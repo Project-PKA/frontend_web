@@ -1,0 +1,46 @@
+# =============================================================================
+# EXEMPLO — aplicacao com servidor (SSR).
+# Copie para a raiz como `Dockerfile` e substitua os TODO.
+#
+# Diferenca para o estatico: aqui existe um processo rodando em producao.
+# Em compensacao, as variaveis podem ser lidas em RUNTIME — a mesma imagem
+# serve para todos os ambientes.
+# =============================================================================
+
+FROM node:22-alpine AS deps
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm ci --no-audit --no-fund
+
+FROM node:22-alpine AS build
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+# TODO: comando de build — o mesmo de BUILD_CMD.
+RUN npm run build
+# Descarta devDependencies antes de copiar para a imagem final.
+RUN npm prune --omit=dev
+
+FROM node:22-alpine AS runtime
+WORKDIR /app
+ENV NODE_ENV=production PORT=3000
+
+# Nunca rode como root.
+RUN addgroup -g 1001 app && adduser -u 1001 -G app -s /bin/sh -D app
+
+# TODO: ajuste aos artefatos da stack.
+#   Next.js standalone : .next/standalone, .next/static, public
+#   Nuxt               : .output
+#   SvelteKit (node)   : build
+COPY --from=build --chown=app:app /app/dist         ./dist
+COPY --from=build --chown=app:app /app/node_modules ./node_modules
+COPY --from=build --chown=app:app /app/package.json ./package.json
+
+USER app
+EXPOSE 3000
+
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD wget --quiet --spider http://localhost:3000/healthz || exit 1
+
+# TODO: comando que sobe o servidor.
+CMD ["node", "dist/server.js"]

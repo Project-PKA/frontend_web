@@ -1,0 +1,39 @@
+# =============================================================================
+# EXEMPLO — ambiente local com o frontend e um backend.
+# Copie para a raiz como `compose.yaml` e ajuste.
+#
+#   docker compose up web                  # so o frontend (build de producao)
+#   docker compose --profile backend up    # frontend + backend
+#
+# Para desenvolvimento com hot reload use `make dev` na maquina: e mais
+# rapido e nao depende de bind mount (lento no Windows e no macOS).
+# =============================================================================
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Dentro da rede do compose o backend responde em http://api:8080.
+        API_BASE_URL: ${API_BASE_URL:-http://localhost:8080}
+        APP_ENV: ${APP_ENV:-local}
+    image: frontend:local
+    ports:
+      - '8081:8080'
+    healthcheck:
+      test: ['CMD', 'wget', '--quiet', '--spider', 'http://localhost:8080/healthz']
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+
+  # TODO: troque pela imagem real da sua API. O profile deixa o backend
+  # opcional; remova-o se o frontend nao roda sem ele.
+  api:
+    profiles: ['backend']
+    image: ${API_IMAGE:-kennethreitz/httpbin}
+    ports:
+      - '8080:80'
+    restart: unless-stopped

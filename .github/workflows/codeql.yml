@@ -1,0 +1,42 @@
+# =============================================================================
+# CodeQL — analise estatica de seguranca (SAST) do proprio codigo.
+#
+# Cobre o que o linter nao cobre: fluxo de dados entre arquivos (XSS por
+# innerHTML, injecao em navegacao, redirect aberto, dado nao sanitizado
+# chegando ao DOM).
+#
+# A linguagem vem da variable CODEQL_LANGUAGES (padrao: javascript-typescript,
+# que cobre .js, .jsx, .ts, .tsx, .vue e .svelte). Logica em IgorOCosta/workflows.
+#
+# Os alertas aparecem em Security -> Code scanning. Para BLOQUEAR o merge,
+# ative "Require code scanning results" nas regras da branch (SETUP-GITHUB.md).
+# =============================================================================
+name: CodeQL
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    # Toda segunda as 03:17 UTC — pega CVE nova em codigo que ninguem tocou.
+    - cron: '17 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codeql-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  codeql:
+    uses: IgorOCosta/workflows/.github/workflows/codeql.yml@v1
+    permissions:
+      contents: read
+      actions: read
+      security-events: write
+    with:
+      languages: ${{ vars.CODEQL_LANGUAGES || 'javascript-typescript' }}
+      build-mode: ${{ vars.CODEQL_BUILD_MODE }}

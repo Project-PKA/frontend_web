@@ -1,0 +1,69 @@
+# =============================================================================
+# Ignorados genericos. Ao escolher a stack, acrescente o bloco dela.
+# =============================================================================
+
+# Dependencias
+node_modules/
+vendor/
+.pnp/
+.pnpm-store/
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/versions
+
+# Artefatos de build (cubra o BUILD_DIR do project.mk)
+dist/
+build/
+out/
+.output/
+.next/
+.nuxt/
+.svelte-kit/
+.astro/
+.vite/
+*.tsbuildinfo
+
+# Testes e relatorios
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+blob-report/
+cypress/screenshots/
+cypress/videos/
+.lighthouseci/
+perf-report/
+
+# Caches de ferramentas
+.cache/
+.parcel-cache/
+.turbo/
+.eslintcache
+.stylelintcache
+.ruff_cache/
+__pycache__/
+
+# Contrato de API baixado pelo sync-api-types (a fonte e o docs/shared)
+.contract/
+
+# Ambiente — nunca commitar segredo (ver .env.example)
+.env
+.env.*
+!.env.example
+
+# Editores e SO
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*

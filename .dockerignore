@@ -1,0 +1,26 @@
+# Vale para qualquer Dockerfile copiado de docker/.
+.git
+.github
+.githooks
+node_modules
+vendor
+dist
+build
+out
+.next
+.nuxt
+.svelte-kit
+.output
+coverage
+playwright-report
+test-results
+.lighthouseci
+.cache
+.turbo
+.vscode
+.idea
+*.log
+.env
+.env.*
+!.env.example
+*.md

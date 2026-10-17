@@ -1,0 +1,96 @@
+# =============================================================================
+# Sincroniza os tipos de API com o contrato publicado no docs/shared.
+#
+# Fluxo do contrato (CONVENCOES.md do codex-base, secao 6):
+#   backend gera openapi.yaml -> PR no docs/shared -> merge -> o shared dispara
+#   `repository_dispatch` (openapi-contract-updated) -> ESTE workflow regenera
+#   os tipos com `make generate-types` e abre um PR aqui.
+#
+# O CI desse PR e o que pega mudanca incompativel: tipo gerado que nao bate
+# com o codigo quebra o `typecheck`/`build` antes de virar bug em producao.
+#
+# Requisitos (SETUP-GITHUB.md):
+#   - variable CONTRACT_REPO    (org/repo do docs/shared; nivel da organizacao)
+#   - secret   AUTOMATION_TOKEN (le o shared privado e abre o PR — com o
+#                                GITHUB_TOKEN o PR nao dispararia o CI)
+#   - GENERATE_TYPES_CMD configurado em project.mk (ou `skip`)
+# =============================================================================
+name: Sync API types
+
+on:
+  repository_dispatch:
+    types: [openapi-contract-updated]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: sync-api-types
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    name: Regenerar tipos a partir do contrato
+    if: github.event.repository.is_template != true
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    env:
+      CONTRACT_REPO: ${{ vars.CONTRACT_REPO || github.event.client_payload.repository }}
+      CONTRACT_REF: ${{ github.event.client_payload.ref || 'main' }}
+    steps:
+      - name: Verificar configuracao
+        env:
+          AUTOMATION_TOKEN: ${{ secrets.AUTOMATION_TOKEN }}
+        run: |
+          if [ -z "$CONTRACT_REPO" ]; then
+            echo "::error title=CONTRACT_REPO ausente::Defina a variable CONTRACT_REPO (org/repo do docs/shared). Ver SETUP-GITHUB.md."
+            exit 1
+          fi
+          if [ -z "$AUTOMATION_TOKEN" ]; then
+            echo "::warning title=Sem AUTOMATION_TOKEN::Usando GITHUB_TOKEN: nao le shared privado e o PR aberto nao dispara o CI."
+          fi
+
+      - uses: actions/checkout@v4
+
+      - name: Baixar o contrato do docs/shared
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.CONTRACT_REPO }}
+          ref: ${{ env.CONTRACT_REF }}
+          token: ${{ secrets.AUTOMATION_TOKEN || github.token }}
+          path: .contract
+          sparse-checkout: openapi.yaml
+          sparse-checkout-cone-mode: false
+
+      - uses: jdx/mise-action@v2
+        if: hashFiles('.tool-versions', 'mise.toml', '.mise.toml') != ''
+        with:
+          cache: true
+
+      - run: make setup
+
+      - name: Gerar tipos
+        env:
+          OPENAPI_SPEC: .contract/openapi.yaml
+        run: make generate-types
+
+      - name: Abrir PR com os tipos atualizados
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.AUTOMATION_TOKEN || github.token }}
+          branch: chore/sync-api-types
+          delete-branch: true
+          commit-message: |
+            chore(api): regenera tipos a partir do contrato
+
+            Origem: ${{ env.CONTRACT_REPO }}@${{ env.CONTRACT_REF }}
+          title: 'chore(api): regenera tipos a partir do contrato'
+          body: |
+            Tipos regenerados automaticamente a partir de `${{ env.CONTRACT_REPO }}@${{ env.CONTRACT_REF }}`.
+
+            - Se o CI quebrou, o contrato mudou de forma incompativel com o codigo: ajuste as chamadas neste mesmo PR.
+            - Nao edite os arquivos gerados a mao.
+          labels: contrato-api

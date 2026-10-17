@@ -1,0 +1,64 @@
+# =============================================================================
+# Dependabot.
+#
+# Ativo: `github-actions`, que vale para qualquer stack.
+# Os demais ecossistemas estao comentados — descomente o da stack escolhida
+# (SETUP-GITHUB.md, secao B8).
+#
+# Os prefixos de commit-message seguem Conventional Commits, senao o CI
+# reprova os proprios PRs do Dependabot.
+# =============================================================================
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '06:00'
+      timezone: America/Sao_Paulo
+    open-pull-requests-limit: 5
+    labels: ['ci-cd', 'dependencias']
+    commit-message:
+      prefix: ci
+      include: scope
+    groups:
+      # Um PR por grupo em vez de um por action: menos ruido, mesma seguranca.
+      actions:
+        patterns: ['*']
+        update-types: ['minor', 'patch']
+
+  # ---- npm / pnpm / yarn -----------------------------------------------------
+  # - package-ecosystem: npm
+  #   directory: /
+  #   schedule:
+  #     interval: weekly
+  #     day: monday
+  #   open-pull-requests-limit: 5
+  #   labels: ['dependencias']
+  #   commit-message:
+  #     prefix: chore
+  #     prefix-development: chore
+  #     include: scope
+  #   groups:
+  #     dev-tooling:
+  #       dependency-type: development
+  #       update-types: ['minor', 'patch']
+  #     runtime:
+  #       dependency-type: production
+  #       update-types: ['minor', 'patch']
+
+  # ---- Bun -------------------------------------------------------------------
+  # - package-ecosystem: bun
+  #   directory: /
+  #   schedule: { interval: weekly }
+  #   labels: ['dependencias']
+  #   commit-message: { prefix: chore, include: scope }
+
+  # ---- Docker ----------------------------------------------------------------
+  # - package-ecosystem: docker
+  #   directory: /
+  #   schedule: { interval: monthly }
+  #   labels: ['dependencias']
+  #   commit-message: { prefix: build, include: scope }
