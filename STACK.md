@@ -284,7 +284,7 @@ Nao precisam ser tomadas no primeiro dia, mas precisam ser **conscientes**.
 | Observabilidade | Como voce descobre que quebrou em producao? | Sem telemetria de terceiros; GlitchTip na VPS depois de A7, sem dado pessoal nem fragmento da URL |
 
 Dependencias citadas aqui (TanStack Query, Pinia, VeeValidate, Zod,
-`@nuxtjs/i18n`, Fontsource, `openapi-typescript`, size-limit, Lighthouse CI,
+`@nuxtjs/i18n`, Fontsource, `openapi-typescript`, Lighthouse CI, o script `bundle-budget`,
 Playwright, Vitest) ainda precisam de aprovacao explicita ao instalar.
 
 > A maior parte do que vira "estado global" e, na verdade, **cache de
