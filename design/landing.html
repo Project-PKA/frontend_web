@@ -1,0 +1,304 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Landing Leilões TCG</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Plataforma para lojistas de cartas Pokémon TCG organizarem leilões no WhatsApp: estoque, agenda de leilões, lances, acertos, consignados, vitrine pública e dashboards.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Sora:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components.css">
+<style>
+/* Landing: nav de vidro, hero com brilho e prévia do produto, grade de funcionalidades, vitrine, dashboards, planos, FAQ, solicitação de acesso */
+html { scroll-behavior: smooth; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+section[id] { scroll-margin-top: 80px; }
+.sec { padding-block: 88px 0; display: flex; flex-direction: column; gap: 40px; }
+.sec__head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; }
+.sec__head h2 { font-size: clamp(1.75rem, 3.4vw, 2.5rem); line-height: 1.12; max-width: 22ch; }
+.sec__head p { color: var(--text-2); max-width: 62ch; }
+.pill { display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 12px; border-radius: var(--radius-pill); border: 1px solid var(--primary-line); background: var(--primary-soft); color: var(--text); font: 600 var(--fs-xs) / 1 var(--font-body); }
+
+/* nav */
+.nav-top { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid var(--border); background: color-mix(in srgb, var(--bg) 78%, transparent); backdrop-filter: blur(12px); }
+.nav-top .wrap { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; height: 64px; }
+.nav-top nav { display: flex; gap: 28px; }
+.nav-top nav a { color: var(--text-2); font: 500 var(--fs-sm) / 1 var(--font-body); }
+.nav-top nav a:hover { color: var(--text); text-decoration: none; }
+.nav-top .actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+/* hero */
+.hero { position: relative; padding-block: 72px 0; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.hero h1 { font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.04; letter-spacing: -0.02em; }
+.hero h1 em { font-style: normal; background: linear-gradient(90deg, var(--primary-hover), var(--info)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero__lead { font-size: var(--fs-lg); color: var(--text-2); max-width: 52ch; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.mock { position: relative; padding: var(--sp-4); display: flex; flex-direction: column; gap: var(--sp-3); }
+.mock::before { content: ""; position: absolute; inset: -40px; z-index: -1; background: radial-gradient(closest-side, rgba(168, 85, 247, 0.28), transparent); filter: blur(10px); }
+.mock__bar { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.mock__row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.mini { padding: 12px; border-radius: var(--radius-md); background: var(--surface); border: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
+.mini strong { font: 600 var(--fs-xl) / 1 var(--font-display); font-variant-numeric: tabular-nums; }
+.mini span { font-size: var(--fs-xs); color: var(--text-2); }
+.lance { display: flex; gap: 12px; align-items: center; padding: 8px 12px; border-radius: 10px; background: var(--surface); border: 1px solid var(--border); font-size: var(--fs-xs); }
+.lance b { margin-left: auto; color: var(--success); font-family: var(--font-mono); }
+
+/* grids */
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: s; }
+.step { padding: var(--sp-5); display: flex; flex-direction: column; gap: 10px; counter-increment: s; }
+.step::before { content: counter(s); width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font: 700 var(--fs-xs) var(--font-mono); color: var(--primary); border: 1px solid var(--primary-line); background: var(--primary-soft); }
+.step p, .feat p { color: var(--text-2); font-size: var(--fs-sm); }
+.feats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.feat { padding: var(--sp-5); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+.feat h3 { font-size: var(--fs-md); }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; align-items: center; }
+.two .txt { display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.two h2 { font-size: clamp(1.75rem, 3.2vw, 2.4rem); line-height: 1.12; }
+.two ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; color: var(--text-2); }
+.two li { display: flex; gap: 10px; align-items: flex-start; }
+.two li .i { color: var(--success); margin-top: 2px; }
+.who { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.who .card { padding: var(--sp-5); display: flex; flex-direction: column; gap: 8px; }
+.who p { color: var(--text-2); font-size: var(--fs-sm); }
+
+/* planos */
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+.plan { padding: var(--sp-5); display: flex; flex-direction: column; gap: 16px; }
+.plan__price { font: 600 var(--fs-2xl) / 1 var(--font-display); }
+.plan__price small { font: 400 var(--fs-sm) var(--font-body); color: var(--text-3); }
+.plan ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; font-size: var(--fs-sm); flex: 1; }
+.plan li { display: flex; gap: 10px; align-items: center; }
+.plan li .i { color: var(--primary); }
+.plan__note { text-align: center; font-size: var(--fs-xs); color: var(--text-3); margin-top: -4px; }
+
+/* cta final e rodapé */
+.cta { padding: var(--sp-6); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 40px; align-items: center; }
+.cta h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); line-height: 1.12; }
+.foot { margin-top: 88px; border-top: 1px solid var(--border); padding-block: 40px 56px; }
+.foot .wrap { display: flex; flex-direction: column; gap: 20px; }
+.foot__links { display: flex; gap: 20px; flex-wrap: wrap; }
+.foot__links a { color: var(--text-2); font-size: var(--fs-sm); }
+
+@media (max-width: 960px) {
+  .hero, .two, .cta { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .feats, .who, .plans { grid-template-columns: minmax(0, 1fr); }
+  .nav-top nav { display: none; }
+  .nav-top .wrap { grid-template-columns: 1fr auto; }
+  .sec { padding-top: 64px; }
+}
+@media (max-width: 560px) {
+  .steps { grid-template-columns: minmax(0, 1fr); }
+  .nav-top .actions .btn--ghost { display: none; }
+  .mock__row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mock__row .mini:last-child { display: none; }
+}
+</style>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display:none">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M12 3 3 7.5v9L12 21l9-4.5v-9zM3 7.5 12 12l9-4.5M12 12v9"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 20v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M9.5 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM21 20v-1a4 4 0 0 0-3-3.9M16 4.2a3.5 3.5 0 0 1 0 6.6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12v4M4 7v10a2 2 0 0 0 2 2h14V9H6a2 2 0 0 1-2-2zM16 14h2"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 1 12 0c0 6 2 7 2 7H4s2-1 2-7zM10 20a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4 10 14M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 2.5 20h19zM12 10v4M12 17.5v.01"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0 1 16 0"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+  <symbol id="i-store" viewBox="0 0 24 24"><path d="M4 9l1-5h14l1 5M4 9a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0 6 0 2.5 2.5 0 0 0 5 0M5 12v8h14v-8"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+</svg>
+
+
+<header class="nav-top">
+  <div class="wrap">
+    <a class="brand" href="#topo" style="color:inherit"><span class="brand__mark"></span>Leilões TCG</a>
+    <nav aria-label="Seções"><a href="#funcionalidades">Funcionalidades</a><a href="#vitrine">Vitrine</a><a href="#dashboards">Dashboards</a><a href="#precos">Preços</a><a href="#faq">Perguntas</a></nav>
+    <div class="actions"><a class="btn btn--ghost btn--sm" href="login.html">Entrar</a><a class="btn btn--primary btn--sm" href="#acesso">Solicitar acesso</a></div>
+  </div>
+</header>
+
+<main id="topo">
+  <div class="wrap">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="h1">
+      <div class="stack" style="gap:24px">
+        <span class="pill"><svg class="i" style="width:14px;height:14px"><use href="#i-bolt"/></svg>Plataforma para lojistas de cartas Pokémon TCG</span>
+        <h1 id="h1">Leilões de cartas Pokémon no WhatsApp, <em>do estoque ao acerto.</em></h1>
+        <p class="hero__lead">Cadastre suas cartas, agende leilões individuais, deixe o bot cuidar do grupo e acompanhe tudo em dashboards. Seus leilões ainda aparecem em uma vitrine pública que atrai novos compradores.</p>
+        <div class="row"><a class="btn btn--primary btn--lg" href="#acesso">Solicitar acesso</a><a class="btn btn--secondary btn--lg" href="vitrine.html">Ver leilões ao vivo</a></div>
+        <div class="chips"><span class="badge">Catálogo de cartas</span><span class="badge">Leilão no WhatsApp</span><span class="badge">Vitrine pública</span><span class="badge">Dashboards</span></div>
+      </div>
+      <div class="card frame mock" aria-label="Prévia do painel">
+        <div class="mock__bar"><span class="card__title">Home</span><span class="status-chip status-chip--on">WhatsApp online</span></div>
+        <div class="mock__row">
+          <div class="mini"><strong>6</strong><span>Leilões ativos</span></div>
+          <div class="mini"><strong>128</strong><span>Lances ao vivo</span></div>
+          <div class="mini"><strong>9</strong><span>Acertos pendentes</span></div>
+        </div>
+        <div class="auction__bid"><div class="row" style="justify-content:space-between"><span class="auction__name">Charizard ex 199/165</span><span class="badge badge--success badge--live">AO VIVO</span></div><strong>R$ 820,00</strong><span class="mono faint" style="font-size:var(--fs-xs)">54 lances · termina em 00:12:40</span></div>
+        <div class="lance"><span class="mono">21:42:10</span><span class="mono">(11) 9****-1020</span><b>R$ 820,00</b></div>
+        <div class="lance"><span class="mono">21:41:55</span><span class="mono">(21) 9****-4455</span><b>R$ 800,00</b></div>
+      </div>
+    </section>
+
+    <!-- COMO FUNCIONA -->
+    <section class="sec" aria-labelledby="h-como">
+      <div class="sec__head"><span class="pill">Como funciona</span><h2 id="h-como">Um leilão de cartas Pokémon em quatro passos</h2><p>A plataforma organiza o leilão e o acerto. O pagamento e o envio acontecem diretamente entre a loja e o comprador.</p></div>
+      <div class="steps">
+        <div class="card step"><h3>Cadastre a carta</h3><p>Busque no catálogo, informe estado, fotos e observações e escolha se é estoque próprio ou consignada.</p></div>
+        <div class="card step"><h3>Agende o leilão</h3><p>Defina início, fim, tipo (lance livre ou enquete), lance mínimo e valor teto.</p></div>
+        <div class="card step"><h3>O bot cuida do grupo</h3><p>A carta é postada no WhatsApp, os lances são registrados e o vencedor é anunciado.</p></div>
+        <div class="card step"><h3>Feche o acerto</h3><p>O comprador completa os dados, combina o pagamento com a loja e você confirma a venda.</p></div>
+      </div>
+    </section>
+
+    <!-- FUNCIONALIDADES -->
+    <section class="sec" id="funcionalidades" aria-labelledby="h-func">
+      <div class="sec__head"><span class="pill">Funcionalidades</span><h2 id="h-func">Tudo para quem vende cartas Pokémon TCG</h2><p>Estoque, agenda de leilões, lances, acertos, consignados e equipe em um só lugar, sem planilhas.</p></div>
+      <div class="feats">
+        <article class="card card--interactive feat"><span class="kpi__icon"><svg class="i"><use href="#i-box"/></svg></span><h3>Estoque organizado</h3><p>Cadastre cada carta com busca rápida no catálogo, fotos reais, idioma, estado de conservação e observações. Cada uma ganha um código #ID curto para usar nas conversas do grupo.</p></article>
+        <article class="card card--interactive feat"><span class="kpi__icon"><svg class="i"><use href="#i-bolt"/></svg></span><h3>Leilões no WhatsApp</h3><p>Agende um leilão para cada carta, em lance livre ou enquete, com lance mínimo e valor teto. O bot publica a carta no grupo, registra cada lance e anuncia o vencedor.</p></article>
+        <article class="card card--interactive feat"><span class="kpi__icon"><svg class="i"><use href="#i-store"/></svg></span><h3>Vitrine de leilões ao vivo</h3><p>Seus leilões em andamento aparecem em uma página pública, com a carta, o último lance e o tempo restante. Quem se interessa entra direto no seu grupo de WhatsApp.</p></article>
+        <article class="card card--interactive feat"><span class="kpi__icon"><svg class="i"><use href="#i-wallet"/></svg></span><h3>Acertos sem planilha</h3><p>Quem arremata recebe um link para informar CPF e endereço e ver o resumo da compra. Você soma o frete, envia o resumo no WhatsApp e confirma a venda quando o pagamento for feito.</p></article>
+        <article class="card card--interactive feat"><span class="kpi__icon"><svg class="i"><use href="#i-link"/></svg></span><h3>Gestão de consignados</h3><p>Cadastre cartas de terceiros com a sua comissão. O sistema calcula o valor vendido, a comissão retida e quanto repassar a cada dono, que acompanha a carta por um link.</p></article>
+        <article class="card card--interactive feat"><span class="kpi__icon"><svg class="i"><use href="#i-chart"/></svg></span><h3>Dashboards completos</h3><p>Acompanhe o que acontece agora na Home e analise faturamento, lucro, ticket médio e vendas por período no painel financeiro, com gráficos e lista de repasses.</p></article>
+        <article class="card card--interactive feat"><span class="kpi__icon"><svg class="i"><use href="#i-shield"/></svg></span><h3>Moderação do grupo</h3><p>Mantenha uma lista de números bloqueados e remova automaticamente quem ficar inativo por muito tempo, com aviso de quem está prestes a sair.</p></article>
+        <article class="card card--interactive feat"><span class="kpi__icon"><svg class="i"><use href="#i-users"/></svg></span><h3>Equipe e permissões</h3><p>Convide funcionários por e-mail e escolha o que cada um pode fazer: estoque, leilões, acertos ou financeiro. Excluir registros fica bloqueado por padrão.</p></article>
+        <article class="card card--interactive feat"><span class="kpi__icon"><svg class="i"><use href="#i-message"/></svg></span><h3>Mensagens personalizadas</h3><p>Personalize o texto da postagem de cada carta e a mensagem de encerramento para falar com o seu grupo do seu jeito.</p></article>
+      </div>
+    </section>
+
+    <!-- VITRINE -->
+    <section class="sec" id="vitrine" aria-labelledby="h-vit">
+      <div class="two">
+        <div class="txt"><span class="pill">Vitrine</span><h2 id="h-vit">Seus leilões ao vivo, à vista de todo mundo</h2>
+          <p class="muted">Cada leilão ativo aparece em uma página pública com a foto da carta, o estado, o idioma, o último lance e o tempo restante. O comprador clica em “Ir para o leilão” e cai direto no grupo de WhatsApp da loja.</p>
+          <ul><li><svg class="i"><use href="#i-check"/></svg>Mais visibilidade para as suas cartas, mesmo para quem ainda não está no grupo.</li><li><svg class="i"><use href="#i-check"/></svg>Lances e tempo atualizados automaticamente.</li><li><svg class="i"><use href="#i-check"/></svg>Você escolhe se a sua loja aparece na vitrine.</li></ul>
+          <a class="btn btn--primary" href="vitrine.html">Abrir a vitrine <svg class="i"><use href="#i-external"/></svg></a></div>
+        <div class="stack" style="align-items:center;gap:8px">
+          <article class="card card--highlight auction" style="width:min(300px,100%)">
+            <div class="auction__top"><span class="badge">Poké Card Hub</span><span class="badge badge--success badge--live">AO VIVO</span></div>
+            <div class="tcg"><div class="tcg__ph">[ foto da carta ]</div></div>
+            <div><div class="auction__name">Charizard ex 199/165</div><div class="faint" style="font-size:var(--fs-xs)">151 · NM · EN</div></div>
+            <div class="auction__bid"><span class="faint" style="font-size:var(--fs-xs)">Maior lance</span><strong>R$ 820,00</strong><span class="mono faint" style="font-size:var(--fs-xs)">54 lances · último há 8s</span></div>
+            <a class="btn btn--primary btn--block" href="#">Ir para o leilão <svg class="i"><use href="#i-external"/></svg></a>
+          </article>
+          <small class="faint" style="font-size:11px">* imagem de exemplo</small>
+        </div>
+      </div>
+    </section>
+
+    <!-- DASHBOARDS -->
+    <section class="sec" id="dashboards" aria-labelledby="h-dash">
+      <div class="two">
+        <div class="card frame" style="padding:var(--sp-5)">
+          <div class="row" style="justify-content:space-between;margin-bottom:16px"><span class="card__title">Faturamento por dia</span><div class="seg"><button>1D</button><button class="is-active">1W</button><button>1M</button></div></div>
+          <div class="bars" role="img" aria-label="Gráfico de barras de exemplo"><span style="height:48%"></span><span style="height:62%"></span><span class="is-peak" style="height:94%"></span><span style="height:58%"></span><span style="height:70%"></span><span style="height:44%"></span><span style="height:66%"></span><span style="height:52%"></span><span style="height:78%"></span><span style="height:40%"></span><span style="height:84%"></span></div>
+          <div class="row" style="margin-top:20px;gap:20px">
+            <div class="ring" style="--v:58;width:96px"><div class="ring__in"><span class="mono" style="font-weight:600">58%</span></div></div>
+            <div class="stack" style="gap:6px"><span class="muted" style="font-size:var(--fs-sm)">Vendas por origem</span><span class="row" style="gap:8px;font-size:var(--fs-xs)"><i style="width:10px;height:10px;border-radius:3px;background:var(--success)"></i>Estoque próprio</span><span class="row" style="gap:8px;font-size:var(--fs-xs)"><i style="width:10px;height:10px;border-radius:3px;background:var(--surface-3)"></i>Consignadas</span></div>
+          </div>
+          <p class="faint" style="font-size:11px;margin-top:12px">* dados de exemplo</p>
+        </div>
+        <div class="txt"><span class="pill">Dashboards</span><h2 id="h-dash">Operacional e financeiro, cada um no seu lugar</h2>
+          <p class="muted">A <b>Home operacional</b> mostra o que precisa de atenção agora: leilões ativos, enquetes aguardando aprovação, acertos pendentes e cartas sem leilão agendado.</p>
+          <p class="muted">O <b>painel financeiro</b> reúne faturamento bruto, lucro líquido, ticket médio, gráficos por período, distribuição das vendas por valor, idioma e estado de conservação, e a lista de repasses de consignação.</p>
+          <p class="muted">O acesso ao financeiro é exclusivo do proprietário ou de quem receber essa permissão.</p></div>
+      </div>
+    </section>
+
+    <!-- PARA QUEM -->
+    <section class="sec" aria-labelledby="h-quem">
+      <div class="sec__head"><span class="pill">Para quem é</span><h2 id="h-quem">Feito para quem vende cartas em grupos</h2></div>
+      <div class="who">
+        <div class="card"><h3>Lojistas de TCG</h3><p>Que já vendem por grupos de WhatsApp e querem sair do controle manual.</p></div>
+        <div class="card"><h3>Colecionadores que vendem</h3><p>Que organizam leilões de cartas raras e precisam registrar lances e vencedores.</p></div>
+        <div class="card"><h3>Lojas com equipe</h3><p>Que dividem tarefas entre estoque, leilões e acertos, com permissões por pessoa.</p></div>
+      </div>
+    </section>
+
+    <!-- PRECOS -->
+    <section class="sec" id="precos" aria-labelledby="h-preco">
+      <div class="sec__head"><span class="pill">Preços</span><h2 id="h-preco">Escolha o plano da sua loja</h2><p>Valores em definição. O acesso é por convite: solicite e nossa equipe cria a sua loja.</p></div>
+      <div class="plans">
+        <div class="card plan"><div><h3>Inicial</h3><p class="faint" style="font-size:var(--fs-sm)">Para começar a organizar</p></div><div class="plan__price">R$ [ 00 ]<small> /mês</small></div>
+          <ul><li><svg class="i"><use href="#i-check"/></svg>1 grupo de WhatsApp</li><li><svg class="i"><use href="#i-check"/></svg>1 usuário</li><li><svg class="i"><use href="#i-check"/></svg>[ limite de cartas ]</li></ul>
+          <a class="btn btn--secondary btn--block" href="#acesso">Solicitar acesso</a></div>
+        <div class="card card--highlight plan"><div><h3>Loja</h3><p class="faint" style="font-size:var(--fs-sm)">Para quem tem equipe</p></div><div class="plan__price">R$ [ 00 ]<small> /mês</small></div>
+          <ul><li><svg class="i"><use href="#i-check"/></svg>Vários grupos</li><li><svg class="i"><use href="#i-check"/></svg>Funcionários e permissões</li><li><svg class="i"><use href="#i-check"/></svg>Consignados e financeiro</li><li><svg class="i"><use href="#i-check"/></svg>Vitrine pública</li></ul>
+          <a class="btn btn--primary btn--block" href="#acesso">Solicitar acesso</a><span class="plan__note">Mais escolhido</span></div>
+        <div class="card plan"><div><h3>Rede</h3><p class="faint" style="font-size:var(--fs-sm)">Para várias lojas</p></div><div class="plan__price">R$ [ 00 ]<small> /mês</small></div>
+          <ul><li><svg class="i"><use href="#i-check"/></svg>Várias lojas</li><li><svg class="i"><use href="#i-check"/></svg>Vitrine em destaque</li><li><svg class="i"><use href="#i-check"/></svg>Suporte dedicado</li></ul>
+          <a class="btn btn--secondary btn--block" href="#acesso">Solicitar acesso</a></div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="sec" id="faq" aria-labelledby="h-faq" style="max-width:820px;margin-inline:auto;width:100%">
+      <div class="sec__head"><span class="pill">Perguntas frequentes</span><h2 id="h-faq">Tire suas dúvidas</h2></div>
+      <div class="accordion">
+        <details><summary>Como faço para começar?</summary><p>O acesso é somente por convite. Você solicita acesso, nossa equipe cria a sua loja, define você como proprietário e envia o convite por e-mail.</p></details>
+        <details><summary>O que é a plataforma?</summary><p>Um painel para lojistas de cartas Pokémon TCG organizarem leilões em grupos de WhatsApp: estoque, agenda de leilões, lances, acertos, consignados e dashboards em um só lugar.</p></details>
+        <details><summary>Vocês processam os pagamentos ou enviam as cartas?</summary><p>Não. A plataforma organiza o leilão e o acerto. O pagamento e o envio são combinados diretamente entre a loja e o comprador.</p></details>
+        <details><summary>Preciso de um número de WhatsApp exclusivo?</summary><p>Recomendamos um número dedicado à loja. Você conecta lendo um QR Code e escolhe qual grupo o bot vai monitorar.</p></details>
+        <details><summary>O que é a vitrine de leilões ao vivo?</summary><p>Uma página pública que lista os leilões em andamento de várias lojas, com a carta, o último lance e um botão para entrar no grupo do leilão.</p></details>
+        <details><summary>Como funcionam as cartas consignadas?</summary><p>Você cadastra a carta em nome do dono e define a comissão da loja. Quando ela é vendida, o painel financeiro mostra quanto repassar a ele, e o dono acompanha a carta por um link.</p></details>
+        <details><summary>Funcionários podem apagar registros?</summary><p>Só se você liberar. Excluir itens e registros vem bloqueado por padrão, e cada permissão é escolhida por funcionário.</p></details>
+        <details><summary>Quais cartas e idiomas posso cadastrar?</summary><p>Qualquer carta do catálogo, em português, inglês, japonês e outros idiomas, com estados de conservação de M a DMG.</p></details>
+      </div>
+    </section>
+
+    <!-- SOLICITAR ACESSO -->
+    <section class="sec" id="acesso" aria-labelledby="h-acesso">
+      <div class="card card--highlight cta">
+        <div class="stack" style="gap:16px"><span class="pill" style="align-self:flex-start">Acesso por convite</span><h2 id="h-acesso">Pronto para organizar seus leilões?</h2><p class="muted">Conte sobre a sua loja. Nossa equipe cria o seu acesso e envia o convite por e-mail em até [ 1 dia útil ].</p></div>
+        <form id="reqForm" class="stack" novalidate>
+          <div class="field"><label class="label" for="r1">Seu nome</label><input class="input" id="r1" autocomplete="name"></div>
+          <div class="field"><label class="label" for="r2">E-mail</label><input class="input" id="r2" type="email" autocomplete="email" placeholder="voce@email.com"></div>
+          <div class="field"><label class="label" for="r3">WhatsApp</label><input class="input" id="r3" inputmode="numeric" maxlength="15" placeholder="(00) 00000-0000"></div>
+          <div class="field"><label class="label" for="r4">Nome da loja</label><input class="input" id="r4"></div>
+          <button class="btn btn--primary btn--lg btn--block" type="submit">Solicitar acesso</button>
+          <div class="alert alert--success" id="reqOk" hidden><svg class="i"><use href="#i-check"/></svg><div class="alert__body">Solicitação enviada. Respondemos por e-mail.</div></div>
+        </form>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="row" style="justify-content:space-between">
+      <a class="brand" href="#topo" style="color:inherit"><span class="brand__mark"></span>Leilões TCG</a>
+      <div class="seg" role="group" aria-label="Tema"><button class="is-active" data-theme-set="system">Sistema</button><button data-theme-set="dark">Escuro</button><button data-theme-set="light">Claro</button></div>
+    </div>
+    <div class="foot__links"><a href="#funcionalidades">Funcionalidades</a><a href="#vitrine">Vitrine</a><a href="#precos">Preços</a><a href="#faq">Perguntas</a><a href="termos.html">Termos de uso</a><a href="privacidade.html">Política de Privacidade</a><a href="index.html">Mapa de telas</a><a href="#acesso">Contato</a></div>
+    <p class="faint" style="font-size:var(--fs-xs);max-width:70ch">Plataforma de leilões de cartas Pokémon TCG no WhatsApp para lojistas e colecionadores. Pokémon e os nomes das cartas pertencem aos seus respectivos titulares.</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+(function () {
+  var tel = document.getElementById('r3');
+  tel.addEventListener('input', function () {
+    var d = tel.value.replace(/\D/g, '').slice(0, 11);
+    tel.value = d.length > 10 ? '(' + d.slice(0, 2) + ') ' + d.slice(2, 7) + '-' + d.slice(7)
+      : d.length > 6 ? '(' + d.slice(0, 2) + ') ' + d.slice(2, 6) + '-' + d.slice(6)
+      : d.length > 2 ? '(' + d.slice(0, 2) + ') ' + d.slice(2) : d.length ? '(' + d : '';
+  });
+  document.getElementById('reqForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    document.getElementById('reqOk').hidden = false;
+  });
+})();
+</script>
+</body></html>

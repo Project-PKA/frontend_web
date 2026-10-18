@@ -1,0 +1,144 @@
+/* ==========================================================================
+   Design tokens · Plataforma de leilões de cartas Pokémon TCG
+   Direção: dark-first, preto-arroxeado, acento violeta, verde-limão para
+   "ao vivo / ganho", cards de vidro com borda sutil e brilho suave.
+   Tema: :root = escuro (padrão). Claro via prefers-color-scheme ou data-theme.
+   ========================================================================== */
+
+:root {
+  /* ---- tipografia ---- */
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --fs-xs: 0.75rem;     /* 12 */
+  --fs-sm: 0.8125rem;   /* 13 */
+  --fs-md: 0.9375rem;   /* 15 */
+  --fs-lg: 1.125rem;    /* 18 */
+  --fs-xl: 1.5rem;      /* 24 */
+  --fs-2xl: 2rem;       /* 32 */
+  --fs-3xl: 2.75rem;    /* 44 */
+
+  /* ---- espaçamento (grade de 4px) ---- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+
+  /* ---- forma e movimento ---- */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --dur: 0.18s;
+
+  /* ---- cores · escuro (padrão) ---- */
+  --bg: #09080f;
+  --bg-glow: radial-gradient(60% 45% at 50% -8%, rgba(168, 85, 247, 0.2), transparent 70%);
+  --surface: #100f19;
+  --surface-2: #171524;
+  --surface-3: #201d33;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --overlay: rgba(5, 4, 10, 0.62);
+
+  --text: #f3f2fa;
+  --text-2: #b4b1c9;
+  --text-3: #7f7c98;
+
+  --primary: #a855f7;
+  --primary-hover: #b772ff;
+  --primary-press: #9333ea;
+  --on-primary: #14061f;
+  --primary-soft: rgba(168, 85, 247, 0.14);
+  --primary-line: rgba(168, 85, 247, 0.45);
+
+  --success: #b8f23d;
+  --success-soft: rgba(184, 242, 61, 0.12);
+  --warning: #fbbf24;
+  --warning-soft: rgba(251, 191, 36, 0.12);
+  --danger: #fb6f92;
+  --danger-soft: rgba(251, 111, 146, 0.13);
+  --info: #2dd9c4;
+  --info-soft: rgba(45, 217, 196, 0.12);
+
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 14px 34px rgba(0, 0, 0, 0.38);
+  --glow-primary: 0 0 0 1px var(--primary-line), 0 8px 28px rgba(168, 85, 247, 0.3);
+
+  color-scheme: dark;
+}
+
+/* ---- claro: sistema ---- */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f5f4fa;
+    --bg-glow: radial-gradient(60% 45% at 50% -8%, rgba(124, 58, 237, 0.12), transparent 70%);
+    --surface: #ffffff;
+    --surface-2: #f1eff9;
+    --surface-3: #e7e4f4;
+    --border: rgba(23, 21, 43, 0.1);
+    --border-strong: rgba(23, 21, 43, 0.2);
+    --overlay: rgba(23, 21, 43, 0.4);
+    --text: #17152b;
+    --text-2: #4b4866;
+    --text-3: #7a7793;
+    --primary: #7c3aed;
+    --primary-hover: #6d28d9;
+    --primary-press: #5b21b6;
+    --on-primary: #ffffff;
+    --primary-soft: rgba(124, 58, 237, 0.1);
+    --primary-line: rgba(124, 58, 237, 0.4);
+    --success: #3f7d0a;
+    --success-soft: rgba(101, 163, 13, 0.14);
+    --warning: #b45309;
+    --warning-soft: rgba(217, 119, 6, 0.12);
+    --danger: #be123c;
+    --danger-soft: rgba(225, 29, 72, 0.1);
+    --info: #0f766e;
+    --info-soft: rgba(13, 148, 136, 0.12);
+    --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 8px 24px rgba(23, 21, 43, 0.08);
+    --glow-primary: 0 0 0 1px var(--primary-line), 0 8px 22px rgba(124, 58, 237, 0.22);
+    color-scheme: light;
+  }
+}
+
+/* ---- claro: escolha explícita ---- */
+:root[data-theme="light"] {
+  --bg: #f5f4fa;
+  --bg-glow: radial-gradient(60% 45% at 50% -8%, rgba(124, 58, 237, 0.12), transparent 70%);
+  --surface: #ffffff;
+  --surface-2: #f1eff9;
+  --surface-3: #e7e4f4;
+  --border: rgba(23, 21, 43, 0.1);
+  --border-strong: rgba(23, 21, 43, 0.2);
+  --overlay: rgba(23, 21, 43, 0.4);
+  --text: #17152b;
+  --text-2: #4b4866;
+  --text-3: #7a7793;
+  --primary: #7c3aed;
+  --primary-hover: #6d28d9;
+  --primary-press: #5b21b6;
+  --on-primary: #ffffff;
+  --primary-soft: rgba(124, 58, 237, 0.1);
+  --primary-line: rgba(124, 58, 237, 0.4);
+  --success: #3f7d0a;
+  --success-soft: rgba(101, 163, 13, 0.14);
+  --warning: #b45309;
+  --warning-soft: rgba(217, 119, 6, 0.12);
+  --danger: #be123c;
+  --danger-soft: rgba(225, 29, 72, 0.1);
+  --info: #0f766e;
+  --info-soft: rgba(13, 148, 136, 0.12);
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 8px 24px rgba(23, 21, 43, 0.08);
+  --glow-primary: 0 0 0 1px var(--primary-line), 0 8px 22px rgba(124, 58, 237, 0.22);
+  color-scheme: light;
+}
+
+/* ---- escuro: escolha explícita (vence o sistema claro) ---- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}

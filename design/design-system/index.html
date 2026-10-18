@@ -1,0 +1,284 @@
+<title>Design System Leilões TCG</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Sora:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components.css">
+<style>
+/* Somente layout da página de demonstração; o produto usa tokens.css + components.css */
+.ds { max-width: 1120px; margin: 0 auto; padding-block: 32px 80px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.ds-head { display: flex; flex-wrap: wrap; gap: 16px; align-items: flex-end; justify-content: space-between; }
+.ds-head h1 { font-size: var(--fs-3xl); line-height: 1.05; }
+.ds-sec { margin-top: 56px; display: flex; flex-direction: column; gap: 16px; }
+.ds-sec > h2 { font-size: var(--fs-xl); }
+.ds-sec > p { color: var(--text-2); max-width: 70ch; }
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+.sw { border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; background: var(--surface); }
+.sw i { display: block; height: 56px; border-bottom: 1px solid var(--border); }
+.sw span { display: block; padding: 8px 10px; font: 500 11px / 1.3 var(--font-mono); color: var(--text-2); }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.preview { border: 1px solid var(--border-strong); border-radius: var(--radius-lg); overflow: hidden; background: var(--bg); }
+.preview .app { min-height: 0; }
+.preview .side { position: static; height: auto; }
+.preview .topbar { position: static; }
+.preview .scroll { overflow-x: auto; }
+.type-row { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; padding: 8px 0; border-bottom: 1px solid var(--border); }
+.type-row code { font: 500 11px var(--font-mono); color: var(--text-3); min-width: 150px; }
+@media (max-width: 860px) { .two, .three { grid-template-columns: minmax(0, 1fr); } .ds-head h1 { font-size: var(--fs-2xl); } }
+</style>
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display:none">
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-box" viewBox="0 0 24 24"><path d="M12 3 3 7.5v9L12 21l9-4.5v-9zM3 7.5 12 12l9-4.5M12 12v9"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 20v-1a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v1M9.5 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM21 20v-1a4 4 0 0 0-3-3.9M16 4.2a3.5 3.5 0 0 1 0 6.6"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M4 7a2 2 0 0 1 2-2h12v4M4 7v10a2 2 0 0 0 2 2h14V9H6a2 2 0 0 1-2-2zM16 14h2"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 9a6 6 0 1 1 12 0c0 6 2 7 2 7H4s2-1 2-7zM10 20a2 2 0 0 0 4 0"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4 10 14M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 2.5 20h19zM12 10v4M12 17.5v.01"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0 1 16 0"/></symbol>
+</svg>
+
+
+<div class="ds">
+  <header class="ds-head">
+    <div class="stack" style="gap:10px">
+      <span class="eyebrow">Fase 2 · Design system</span>
+      <h1>Leilões TCG</h1>
+      <p class="muted" style="max-width:60ch">Tokens, tipografia e os componentes mais usados do painel. Tudo responde ao tema claro, escuro e do sistema.</p>
+    </div>
+    <div class="seg" role="group" aria-label="Tema">
+      <button class="is-active" data-theme-set="system">Sistema</button>
+      <button data-theme-set="dark">Escuro</button>
+      <button data-theme-set="light">Claro</button>
+    </div>
+  </header>
+
+  <!-- CORES -->
+  <section class="ds-sec"><h2>Cores</h2>
+    <p>Base preto-arroxeada, violeta como ação principal e verde-limão reservado para “ao vivo”, lance e ganho. Cada cor semântica tem versão suave para fundos.</p>
+    <div class="swatches">
+      <div class="sw"><i style="background:var(--bg)"></i><span>--bg</span></div>
+      <div class="sw"><i style="background:var(--surface)"></i><span>--surface</span></div>
+      <div class="sw"><i style="background:var(--surface-2)"></i><span>--surface-2</span></div>
+      <div class="sw"><i style="background:var(--surface-3)"></i><span>--surface-3</span></div>
+      <div class="sw"><i style="background:var(--border-strong)"></i><span>--border-strong</span></div>
+      <div class="sw"><i style="background:var(--text)"></i><span>--text</span></div>
+      <div class="sw"><i style="background:var(--text-2)"></i><span>--text-2</span></div>
+      <div class="sw"><i style="background:var(--text-3)"></i><span>--text-3</span></div>
+      <div class="sw"><i style="background:var(--primary)"></i><span>--primary</span></div>
+      <div class="sw"><i style="background:var(--primary-soft)"></i><span>--primary-soft</span></div>
+      <div class="sw"><i style="background:var(--success)"></i><span>--success · ao vivo</span></div>
+      <div class="sw"><i style="background:var(--warning)"></i><span>--warning</span></div>
+      <div class="sw"><i style="background:var(--danger)"></i><span>--danger</span></div>
+      <div class="sw"><i style="background:var(--info)"></i><span>--info</span></div>
+    </div>
+  </section>
+
+  <!-- TIPOGRAFIA -->
+  <section class="ds-sec"><h2>Tipografia</h2>
+    <p>Sora nos títulos e números de destaque, DM Sans no texto corrido e JetBrains Mono em IDs, telefones e valores em tabela.</p>
+    <div>
+      <div class="type-row"><code>display · 3xl 44</code><span style="font:600 var(--fs-3xl)/1.05 var(--font-display)">R$ 8.420,00</span></div>
+      <div class="type-row"><code>display · 2xl 32</code><span style="font:600 var(--fs-2xl)/1.1 var(--font-display)">Leilões ao vivo agora</span></div>
+      <div class="type-row"><code>display · xl 24</code><span style="font:600 var(--fs-xl)/1.2 var(--font-display)">Fila de acertos rápidos</span></div>
+      <div class="type-row"><code>body · md 15</code><span>Charizard ex 199/165 · estado NM · idioma inglês</span></div>
+      <div class="type-row"><code>body · sm 13</code><span style="font-size:var(--fs-sm)" class="muted">Termina hoje às 22:00 · lance mínimo R$ 20,00</span></div>
+      <div class="type-row"><code>mono · sm 13</code><span class="mono" style="font-size:var(--fs-sm)">#0412 · (11) 98877-1020 · R$ 820,00</span></div>
+    </div>
+  </section>
+
+  <!-- BOTOES -->
+  <section class="ds-sec"><h2>Botões</h2>
+    <div class="row">
+      <button class="btn btn--primary">Agendar leilão</button>
+      <button class="btn btn--secondary">Cancelar</button>
+      <button class="btn btn--ghost">Ver detalhes</button>
+      <button class="btn btn--danger">Excluir</button>
+      <button class="btn btn--primary" disabled>Desabilitado</button>
+    </div>
+    <div class="row">
+      <button class="btn btn--primary btn--lg"><svg class="i"><use href="#i-plus"/></svg>Cadastrar carta</button>
+      <button class="btn btn--secondary btn--sm"><svg class="i"><use href="#i-copy"/></svg>Copiar link</button>
+      <button class="btn btn--secondary btn--icon" aria-label="Notificações"><svg class="i"><use href="#i-bell"/></svg></button>
+      <button class="btn btn--ghost btn--icon btn--sm" aria-label="Fechar"><svg class="i"><use href="#i-x"/></svg></button>
+      <a class="btn btn--primary btn--sm" href="#">Ir para o leilão <svg class="i"><use href="#i-external"/></svg></a>
+    </div>
+  </section>
+
+  <!-- BADGES -->
+  <section class="ds-sec"><h2>Badges e status</h2>
+    <div class="row">
+      <span class="badge">Disponível</span>
+      <span class="badge badge--primary">Consignada</span>
+      <span class="badge badge--success">Vendida</span>
+      <span class="badge badge--warning">Esperando confirmação</span>
+      <span class="badge badge--danger">Blacklist</span>
+      <span class="badge badge--info">Enquete</span>
+      <span class="badge badge--dashed">Própria</span>
+      <span class="badge badge--success badge--live">AO VIVO</span>
+      <span class="id-chip" title="Clique para copiar">#0412</span>
+    </div>
+    <div class="row">
+      <span class="status-chip status-chip--on" id="waChip">WhatsApp online</span>
+      <button class="btn btn--ghost btn--sm" data-wa-toggle>Simular queda do WhatsApp</button>
+    </div>
+  </section>
+
+  <!-- FORM -->
+  <section class="ds-sec"><h2>Formulário e navegação interna</h2>
+    <div class="two">
+      <div class="card"><div class="card__body stack">
+        <div class="field"><label class="label" for="f1">Nome da carta</label><input class="input" id="f1" placeholder="Busque pelo nome ou número"></div>
+        <div class="field"><label class="label" for="f2">Estado de conservação</label><select class="select" id="f2"><option>NM · Near Mint</option><option>SP · Slightly Played</option></select></div>
+        <div class="field"><label class="label" for="f3">CPF</label><input class="input" id="f3" value="123.456" aria-invalid="true"><span class="hint hint--error">CPF incompleto. Digite os 11 números.</span></div>
+        <div class="field"><label class="label" for="f4">Observações</label><textarea class="textarea" id="f4" placeholder="Ex.: leve marca na borda inferior"></textarea></div>
+      </div></div>
+      <div class="card"><div class="card__body stack" style="gap:20px">
+        <label class="switch"><input type="checkbox" checked><span class="switch__track"></span>Mostrar meus leilões na vitrine</label>
+        <label class="switch"><input type="checkbox"><span class="switch__track"></span>Resumo diário por e-mail</label>
+        <label class="check"><input type="checkbox" checked> Cadastrar Estoque</label>
+        <div class="stack" style="gap:6px"><span class="label">Tipo do leilão</span><div class="seg"><button class="is-active">Lance livre</button><button>Enquete</button></div></div>
+        <div class="stack" style="gap:6px"><span class="label">Origem</span><div class="seg"><button>Estoque próprio</button><button>Consignada</button></div></div>
+        <div class="tabs"><button class="tab is-active">Acertos pendentes</button><button class="tab">Histórico</button><button class="tab">Carteira</button></div>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- CARDS -->
+  <section class="ds-sec"><h2>KPIs e cards</h2>
+    <div class="grid grid--kpi">
+      <div class="card kpi frame"><div class="kpi__row"><span class="kpi__icon"><svg class="i"><use href="#i-bolt"/></svg></span><span class="badge badge--success badge--live">ao vivo</span></div><div><div class="kpi__value">6</div><div class="kpi__label">Leilões ativos agora</div></div></div>
+      <div class="card kpi frame"><div class="kpi__row"><span class="kpi__icon"><svg class="i"><use href="#i-clock"/></svg></span><span class="badge">próximo 14:30</span></div><div><div class="kpi__value">4</div><div class="kpi__label">Agendados para hoje</div></div></div>
+      <div class="card kpi frame"><div class="kpi__row"><span class="kpi__icon"><svg class="i"><use href="#i-message"/></svg></span><span class="badge badge--info">último há 8s</span></div><div><div class="kpi__value">128</div><div class="kpi__label">Lances nos leilões ativos</div></div></div>
+      <div class="card kpi frame"><div class="kpi__row"><span class="kpi__icon"><svg class="i"><use href="#i-wallet"/></svg></span><span class="badge badge--warning">9 pendentes</span></div><div><div class="kpi__value">9</div><div class="kpi__label">Acertos pendentes</div></div></div>
+    </div>
+    <div class="grid grid--cards">
+      <article class="card card--interactive auction">
+        <div class="auction__top"><span class="badge">Poké Card Hub</span><span class="badge badge--success badge--live">AO VIVO</span></div>
+        <div class="tcg"><div class="tcg__ph">[ foto real da carta ]</div></div>
+        <div><div class="auction__name">Charizard ex 199/165</div><div class="faint" style="font-size:var(--fs-xs)">151 · NM · EN</div></div>
+        <div class="auction__bid"><span class="faint" style="font-size:var(--fs-xs)">Maior lance</span><strong>R$ 820,00</strong><span class="mono faint" style="font-size:var(--fs-xs)">54 lances · último há 8s</span></div>
+        <div class="mono muted" style="font-size:var(--fs-xs)">Termina em 00:12:40</div>
+        <a class="btn btn--primary btn--block" href="#">Ir para o leilão <svg class="i"><use href="#i-external"/></svg></a>
+      </article>
+      <article class="card card--highlight auction">
+        <div class="auction__top"><span class="badge">Cards do Zé</span><span class="badge badge--info">Enquete</span></div>
+        <div class="tcg"><div class="tcg__ph">[ foto real da carta ]</div></div>
+        <div><div class="auction__name">Pikachu VMAX 044/185</div><div class="faint" style="font-size:var(--fs-xs)">Vivid Voltage · SP · PT</div></div>
+        <div class="auction__bid"><span class="faint" style="font-size:var(--fs-xs)">Maior lance</span><strong>R$ 465,00</strong><span class="mono faint" style="font-size:var(--fs-xs)">41 lances · último há 25s</span></div>
+        <button class="btn btn--secondary btn--block">Ver monitor</button>
+      </article>
+      <div class="card">
+        <div class="card__head"><span class="card__title">Uso do plano</span><span class="badge badge--primary">Loja</span></div>
+        <div class="card__body stack">
+          <div class="stack" style="gap:6px"><div class="row" style="justify-content:space-between"><span class="muted">Cartas no estoque</span><span class="mono">120 / 500</span></div><div class="progress"><span style="width:24%"></span></div></div>
+          <div class="stack" style="gap:6px"><div class="row" style="justify-content:space-between"><span class="muted">Equipe</span><span class="mono">3 / 5</span></div><div class="progress"><span style="width:60%"></span></div></div>
+        </div>
+        <div class="card__foot">Próxima cobrança em 05/11</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARTA HOLO -->
+  <section class="ds-sec"><h2>Carta com efeito holográfico</h2>
+    <p>Usada em todo lugar onde a carta aparece (vitrine, leilão, estoque). Passe o mouse: o brilho corre pela carta, o reflexo segue o ponteiro e ela inclina levemente. Troque o placeholder por <code class="mono">&lt;img class="tcg__art"&gt;</code>.</p>
+    <div class="row" style="gap:32px;align-items:flex-start">
+      <div class="stack" style="width:220px;gap:8px"><div class="tcg"><div class="tcg__ph">[ foto real da carta ]</div></div><span class="faint" style="font-size:var(--fs-xs)">.tcg · holofoil</span></div>
+      <div class="stack" style="width:220px;gap:8px"><div class="tcg tcg--reverse"><div class="tcg__ph">[ foto real da carta ]</div></div><span class="faint" style="font-size:var(--fs-xs)">.tcg.tcg--reverse</span></div>
+    </div>
+  </section>
+
+  <!-- DADOS -->
+  <section class="ds-sec"><h2>Tabela e gráficos</h2>
+    <div class="card"><div class="card__head"><span class="card__title">Fila de acertos rápidos</span><a href="#">Ver todos (9)</a></div>
+      <div class="table-wrap"><table class="table"><thead><tr><th>#ID</th><th>Carta</th><th>Vencedor</th><th style="text-align:right">Valor</th><th>Status</th><th></th></tr></thead><tbody>
+        <tr><td><span class="id-chip">#0377</span></td><td><span class="thumb"></span>Lugia V Alt Art</td><td>Rafael M.</td><td class="num">R$ 340,00</td><td><span class="badge badge--warning">Esperando</span></td><td><button class="btn btn--secondary btn--sm">Fechar acerto</button></td></tr>
+        <tr><td><span class="id-chip">#0366</span></td><td><span class="thumb"></span>Gardevoir ex</td><td>Bruno A.</td><td class="num">R$ 95,00</td><td><span class="badge badge--danger">Sem CPF</span></td><td><button class="btn btn--secondary btn--sm">Completar cadastro</button></td></tr>
+        <tr><td><span class="id-chip">#0301</span></td><td><span class="thumb"></span>Mew ex 151</td><td>Camila T.</td><td class="num">R$ 210,00</td><td><span class="badge badge--success">Vendida</span></td><td></td></tr>
+      </tbody></table></div></div>
+    <div class="two">
+      <div class="card"><div class="card__head"><span class="card__title">Faturamento por dia</span><div class="seg"><button>1D</button><button class="is-active">1W</button><button>1M</button></div></div>
+        <div class="card__body"><div class="bars" role="img" aria-label="Barras de faturamento por dia">
+          <span style="height:48%"></span><span style="height:62%"></span><span class="is-peak" style="height:94%"></span><span style="height:58%"></span><span style="height:70%"></span><span style="height:44%"></span><span style="height:66%"></span><span style="height:52%"></span><span style="height:78%"></span><span style="height:40%"></span><span style="height:60%"></span><span style="height:84%"></span>
+        </div></div><div class="card__foot">Dados de exemplo</div></div>
+      <div class="card"><div class="card__head"><span class="card__title">Vendas por origem</span></div>
+        <div class="card__body row" style="gap:24px;justify-content:center">
+          <div class="ring" style="--v:58"><div class="ring__in"><div><div class="mono" style="font-size:var(--fs-xl);font-weight:600">58%</div><div class="faint" style="font-size:var(--fs-xs)">própria</div></div></div></div>
+          <div class="stack" style="gap:8px"><span class="row" style="gap:8px"><i style="width:10px;height:10px;border-radius:3px;background:var(--success)"></i>Estoque próprio</span><span class="row" style="gap:8px"><i style="width:10px;height:10px;border-radius:3px;background:var(--surface-3)"></i>Consignadas</span></div>
+        </div></div>
+    </div>
+  </section>
+
+  <!-- FEEDBACK -->
+  <section class="ds-sec"><h2>Alertas, vazio e modal</h2>
+    <div class="alert alert--warning"><svg class="i"><use href="#i-alert"/></svg><div class="alert__body"><div class="alert__title">2 enquetes aguardando validação</div><span class="muted">O lance chegou ao valor máximo definido.</span></div><button class="btn btn--primary btn--sm">Revisar</button></div>
+    <div class="alert alert--danger"><svg class="i"><use href="#i-alert"/></svg><div class="alert__body"><div class="alert__title">WhatsApp desconectado</div><span class="muted">3 leilões ativos estão sem receber lances.</span></div><button class="btn btn--danger btn--sm">Reconectar agora</button></div>
+    <div class="alert alert--success"><svg class="i"><use href="#i-check"/></svg><div class="alert__body"><div class="alert__title">Carta cadastrada</div><span class="muted">#0471 Pikachu VMAX já está no estoque.</span></div></div>
+    <div class="alert alert--info"><svg class="i"><use href="#i-message"/></svg><div class="alert__body"><span>O pagamento é feito diretamente à loja.</span></div></div>
+    <div class="two">
+      <div class="card"><div class="empty"><div class="empty__art"><svg class="i" style="width:32px;height:32px"><use href="#i-box"/></svg></div><h3>Seu estoque ainda está vazio</h3><p class="muted" style="max-width:36ch">Cadastre a primeira carta para agendar um leilão.</p><button class="btn btn--primary"><svg class="i"><use href="#i-plus"/></svg>Cadastrar carta</button></div></div>
+      <div class="card"><div class="empty"><h3>Janela de confirmação</h3><p class="muted" style="max-width:36ch">Abra o modal para ver o padrão de diálogo.</p><button class="btn btn--secondary" data-open="demoModal">Abrir modal</button></div></div>
+    </div>
+  </section>
+
+  <!-- COMPOSICAO -->
+  <section class="ds-sec"><h2>Composição · Home</h2>
+    <p>Os componentes juntos: sidebar, topbar com status do WhatsApp, alerta, KPIs e fila de acertos.</p>
+    <div class="preview"><div class="scroll"><div class="app" style="min-width:860px">
+      <aside class="side">
+        <div class="brand"><span class="brand__mark"></span>Leilões TCG</div>
+        <div class="store-switch"><span class="avatar"></span><div>Poké Card Hub<small>Proprietário</small></div><svg class="i" style="margin-left:auto"><use href="#i-chevron"/></svg></div>
+        <nav class="nav" aria-label="Principal">
+          <a class="nav__item" href="#" aria-current="page"><svg class="i"><use href="#i-home"/></svg>Home</a>
+          <a class="nav__item" href="#"><svg class="i"><use href="#i-box"/></svg>Estoque</a>
+          <a class="nav__item" href="#"><svg class="i"><use href="#i-bolt"/></svg>Leilões</a>
+          <a class="nav__item" href="#"><svg class="i"><use href="#i-users"/></svg>Clientes</a>
+          <a class="nav__item" href="#"><svg class="i"><use href="#i-truck"/></svg>Envios</a>
+          <a class="nav__item" href="#"><svg class="i"><use href="#i-shield"/></svg>Funcionários</a>
+          <a class="nav__item" href="#"><svg class="i"><use href="#i-sliders"/></svg>Configurações</a>
+          <a class="nav__item" href="#"><svg class="i"><use href="#i-wallet"/></svg>Financeiro</a>
+        </nav>
+        <div class="side__foot"><span class="avatar"></span><span>igor@loja.com<br><span class="faint">Ver perfil</span></span></div>
+      </aside>
+      <div style="min-width:0">
+        <header class="topbar"><span class="topbar__title">Home</span><span class="status-chip status-chip--on">WhatsApp online</span><button class="btn btn--secondary btn--sm"><svg class="i"><use href="#i-bell"/></svg>3</button></header>
+        <div class="page">
+          <div class="alert alert--warning"><svg class="i"><use href="#i-alert"/></svg><div class="alert__body"><div class="alert__title">2 leilões de enquete aguardando validação</div><span class="muted">#0412 Charizard ex · #0431 Pikachu VMAX</span></div><button class="btn btn--primary btn--sm">Revisar e aprovar</button></div>
+          <div class="grid grid--kpi">
+            <div class="card kpi frame"><div class="kpi__row"><span class="kpi__icon"><svg class="i"><use href="#i-bolt"/></svg></span><span class="badge badge--success badge--live">ao vivo</span></div><div><div class="kpi__value">6</div><div class="kpi__label">Leilões ativos agora</div></div></div>
+            <div class="card kpi frame"><div class="kpi__row"><span class="kpi__icon"><svg class="i"><use href="#i-clock"/></svg></span></div><div><div class="kpi__value">4</div><div class="kpi__label">Agendados hoje</div></div></div>
+            <div class="card kpi frame"><div class="kpi__row"><span class="kpi__icon"><svg class="i"><use href="#i-message"/></svg></span></div><div><div class="kpi__value">128</div><div class="kpi__label">Lances nos ativos</div></div></div>
+            <div class="card kpi frame"><div class="kpi__row"><span class="kpi__icon"><svg class="i"><use href="#i-wallet"/></svg></span><span class="badge badge--warning">9</span></div><div><div class="kpi__value">9</div><div class="kpi__label">Acertos pendentes</div></div></div>
+          </div>
+          <div class="card"><div class="card__head"><span class="card__title">Fila de acertos rápidos</span><a href="#">Ver todos</a></div>
+            <div class="table-wrap"><table class="table"><thead><tr><th>#ID</th><th>Carta</th><th>Vencedor</th><th style="text-align:right">Valor</th><th></th></tr></thead><tbody>
+              <tr><td><span class="id-chip">#0377</span></td><td><span class="thumb"></span>Lugia V Alt Art</td><td>Rafael M.</td><td class="num">R$ 340,00</td><td><button class="btn btn--secondary btn--sm">Fechar acerto</button></td></tr>
+              <tr><td><span class="id-chip">#0381</span></td><td><span class="thumb"></span>Rayquaza VMAX</td><td>Rafael M.</td><td class="num">R$ 210,00</td><td><button class="btn btn--secondary btn--sm">Fechar acerto</button></td></tr>
+            </tbody></table></div></div>
+        </div>
+      </div>
+    </div></div></div>
+  </section>
+</div>
+
+<div class="overlay" id="demoModal" role="dialog" aria-modal="true" aria-label="Excluir carta">
+  <div class="card modal">
+    <div class="card__head"><span class="card__title">Excluir carta #0290?</span><button class="btn btn--ghost btn--icon btn--sm" data-close aria-label="Fechar"><svg class="i"><use href="#i-x"/></svg></button></div>
+    <div class="card__body stack"><p class="muted">A carta e o histórico de leilões dela serão removidos. Essa ação fica registrada no log de atividades.</p></div>
+    <div class="card__foot row" style="justify-content:flex-end"><button class="btn btn--secondary" data-close>Cancelar</button><button class="btn btn--danger" data-close>Excluir carta</button></div>
+  </div>
+</div>
+
+<script src="app.js"></script>
