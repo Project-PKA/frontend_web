@@ -36,7 +36,7 @@ inercia.
 | Tipo de aplicacao | Hibrido: SSG (landing, termos, privacidade) + SPA (app, /admin, paginas por token) | — | 1 |
 | Framework de UI | Vue 3 + Nuxt (estatico, `nuxi generate`) | ver `package.json` | 2 |
 | Linguagem | TypeScript estrito | ver `package.json` | 3 |
-| Runtime e gerenciador de pacotes | Node 22 + npm 10.9 | 22.14.0 | 3 |
+| Runtime e gerenciador de pacotes | Node 22 + npm 10.9 | 22.23.3 | 3 |
 | Build | Nuxt (Vite) | ver `package.json` | 3 |
 | Lint e formatacao | ESLint (+ a11y Vue, sonarjs) e Prettier | ver `package.json` | 4 |
 | Testes unitarios/componente | Vitest + Vue Testing Library | ver `package.json` | 5 |
@@ -131,7 +131,7 @@ o alvo `typecheck` (`TYPECHECK_CMD = skip`) e enfraquece o contrato de API da
 secao 7. E uma escolha legitima em prototipo; e cara em produto de longa
 duracao.
 
-**Escolha:** TypeScript em modo estrito; Node 22 (22.14.0 em `.tool-versions`);
+**Escolha:** TypeScript em modo estrito; Node 22 (22.23.3 em `.tool-versions`);
 npm 10.9 com `package-lock.json`; build do Nuxt (Vite).
 **Criterio:** o projeto pede Node 22; tipos gerados do OpenAPI exigem
 tipagem estatica; npm vem com o Node e funciona no Windows sem passo extra.
