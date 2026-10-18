@@ -1,0 +1,36 @@
+/* Styles of this project that the design system does not have. Tokens only, no color literals. */
+
+.skip-link {
+  position: absolute;
+  inset-inline-start: var(--sp-2);
+  inset-block-start: var(--sp-2);
+  z-index: 100;
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* The public header is 65px tall (64px plus its border); the design assumes 64px, which made
+   the login page scroll by 1px. */
+.center-page {
+  min-height: calc(100dvh - 65px);
+}

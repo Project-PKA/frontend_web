@@ -157,5 +157,17 @@
   },
   "language": {
     "label": "Idioma"
+  },
+  "brand": {
+    "name": "pokemonAuction"
+  },
+  "layout": {
+    "publicNav": "Navegação pública"
+  },
+  "theme": {
+    "label": "Tema",
+    "SYSTEM": "Sistema",
+    "DARK": "Escuro",
+    "LIGHT": "Claro"
   }
 }

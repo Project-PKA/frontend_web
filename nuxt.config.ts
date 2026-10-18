@@ -7,6 +7,10 @@ export default defineNuxtConfig({
     '@fontsource-variable/sora',
     '@fontsource-variable/dm-sans',
     '@fontsource-variable/jetbrains-mono',
+    '~/assets/css/tokens.css',
+    '~/assets/css/fonts.css',
+    '~/assets/css/components.css',
+    '~/assets/css/app.css',
   ],
   i18n: {
     locales: [

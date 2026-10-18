@@ -5,6 +5,8 @@ const props = defineProps<{ error: NuxtError }>();
 
 const { t } = useI18n();
 
+useAppHead();
+
 const data = computed(
   () =>
     (props.error.data ?? {}) as { reason?: 'admin' | 'owner' | 'permission'; permission?: string },
