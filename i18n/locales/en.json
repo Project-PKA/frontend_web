@@ -22,7 +22,8 @@
       "label": "6-digit code",
       "submit": "Sign in",
       "resend": "Send the code again",
-      "changeEmail": "Use another e-mail"
+      "changeEmail": "Use another e-mail",
+      "digit": "Digit {position} of {total}"
     }
   },
   "validation": {

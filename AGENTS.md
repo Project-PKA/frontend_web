@@ -119,6 +119,14 @@ vai em `app.css` (so tokens). `app/assets/css/design.test.ts` falha se uma copia
 divergir ou se aparecer cor literal (`#hex`, `rgb()`, `hsl()`) em `.css`, `<style>`
 ou `style=""` do projeto. Tema: `data-theme` no `<html>` (`SYSTEM` = sem atributo).
 
+**Componentes** — use `AppButton`, `AppBadge`, `AppCard`, `AppInput`, `AppSelect`,
+`AppTextarea` e `AppOtpInput` (`app/components/`) em vez de repetir as classes do design.
+Sao apresentacionais: recebem textos ja traduzidos por props e slots (nao chamam
+`useI18n` nem stores), e por isso sao testados com Testing Library. Campo de
+formulario liga rotulo, dica e erro por id (`fieldIds`) e marca `aria-invalid`.
+Botao so com icone exige `label`. O erro de campo vem do VeeValidate (chave de
+traducao, traduzida na pagina) ou do servidor (por `code`).
+
 **Acessibilidade** — semantica antes de ARIA, tudo por teclado, contraste AA,
 responsivo (desktop, tablet ate 1100px, mobile ate 640px), tema claro, escuro
 e sistema.

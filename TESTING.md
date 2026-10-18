@@ -66,7 +66,7 @@ esta no nivel errado.
 
 | Camada | Ferramenta | Arquivos | Comando |
 | --- | --- | --- | --- |
-| Unitario / componente | Vitest + Vue Testing Library (`@testing-library/vue`) | `*.test.ts` ao lado do codigo | `make test` |
+| Unitario / componente | Vitest + Vue Testing Library (`@testing-library/vue`, `@vitejs/plugin-vue` para compilar `.vue`) | `*.test.ts` ao lado do codigo; `vitest.setup.ts` limpa o DOM e registra um `NuxtLink` simples | `make test` |
 | E2E | Playwright (chromium no CI), API simulada por rota | `e2e/*.spec.ts` | `make e2e` |
 | Cobertura | Vitest (v8), `coverage/lcov.info` | — | `make test-coverage` |
 | A11y estatica | `eslint-plugin-vuejs-accessibility` | — | `make lint` |

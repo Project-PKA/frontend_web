@@ -7,6 +7,11 @@ const session = {
   user: { id: '7d1f6c39-7f43-4a1e-9f3a-2f1a1f5b7a10', email: 'igor@example.com', name: null },
 };
 
+async function typeCode(page: Page, code: string) {
+  await page.getByLabel('Digit 1 of 6').click();
+  await page.keyboard.type(code);
+}
+
 async function mockApi(page: Page, options: { loggedIn: boolean }) {
   await page.route('**/v1/auth/refresh', (route) =>
     options.loggedIn
@@ -33,7 +38,7 @@ async function mockApi(page: Page, options: { loggedIn: boolean }) {
 async function signIn(page: Page) {
   await page.getByLabel('E-mail').fill('igor@example.com');
   await page.getByRole('button', { name: 'Send code' }).click();
-  await page.getByLabel('6-digit code').fill('123456');
+  await typeCode(page, '123456');
   await page.getByRole('button', { name: 'Sign in' }).click();
 }
 
