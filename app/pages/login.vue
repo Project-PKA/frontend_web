@@ -9,6 +9,7 @@ const { t } = useI18n();
 const session = useSessionStore();
 const route = useRoute();
 const errorMessage = useErrorMessage();
+const toast = useToast();
 
 definePageMeta({ i18n: false, layout: 'public' });
 
@@ -100,8 +101,9 @@ const submitCode = codeForm.handleSubmit((values) =>
   }),
 );
 
-function resend() {
-  return run(() => session.requestOtp(email.value));
+async function resend() {
+  const sent = await run(() => session.requestOtp(email.value));
+  if (sent) toast.success(t('auth.code.resent', { email: email.value }));
 }
 
 onMounted(async () => {

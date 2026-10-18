@@ -34,3 +34,77 @@
 .center-page {
   min-height: calc(100dvh - 65px);
 }
+
+/* ---------- toasts (built on .alert; the design has no toast) ---------- */
+.toast-region {
+  position: fixed;
+  inset-block-end: var(--sp-4);
+  inset-inline-end: var(--sp-4);
+  z-index: 60;
+  display: grid;
+  gap: var(--sp-2);
+  width: min(380px, calc(100vw - 2 * var(--sp-4)));
+  pointer-events: none;
+}
+
+.toast-region > div {
+  display: grid;
+  gap: var(--sp-2);
+}
+
+.toast {
+  pointer-events: auto;
+  align-items: center;
+  box-shadow: var(--shadow-card);
+}
+
+/* .alert tints are translucent; a toast floats over content, so it needs a solid base. */
+.toast.alert--success {
+  background: linear-gradient(var(--success-soft), var(--success-soft)), var(--surface);
+}
+
+.toast.alert--info {
+  background: linear-gradient(var(--info-soft), var(--info-soft)), var(--surface);
+}
+
+.toast.alert--warning {
+  background: linear-gradient(var(--warning-soft), var(--warning-soft)), var(--surface);
+}
+
+.toast.alert--danger {
+  background: linear-gradient(var(--danger-soft), var(--danger-soft)), var(--surface);
+}
+
+/* ---------- modal on the native <dialog> ---------- */
+.modal-dialog {
+  width: min(520px, calc(100vw - 2 * var(--sp-4)));
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  overflow: visible;
+}
+
+.modal-dialog::backdrop {
+  background: var(--overlay);
+  backdrop-filter: blur(4px);
+}
+
+/* The page behind a modal does not scroll. */
+body:has(dialog[open]) {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-dialog::backdrop {
+    backdrop-filter: none;
+  }
+}
+
+/* The design's tab overlaps the line below it by 1px (margin-bottom: -1px), which made the
+   scroll container show a vertical scrollbar. */
+.tabs {
+  overflow-y: hidden;
+}

@@ -9,4 +9,5 @@ useAppHead();
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>
+  <AppToastRegion />
 </template>
