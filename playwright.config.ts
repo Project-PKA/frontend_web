@@ -12,8 +12,10 @@ export default defineConfig({
   webServer: process.env.E2E_BASE_URL
     ? undefined
     : {
-        command: 'npm run preview -- --port 4173 --strictPort',
+        // The CI e2e job does not build first, so the server command builds the static site.
+        command: 'npm run generate && npm run preview -- --port 4173 --strictPort',
         url: baseURL,
+        timeout: 180_000,
         reuseExistingServer: !process.env.CI,
       },
 });

@@ -1,7 +1,10 @@
 <script setup lang="ts">
 const { t } = useI18n();
 
-useHead({ title: () => t('landing.title') });
+useHead({
+  title: () => t('landing.title'),
+  meta: [{ name: 'description', content: () => t('landing.description') }],
+});
 </script>
 
 <template>

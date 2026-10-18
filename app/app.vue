@@ -7,8 +7,12 @@ useHead({
     lang: () => localeHead.value.htmlAttrs?.lang,
     dir: () => localeHead.value.htmlAttrs?.dir,
   },
-  link: () => localeHead.value.link ?? [],
-  meta: () => localeHead.value.meta ?? [],
+  // Canonical and hreflang must be absolute URLs: skip them when SITE_URL was not set at build time.
+  link: () => (localeHead.value.link ?? []).filter((link) => /^https?:\/\//.test(link.href ?? '')),
+  meta: () =>
+    (localeHead.value.meta ?? []).filter(
+      (meta) => !(typeof meta.content === 'string' && meta.content.startsWith('/')),
+    ),
 });
 </script>
 
