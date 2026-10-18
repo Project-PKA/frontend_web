@@ -7,7 +7,7 @@
         "http://localhost/pt-BR/index.html",
         "http://localhost/login/"
       ],
-      "numberOfRuns": 1
+      "numberOfRuns": 3
     },
     "assert": {
       "assertMatrix": [

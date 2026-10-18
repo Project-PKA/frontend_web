@@ -237,5 +237,29 @@
     "changeStore": "Loja {store}, {role}. Trocar de loja",
     "viewProfile": "Ver perfil",
     "profileOf": "Perfil de {email}"
+  },
+  "invite": {
+    "title": "Você foi convidado(a)",
+    "loading": "Conferindo o seu convite",
+    "introStore": "{email} foi convidado(a) para fazer parte da loja {store} como {role}.",
+    "introPlatform": "{email} foi convidado(a) para o {product}.",
+    "permissions": "Suas permissões",
+    "yes": "Sim",
+    "no": "Não",
+    "ownerAccess": "Como proprietário(a) da loja, você tem acesso total a ela.",
+    "validUntil": "Este convite vale até {date}.",
+    "hint": "Você entra com um código enviado ao seu e-mail, sem senha.",
+    "accept": "Aceitar convite e entrar",
+    "decline": "Recusar convite",
+    "invalid": {
+      "title": "Este convite não está disponível",
+      "text": "O link é inválido ou expirou. Peça a quem convidou para enviar um novo.",
+      "signIn": "Entrar"
+    },
+    "failed": {
+      "title": "Não foi possível conferir este convite",
+      "text": "Verifique a sua conexão e tente de novo.",
+      "retry": "Tentar de novo"
+    }
   }
 }
