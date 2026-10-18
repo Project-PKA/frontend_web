@@ -15,6 +15,9 @@ export default defineNuxtConfig({
     ],
     defaultLocale: 'en',
     strategy: 'prefix_except_default',
+    // Only the public pages (landing, terms, privacy) have /pt-BR URLs. App pages opt out
+    // with definePageMeta({ i18n: false }) and get their language from the person.
+    customRoutes: 'meta',
     detectBrowserLanguage: false,
     // Absolute origin for canonical and hreflang links; set at build time per environment.
     baseUrl: process.env.SITE_URL ?? '',
@@ -28,10 +31,7 @@ export default defineNuxtConfig({
   // The logged-in app is a client-only SPA (STACK.md section 1).
   routeRules: {
     '/login': { ssr: false },
-    // Temporary: the app routes get no language prefix once #13 lands.
-    '/pt-BR/login': { ssr: false },
     '/stores/**': { ssr: false },
-    '/pt-BR/stores/**': { ssr: false },
   },
   nitro: {
     prerender: { routes: ['/', '/pt-BR'] },

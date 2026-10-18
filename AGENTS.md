@@ -80,7 +80,8 @@ mostre o `detail`** (vem em portugues do Backend). Todo `code` do contrato
 precisa de traducao em `en` e `pt-BR`.
 
 **Localizacao** — `en` e `pt-BR`; idioma inicial pelo navegador, troca manual,
-preferencia em `GET/PATCH /v1/me/preferences`. Data, hora, numero e moeda com
+preferencia em `GET/PATCH /v1/me/preferences` (store `preferences`). Formate com
+`useFormat()` (dinheiro como string, fuso do perfil), nunca montando texto a mao. Data, hora, numero e moeda com
 `Intl` na localidade ativa. URLs sempre em ingles.
 
 **Dinheiro e datas** — dinheiro chega como string decimal (`"25.50"`): nunca
@@ -204,9 +205,8 @@ Pare e pergunte antes de:
   rota em `routeRules` com `ssr: false`; sem isso o prerender a renderiza sem
   sessao. O botao "Pedir acesso ao proprietario" do design nao existe: a API
   nao tem o endpoint (Backend#94).
-- Rotas `ssr: false` (`routeRules`) tambem precisam existir para `/pt-BR/...`
-  enquanto o prefixo de idioma nao sair das rotas do app (#13); senao o
-  prerender as renderiza e segue links para paginas que ainda nao existem.
+- Pagina do app (sem idioma na URL) declara `definePageMeta({ i18n: false })`; sem isso o
+  modulo cria tambem `/pt-BR/...` e o prerender renderiza essa copia.
 - `shared/openapi.yaml` e um stub de 78 linhas. O contrato real e o do Backend.
 - O Backend envia o link de convite como `/convite#token=...`. O frontend usa
   `/invite` e mantem `/convite` como redirecionamento ate o Backend mudar

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ access: { level: 'session' } });
+definePageMeta({ i18n: false, access: { level: 'session' } });
 
 const { t } = useI18n();
 useHead({ title: () => t('stores.title'), meta: [{ name: 'robots', content: 'noindex' }] });
