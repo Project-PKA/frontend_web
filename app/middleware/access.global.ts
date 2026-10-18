@@ -5,6 +5,8 @@ declare module '#app' {
   interface PageMeta {
     /** What the page needs; a page without it is public. See `AccessRule`. */
     access?: import('../utils/access').AccessRule;
+    /** Translation key of the page title: the layout shows it as the heading of the page. */
+    titleKey?: string;
   }
 }
 

@@ -127,6 +127,16 @@ formulario liga rotulo, dica e erro por id (`fieldIds`) e marca `aria-invalid`.
 Botao so com icone exige `label`. O erro de campo vem do VeeValidate (chave de
 traducao, traduzida na pagina) ou do servidor (por `code`).
 
+**Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
+`definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
+layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).
+O menu vem de `NAV_ITEMS` (`app/utils/navigation.ts`) com a mesma regra de acesso da
+pagina; item novo de menu = item novo la, e a rota precisa de `ssr: false` no
+`nuxt.config.ts`. Menu: desktop completo, tablet (901 a 1100px) em trilho so com icones
+(por isso todo link tem `aria-label`), celular (ate 900px) em gaveta com `aria-expanded`,
+foco no primeiro item, Esc, clique fora e `inert` no resto. Erros (404, 403) aparecem
+dentro do shell para quem esta numa loja.
+
 **Dados e feedback** — lista de tela: `useCursorList` (`app/utils/cursor-list.ts`, sobre o
 TanStack Query; junta as paginas por `next_cursor`) com `AppDataState` para os estados de
 carregando, vazio e erro, e `AppTable` (legenda obrigatoria, `data-label` para o layout

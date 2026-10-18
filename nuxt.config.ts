@@ -36,6 +36,7 @@ export default defineNuxtConfig({
   routeRules: {
     '/login': { ssr: false },
     '/stores/**': { ssr: false },
+    '/home': { ssr: false },
   },
   nitro: {
     prerender: { routes: ['/', '/pt-BR'] },

@@ -175,5 +175,32 @@
   "toast": {
     "region": "Notifications",
     "close": "Dismiss"
+  },
+  "nav": {
+    "home": "Home",
+    "inventory": "Inventory",
+    "auctions": "Auctions",
+    "customers": "Customers",
+    "shipments": "Shipments",
+    "team": "Team",
+    "settings": "Settings",
+    "finance": "Finance"
+  },
+  "role": {
+    "OWNER": "Owner",
+    "STAFF": "Staff"
+  },
+  "whatsapp": {
+    "ONLINE": "WhatsApp online",
+    "OFFLINE": "WhatsApp offline",
+    "QR_READY": "WhatsApp: scan the QR code"
+  },
+  "shell": {
+    "mainNav": "Main",
+    "openMenu": "Open the menu",
+    "notifications": "Notifications",
+    "changeStore": "Store {store}, {role}. Change store",
+    "viewProfile": "View profile",
+    "profileOf": "Profile of {email}"
   }
 }

@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { THEMES, type Theme } from '../utils/theme';
 
+defineProps<{
+  /** For the top bar: the label is only for screen readers. */
+  compact?: boolean;
+}>();
+
 const { t } = useI18n();
 const preferences = usePreferencesStore();
 const errorMessage = useErrorMessage();
@@ -19,7 +24,9 @@ async function choose(theme: Theme) {
 
 <template>
   <div class="field theme-seg">
-    <span id="theme-label" class="label">{{ t('theme.label') }}</span>
+    <span id="theme-label" :class="compact ? 'visually-hidden' : 'label'">{{
+      t('theme.label')
+    }}</span>
     <div class="seg" role="group" aria-labelledby="theme-label">
       <button
         v-for="theme in THEMES"
