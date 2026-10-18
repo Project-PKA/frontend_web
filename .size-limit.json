@@ -1,0 +1,14 @@
+[
+  {
+    "name": "JavaScript (gzip)",
+    "path": ".output/public/_nuxt/*.js",
+    "gzip": true,
+    "limit": "130 kB"
+  },
+  {
+    "name": "CSS (gzip)",
+    "path": ".output/public/_nuxt/*.css",
+    "gzip": true,
+    "limit": "20 kB"
+  }
+]

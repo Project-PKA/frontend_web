@@ -1,0 +1,103 @@
+import { ApiError, type ProblemBody } from './errors';
+
+export interface ApiClientOptions {
+  baseUrl: string;
+  /** Access token lives in memory only (Pinia session store). */
+  getAccessToken: () => string | null;
+  getStoreId: () => string | null;
+  /** Refreshes the session once after a 401. Resolves to true when it worked. */
+  refreshSession: () => Promise<boolean>;
+  timeoutMs?: number;
+  fetchImpl?: typeof fetch;
+}
+
+export interface RequestOptions {
+  method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+  body?: unknown;
+  query?: Record<string, string | number | boolean | undefined>;
+  /** Sends the refresh cookie. Needed only for the auth endpoints. */
+  withCredentials?: boolean;
+  /** Skips the bearer token and the store header (public pages). */
+  anonymous?: boolean;
+  signal?: AbortSignal;
+}
+
+const DEFAULT_TIMEOUT_MS = 15_000;
+
+export function createApiClient(options: ApiClientOptions) {
+  const doFetch = options.fetchImpl ?? fetch;
+
+  function buildUrl(path: string, query: RequestOptions['query']): string {
+    const url = new URL(path, options.baseUrl);
+    for (const [key, value] of Object.entries(query ?? {})) {
+      if (value !== undefined) url.searchParams.set(key, String(value));
+    }
+    return url.toString();
+  }
+
+  async function send(path: string, request: RequestOptions): Promise<Response> {
+    const headers = new Headers({ Accept: 'application/json, application/problem+json' });
+    if (request.body !== undefined) headers.set('Content-Type', 'application/json');
+    if (!request.anonymous) {
+      const token = options.getAccessToken();
+      const storeId = options.getStoreId();
+      if (token) headers.set('Authorization', `Bearer ${token}`);
+      if (storeId) headers.set('x-store-id', storeId);
+    }
+
+    const timeout = AbortSignal.timeout(options.timeoutMs ?? DEFAULT_TIMEOUT_MS);
+    const signal = request.signal ? AbortSignal.any([request.signal, timeout]) : timeout;
+
+    try {
+      return await doFetch(buildUrl(path, request.query), {
+        method: request.method ?? 'GET',
+        headers,
+        body: request.body === undefined ? undefined : JSON.stringify(request.body),
+        credentials: request.withCredentials ? 'include' : 'same-origin',
+        referrerPolicy: 'no-referrer',
+        signal,
+      });
+    } catch (cause) {
+      if (timeout.aborted) throw new ApiError('timeout', { cause });
+      if (request.signal?.aborted) throw new ApiError('aborted', { cause });
+      throw new ApiError('network', { cause });
+    }
+  }
+
+  async function readProblem(response: Response): Promise<ProblemBody | null> {
+    try {
+      return (await response.json()) as ProblemBody;
+    } catch {
+      return null;
+    }
+  }
+
+  async function toError(response: Response): Promise<ApiError> {
+    const problem = await readProblem(response);
+    return new ApiError('http', {
+      status: response.status,
+      code: typeof problem?.code === 'string' ? problem.code : undefined,
+    });
+  }
+
+  async function request<T>(path: string, requestOptions: RequestOptions = {}): Promise<T> {
+    let response = await send(path, requestOptions);
+
+    if (response.status === 401 && !requestOptions.anonymous && (await options.refreshSession())) {
+      response = await send(path, requestOptions);
+    }
+
+    if (!response.ok) throw await toError(response);
+    if (response.status === 204) return undefined as T;
+
+    try {
+      return (await response.json()) as T;
+    } catch (cause) {
+      throw new ApiError('parse', { status: response.status, cause });
+    }
+  }
+
+  return { request };
+}
+
+export type ApiClient = ReturnType<typeof createApiClient>;
