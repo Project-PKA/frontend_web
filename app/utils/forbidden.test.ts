@@ -16,4 +16,11 @@ describe('forbiddenAction', () => {
     expect(forbiddenAction(forbidden('FORBIDDEN'))).toBe('reselect-store');
     expect(forbiddenAction(forbidden())).toBe('reselect-store');
   });
+
+  it.each(['CANNOT_CREATE_STORES', 'SOMETHING_NEW'])(
+    'leaves a rule of one action (%s) to the screen that asked',
+    (code) => {
+      expect(forbiddenAction(forbidden(code))).toBe('none');
+    },
+  );
 });

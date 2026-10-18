@@ -76,7 +76,7 @@ test('uses the theme saved in the profile of a person with a session', async ({ 
 
   await page.goto('/stores');
 
-  await expect(page.getByRole('heading', { name: 'Your stores' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Choose a store' })).toBeVisible();
   await expect(root(page)).toHaveAttribute('data-theme', 'dark');
 });
 

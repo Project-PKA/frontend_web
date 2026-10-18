@@ -134,3 +134,55 @@ body:has(dialog[open]) {
   flex-wrap: nowrap;
   gap: var(--sp-2);
 }
+
+/* ---------- store selection ---------- */
+.store-picker {
+  align-items: center;
+  gap: var(--sp-2);
+  width: 100%;
+}
+
+.store-picker__title {
+  font-size: var(--fs-2xl);
+}
+
+.store-picker__actions {
+  justify-content: flex-end;
+}
+
+.store-card__top {
+  justify-content: space-between;
+}
+
+.store-card__name {
+  font: 600 var(--fs-lg) / 1.2 var(--font-display);
+}
+
+.store-card__status {
+  font-size: var(--fs-xs);
+}
+
+/* A card that is not in the middle is dimmed; reaching it with the pointer or the keyboard lights it. */
+.store-card:hover,
+.store-card:focus-visible {
+  opacity: 1;
+}
+
+.store-deck__prev {
+  transform: rotate(90deg);
+}
+
+.store-deck__next {
+  transform: rotate(-90deg);
+}
+
+/* The deck is wider than the screen (it scrolls inside itself): the page must not grow with it. */
+.center-page {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.store-picker,
+.store-deck {
+  min-width: 0;
+  max-width: 100%;
+}
