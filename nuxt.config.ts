@@ -30,6 +30,8 @@ export default defineNuxtConfig({
     '/login': { ssr: false },
     // Temporary: the app routes get no language prefix once #13 lands.
     '/pt-BR/login': { ssr: false },
+    '/stores/**': { ssr: false },
+    '/pt-BR/stores/**': { ssr: false },
   },
   nitro: {
     prerender: { routes: ['/', '/pt-BR'] },

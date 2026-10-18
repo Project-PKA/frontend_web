@@ -200,6 +200,10 @@ Pare e pergunte antes de:
 - `vee-validate` 4.15 nao aceita Zod 4 (o `@vee-validate/zod` e para Zod 3).
   `app/utils/zod-schema.ts` e o adaptador proprio; mensagens dos schemas sao
   chaves de traducao.
+- Pagina nova protegida: declare `definePageMeta({ access: ... })` **e** inclua a
+  rota em `routeRules` com `ssr: false`; sem isso o prerender a renderiza sem
+  sessao. O botao "Pedir acesso ao proprietario" do design nao existe: a API
+  nao tem o endpoint (Backend#94).
 - Rotas `ssr: false` (`routeRules`) tambem precisam existir para `/pt-BR/...`
   enquanto o prefixo de idioma nao sair das rotas do app (#13); senao o
   prerender as renderiza e segue links para paginas que ainda nao existem.

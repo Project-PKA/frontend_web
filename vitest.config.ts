@@ -16,6 +16,9 @@ export default defineConfig({
         'app/pages/**',
         'app/composables/**',
         'app/plugins/**',
+        'app/middleware/**',
+        'app/error.vue',
+        'app/api/instance.ts',
       ],
       thresholds: {
         lines: 70,

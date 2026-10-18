@@ -7,6 +7,8 @@ export interface ApiClientOptions {
   getStoreId: () => string | null;
   /** Refreshes the session once after a 401. Resolves to true when it worked. */
   refreshSession: () => Promise<boolean>;
+  /** Called for every 403 before the error is thrown, e.g. to show the no-permission state. */
+  onForbidden?: (error: ApiError, path: string) => void;
   timeoutMs?: number;
   fetchImpl?: typeof fetch;
 }
@@ -87,7 +89,11 @@ export function createApiClient(options: ApiClientOptions) {
       response = await send(path, requestOptions);
     }
 
-    if (!response.ok) throw await toError(response);
+    if (!response.ok) {
+      const error = await toError(response);
+      if (error.status === 403) options.onForbidden?.(error, path);
+      throw error;
+    }
     if (response.status === 204) return undefined as T;
 
     try {

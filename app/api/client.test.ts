@@ -161,6 +161,43 @@ describe('api client', () => {
     expect(error).toMatchObject({ kind: 'timeout' });
   });
 
+  it('tells the app about a 403 before throwing it', async () => {
+    const fetchImpl = vi
+      .fn()
+      .mockImplementation(() => Promise.resolve(jsonResponse({ code: 'MISSING_PERMISSION' }, 403)));
+    const onForbidden = vi.fn();
+    const client = createApiClient({
+      baseUrl: 'https://api.example.com',
+      getAccessToken: () => 'access-token',
+      getStoreId: () => 'store-1',
+      refreshSession: () => Promise.resolve(false),
+      onForbidden,
+      fetchImpl,
+    });
+
+    const error = await client.request('/v1/finance/summary').catch((caught: unknown) => caught);
+
+    expect(onForbidden).toHaveBeenCalledWith(error, '/v1/finance/summary');
+    expect(error).toMatchObject({ status: 403, code: 'MISSING_PERMISSION' });
+  });
+
+  it('does not call onForbidden for other errors', async () => {
+    const fetchImpl = vi.fn().mockImplementation(() => Promise.resolve(jsonResponse({}, 404)));
+    const onForbidden = vi.fn();
+    const client = createApiClient({
+      baseUrl: 'https://api.example.com',
+      getAccessToken: () => null,
+      getStoreId: () => null,
+      refreshSession: () => Promise.resolve(false),
+      onForbidden,
+      fetchImpl,
+    });
+
+    await client.request('/v1/cards/1').catch(() => undefined);
+
+    expect(onForbidden).not.toHaveBeenCalled();
+  });
+
   it('reports a network failure', async () => {
     const fetchImpl = vi.fn().mockRejectedValue(new TypeError('offline'));
     const error = await makeClient(fetchImpl)
