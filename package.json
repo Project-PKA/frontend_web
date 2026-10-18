@@ -11,7 +11,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
-    "preview": "vite preview --outDir .output/public",
+    "preview": "node scripts/serve-static.mjs .output/public",
     "postinstall": "nuxt prepare",
     "typecheck": "nuxt typecheck"
   },

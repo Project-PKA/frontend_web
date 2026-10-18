@@ -11,6 +11,8 @@ export default withNuxt(
   { ignores: ['design/**', 'app/api/generated.ts', 'coverage/**', '.output/**'] },
   ...vuejsAccessibility.configs['flat/recommended'],
   sonarjs.configs.recommended,
+  // Prettier writes void elements as <input />, which the Vue style rule would flag.
+  { files: ['**/*.vue'], rules: { 'vue/html-self-closing': ['warn', { html: { void: 'any' } }] } },
   {
     files: ['**/*.{ts,vue,mjs}'],
     ignores: ['app/api/**', 'e2e/**'],

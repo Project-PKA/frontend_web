@@ -192,10 +192,17 @@ Pare e pergunte antes de:
   corrigir ou se migrarmos para o npm 11.
 - `typescript` fica em `~5.9`: o TypeScript 7 nao e suportado pelo `vue-tsc`
   nem pelo `openapi-typescript` (peer `^5`).
-- `nuxt preview` nao serve o build estatico (`.output/server` nao existe). O
-  `preview` usa `vite preview --outDir .output/public`, que nao resolve
-  `/pt-BR` sem barra final: no e2e use `/pt-BR/`. O proxy reverso precisa de
-  `try_files $uri $uri/index.html` e do fallback da SPA.
+- `nuxt preview` nao serve o build estatico (`.output/server` nao existe) e o
+  `vite preview` devolve a landing para `/login`. O `preview` usa
+  `scripts/serve-static.mjs`, que imita o proxy: arquivo, `<caminho>/index.html`,
+  depois o fallback `200.html`. O proxy de producao precisa da mesma regra
+  (`try_files $uri $uri/index.html /200.html`).
+- `vee-validate` 4.15 nao aceita Zod 4 (o `@vee-validate/zod` e para Zod 3).
+  `app/utils/zod-schema.ts` e o adaptador proprio; mensagens dos schemas sao
+  chaves de traducao.
+- Rotas `ssr: false` (`routeRules`) tambem precisam existir para `/pt-BR/...`
+  enquanto o prefixo de idioma nao sair das rotas do app (#13); senao o
+  prerender as renderiza e segue links para paginas que ainda nao existem.
 - `shared/openapi.yaml` e um stub de 78 linhas. O contrato real e o do Backend.
 - O Backend envia o link de convite como `/convite#token=...`. O frontend usa
   `/invite` e mantem `/convite` como redirecionamento ate o Backend mudar
