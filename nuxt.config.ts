@@ -34,6 +34,8 @@ export default defineNuxtConfig({
   },
   // The logged-in app is a client-only SPA (STACK.md section 1).
   routeRules: {
+    '/invite': { ssr: false },
+    '/convite': { ssr: false },
     '/stores/**': { ssr: false },
     '/home': { ssr: false },
   },

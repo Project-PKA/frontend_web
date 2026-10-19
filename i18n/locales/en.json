@@ -237,5 +237,29 @@
     "changeStore": "Store {store}, {role}. Change store",
     "viewProfile": "View profile",
     "profileOf": "Profile of {email}"
+  },
+  "invite": {
+    "title": "You were invited",
+    "loading": "Checking your invitation",
+    "introStore": "{email} was invited to join the store {store} as {role}.",
+    "introPlatform": "{email} was invited to {product}.",
+    "permissions": "Your permissions",
+    "yes": "Yes",
+    "no": "No",
+    "ownerAccess": "As the store owner you have full access to it.",
+    "validUntil": "This invitation is valid until {date}.",
+    "hint": "You sign in with a code sent to your e-mail, with no password.",
+    "accept": "Accept invitation and sign in",
+    "decline": "Decline invitation",
+    "invalid": {
+      "title": "This invitation is not available",
+      "text": "The link is invalid or has expired. Ask the person who invited you to send a new one.",
+      "signIn": "Sign in"
+    },
+    "failed": {
+      "title": "Could not check this invitation",
+      "text": "Check your connection and try again.",
+      "retry": "Try again"
+    }
   }
 }

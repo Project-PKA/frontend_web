@@ -38,6 +38,16 @@ function setup(api: AuthApi) {
 describe('session store', () => {
   beforeEach(() => setActivePinia(createPinia()));
 
+  it('keeps a hint for the login page and gives it out once', () => {
+    const session = setup(fakeApi());
+    expect(session.takeLoginHint()).toBeNull();
+
+    session.setLoginHint('igor@example.com', true);
+
+    expect(session.takeLoginHint()).toEqual({ email: 'igor@example.com', codeSent: true });
+    expect(session.takeLoginHint()).toBeNull();
+  });
+
   it('starts without a session', () => {
     const session = setup(fakeApi());
     expect(session.status).toBe('unknown');

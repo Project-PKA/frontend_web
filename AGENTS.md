@@ -127,6 +127,14 @@ formulario liga rotulo, dica e erro por id (`fieldIds`) e marca `aria-invalid`.
 Botao so com icone exige `label`. O erro de campo vem do VeeValidate (chave de
 traducao, traduzida na pagina) ou do servidor (por `code`).
 
+**Convite** — `/invite#token=...` le o token do fragmento com `tokenFromFragment`
+(`app/utils/fragment-token.ts`, o mesmo para as paginas publicas por token) e o envia no
+corpo do POST, sem sessao (`anonymous: true`). Token ausente, invalido, expirado ou
+revogado mostram a mesma mensagem generica (a API responde o mesmo 404). Aceitar pede o
+codigo de login e leva a `/login` ja no passo do codigo: o e-mail viaja na memoria
+(`session.setLoginHint`), nunca na URL. `/convite` (link antigo do e-mail do Backend)
+redireciona para `/invite` mantendo o fragmento ate o Backend#89 sair.
+
 **Lojas** — `/stores` (carrossel `StoreDeck` e `StoreCard`) e `/stores/new` usam o layout
 `public` (com "Sair" para quem esta logado). Clique do ponteiro num cartao fora do meio
 so o traz para o meio (como no design); Enter escolhe na hora. Escolher chama
@@ -277,8 +285,12 @@ Pare e pergunte antes de:
 - O `happy-dom` do Vitest nao prende o foco nem trata Esc no `<dialog>` (isso e do
   navegador): os testes de unidade cobrem so a nossa ligacao; foco preso e Esc foram
   conferidos no Chromium e entram no e2e na primeira tela que usar `AppModal`.
-- O `lighthouserc.json` mede a landing (SSR) e o `/login` (SPA). O `/login` nao entra no
-  SEO (tem `noindex`) e tem teto de LCP maior (3,5 s): o shell so pinta depois do JS.
+- O `lighthouserc.json` mede a landing e o `/login` (3 execucoes, vale a mediana: uma so
+  oscilava acima do teto). O `/login` nao entra no SEO (tem `noindex`) e tem teto de LCP
+  maior (3,5 s). Ele e pre-renderizado (o titulo e o formulario pintam do HTML; como
+  SPA o LCP passava de 3,3 s) e a pagina so liga o comportamento no `onMounted`, entao a
+  hidratacao e segura. Pagina pre-renderizada que linka para rota que ainda nao existe
+  quebra o build: liste-a em `nitro.prerender.ignore`.
   A URL do Lighthouse precisa ser a rota (`/login/`), nao o arquivo (`/login/index.html`):
   este ultimo cai no 404 do app.
 - `error.vue` substitui o app inteiro: precisa chamar `useAppHead()` (senao o `<html>` fica

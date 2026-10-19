@@ -20,6 +20,23 @@ export function defineSessionStore(getAuthApi: () => AuthApi, id = 'session') {
 
     let inflightRefresh: Promise<boolean> | null = null;
 
+    /**
+     * Where the login page starts: the e-mail to fill in, and whether a code was already sent
+     * (after accepting an invitation). Memory only: an e-mail must not travel in a URL.
+     */
+    const loginHint = ref<{ email: string; codeSent: boolean } | null>(null);
+
+    function setLoginHint(email: string, codeSent: boolean) {
+      loginHint.value = { email, codeSent };
+    }
+
+    /** The hint is used once. */
+    function takeLoginHint() {
+      const hint = loginHint.value;
+      loginHint.value = null;
+      return hint;
+    }
+
     function apply(payload: SessionPayload) {
       accessToken.value = payload.access_token;
       user.value = payload.user;
@@ -86,6 +103,9 @@ export function defineSessionStore(getAuthApi: () => AuthApi, id = 'session') {
       refresh,
       restore,
       logout,
+      loginHint,
+      setLoginHint,
+      takeLoginHint,
     };
   });
 }

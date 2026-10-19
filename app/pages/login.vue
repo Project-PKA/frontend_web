@@ -109,6 +109,12 @@ async function resend() {
 }
 
 onMounted(async () => {
+  const hint = session.takeLoginHint();
+  if (hint) {
+    emailField.value = hint.email;
+    email.value = hint.email;
+    if (hint.codeSent) await goTo('code');
+  }
   await session.restore();
   if (session.isAuthenticated) await navigateTo(afterLoginPath.value);
 });
