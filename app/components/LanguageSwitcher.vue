@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { LANGUAGES, isLanguage, type Language } from '../utils/language';
+import AppSelect from './AppSelect.vue';
 
 const NAMES: Record<Language, string> = { en: 'English', 'pt-BR': 'Português (Brasil)' };
 
@@ -9,8 +10,7 @@ const errorMessage = useErrorMessage();
 
 const failure = ref<string | null>(null);
 
-async function change(event: Event) {
-  const value = (event.target as HTMLSelectElement).value;
+async function change(value: string) {
   if (!isLanguage(value)) return;
   failure.value = null;
   try {
@@ -22,15 +22,14 @@ async function change(event: Event) {
 </script>
 
 <template>
-  <div class="field">
-    <label class="label" for="language">
-      <span>{{ t('language.label') }}</span>
-      <select id="language" class="select" :value="preferences.language" @change="change">
-        <option v-for="code in LANGUAGES" :key="code" :value="code" :lang="code">
-          {{ NAMES[code] }}
-        </option>
-      </select>
-    </label>
-    <p v-if="failure" role="alert" class="hint hint--error">{{ failure }}</p>
-  </div>
+  <AppSelect
+    :model-value="preferences.language"
+    :label="t('language.label')"
+    :error="failure"
+    @update:model-value="change"
+  >
+    <option v-for="code in LANGUAGES" :key="code" :value="code" :lang="code">
+      {{ NAMES[code] }}
+    </option>
+  </AppSelect>
 </template>

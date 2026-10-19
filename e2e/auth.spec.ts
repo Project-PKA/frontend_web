@@ -15,6 +15,11 @@ function problem(status: number, code: string) {
   };
 }
 
+async function typeCode(page: Page, code: string) {
+  await page.getByLabel('Digit 1 of 6').click();
+  await page.keyboard.type(code);
+}
+
 async function mockAuth(
   page: Page,
   routes: { refresh?: Parameters<Page['route']>[1]; verify?: Parameters<Page['route']>[1] } = {},
@@ -36,14 +41,14 @@ async function requestCode(page: Page) {
   await page.goto('/login');
   await page.getByLabel('E-mail').fill('igor@example.com');
   await page.getByRole('button', { name: 'Send code' }).click();
-  await expect(page.getByRole('heading', { name: 'Enter the code' })).toBeFocused();
+  await expect(page.getByLabel('Digit 1 of 6')).toBeFocused();
 }
 
 test('signs in with the e-mail code', async ({ page }) => {
   await mockAuth(page);
   await requestCode(page);
 
-  await page.getByLabel('6-digit code').fill('123456');
+  await typeCode(page, '123456');
   await page.getByRole('button', { name: 'Sign in' }).click();
 
   await expect(page).toHaveURL(/\/stores$/);
@@ -53,7 +58,7 @@ test('shows a translated message for a wrong code and not the API detail', async
   await mockAuth(page, { verify: (route) => route.fulfill(problem(401, 'INVALID_CODE')) });
   await requestCode(page);
 
-  await page.getByLabel('6-digit code').fill('000000');
+  await typeCode(page, '000000');
   await page.getByRole('button', { name: 'Sign in' }).click();
 
   await expect(page.getByRole('alert')).toHaveText('The code is wrong or has expired.');
@@ -96,7 +101,7 @@ test('validates the 6 digits of the code', async ({ page }) => {
   await mockAuth(page);
   await requestCode(page);
 
-  await page.getByLabel('6-digit code').fill('12');
+  await typeCode(page, '12');
   await page.getByRole('button', { name: 'Sign in' }).click();
 
   await expect(page.getByText('Enter the 6 digits of the code.')).toBeVisible();

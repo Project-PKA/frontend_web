@@ -1,9 +1,12 @@
+import vue from '@vitejs/plugin-vue';
 import { defineConfig } from 'vitest/config';
 
 export default defineConfig({
+  plugins: [vue()],
   test: {
     environment: 'happy-dom',
     include: ['app/**/*.test.ts'],
+    setupFiles: ['./vitest.setup.ts'],
     coverage: {
       provider: 'v8',
       reporter: ['text-summary', 'lcov'],
@@ -14,13 +17,15 @@ export default defineConfig({
         // Nuxt glue (auto-imports, runtime config): covered by the e2e tests.
         'app/app.vue',
         'app/pages/**',
-        'app/components/**',
         'app/layouts/**',
         'app/composables/**',
         'app/plugins/**',
         'app/middleware/**',
         'app/error.vue',
         'app/api/instance.ts',
+        // Components that use Nuxt composables (stores, i18n): covered by the e2e tests.
+        'app/components/LanguageSwitcher.vue',
+        'app/components/ThemeSwitcher.vue',
       ],
       thresholds: {
         lines: 70,
