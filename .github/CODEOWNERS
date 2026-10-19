@@ -15,33 +15,33 @@
 # =============================================================================
 
 # Padrao para tudo que nao casar com nenhuma regra abaixo.
-*                           @SUA-ORG/time-frontend
+*                           @IgorOCosta
 
 # ----------------------------------------------------------------------------
 # Infra do repositorio: CI/CD, seguranca e automacao.
 # ----------------------------------------------------------------------------
-/.github/                   @SUA-ORG/time-plataforma
-/.github/workflows/         @SUA-ORG/time-plataforma
-/scripts/deploy.sh          @SUA-ORG/time-plataforma
-/docker/                    @SUA-ORG/time-plataforma
-/Dockerfile                 @SUA-ORG/time-plataforma
-/compose.yaml               @SUA-ORG/time-plataforma
-/sonar-project.properties   @SUA-ORG/time-plataforma
+/.github/                   @IgorOCosta
+/.github/workflows/         @IgorOCosta
+/scripts/deploy.sh          @IgorOCosta
+/docker/                    @IgorOCosta
+/Dockerfile                 @IgorOCosta
+/compose.yaml               @IgorOCosta
+/sonar-project.properties   @IgorOCosta
 
 # ----------------------------------------------------------------------------
 # Contrato de comandos e convencoes: mudar aqui afeta todo mundo.
 # ----------------------------------------------------------------------------
-/Makefile                   @SUA-ORG/time-plataforma
-/project.mk                 @SUA-ORG/time-frontend
-/.tool-versions             @SUA-ORG/time-frontend
-/.githooks/                 @SUA-ORG/time-plataforma
-/scripts/conventions.sh     @SUA-ORG/time-plataforma
+/Makefile                   @IgorOCosta
+/project.mk                 @IgorOCosta
+/.tool-versions             @IgorOCosta
+/.githooks/                 @IgorOCosta
+/scripts/conventions.sh     @IgorOCosta
 
 # ----------------------------------------------------------------------------
 # Documentacao viva e contrato com agentes de IA.
 # ----------------------------------------------------------------------------
-/AGENTS.md                  @SUA-ORG/time-frontend
-/ARCHITECTURE.md            @SUA-ORG/time-frontend
-/STACK.md                   @SUA-ORG/time-frontend
-/TESTING.md                 @SUA-ORG/time-frontend
-/DEPLOY.md                  @SUA-ORG/time-plataforma
+/AGENTS.md                  @IgorOCosta
+/ARCHITECTURE.md            @IgorOCosta
+/STACK.md                   @IgorOCosta
+/TESTING.md                 @IgorOCosta
+/DEPLOY.md                  @IgorOCosta

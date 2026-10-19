@@ -2,7 +2,7 @@
 # Deploy — parametrizado por GitHub Environment, NAO por branch.
 #
 # Ambientes: dev | test | homolog | prod
-#   - dev      : automatico a cada push em main
+#   - dev      : automatico a cada push em main (DESLIGADO ate o deploy existir, ver `on:`)
 #   - test     : manual (workflow_dispatch)
 #   - homolog  : manual, com aprovacao obrigatoria (required reviewers)
 #   - prod     : manual ou via release publicada, com aprovacao obrigatoria
@@ -21,8 +21,11 @@
 name: Deploy
 
 on:
-  push:
-    branches: [main]
+  # Desligado ate existir VPS e dominio (A7 em shared/OWNER.md) e o scripts/deploy.sh:
+  # sem eles, o deploy em `dev` falha a cada push em main e manda e-mail de erro.
+  # Para religar, devolva o gatilho:
+  #   push:
+  #     branches: [main]
   release:
     types: [published]
   workflow_dispatch:

@@ -1,5 +1,12 @@
 # Deploy
 
+> **Decisao deste projeto (bootstrap, etapa 6):** arquivos estaticos do
+> `nuxi generate` servidos pela mesma VPS do Backend, atras do proxy reverso,
+> que aplica CSP, `Referrer-Policy: no-referrer` e `X-Robots-Tag: noindex` nas
+> rotas privadas e por token, e faz o fallback de rota da SPA. **Execucao
+> pendente:** VPS e dominio (A7 em `shared/OWNER.md`). Ate la,
+> `scripts/deploy.sh` nao esta implementado e nenhum Environment foi criado.
+
 A fundacao separa **como publicar** (depende da plataforma) de **quando e com
 que autorizacao publicar** (nao depende).
 

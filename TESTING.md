@@ -66,11 +66,11 @@ esta no nivel errado.
 
 | Camada | Ferramenta | Arquivos | Comando |
 | --- | --- | --- | --- |
-| Unitario / componente | <!-- --> | <!-- --> | `make test` |
-| E2E | <!-- --> | <!-- --> | `make e2e` |
-| Cobertura | <!-- --> | — | `make test-coverage` |
-| A11y estatica | <!-- plugin de lint --> | — | `make lint` |
-| A11y em runtime | <!-- --> | — | `make perf` |
+| Unitario / componente | Vitest + Vue Testing Library (`@testing-library/vue`) | `*.test.ts` ao lado do codigo | `make test` |
+| E2E | Playwright (chromium no CI), API simulada por rota | `e2e/*.spec.ts` | `make e2e` |
+| Cobertura | Vitest (v8), `coverage/lcov.info` | — | `make test-coverage` |
+| A11y estatica | `eslint-plugin-vuejs-accessibility` | — | `make lint` |
+| A11y em runtime | A decidir na etapa 8 (axe no Playwright e/ou Lighthouse) | — | `make perf` |
 
 **Requisito tecnico:** `make test-coverage` precisa produzir
 `coverage/lcov.info` — e o que o SonarCloud e o comentario de cobertura no
@@ -152,14 +152,26 @@ nao e e2e.
 
 | Fluxo | Arquivo | Por que e critico |
 | --- | --- | --- |
-| A home carrega | <!-- --> | Se falha, tudo falha |
-| <!-- --> | <!-- --> | <!-- --> |
+| A landing e a home carregam (sem erro de console, sem rolagem horizontal em 320px) | `e2e/smoke.spec.ts` | Se falha, tudo falha |
+| Login por OTP, refresh e logout, selecao de loja | `e2e/auth.spec.ts` | Sem isso ninguem entra |
+| Aceitar convite (`/convite#token=`) | `e2e/invite.spec.ts` | Unico caminho de entrada |
+| Acerto do comprador: link invalido (mensagem generica unica), CPF e consentimento, "ja paguei" | `e2e/settlement.spec.ts` | Pagina publica com dado pessoal |
+| Consignador: chave de 4 digitos, erro e bloqueio | `e2e/consignor.spec.ts` | Pagina publica com dado de terceiro |
+| Cadastrar carta e criar leilao | `e2e/auction-create.spec.ts` | Nucleo do produto |
+| Aprovar enquete | `e2e/poll-approval.spec.ts` | Protege a loja de lance falso (ADR 0004) |
+| Sem permissao (funcionario) e bloqueio de `/admin` para nao administrador | `e2e/permissions.spec.ts` | Isolamento de papeis |
+| Solicitar acesso (campo `website` vazio); `noindex` nas paginas privadas e indexavel na landing | `e2e/public-pages.spec.ts` | SEO e privacidade |
+
+Alem disso, um teste unitario falha se algum `code` de erro do contrato nao
+tiver traducao em `en` e `pt-BR`.
 
 ---
 
 ## Cobertura
 
-**Piso:** <!-- % --> — o CI falha abaixo disso.
+**Piso:** 70% global (linhas, branches, funcoes e statements) e 85% nos
+modulos criticos: cliente de API, auth e guards, i18n, formatacao de dinheiro e
+data. O CI falha abaixo disso.
 
 Cobertura e piso, nao meta. 100% com assercoes fracas nao prova nada; 70%
 com testes que descrevem comportamento real prova bastante.

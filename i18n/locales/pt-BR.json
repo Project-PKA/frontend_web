@@ -1,0 +1,47 @@
+{
+  "a11y": {
+    "skipToContent": "Ir para o conteúdo"
+  },
+  "landing": {
+    "title": "Leilões de cartas no seu grupo de WhatsApp",
+    "description": "Faça leilões de cartas no seu grupo de WhatsApp e mantenha vendas, compradores e acertos organizados em um só lugar.",
+    "subtitle": "Uma ferramenta para lojas de cartas colecionáveis fazerem leilões e manterem as vendas organizadas."
+  },
+  "auth": {
+    "login": {
+      "title": "Entrar",
+      "subtitle": "Sem senha. Enviamos um código para o seu e-mail.",
+      "email": "E-mail",
+      "sendCode": "Enviar código",
+      "inviteOnly": "O acesso é por convite. Sem convite?",
+      "requestAccess": "Solicitar acesso"
+    },
+    "code": {
+      "title": "Digite o código",
+      "sentTo": "Enviado para {email}.",
+      "label": "Código de 6 dígitos",
+      "submit": "Entrar",
+      "resend": "Enviar o código de novo",
+      "changeEmail": "Usar outro e-mail"
+    }
+  },
+  "validation": {
+    "required": "Este campo é obrigatório.",
+    "email": "Informe um e-mail válido.",
+    "otpCode": "Informe os 6 dígitos do código."
+  },
+  "errors": {
+    "unknown": "Algo deu errado. Tente de novo.",
+    "http": "Não foi possível concluir esta ação. Tente de novo.",
+    "network": "Não foi possível falar com o servidor. Verifique sua conexão e tente de novo.",
+    "timeout": "O servidor demorou demais para responder. Tente de novo.",
+    "aborted": "A solicitação foi cancelada.",
+    "parse": "Recebemos uma resposta inesperada do servidor. Tente de novo.",
+    "INVALID_CODE": "O código está errado ou expirou.",
+    "INVALID_REFRESH": "Sua sessão terminou. Entre de novo.",
+    "UNAUTHENTICATED": "Entre para continuar.",
+    "RATE_LIMITED": "Muitas tentativas. Aguarde um momento e tente de novo.",
+    "VALIDATION_ERROR": "Confira os dados informados e tente de novo.",
+    "SESSION_NOT_FOUND": "Esta sessão não existe mais."
+  }
+}
