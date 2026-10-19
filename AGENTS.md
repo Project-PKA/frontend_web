@@ -127,6 +127,13 @@ formulario liga rotulo, dica e erro por id (`fieldIds`) e marca `aria-invalid`.
 Botao so com icone exige `label`. O erro de campo vem do VeeValidate (chave de
 traducao, traduzida na pagina) ou do servidor (por `code`).
 
+**Paginas abertas** — convite, solicitar acesso e as paginas publicas por token usam
+`usePublicApi()` (sem sessao, sem renovar). "Solicitar acesso" (`/request-access`) manda
+o `website` (isca da API) **sempre vazio**; o campo existe no formulario, `inert` e fora
+de vista, e um pedido com a isca preenchida nem e enviado. A resposta da API e igual para
+pedido novo, repetido ou descartado: a tela nao diz se ja existia. Telefone brasileiro:
+`maskBrazilPhone` (`app/utils/phone.ts`).
+
 **Convite** — `/invite#token=...` le o token do fragmento com `tokenFromFragment`
 (`app/utils/fragment-token.ts`, o mesmo para as paginas publicas por token) e o envia no
 corpo do POST, sem sessao (`anonymous: true`). Token ausente, invalido, expirado ou
