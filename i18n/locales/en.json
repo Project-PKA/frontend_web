@@ -43,5 +43,33 @@
     "RATE_LIMITED": "Too many attempts. Wait a moment and try again.",
     "VALIDATION_ERROR": "Check the data you entered and try again.",
     "SESSION_NOT_FOUND": "This session no longer exists."
+  },
+  "stores": {
+    "title": "Your stores"
+  },
+  "permissions": {
+    "can_delete": "Delete records",
+    "can_view_finance": "View the finance dashboard",
+    "can_manage_auctions": "Manage auctions",
+    "can_manage_inventory": "Manage inventory",
+    "can_manage_customers": "Manage customers"
+  },
+  "errorPage": {
+    "back": "Go back",
+    "forbidden": {
+      "title": "You do not have permission to open this page",
+      "generic": "Ask the store owner to grant you access.",
+      "permission": "This area needs the permission \"{permission}\". Ask the store owner to grant you access.",
+      "owner": "This area is only for the store owner.",
+      "admin": "This area is only for platform administrators."
+    },
+    "notFound": {
+      "title": "Page not found",
+      "body": "The address does not exist or was moved."
+    },
+    "unexpected": {
+      "title": "Something went wrong",
+      "body": "We could not show this page. Try again in a moment."
+    }
   }
 }

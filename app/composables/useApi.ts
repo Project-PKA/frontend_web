@@ -1,18 +1,14 @@
-import { createApiClient } from '../api/client';
+import { createAppClient } from '../api/instance';
 
 /**
- * The API client for authenticated calls: it sends the access token from the
- * session store and renews the session once after a 401. All network calls in
- * the app go through this client.
+ * The API client for authenticated calls. All network calls in the app go
+ * through this client (see `createAppClient`).
  */
 export function useApi() {
-  const { public: config } = useRuntimeConfig();
-  const session = useSessionStore();
+  const access = useAccessStore();
 
-  return createApiClient({
-    baseUrl: config.apiBaseUrl,
-    getAccessToken: () => session.accessToken,
-    getStoreId: () => null,
-    refreshSession: () => session.refresh(),
+  return createAppClient({
+    getStoreId: () => access.storeId,
+    onForbidden: (action) => handleForbidden(action, () => access.clearStore()),
   });
 }

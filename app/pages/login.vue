@@ -3,13 +3,17 @@ import { z } from 'zod';
 import { useForm } from 'vee-validate';
 import { toFormSchema } from '../utils/zod-schema';
 
-const AFTER_LOGIN_PATH = '/stores';
+const DEFAULT_PATH = '/stores';
 
 const { t } = useI18n();
 const session = useSessionStore();
+const route = useRoute();
 const errorMessage = useErrorMessage();
 
 useHead({ title: () => t('auth.login.title'), meta: [{ name: 'robots', content: 'noindex' }] });
+
+/** Back to the page that asked for the login, if it is a path inside this app. */
+const afterLoginPath = computed(() => safeRedirectPath(route.query.redirect) ?? DEFAULT_PATH);
 
 const step = ref<'email' | 'code'>('email');
 const email = ref('');
@@ -69,7 +73,7 @@ const submitEmail = emailForm.handleSubmit((values) =>
 const submitCode = codeForm.handleSubmit((values) =>
   run(async () => {
     await session.login(email.value, values.code);
-    await navigateTo(AFTER_LOGIN_PATH);
+    await navigateTo(afterLoginPath.value);
   }),
 );
 
@@ -79,7 +83,7 @@ function resend() {
 
 onMounted(async () => {
   await session.restore();
-  if (session.isAuthenticated) await navigateTo(AFTER_LOGIN_PATH);
+  if (session.isAuthenticated) await navigateTo(afterLoginPath.value);
 });
 </script>
 

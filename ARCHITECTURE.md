@@ -169,6 +169,22 @@ Ver `docker/nginx.conf.example` e [`DEPLOY.md`](DEPLOY.md).
 - **Rotas privadas e por token:** `noindex` e `Referrer-Policy: no-referrer`
   no proxy reverso. O app nao poe a loja na URL: ela vem do Pinia, entao o link
   de uma tela nao muda de loja por conta propria.
+- **Guards por metadado:** cada pagina protegida declara
+  `definePageMeta({ access: { level, owner?, permission? } })` (`level`:
+  `session`, `store` ou `admin`). A pagina sem `access` e publica. O
+  middleware global `app/middleware/access.global.ts` restaura a sessao, carrega
+  `GET /v1/me` ou `GET /v1/store` e entrega a decisao a `decideAccess`
+  (`app/utils/access.ts`, funcao pura e testada): sem sessao vai para
+  `/login?redirect=...` (so caminhos internos, `safeRedirectPath`); sem loja vai
+  para `/stores`; sem permissao mostra o estado 403 em `app/error.vue` dizendo
+  qual permissao falta. O proprietario passa em tudo na loja.
+- **403 do servidor:** `MISSING_PERMISSION` e `OWNER_REQUIRED` mostram o estado
+  de sem permissao; um 403 sem esses codigos (loja que a pessoa nao integra
+  mais) limpa a loja atual e volta a `/stores` (`forbiddenAction`).
+- **Loja atual:** guardada na store `access` e lembrada em `localStorage`
+  (id da loja, nao e segredo); o cabecalho `x-store-id` sai dela.
+- **Rotas protegidas sao so de cliente:** toda rota com `access` precisa de
+  `routeRules` `ssr: false` (e a versao `/pt-BR/...` enquanto o prefixo existir).
 - **Redirecionamento temporario:** `/convite` vai para `/invite` preservando o
   fragmento, ate o Backend mudar o link do e-mail (Backend#89).
 

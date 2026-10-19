@@ -43,5 +43,33 @@
     "RATE_LIMITED": "Muitas tentativas. Aguarde um momento e tente de novo.",
     "VALIDATION_ERROR": "Confira os dados informados e tente de novo.",
     "SESSION_NOT_FOUND": "Esta sessão não existe mais."
+  },
+  "stores": {
+    "title": "Suas lojas"
+  },
+  "permissions": {
+    "can_delete": "Excluir registros",
+    "can_view_finance": "Ver o painel financeiro",
+    "can_manage_auctions": "Gerenciar leilões",
+    "can_manage_inventory": "Gerenciar estoque",
+    "can_manage_customers": "Gerenciar clientes"
+  },
+  "errorPage": {
+    "back": "Voltar",
+    "forbidden": {
+      "title": "Você não tem permissão para acessar esta tela",
+      "generic": "Peça ao proprietário da loja para liberar o seu acesso.",
+      "permission": "Esta área exige a permissão \"{permission}\". Peça ao proprietário da loja para liberar o seu acesso.",
+      "owner": "Esta área é só para o proprietário da loja.",
+      "admin": "Esta área é só para administradores da plataforma."
+    },
+    "notFound": {
+      "title": "Página não encontrada",
+      "body": "O endereço não existe ou foi movido."
+    },
+    "unexpected": {
+      "title": "Algo deu errado",
+      "body": "Não foi possível mostrar esta página. Tente de novo em instantes."
+    }
   }
 }
