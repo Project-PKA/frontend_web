@@ -1,4 +1,5 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from './fixtures';
+import type { Page } from '@playwright/test';
 
 const session = {
   access_token: 'access-token-for-tests',
@@ -147,4 +148,17 @@ test('keeps an error visible as an alert when sending a new code fails', async (
   await expect(
     page.getByRole('alert').filter({ hasText: 'Too many attempts. Wait a moment and try again.' }),
   ).toBeVisible();
+});
+
+test('has no form that could submit by itself before the page is hydrated', async ({ browser }) => {
+  // Without JavaScript the page is what the server sent: the title, but no <form> to submit with
+  // a GET that would put the e-mail in the address.
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+
+  await page.goto('/login');
+
+  await expect(page.getByRole('heading', { level: 1, name: 'Sign in' })).toBeVisible();
+  await expect(page.locator('form')).toHaveCount(0);
+  await context.close();
 });
