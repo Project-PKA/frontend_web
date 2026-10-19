@@ -52,7 +52,7 @@ test('sends a logged out visitor to the login and back after signing in', async 
   await signIn(page);
 
   await expect(page).toHaveURL(/\/stores$/);
-  await expect(page.getByRole('heading', { name: 'Your stores' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Choose a store' })).toBeVisible();
 });
 
 test('opens a protected page for a person with a session', async ({ page }) => {
@@ -60,7 +60,7 @@ test('opens a protected page for a person with a session', async ({ page }) => {
 
   await page.goto('/stores');
 
-  await expect(page.getByRole('heading', { name: 'Your stores' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Choose a store' })).toBeVisible();
 });
 
 test('never redirects to another site after signing in', async ({ page }) => {

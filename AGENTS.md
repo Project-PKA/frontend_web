@@ -127,6 +127,16 @@ formulario liga rotulo, dica e erro por id (`fieldIds`) e marca `aria-invalid`.
 Botao so com icone exige `label`. O erro de campo vem do VeeValidate (chave de
 traducao, traduzida na pagina) ou do servidor (por `code`).
 
+**Lojas** — `/stores` (carrossel `StoreDeck` e `StoreCard`) e `/stores/new` usam o layout
+`public` (com "Sair" para quem esta logado). Clique do ponteiro num cartao fora do meio
+so o traz para o meio (como no design); Enter escolhe na hora. Escolher chama
+`access.selectStore` e o link leva a `/home`, onde o middleware carrega papel e permissoes.
+"Criar nova loja" so aparece com `can_create_stores` e lojas proprias abaixo de
+`store_limit` (`canCreateStore`); a API confere de novo. A API so recebe o nome; cidade,
+QR do WhatsApp e grupo dependem do Backend (Backend#100) e a tela os mostra como "depois
+de criar". 403 com codigo de uma acao (ex.: `CANNOT_CREATE_STORES`) nao manda a pessoa de
+volta a `/stores` (`forbiddenAction` devolve `none`): a tela mostra a mensagem.
+
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
 layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).
@@ -244,6 +254,15 @@ Pare e pergunte antes de:
   rota em `routeRules` com `ssr: false`; sem isso o prerender a renderiza sem
   sessao. O botao "Pedir acesso ao proprietario" do design nao existe: a API
   nao tem o endpoint (Backend#94).
+- `useForm` do VeeValidate com `defineField` deixa o campo `undefined`, e o Zod acusa o
+  tipo com texto proprio (nao a chave de traducao): passe `initialValues` com `''`.
+- O `offsetLeft` de um cartao do carrossel e relativo ao ancestral posicionado, nao ao
+  `.deck`: o `StoreDeck` mede com `getBoundingClientRect`. O `.center-page` do design nao
+  limita a coluna e o carrossel alargava a pagina: `app.css` usa `minmax(0, 1fr)`.
+- O handler de clique do `RouterLink` roda antes do seu e ja chama `preventDefault`:
+  nao use `event.defaultPrevented` para saber se outro codigo cancelou o clique.
+- Em e2e, `locator.click()` rola o elemento para o meio do carrossel antes de clicar; para
+  testar o clique em cartao fora do meio use `page.mouse.click` nas coordenadas.
 - A pagina sempre tem uma regiao `role="alert"` vazia (toasts de erro): em teste e2e escolha
   o alerta pelo texto (`getByRole('alert').filter({ hasText })`), nao so pelo papel.
 - `.tabs` do design tem 1px de sobra e mostrava barra de rolagem; `app.css` corrige com

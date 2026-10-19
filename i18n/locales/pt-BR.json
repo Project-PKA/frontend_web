@@ -30,7 +30,8 @@
   "validation": {
     "required": "Este campo é obrigatório.",
     "email": "Informe um e-mail válido.",
-    "otpCode": "Informe os 6 dígitos do código."
+    "otpCode": "Informe os 6 dígitos do código.",
+    "tooLong": "Este texto é longo demais."
   },
   "errors": {
     "unknown": "Algo deu errado. Tente de novo.",
@@ -130,7 +131,40 @@
     "VALIDATION_ERROR": "Confira os dados informados e tente de novo."
   },
   "stores": {
-    "title": "Suas lojas"
+    "title": "Escolha a loja",
+    "list": "Lojas",
+    "previous": "Loja anterior",
+    "next": "Próxima loja",
+    "newCard": "Criar nova loja",
+    "loading": "Carregando as suas lojas",
+    "empty": {
+      "title": "Você ainda não participa de nenhuma loja",
+      "text": "Entra-se numa loja por convite. Peça ao proprietário da loja ou ao administrador da plataforma."
+    },
+    "error": {
+      "title": "Não foi possível carregar as suas lojas",
+      "text": "Verifique a sua conexão e tente de novo.",
+      "retry": "Tentar de novo"
+    },
+    "new": {
+      "title": "Criar nova loja",
+      "back": "Voltar às lojas",
+      "intro": "Você pode criar lojas porque o administrador da plataforma liberou isso para a sua conta.",
+      "step1": "1 · Dados da loja",
+      "name": "Nome da loja",
+      "step2": "2 · Conectar o WhatsApp",
+      "step2Text": "Com a loja criada, conecte o WhatsApp dela lendo um QR code nas configurações.",
+      "step3": "3 · Escolher o grupo",
+      "step3Text": "Depois de conectar o WhatsApp, escolha o grupo que o bot vai monitorar e onde vai postar.",
+      "afterCreate": "Depois de criar",
+      "cancel": "Cancelar",
+      "submit": "Criar loja",
+      "created": "Loja {name} criada.",
+      "notAllowed": {
+        "title": "Você não pode criar lojas",
+        "text": "Quem libera a criação de lojas é o administrador da plataforma. Peça a ele para liberar na sua conta."
+      }
+    }
   },
   "permissions": {
     "can_delete": "Excluir registros",
@@ -164,7 +198,8 @@
     "name": "pokemonAuction"
   },
   "layout": {
-    "publicNav": "Navegação pública"
+    "publicNav": "Navegação pública",
+    "signOut": "Sair"
   },
   "theme": {
     "label": "Tema",

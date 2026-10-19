@@ -30,7 +30,8 @@
   "validation": {
     "required": "This field is required.",
     "email": "Enter a valid e-mail address.",
-    "otpCode": "Enter the 6 digits of the code."
+    "otpCode": "Enter the 6 digits of the code.",
+    "tooLong": "This text is too long."
   },
   "errors": {
     "unknown": "Something went wrong. Try again.",
@@ -130,7 +131,40 @@
     "VALIDATION_ERROR": "Check the data you entered and try again."
   },
   "stores": {
-    "title": "Your stores"
+    "title": "Choose a store",
+    "list": "Stores",
+    "previous": "Previous store",
+    "next": "Next store",
+    "newCard": "Create new store",
+    "loading": "Loading your stores",
+    "empty": {
+      "title": "You are not in any store yet",
+      "text": "Stores are joined by invitation. Ask the store owner or the platform administrator."
+    },
+    "error": {
+      "title": "Could not load your stores",
+      "text": "Check your connection and try again.",
+      "retry": "Try again"
+    },
+    "new": {
+      "title": "Create new store",
+      "back": "Back to the stores",
+      "intro": "You can create stores because the platform administrator allowed it for your account.",
+      "step1": "1 · Store data",
+      "name": "Store name",
+      "step2": "2 · Connect WhatsApp",
+      "step2Text": "Once the store exists, connect the store's WhatsApp by reading a QR code in the settings.",
+      "step3": "3 · Choose the group",
+      "step3Text": "After WhatsApp is connected, choose the group the bot watches and posts in.",
+      "afterCreate": "After creating",
+      "cancel": "Cancel",
+      "submit": "Create store",
+      "created": "Store {name} created.",
+      "notAllowed": {
+        "title": "You cannot create stores",
+        "text": "Creating stores is allowed by the platform administrator. Ask them to allow it for your account."
+      }
+    }
   },
   "permissions": {
     "can_delete": "Delete records",
@@ -164,7 +198,8 @@
     "name": "pokemonAuction"
   },
   "layout": {
-    "publicNav": "Public navigation"
+    "publicNav": "Public navigation",
+    "signOut": "Sign out"
   },
   "theme": {
     "label": "Theme",

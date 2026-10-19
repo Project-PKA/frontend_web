@@ -80,7 +80,7 @@ test.describe('browser in English', () => {
 
     await page.goto('/stores');
 
-    await expect(page.getByRole('heading', { name: 'Suas lojas' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Escolha a loja' })).toBeVisible();
   });
 
   test('keeps the public pages in the language of their address', async ({ page }) => {

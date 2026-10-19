@@ -45,6 +45,7 @@ const codeForm = useForm({
         .regex(/^\d{6}$/, 'validation.otpCode'),
     }),
   ),
+  initialValues: { code: '' },
 });
 // The code is checked when it is submitted, not while the 6 digits are still being typed.
 const [codeField] = codeForm.defineField('code', { validateOnModelUpdate: false });
