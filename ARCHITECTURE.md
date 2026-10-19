@@ -399,8 +399,13 @@ Dois controles, ambos plugados no contrato e **bloqueantes** no CI:
 
 | Controle | Alvo do Makefile | Limite |
 | --- | --- | --- |
-| Orcamento de bundle | `make bundle-budget` (`size-limit`) | A medir no primeiro build; folgado, apertado depois |
+| Orcamento de bundle | `make bundle-budget` (`scripts/bundle-budget.mjs`) | JS de entrada <= 150 kB gzip (medido: 120), maior chunk de rota <= 50 kB (medido: 35), CSS <= 20 kB (medido: 10). Limites em `bundle-budget.json` |
 | Core Web Vitals | `make perf` (Lighthouse CI, perfil mobile) | A medir no primeiro build. Alvo inicial: LCP, CLS e INP no "bom" do Web Vitals; acessibilidade >= 0.95 |
+
+**Orcamento por o que se baixa (2026-10):** o `size-limit` somava todos os arquivos do build, que
+cresce a cada tela embora ninguem baixe tudo. O script mede o JS que a landing carrega (as tags
+`script` e `modulepreload` do `index.html`), o maior chunk de rota (cada tela e um chunk) e o CSS.
+Subir um limite exige aprovacao do dono (`AGENTS.md` secao 6).
 
 **Decisao (etapa 8):** publico principal e lojista em celular, entao o perfil e
 mobile. Lighthouse CI cobre a landing (estatica) e o shell do app (login). Os

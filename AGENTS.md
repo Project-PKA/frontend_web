@@ -53,7 +53,7 @@ npm 10.9).
 | `make test` | `npx vitest run` | `make test-watch` em watch |
 | `make test-coverage` | `npx vitest run --coverage` | Piso 70% global, 85% em `app/api/**` |
 | `make e2e` | `npx playwright test` | Precisa do build; `E2E_INSTALL_CMD` instala o Chromium |
-| `make bundle-budget` | `npx size-limit` | Apos o build |
+| `make bundle-budget` | `node scripts/bundle-budget.mjs` | Apos o build; limites em `bundle-budget.json` |
 | `make perf` | `npx lhci autorun` | Apos o build |
 | `make generate-types` | `npx openapi-typescript $OPENAPI_SPEC -o app/api/generated.ts` | |
 | `make validate` | formato, lint, tipos, testes | **Rode antes de abrir PR** |
@@ -263,6 +263,11 @@ Pare e pergunte antes de:
   nao use `event.defaultPrevented` para saber se outro codigo cancelou o clique.
 - Em e2e, `locator.click()` rola o elemento para o meio do carrossel antes de clicar; para
   testar o clique em cartao fora do meio use `page.mouse.click` nas coordenadas.
+- O orcamento de bundle mede o JS de entrada (o que a landing carrega) e o maior chunk de
+  rota, nao a soma do build: tela nova pesa no seu proprio chunk. Se estourar o chunk de
+  uma rota, divida a tela ou adie o que ela importa (`defineAsyncComponent`); subir o limite
+  exige aprovacao. Dependencia usada por todas as telas entra na entrada (plugin do Nuxt):
+  pese antes de registrar plugin global.
 - A pagina sempre tem uma regiao `role="alert"` vazia (toasts de erro): em teste e2e escolha
   o alerta pelo texto (`getByRole('alert').filter({ hasText })`), nao so pelo papel.
 - `.tabs` do design tem 1px de sobra e mostrava barra de rolagem; `app.css` corrige com

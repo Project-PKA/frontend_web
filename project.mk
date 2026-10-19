@@ -83,7 +83,7 @@ E2E_INSTALL_CMD = npx playwright install --with-deps chromium
 # -----------------------------------------------------------------------------
 
 # Orcamento de bundle. Deve FALHAR quando estourar, nao so avisar.
-BUNDLE_BUDGET_CMD = npx size-limit
+BUNDLE_BUDGET_CMD = node scripts/bundle-budget.mjs
 
 # Core Web Vitals sobre o build (Lighthouse CI ou equivalente).
 PERF_CMD = npx lhci autorun
@@ -122,7 +122,7 @@ OPENAPI_SPEC ?= ../Backend/docs/api/openapi.yaml
 # TEST_COVERAGE_CMD  = npx vitest run --coverage
 # E2E_CMD            = npx playwright test
 # E2E_INSTALL_CMD    = npx playwright install --with-deps chromium
-# BUNDLE_BUDGET_CMD  = npx size-limit
+# BUNDLE_BUDGET_CMD  = node scripts/bundle-budget.mjs
 # PERF_CMD           = npx lhci autorun
 # GENERATE_TYPES_CMD = npx openapi-typescript $(OPENAPI_SPEC) -o src/api/generated.ts
 
