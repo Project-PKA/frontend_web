@@ -152,8 +152,12 @@ QR do WhatsApp e grupo dependem do Backend (Backend#100) e a tela os mostra como
 de criar". 403 com codigo de uma acao (ex.: `CANNOT_CREATE_STORES`) nao manda a pessoa de
 volta a `/stores` (`forbiddenAction` devolve `none`): a tela mostra a mensagem.
 
-**Home** — `/home` e ao vivo: uma consulta (`/v1/dashboard/home`, TanStack Query) que repete
-a cada 15 s enquanto a aba esta visivel; sem periodo e sem ranking. O "ha 12 minutos" conta
+**Home** — `/home` e ao vivo e **so os componentes atualizam, nunca a pagina**: a pagina so
+organiza `HomeSetup`, `HomePollAlert`, `HomeKpis`, `HomeNoAuction` e `HomeSettlements`, e cada
+um chama `useHomeData(select)` (TanStack Query, 15 s enquanto a aba esta visivel). Todos usam a
+mesma chave, entao a API (`/v1/dashboard/home`) e chamada uma vez por rodada, e como o `select`
+mantem a identidade quando o conteudo nao mudou, so o componente cujo dado mudou e tocado. O
+erro de carga aparece so em `HomeKpis` (os outros calam). Sem periodo e sem ranking. O "ha 12 minutos" conta
 a partir do momento em que o dado chegou (`useFormat().relative`). O contrato nao marca como
 obrigatorios os campos de dentro das listas, entao `app/utils/home.ts` normaliza as linhas
 (sem `id` a linha sai; texto ausente vira vazio) e o valor segue como a string que a API

@@ -227,21 +227,33 @@ test('does not send staff to pages they cannot open', async ({ page }) => {
   await expect(page.getByRole('link', { name: 'Close the settlement' })).toHaveCount(0);
 });
 
-test('asks again on its own to stay live', async ({ page }) => {
+test('updates only the pieces of the home, by themselves, with one request per round', async ({
+  page,
+}) => {
   let active = 6;
   const requests = await signedIn(page, {
     answer: () => home({ kpis: { ...home().kpis, active_auctions: active } }),
   });
   await page.clock.install();
   await page.goto('/home');
-  await expect(page.getByRole('group', { name: 'Live indicators' })).toContainText('6');
+  const kpis = page.getByRole('group', { name: 'Live indicators' });
+  await expect(kpis).toContainText('6');
+  // A mark on the page and on a piece whose data will not change: a refresh of the whole
+  // screen would remove them, a refresh of the pieces does not.
+  await page.evaluate(() => {
+    document.querySelector('h1')?.setAttribute('data-mark', 'kept');
+    document.querySelector('#no-auction')?.setAttribute('data-mark', 'kept');
+  });
   const before = requests.count;
 
   active = 7;
   await page.clock.runFor(16_000);
 
-  await expect(page.getByRole('group', { name: 'Live indicators' })).toContainText('7');
-  expect(requests.count).toBeGreaterThan(before);
+  await expect(kpis).toContainText('7');
+  // Five pieces, one request: they share the same question.
+  expect(requests.count).toBe(before + 1);
+  await expect(page.locator('h1')).toHaveAttribute('data-mark', 'kept');
+  await expect(page.locator('#no-auction')).toHaveAttribute('data-mark', 'kept');
 });
 
 test('shows an error with a way to try again when the home does not load', async ({ page }) => {
