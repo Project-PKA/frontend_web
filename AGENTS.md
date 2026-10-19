@@ -127,6 +127,18 @@ formulario liga rotulo, dica e erro por id (`fieldIds`) e marca `aria-invalid`.
 Botao so com icone exige `label`. O erro de campo vem do VeeValidate (chave de
 traducao, traduzida na pagina) ou do servidor (por `code`).
 
+**Dados e feedback** — lista de tela: `useCursorList` (`app/utils/cursor-list.ts`, sobre o
+TanStack Query; junta as paginas por `next_cursor`) com `AppDataState` para os estados de
+carregando, vazio e erro, e `AppTable` (legenda obrigatoria, `data-label` para o layout
+de cartoes no celular). Linha de tabela **nao** e clicavel: ponha um link na celula
+(`#cell-<coluna>`). A chave da consulta inclui tudo de que a lista depende; o cache e
+esvaziado ao sair e ao trocar de loja. Leitura repete ate 2 vezes em falha de rede ou
+5xx, nunca em 4xx (`shouldRetry`). Mensagem curta apos uma acao: `useToast()`
+(`success`, `info`, `warning`, `error`); erro fica ate ser dispensado e vai numa regiao
+`role="alert"`, o resto some em 6 s e pausa com mouse ou foco. Modal: `AppModal` sobre
+o `<dialog>` nativo (foco preso, Esc, foco devolvido); Esc e fundo so pedem para fechar,
+quem decide e a pagina. Abas: `AppTabs` (padrao WAI-ARIA, setas, Home, End).
+
 **Acessibilidade** — semantica antes de ARIA, tudo por teclado, contraste AA,
 responsivo (desktop, tablet ate 1100px, mobile ate 640px), tema claro, escuro
 e sistema.
@@ -222,6 +234,15 @@ Pare e pergunte antes de:
   rota em `routeRules` com `ssr: false`; sem isso o prerender a renderiza sem
   sessao. O botao "Pedir acesso ao proprietario" do design nao existe: a API
   nao tem o endpoint (Backend#94).
+- A pagina sempre tem uma regiao `role="alert"` vazia (toasts de erro): em teste e2e escolha
+  o alerta pelo texto (`getByRole('alert').filter({ hasText })`), nao so pelo papel.
+- `.tabs` do design tem 1px de sobra e mostrava barra de rolagem; `app.css` corrige com
+  `overflow-y: hidden`.
+- O `<dialog>` modal nao trava a rolagem da pagina: `app.css` faz isso com
+  `body:has(dialog[open])`.
+- O `happy-dom` do Vitest nao prende o foco nem trata Esc no `<dialog>` (isso e do
+  navegador): os testes de unidade cobrem so a nossa ligacao; foco preso e Esc foram
+  conferidos no Chromium e entram no e2e na primeira tela que usar `AppModal`.
 - O `lighthouserc.json` mede a landing (SSR) e o `/login` (SPA). O `/login` nao entra no
   SEO (tem `noindex`) e tem teto de LCP maior (3,5 s): o shell so pinta depois do JS.
   A URL do Lighthouse precisa ser a rota (`/login/`), nao o arquivo (`/login/index.html`):

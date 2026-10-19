@@ -23,7 +23,8 @@
       "submit": "Entrar",
       "resend": "Enviar o código de novo",
       "changeEmail": "Usar outro e-mail",
-      "digit": "Dígito {position} de {total}"
+      "digit": "Dígito {position} de {total}",
+      "resent": "Enviamos um novo código para {email}."
     }
   },
   "validation": {
@@ -170,5 +171,9 @@
     "SYSTEM": "Sistema",
     "DARK": "Escuro",
     "LIGHT": "Claro"
+  },
+  "toast": {
+    "region": "Avisos",
+    "close": "Dispensar"
   }
 }

@@ -61,7 +61,10 @@ test('shows a translated message for a wrong code and not the API detail', async
   await typeCode(page, '000000');
   await page.getByRole('button', { name: 'Sign in' }).click();
 
-  await expect(page.getByRole('alert')).toHaveText('The code is wrong or has expired.');
+  // The page also has an (empty) live region for urgent toasts, so pick the alert by its text.
+  await expect(
+    page.getByRole('alert').filter({ hasText: 'The code is wrong or has expired.' }),
+  ).toBeVisible();
   await expect(page.getByText('mensagem em português')).toHaveCount(0);
   await expect(page).toHaveURL(/\/login$/);
 });
@@ -76,9 +79,10 @@ test('explains when there were too many attempts', async ({ page }) => {
   await page.getByLabel('E-mail').fill('igor@example.com');
   await page.getByRole('button', { name: 'Send code' }).click();
 
-  await expect(page.getByRole('alert')).toHaveText(
-    'Too many attempts. Wait a moment and try again.',
-  );
+  // The page also has an (empty) live region for urgent toasts, so pick the alert by its text.
+  await expect(
+    page.getByRole('alert').filter({ hasText: 'Too many attempts. Wait a moment and try again.' }),
+  ).toBeVisible();
 });
 
 test('validates the e-mail before calling the API', async ({ page }) => {
@@ -113,4 +117,34 @@ test('skips the login when the refresh cookie still works', async ({ page }) => 
   await page.goto('/login');
 
   await expect(page).toHaveURL(/\/stores$/);
+});
+
+test('confirms with a message that a new code was sent, and the message can be dismissed', async ({
+  page,
+}) => {
+  await mockAuth(page);
+  await requestCode(page);
+
+  await page.getByRole('button', { name: 'Send the code again' }).click();
+
+  const message = page.getByRole('status').getByText('We sent a new code to igor@example.com.');
+  await expect(message).toBeVisible();
+
+  await page.getByRole('button', { name: 'Dismiss' }).click();
+  await expect(message).toHaveCount(0);
+});
+
+test('keeps an error visible as an alert when sending a new code fails', async ({ page }) => {
+  await mockAuth(page);
+  await requestCode(page);
+  await page.route('**/v1/auth/otp/request', (route) =>
+    route.fulfill(problem(429, 'RATE_LIMITED')),
+  );
+
+  await page.getByRole('button', { name: 'Send the code again' }).click();
+
+  // The page also has an (empty) live region for urgent toasts, so pick the alert by its text.
+  await expect(
+    page.getByRole('alert').filter({ hasText: 'Too many attempts. Wait a moment and try again.' }),
+  ).toBeVisible();
 });

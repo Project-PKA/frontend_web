@@ -23,7 +23,8 @@
       "submit": "Sign in",
       "resend": "Send the code again",
       "changeEmail": "Use another e-mail",
-      "digit": "Digit {position} of {total}"
+      "digit": "Digit {position} of {total}",
+      "resent": "We sent a new code to {email}."
     }
   },
   "validation": {
@@ -170,5 +171,9 @@
     "SYSTEM": "System",
     "DARK": "Dark",
     "LIGHT": "Light"
+  },
+  "toast": {
+    "region": "Notifications",
+    "close": "Dismiss"
   }
 }

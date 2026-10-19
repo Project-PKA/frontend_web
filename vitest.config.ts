@@ -26,6 +26,7 @@ export default defineConfig({
         // Components that use Nuxt composables (stores, i18n): covered by the e2e tests.
         'app/components/LanguageSwitcher.vue',
         'app/components/ThemeSwitcher.vue',
+        'app/components/AppToastRegion.vue',
       ],
       thresholds: {
         lines: 70,
