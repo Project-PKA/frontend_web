@@ -30,6 +30,29 @@ describe('inventory api', () => {
     expect(request).toHaveBeenCalledWith('/v1/cards/c1', { method: 'DELETE' });
   });
 
+  it('registers a card', async () => {
+    const request = vi.fn().mockResolvedValue({});
+    const body = {
+      tcgdex_id: 'swsh4-044',
+      language: 'PT',
+      condition: 'NM',
+      origin: 'OWN',
+    } as const;
+
+    await apiWith(request).create(body);
+
+    expect(request).toHaveBeenCalledWith('/v1/cards', { method: 'POST', body });
+  });
+
+  it('sends a photo as the body, to the card', async () => {
+    const request = vi.fn().mockResolvedValue({ photo: 'p', photos: ['p'] });
+    const file = new File([new Uint8Array([1])], 'front.png', { type: 'image/png' });
+
+    await apiWith(request).addPhoto('c/1', file);
+
+    expect(request).toHaveBeenCalledWith('/v1/cards/c%2F1/photos', { method: 'PUT', body: file });
+  });
+
   it('downloads a photo as a file', async () => {
     const request = vi.fn().mockResolvedValue(new Blob());
     await apiWith(request).photo('c1', 'p1.png');

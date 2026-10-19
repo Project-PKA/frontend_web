@@ -33,6 +33,7 @@
     "otpCode": "Informe os 6 dígitos do código.",
     "tooLong": "Este texto é longo demais.",
     "phone": "Informe o número com o DDD.",
+    "commission": "Informe uma comissão de 0 a 100.",
     "dateTime": "Informe uma data e hora válidas.",
     "endFuture": "O fim precisa ser no futuro.",
     "endAfterStart": "O fim precisa ser depois do início.",
@@ -665,6 +666,68 @@
         "noArt": "Esta carta não tem arte",
         "rarity": "Raridade: {rarity}",
         "empty": "Escolha uma carta da lista."
+      },
+      "data": {
+        "title": "Dados da carta e estado físico",
+        "language": "Idioma",
+        "condition": "Estado de conservação",
+        "choose": "Escolha",
+        "foil": "Foil",
+        "notes": "Observações",
+        "notesPlaceholder": "Ex.: leve marca na borda inferior, sleeve desde a abertura, vem com toploader…"
+      },
+      "photos": {
+        "label": "Fotos reais da carta (frente, verso e detalhes)",
+        "add": "Adicionar fotos",
+        "hint": "JPEG, PNG ou WebP, até 5 MB cada e 8 fotos.",
+        "remove": "Remover a foto {position}",
+        "preview": "Foto {position}",
+        "problems": {
+          "type": "\"{name}\" ficou de fora: não é uma imagem JPEG, PNG ou WebP.",
+          "size": "\"{name}\" ficou de fora: passa de 5 MB.",
+          "limit": "\"{name}\" ficou de fora: uma carta tem até 8 fotos."
+        }
+      },
+      "origin": {
+        "title": "Origem",
+        "own": "Estoque próprio",
+        "consigned": "Consignada",
+        "choose": "Escolha a origem da carta para continuar."
+      },
+      "consignor": {
+        "change": "Trocar",
+        "commission": "% de comissão da loja",
+        "noCpf": "Este cliente não tem CPF cadastrado, então o link de acompanhamento não pode ser criado. Você ainda pode salvar a carta.",
+        "message": "Oi, {name}! Acompanhe as suas cartas e os leilões aqui: {link}",
+        "search": {
+          "label": "Cliente consignador",
+          "hint": "Busque por nome, telefone ou CPF (pelo menos 2 caracteres).",
+          "loading": "Buscando os clientes",
+          "none": "Nenhum cliente encontrado para \"{text}\".",
+          "error": "Não foi possível buscar os clientes.",
+          "count": "Nenhum cliente encontrado | Um cliente encontrado | {count} clientes encontrados"
+        },
+        "link": {
+          "title": "Link de acompanhamento para o consignador",
+          "whenSaved": "É criado quando você salva a carta.",
+          "needsCpf": "Requer o CPF cadastrado no cliente consignador.",
+          "key": "A chave para abri-lo são os 4 primeiros dígitos do CPF do consignador.",
+          "copy": "Copiar link",
+          "whatsapp": "Enviar no WhatsApp",
+          "failed": "A carta foi salva, mas o link de acompanhamento não foi criado."
+        }
+      },
+      "save": "Salvar carta",
+      "cancel": "Cancelar",
+      "saved": {
+        "title": "Carta salva",
+        "text": "{code} {title} está no seu estoque.",
+        "toast": "{title} salva.",
+        "photosFailed": "Algumas fotos não foram enviadas. A carta foi salva sem elas:",
+        "open": "Abrir a carta",
+        "another": "Cadastrar outra",
+        "copied": "Link copiado.",
+        "copyFailed": "Não foi possível copiar. Selecione o link e copie à mão."
       }
     }
   },

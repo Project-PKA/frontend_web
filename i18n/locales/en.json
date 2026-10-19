@@ -33,6 +33,7 @@
     "otpCode": "Enter the 6 digits of the code.",
     "tooLong": "This text is too long.",
     "phone": "Enter the number with the area code.",
+    "commission": "Enter a commission from 0 to 100.",
     "dateTime": "Enter a valid date and time.",
     "endFuture": "The end must be in the future.",
     "endAfterStart": "The end must be after the start.",
@@ -665,6 +666,68 @@
         "noArt": "No art for this card",
         "rarity": "Rarity: {rarity}",
         "empty": "Pick a card from the list."
+      },
+      "data": {
+        "title": "Card data and condition",
+        "language": "Language",
+        "condition": "Condition",
+        "choose": "Choose",
+        "foil": "Foil",
+        "notes": "Notes",
+        "notesPlaceholder": "E.g. light mark on the lower edge, in a sleeve since it was opened, comes with a toploader…"
+      },
+      "photos": {
+        "label": "Real photos of the card (front, back and details)",
+        "add": "Add photos",
+        "hint": "JPEG, PNG or WebP, up to 5 MB each and 8 photos.",
+        "remove": "Remove photo {position}",
+        "preview": "Photo {position}",
+        "problems": {
+          "type": "\"{name}\" was left out: it is not a JPEG, PNG or WebP image.",
+          "size": "\"{name}\" was left out: it is over 5 MB.",
+          "limit": "\"{name}\" was left out: a card has up to 8 photos."
+        }
+      },
+      "origin": {
+        "title": "Origin",
+        "own": "Own stock",
+        "consigned": "Consigned",
+        "choose": "Choose the origin of the card to continue."
+      },
+      "consignor": {
+        "change": "Change",
+        "commission": "Store commission (%)",
+        "noCpf": "This customer has no CPF registered, so the tracking link cannot be created. You can still save the card.",
+        "message": "Hi, {name}! Follow your cards and the auctions here: {link}",
+        "search": {
+          "label": "Consignor customer",
+          "hint": "Search by name, phone or CPF (at least 2 characters).",
+          "loading": "Searching the customers",
+          "none": "No customer found for \"{text}\".",
+          "error": "We could not search the customers.",
+          "count": "No customers found | One customer found | {count} customers found"
+        },
+        "link": {
+          "title": "Tracking link for the consignor",
+          "whenSaved": "It is created when you save the card.",
+          "needsCpf": "Needs the CPF registered on the consignor customer.",
+          "key": "The key to open it is the first 4 digits of the consignor's CPF.",
+          "copy": "Copy link",
+          "whatsapp": "Send on WhatsApp",
+          "failed": "The card was saved, but the tracking link was not created."
+        }
+      },
+      "save": "Save card",
+      "cancel": "Cancel",
+      "saved": {
+        "title": "Card saved",
+        "text": "{code} {title} is in your stock.",
+        "toast": "{title} saved.",
+        "photosFailed": "Some photos were not sent. The card was saved without them:",
+        "open": "Open the card",
+        "another": "Register another",
+        "copied": "Link copied.",
+        "copyFailed": "Could not copy. Select the link and copy it by hand."
       }
     }
   },
