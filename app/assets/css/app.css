@@ -218,8 +218,9 @@ body:has(dialog[open]) {
   justify-content: center;
 }
 
+/* A bar on the edge, not a tinted row: the tint took the time (text-3) below 4.5:1 in both themes. */
 .feed__item--unread {
-  background: var(--primary-soft);
+  box-shadow: inset 3px 0 0 var(--primary);
 }
 
 .activity__feed {
