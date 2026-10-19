@@ -22,6 +22,8 @@ export interface RequestOptions {
   /** Skips the bearer token and the store header (public pages). */
   anonymous?: boolean;
   signal?: AbortSignal;
+  /** What the answer is: JSON (the default) or a file, e.g. a card photo, which needs the login. */
+  parse?: 'json' | 'blob';
 }
 
 const DEFAULT_TIMEOUT_MS = 15_000;
@@ -97,6 +99,7 @@ export function createApiClient(options: ApiClientOptions) {
     if (response.status === 204) return undefined as T;
 
     try {
+      if (requestOptions.parse === 'blob') return (await response.blob()) as T;
       return (await response.json()) as T;
     } catch (cause) {
       throw new ApiError('parse', { status: response.status, cause });

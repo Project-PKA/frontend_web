@@ -1,6 +1,11 @@
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import { createPreferencesApi, type Preferences, type PreferencesApi } from '../api/preferences';
+import {
+  createPreferencesApi,
+  type Preferences,
+  type PreferencesApi,
+  type PreferencesUpdate,
+} from '../api/preferences';
 import { createAppClient } from '../api/instance';
 import { DEFAULT_LANGUAGE, detectLanguage, isLanguage, type Language } from '../utils/language';
 import { browserTimeZone } from '../utils/format';
@@ -104,6 +109,14 @@ export function definePreferencesStore(deps: PreferencesDeps, id = 'preferences'
       }
     }
 
+    /**
+     * Saves time zone, currency or notifications (the language and the theme have their own
+     * actions, because they also change the page). The server answers with the whole profile.
+     */
+    async function saveProfile(changes: PreferencesUpdate) {
+      profile.value = await deps.getApi().update(changes);
+    }
+
     /** Forgets the profile (after logout); the language and the theme on screen stay. */
     function clearProfile() {
       profile.value = null;
@@ -120,6 +133,7 @@ export function definePreferencesStore(deps: PreferencesDeps, id = 'preferences'
       load,
       changeLanguage,
       changeTheme,
+      saveProfile,
       clearProfile,
     };
   });

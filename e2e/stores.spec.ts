@@ -110,8 +110,19 @@ test('brings a card that is not in the middle to the middle before choosing it',
   await page.goto('/stores');
   await expect(card(page, 'Poké Card Hub')).toHaveClass(/is-sel/);
 
-  // A real pointer click where the card is, without scrolling it into view first.
-  const box = (await card(page, 'Cards and Co').boundingBox())!;
+  // A real pointer click where the card is, without scrolling it into view first. The deck is still
+  // centering the first card when the page opens, so wait until the card stops moving: a position
+  // read in the middle of that would send the click to the wrong place.
+  const target = card(page, 'Cards and Co');
+  let box = (await target.boundingBox())!;
+  await expect
+    .poll(async () => {
+      const now = (await target.boundingBox())!;
+      const still = Math.abs(now.x - box.x) < 1 && Math.abs(now.y - box.y) < 1;
+      box = now;
+      return still;
+    })
+    .toBe(true);
   await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
 
   await expect(page).toHaveURL(/\/stores$/);
