@@ -15,6 +15,7 @@ export interface ApiClientOptions {
 
 export interface RequestOptions {
   method?: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+  /** JSON by default; a `Blob` (a photo) goes as it is, with its own content type. */
   body?: unknown;
   query?: Record<string, string | number | boolean | undefined>;
   /** Sends the refresh cookie. Needed only for the auth endpoints. */
@@ -27,6 +28,13 @@ export interface RequestOptions {
 }
 
 const DEFAULT_TIMEOUT_MS = 15_000;
+
+/** A file goes as it is with its own type; anything else goes as JSON. */
+function encodeBody(body: unknown): { body: BodyInit; contentType: string } | undefined {
+  if (body === undefined) return undefined;
+  if (body instanceof Blob) return { body, contentType: body.type };
+  return { body: JSON.stringify(body), contentType: 'application/json' };
+}
 
 export function createApiClient(options: ApiClientOptions) {
   const doFetch = options.fetchImpl ?? fetch;
@@ -41,7 +49,8 @@ export function createApiClient(options: ApiClientOptions) {
 
   async function send(path: string, request: RequestOptions): Promise<Response> {
     const headers = new Headers({ Accept: 'application/json, application/problem+json' });
-    if (request.body !== undefined) headers.set('Content-Type', 'application/json');
+    const payload = encodeBody(request.body);
+    if (payload) headers.set('Content-Type', payload.contentType);
     if (!request.anonymous) {
       const token = options.getAccessToken();
       const storeId = options.getStoreId();
@@ -56,7 +65,7 @@ export function createApiClient(options: ApiClientOptions) {
       return await doFetch(buildUrl(path, request.query), {
         method: request.method ?? 'GET',
         headers,
-        body: request.body === undefined ? undefined : JSON.stringify(request.body),
+        body: payload?.body,
         credentials: request.withCredentials ? 'include' : 'same-origin',
         referrerPolicy: 'no-referrer',
         signal,

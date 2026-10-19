@@ -119,6 +119,18 @@ describe('api client', () => {
     expect(headers.get('Authorization')).toBe('Bearer access-token');
   });
 
+  it('sends a file as it is, with its own content type and not as JSON', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ photo: 'p1.png' }, 201));
+    const file = new File([new Uint8Array([1, 2, 3])], 'front.png', { type: 'image/png' });
+
+    await makeClient(fetchImpl).request('/v1/cards/c1/photos', { method: 'PUT', body: file });
+
+    const init = fetchImpl.mock.calls[0]![1] as RequestInit;
+    expect(init.body).toBe(file);
+    expect((init.headers as Headers).get('Content-Type')).toBe('image/png');
+    expect((init.headers as Headers).get('Authorization')).toBe('Bearer access-token');
+  });
+
   it('returns undefined for 204 responses', async () => {
     const fetchImpl = vi.fn().mockResolvedValue(new Response(null, { status: 204 }));
     const result = await makeClient(fetchImpl).request('/v1/me/sessions/1', { method: 'DELETE' });

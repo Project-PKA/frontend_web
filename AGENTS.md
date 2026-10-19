@@ -159,7 +159,9 @@ um segundo Esc limpa o texto) e so mostra o que recebe; `useCatalogSearch` pergu
 lista anterior ate a proxima chegar. A arte vem do endereco de origem que o catalogo da (D5
 decidida em 18/10: texto, numero e arte por endereco de origem; a **marca** continua fora da
 interface, diga "catalogo de cartas"): so `https` (`artUrl`), com `referrerpolicy="no-referrer"`.
-A primeira etapa do cadastro vive em `/inventory/new`; o resto do formulario e da issue #28.
+O cadastro inteiro vive em `/inventory/new` (tela unica, issue #28). `AppCombobox` e o combobox
+generico (slot `option`); `CatalogSearch` e `CustomerSearch` so dizem como cada item aparece, e
+`useAsYouType` e a consulta (a chave inclui a loja).
 Em teste de componente, importe `AppButton` e afins no `.vue` (o auto-import e do Nuxt).
 **Estoque** — `/inventory` (lista) e `/inventory/:id` (carta), so com `can_manage_inventory`.
 Os filtros (busca `q`, `status`, `origin`) ficam no endereco (`/inventory?status=SOLD`;
@@ -203,6 +205,18 @@ a tela mostra nome e e-mail desabilitados e o selo "Edicao em breve". Nao invent
 nem botao ate a API existir; "Sair de todos os aparelhos" e foto tambem ficam de fora.
 `describeUserAgent` resume o aparelho ("Chrome, Windows") e `timeZoneOptions` lista os
 fusos sem perder o salvo.
+
+**Cadastro de carta** — o formulario so aparece depois de escolher a carta no catalogo. A
+**origem nao tem valor inicial** e "Salvar" fica desabilitado ate escolher (a condicao tambem
+nao e adivinhada; o idioma comeca em PT, como o design). Consignada pede o cliente (busca por
+nome, telefone ou CPF) e a comissao (0 a 100, aceita virgula; comeca em 15, como o design).
+Ordem do envio: `POST /v1/cards`, depois uma foto por vez (`PUT /v1/cards/:id/photos`, o corpo
+e a imagem; `request` manda `Blob` como esta), depois, se consignada, o link do consignador
+(`POST /v1/customers/:id/consignor-link`). A carta **nao** e criada de novo se uma foto ou o
+link falhar: a tela diz o que nao foi e segue (`Saved`). O token do link aparece **uma vez** e
+vai no fragmento (`consignorLinkUrl`, `/consignor#token=`); "Enviar no WhatsApp" abre
+`wa.me` com o telefone do cliente (`rel="noopener noreferrer"`). Sem a secao "Leilao" do design:
+agendar e da #29 (a carta fica "Disponivel"). Foto depois do cadastro ainda nao tem tela.
 
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
