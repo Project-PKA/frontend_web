@@ -49,6 +49,8 @@ jobs:
       build-artifact: true
       e2e: true
       performance: true
+      # SonarCloud DESLIGADO por enquanto (o dono quer testar tudo antes). Para religar: remover a linha.
+      sonar: false
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
