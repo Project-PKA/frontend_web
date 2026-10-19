@@ -65,7 +65,7 @@ jobs:
           sparse-checkout: openapi.yaml
           sparse-checkout-cone-mode: false
 
-      - uses: jdx/mise-action@v2
+      - uses: jdx/mise-action@v5
         if: hashFiles('.tool-versions', 'mise.toml', '.mise.toml') != ''
         with:
           cache: true
