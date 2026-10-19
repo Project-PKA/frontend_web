@@ -282,5 +282,125 @@
       "home": "Back to the home page"
     },
     "description": "Request access to run card auctions in your WhatsApp group. Access is by invitation."
+  },
+  "inventory": {
+    "caption": "Cards in stock",
+    "register": "Register card",
+    "loading": "Loading the stock",
+    "error": {
+      "title": "We could not load the stock",
+      "text": "Check your connection and try again.",
+      "retry": "Try again"
+    },
+    "empty": {
+      "title": "Your stock is still empty",
+      "text": "Register the first card to be able to schedule an auction and see the numbers appear on the Home."
+    },
+    "noMatch": {
+      "title": "No card matches",
+      "text": "Change or clear the filters.",
+      "clear": "Clear the filters"
+    },
+    "loadMore": "Show more",
+    "copy": "Copy {code}",
+    "copied": "{code} copied.",
+    "copyFailed": "Could not copy. Select the text and copy it by hand.",
+    "filters": {
+      "search": "Search by #ID or name",
+      "status": "Status",
+      "statusAll": "Status: all",
+      "origin": "Origin",
+      "originAll": "Origin: all"
+    },
+    "columns": {
+      "id": "#ID",
+      "card": "Card",
+      "set": "Set",
+      "language": "Language",
+      "condition": "Condition",
+      "origin": "Origin",
+      "status": "Status"
+    },
+    "status": {
+      "AVAILABLE": "Available",
+      "SCHEDULED": "Scheduled in an auction",
+      "AWAITING_CONFIRMATION": "Awaiting confirmation",
+      "SOLD": "Sold"
+    },
+    "origin": {
+      "OWN": "Own",
+      "CONSIGNED": "Consigned"
+    },
+    "conditions": {
+      "MINT": "Mint",
+      "NM": "Near Mint",
+      "SP": "Slightly Played",
+      "MP": "Moderately Played",
+      "HP": "Heavily Played",
+      "DMG": "Damaged"
+    },
+    "languages": {
+      "PT": "Portuguese",
+      "EN": "English",
+      "JP": "Japanese",
+      "ES": "Spanish"
+    },
+    "detail": {
+      "title": "Card",
+      "loading": "Loading the card",
+      "error": {
+        "title": "We could not open this card",
+        "retry": "Try again"
+      },
+      "data": "Card data",
+      "number": "Number",
+      "foil": "Foil",
+      "yes": "Yes",
+      "no": "No",
+      "consignor": "Consignor",
+      "commission": "{pct}% commission",
+      "registered": "Registered on",
+      "photos": "Real photos",
+      "photoAlt": "Photo {n} of {name}",
+      "photoLoading": "Loading the photo",
+      "photoError": "The photo did not load",
+      "noPhotos": "No photos yet.",
+      "notes": "Notes",
+      "noNotes": "No notes.",
+      "history": {
+        "title": "Auction history",
+        "empty": "This card has not been to an auction yet",
+        "foot": "Each auction is for one card only",
+        "columns": {
+          "date": "Date",
+          "type": "Type",
+          "highestBid": "Highest bid",
+          "result": "Result"
+        },
+        "types": {
+          "FREE_BID": "Free bid",
+          "POLL": "Poll"
+        },
+        "results": {
+          "scheduled": "Scheduled",
+          "active": "In progress",
+          "awaitingValidation": "In validation",
+          "sold": "Sold",
+          "noWinner": "No winner",
+          "cancelled": "Cancelled"
+        }
+      },
+      "delete": {
+        "button": "Delete",
+        "needsPermission": "Requires permission to delete",
+        "cannot": "Only an available card that has never been to an auction can be deleted",
+        "title": "Delete this card?",
+        "text": "{code} {name} will be removed from your stock. This cannot be undone.",
+        "confirm": "Delete the card",
+        "cancel": "Cancel",
+        "close": "Close",
+        "done": "Card deleted."
+      }
+    }
   }
 }

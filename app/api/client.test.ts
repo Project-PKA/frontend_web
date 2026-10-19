@@ -101,6 +101,24 @@ describe('api client', () => {
     expect(fetchImpl.mock.calls[1]![1].credentials).toBe('same-origin');
   });
 
+  it('returns a file as a Blob when asked to, still sending the login', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(
+      new Response(new Uint8Array([1, 2, 3]), {
+        status: 200,
+        headers: { 'Content-Type': 'image/png' },
+      }),
+    );
+
+    const blob = await makeClient(fetchImpl).request<Blob>('/v1/cards/c1/photos/p1.png', {
+      parse: 'blob',
+    });
+
+    expect(blob.type).toBe('image/png');
+    expect(blob.size).toBe(3);
+    const headers = fetchImpl.mock.calls[0]![1].headers as Headers;
+    expect(headers.get('Authorization')).toBe('Bearer access-token');
+  });
+
   it('returns undefined for 204 responses', async () => {
     const fetchImpl = vi.fn().mockResolvedValue(new Response(null, { status: 204 }));
     const result = await makeClient(fetchImpl).request('/v1/me/sessions/1', { method: 'DELETE' });

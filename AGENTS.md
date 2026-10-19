@@ -152,6 +152,18 @@ QR do WhatsApp e grupo dependem do Backend (Backend#100) e a tela os mostra como
 de criar". 403 com codigo de uma acao (ex.: `CANNOT_CREATE_STORES`) nao manda a pessoa de
 volta a `/stores` (`forbiddenAction` devolve `none`): a tela mostra a mensagem.
 
+**Estoque** — `/inventory` (lista) e `/inventory/:id` (carta), so com `can_manage_inventory`.
+Os filtros (busca `q`, `status`, `origin`) ficam no endereco (`/inventory?status=SOLD`;
+`parseFilters` descarta valor que a API nao conhece) e a busca espera 300 ms. Sem o filtro de
+idioma do design: a API nao filtra por idioma e filtrar so a pagina carregada enganaria
+(Backend#107). O `#ID` e um botao que copia (`AppIdChip`); a linha **nao** e clicavel, o
+link esta no nome da carta. A foto real exige login, entao baixa como arquivo pelo cliente
+(`request(..., { parse: 'blob' })`, `CardPhoto`) e o endereco temporario e liberado ao sair.
+Sem imagem do catalogo (licenca, D5). Excluir exige `can_delete` **e** carta disponivel que
+nunca foi a leilao; a tela explica o motivo quando o botao esta desabilitado e a API
+(`CARD_HAS_HISTORY`, `CARD_NOT_AVAILABLE`) confere de novo. O detalhe da API vem como
+`{ card, auctions }`. Cadastrar e editar sao das issues #27 e #28.
+
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
 layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).
