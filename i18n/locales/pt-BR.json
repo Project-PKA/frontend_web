@@ -32,7 +32,12 @@
     "email": "Informe um e-mail válido.",
     "otpCode": "Informe os 6 dígitos do código.",
     "tooLong": "Este texto é longo demais.",
-    "phone": "Informe o número com o DDD."
+    "phone": "Informe o número com o DDD.",
+    "dateTime": "Informe uma data e hora válidas.",
+    "endFuture": "O fim precisa ser no futuro.",
+    "endAfterStart": "O fim precisa ser depois do início.",
+    "money": "Informe um valor acima de zero, como 25 ou 25,50.",
+    "ceilingAbove": "O teto precisa ser maior que o lance inicial."
   },
   "errors": {
     "unknown": "Algo deu errado. Tente de novo.",
@@ -661,6 +666,130 @@
         "rarity": "Raridade: {rarity}",
         "empty": "Escolha uma carta da lista."
       }
+    }
+  },
+  "auctions": {
+    "title": "Leilões",
+    "new": "Novo leilão",
+    "loadMore": "Mostrar mais",
+    "loading": "Carregando os leilões",
+    "error": {
+      "title": "Não foi possível carregar os leilões",
+      "text": "Confira sua conexão e tente de novo.",
+      "retry": "Tentar de novo"
+    },
+    "edit": "Editar",
+    "noWinner": "Sem vencedor",
+    "tabs": {
+      "label": "Leilões por situação",
+      "active": "Em andamento",
+      "scheduled": "Agendados",
+      "finished": "Encerrados",
+      "cancelled": "Cancelados"
+    },
+    "empty": {
+      "active": {
+        "title": "Nenhum leilão em andamento",
+        "text": "Os que estão rodando agora aparecem aqui, com os lances."
+      },
+      "scheduled": {
+        "title": "Nenhum leilão agendado",
+        "text": "Agende um leilão para uma carta do seu estoque."
+      },
+      "finished": {
+        "title": "Nenhum leilão encerrado ainda",
+        "text": "Os leilões que terminaram aparecem aqui, com o vencedor."
+      },
+      "cancelled": {
+        "title": "Nenhum leilão cancelado",
+        "text": "Os leilões que você cancelar aparecem aqui."
+      }
+    },
+    "columns": {
+      "card": "Carta",
+      "type": "Tipo",
+      "ends": "Termina",
+      "bids": "Lances",
+      "highest": "Maior lance",
+      "start": "Início",
+      "end": "Fim",
+      "closed": "Encerrou",
+      "raised": "Arrecadado",
+      "winner": "Vencedor",
+      "wasToEnd": "Terminaria"
+    },
+    "types": {
+      "FREE_BID": "Lance livre",
+      "POLL": "Enquete"
+    },
+    "state": {
+      "live": "ao vivo",
+      "paused": "Aguardando validação"
+    },
+    "status": {
+      "PENDING": "Agendado",
+      "ACTIVE": "Em andamento",
+      "PAUSED_FOR_VALIDATION": "Aguardando validação",
+      "FINISHED": "Encerrado",
+      "CANCELLED": "Cancelado"
+    },
+    "terms": {
+      "start": "Início",
+      "end": "Fim",
+      "type": "Tipo",
+      "pollHint": "Na enquete os lances param no teto e esperam você aprovar o encerramento.",
+      "initial": "Lance mínimo (R$)",
+      "increment": "Incremento mínimo (R$)",
+      "ceiling": "Valor teto da enquete (R$)",
+      "ceilingHint": "Acima do lance mínimo."
+    },
+    "create": {
+      "title": "Novo leilão",
+      "close": "Fechar",
+      "cancel": "Cancelar",
+      "schedule": "Agendar leilão",
+      "launch": "Lançar leilão",
+      "scheduled": "Leilão de {title} agendado.",
+      "launched": "Leilão de {title} lançado.",
+      "card": {
+        "label": "Carta disponível no estoque",
+        "hint": "Busque por #ID ou nome (pelo menos 2 caracteres).",
+        "loading": "Buscando no estoque",
+        "none": "Nenhuma carta disponível encontrada para \"{text}\".",
+        "error": "Não foi possível buscar no estoque.",
+        "retry": "Tentar de novo",
+        "count": "Nenhuma carta encontrada | Uma carta encontrada | {count} cartas encontradas",
+        "change": "Trocar"
+      },
+      "when": {
+        "label": "Quando começa",
+        "schedule": "Agendar",
+        "now": "Lançar agora",
+        "nowHint": "A carta é postada no grupo assim que você salvar. Defina só o fim do leilão."
+      }
+    }
+  },
+  "auctionEdit": {
+    "title": "Editar leilão",
+    "loading": "Carregando o leilão",
+    "error": {
+      "title": "Não foi possível abrir este leilão",
+      "retry": "Tentar de novo"
+    },
+    "endOnly": "Este leilão já está rodando: só o fim pode ser alterado.",
+    "locked": "Este leilão acabou: não pode mais ser alterado.",
+    "nothingChanged": "Nada foi alterado.",
+    "saved": "Leilão salvo.",
+    "cancel": "Cancelar leilão",
+    "cancelled": "Leilão cancelado.",
+    "back": "Voltar",
+    "save": "Salvar alterações",
+    "confirm": {
+      "title": "Cancelar este leilão?",
+      "text": "O leilão de {title} será cancelado e a carta volta para o estoque. Isso não pode ser desfeito.",
+      "keep": "Manter o leilão",
+      "cancel": "Cancelar o leilão",
+      "close": "Fechar"
     }
   }
 }

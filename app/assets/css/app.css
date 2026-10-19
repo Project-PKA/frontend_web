@@ -399,3 +399,26 @@ body:has(dialog[open]) {
 .suggest .tcg--xs {
   flex: none;
 }
+
+/* ---------- auctions ---------- */
+.auctions__card {
+  margin-left: var(--sp-2);
+}
+
+.auctions__more {
+  justify-content: center;
+}
+
+.auctions__title {
+  font: 600 var(--fs-lg) var(--font-display);
+}
+
+.auctions__picked {
+  padding: var(--sp-2) var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.auctions__actions {
+  justify-content: space-between;
+}
