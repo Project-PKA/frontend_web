@@ -7,6 +7,12 @@
 > pendente:** VPS e dominio (A7 em `shared/OWNER.md`). Ate la,
 > `scripts/deploy.sh` nao esta implementado e nenhum Environment foi criado.
 
+> **CSP: o que a interface precisa** (para o proxy da A7). `img-src` precisa de `'self'`,
+> `data:` (icones embutidos pelo build), **`blob:`** (as fotos reais das cartas exigem login e
+> sao baixadas como arquivo pelo cliente da API) e o **host de origem das imagens do
+> catalogo** (o que o Backend grava em `image_url`; hoje `assets.tcgdex.net`). `connect-src`
+> precisa da origem da API. As imagens do catalogo saem com `referrerpolicy="no-referrer"`.
+
 A fundacao separa **como publicar** (depende da plataforma) de **quando e com
 que autorizacao publicar** (nao depende).
 

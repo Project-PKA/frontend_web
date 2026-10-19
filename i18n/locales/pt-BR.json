@@ -641,6 +641,26 @@
         "close": "Fechar",
         "done": "Carta excluída."
       }
+    },
+    "new": {
+      "title": "Cadastrar carta",
+      "search": {
+        "title": "Buscar carta",
+        "label": "Busca rápida: nome ou número",
+        "hint": "Digite pelo menos 2 caracteres.",
+        "loading": "Buscando as cartas",
+        "none": "Nenhuma carta encontrada para \"{text}\".",
+        "error": "Não foi possível buscar as cartas.",
+        "retry": "Tentar de novo",
+        "count": "Nenhuma carta encontrada | Uma carta encontrada | {count} cartas encontradas"
+      },
+      "picked": {
+        "art": "Arte oficial de {name}",
+        "placeholder": "Arte oficial",
+        "noArt": "Esta carta não tem arte",
+        "rarity": "Raridade: {rarity}",
+        "empty": "Escolha uma carta da lista."
+      }
     }
   }
 }
