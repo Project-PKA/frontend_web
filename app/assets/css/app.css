@@ -109,6 +109,32 @@ body:has(dialog[open]) {
   overflow-y: hidden;
 }
 
+/* ---------- app shell ---------- */
+.app__main {
+  min-width: 0;
+}
+
+/* The design sets these inline (style="color:inherit") on its links; here they are classes. */
+.brand,
+.store-switch,
+.side__foot {
+  color: inherit;
+}
+
+.side__foot {
+  text-decoration: none;
+}
+
+/* The public header stays on one line on phones (the design's longer brand name wrapped it). */
+.pub-top .brand {
+  white-space: nowrap;
+}
+
+.pub-top nav.row {
+  flex-wrap: nowrap;
+  gap: var(--sp-2);
+}
+
 /* Holds the place of a form that only exists in the browser, so the page does not jump. */
 .form-placeholder {
   min-height: 7.6rem;

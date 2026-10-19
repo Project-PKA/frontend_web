@@ -4,8 +4,24 @@ import type { NuxtError } from '#app';
 const props = defineProps<{ error: NuxtError }>();
 
 const { t } = useI18n();
+const session = useSessionStore();
+const access = useAccessStore();
 
 useAppHead();
+
+/** Someone inside a store sees the error in the shell, with the menu; anyone else, on a plain page. */
+const inShell = computed(() => session.isAuthenticated && access.storeId !== null);
+
+// An unknown address never goes through the access middleware, so find out here who is logged in.
+onMounted(async () => {
+  await session.restore();
+  if (!session.isAuthenticated || access.storeId === null) return;
+  try {
+    await access.loadStore();
+  } catch {
+    // The menu just stays without the store name: the error page is what matters here.
+  }
+});
 
 const data = computed(
   () =>
@@ -35,21 +51,23 @@ useHead({
 });
 
 function leave() {
-  return clearError({ redirect: '/stores' });
+  return clearError({ redirect: inShell.value ? '/home' : '/stores' });
 }
 </script>
 
 <template>
-  <main id="main" class="center-page">
-    <section class="card narrow">
-      <div class="card__body stack">
+  <NuxtLayout :name="inShell ? 'app' : 'public'">
+    <component
+      :is="inShell ? 'div' : 'main'"
+      :id="inShell ? undefined : 'main'"
+      :class="inShell ? undefined : 'center-page'"
+    >
+      <AppCard class="narrow" body-class="stack">
         <h1>{{ t(`errorPage.${kind}.title`) }}</h1>
         <p v-if="kind === 'forbidden'" class="muted">{{ forbiddenMessage }}</p>
         <p v-else class="muted">{{ t(`errorPage.${kind}.body`) }}</p>
-        <button class="btn btn--secondary" type="button" @click="leave">
-          {{ t('errorPage.back') }}
-        </button>
-      </div>
-    </section>
-  </main>
+        <AppButton @click="leave">{{ t('errorPage.back') }}</AppButton>
+      </AppCard>
+    </component>
+  </NuxtLayout>
 </template>

@@ -175,5 +175,32 @@
   "toast": {
     "region": "Avisos",
     "close": "Dispensar"
+  },
+  "nav": {
+    "home": "Home",
+    "inventory": "Estoque",
+    "auctions": "Leilões",
+    "customers": "Clientes",
+    "shipments": "Envios",
+    "team": "Funcionários",
+    "settings": "Configurações",
+    "finance": "Financeiro"
+  },
+  "role": {
+    "OWNER": "Proprietário",
+    "STAFF": "Funcionário"
+  },
+  "whatsapp": {
+    "ONLINE": "WhatsApp online",
+    "OFFLINE": "WhatsApp offline",
+    "QR_READY": "WhatsApp: leia o QR code"
+  },
+  "shell": {
+    "mainNav": "Principal",
+    "openMenu": "Abrir o menu",
+    "notifications": "Notificações",
+    "changeStore": "Loja {store}, {role}. Trocar de loja",
+    "viewProfile": "Ver perfil",
+    "profileOf": "Perfil de {email}"
   }
 }

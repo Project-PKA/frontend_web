@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { t } = useI18n();
+const route = useRoute();
 </script>
 
 <template>
@@ -11,7 +12,7 @@ const { t } = useI18n();
           {{ t('brand.name') }}
         </NuxtLink>
         <nav class="row" :aria-label="t('layout.publicNav')">
-          <NuxtLink class="btn btn--ghost btn--sm" to="/login">{{
+          <NuxtLink v-if="route.path !== '/login'" class="btn btn--ghost btn--sm" to="/login">{{
             t('auth.login.title')
           }}</NuxtLink>
           <NuxtLink class="btn btn--primary btn--sm" to="/request-access">
