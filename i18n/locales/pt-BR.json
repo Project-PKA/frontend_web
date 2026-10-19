@@ -220,7 +220,9 @@
     "shipments": "Envios",
     "team": "Funcionários",
     "settings": "Configurações",
-    "finance": "Financeiro"
+    "finance": "Financeiro",
+    "profile": "Meu perfil",
+    "activity": "Notificações e atividade"
   },
   "role": {
     "OWNER": "Proprietário",
@@ -237,7 +239,8 @@
     "notifications": "Notificações",
     "changeStore": "Loja {store}, {role}. Trocar de loja",
     "viewProfile": "Ver perfil",
-    "profileOf": "Perfil de {email}"
+    "profileOf": "Perfil de {email}",
+    "notificationsCount": "Notificações, {count} não lidas"
   },
   "invite": {
     "title": "Você foi convidado(a)",
@@ -282,6 +285,172 @@
       "home": "Voltar para a página inicial"
     },
     "description": "Solicite acesso para fazer leilões de cartas no seu grupo de WhatsApp. O acesso é por convite."
+  },
+  "profile": {
+    "loading": "Carregando seu perfil",
+    "error": {
+      "title": "Não foi possível carregar seu perfil",
+      "text": "Confira sua conexão e tente de novo.",
+      "retry": "Tentar de novo"
+    },
+    "identity": "Você",
+    "later": "Edição em breve",
+    "personal": {
+      "title": "Dados pessoais",
+      "name": "Nome completo",
+      "email": "E-mail (login)",
+      "text": "Telefone, CPF e data de nascimento poderão ser editados aqui quando o serviço permitir."
+    },
+    "address": {
+      "title": "Endereço",
+      "text": "Seu endereço poderá ser editado aqui quando o serviço permitir."
+    },
+    "preferences": {
+      "title": "Preferências",
+      "language": "Idioma",
+      "timezone": "Fuso horário",
+      "currency": "Moeda"
+    },
+    "languages": {
+      "en": "English",
+      "pt-BR": "Português (Brasil)"
+    },
+    "currencies": {
+      "BRL": "Real (R$)"
+    },
+    "notifications": {
+      "title": "Notificações",
+      "inApp": "Notificações dentro do app",
+      "email": "Notificações por e-mail"
+    },
+    "save": "Salvar alterações",
+    "saved": "Alterações salvas.",
+    "security": {
+      "title": "Segurança",
+      "loading": "Carregando suas sessões",
+      "empty": "Nenhuma sessão ativa",
+      "errorTitle": "Não foi possível carregar suas sessões",
+      "errorText": "Tente de novo em instantes.",
+      "current": "Atual",
+      "since": "Entrou em {date}",
+      "unknownDevice": "Aparelho desconhecido",
+      "end": "Encerrar",
+      "endNamed": "Encerrar a sessão em {device}",
+      "ended": "Sessão encerrada."
+    },
+    "changeStore": "Trocar de loja"
+  },
+  "activity": {
+    "tabs": {
+      "label": "Notificações e atividade",
+      "notifications": "Notificações",
+      "notificationsCount": "Notificações ({count})",
+      "log": "Log de atividades"
+    },
+    "notifications": {
+      "markAll": "Marcar todas como lidas",
+      "markRead": "Marcar como lida",
+      "new": "Nova",
+      "loading": "Carregando as notificações",
+      "emptyTitle": "Nenhuma notificação",
+      "emptyText": "Os avisos novos sobre a sua loja aparecem aqui.",
+      "errorTitle": "Não foi possível carregar as notificações",
+      "errorText": "Confira sua conexão e tente de novo.",
+      "retry": "Tentar de novo",
+      "loadMore": "Mostrar mais",
+      "unknownKind": "Nova notificação",
+      "kinds": {
+        "POLL_CEILING_REACHED": "Um leilão de enquete chegou ao teto e aguarda validação",
+        "BUYER_DATA_SUBMITTED": "Um comprador enviou os dados na página do acerto"
+      },
+      "allRead": "Todas as notificações foram marcadas como lidas."
+    },
+    "log": {
+      "caption": "Atividade das pessoas da loja",
+      "loading": "Carregando o log de atividades",
+      "emptyTitle": "Nenhuma atividade ainda",
+      "emptyText": "O que a equipe faz na loja fica registrado aqui.",
+      "errorTitle": "Não foi possível carregar o log de atividades",
+      "errorText": "Confira sua conexão e tente de novo.",
+      "loadMore": "Mostrar mais",
+      "ownerOnly": "O log é visível apenas para o proprietário",
+      "system": "Sistema",
+      "formerMember": "Ex-integrante",
+      "columns": {
+        "when": "Quando",
+        "user": "Usuário",
+        "action": "Ação",
+        "item": "Item"
+      },
+      "unknownAction": "Fez algo",
+      "unknownTarget": "Item",
+      "targets": {
+        "auction": "Leilão",
+        "card": "Carta",
+        "customer": "Cliente",
+        "invitation": "Convite",
+        "member": "Integrante",
+        "message_template": "Modelo de mensagem",
+        "plan_request": "Pedido de plano",
+        "public_link": "Link público",
+        "settlement": "Acerto",
+        "store": "Loja"
+      },
+      "actions": {
+        "auction": {
+          "cancelled": "Cancelou um leilão",
+          "created": "Criou um leilão",
+          "updated": "Alterou um leilão"
+        },
+        "bid": {
+          "registered": "Registrou um lance"
+        },
+        "card": {
+          "created": "Cadastrou uma carta",
+          "deleted": "Excluiu uma carta",
+          "photo_added": "Adicionou uma foto à carta",
+          "photo_removed": "Removeu uma foto da carta",
+          "updated": "Alterou uma carta"
+        },
+        "customer": {
+          "created": "Cadastrou um cliente",
+          "updated": "Alterou um cliente"
+        },
+        "invitation": {
+          "revoked": "Revogou um convite",
+          "sent": "Enviou um convite"
+        },
+        "member": {
+          "joined": "Entrou na equipe",
+          "permissions_updated": "Alterou permissões",
+          "removed": "Removeu um integrante"
+        },
+        "message_template": {
+          "reset": "Restaurou um modelo de mensagem",
+          "updated": "Alterou um modelo de mensagem"
+        },
+        "ownership": {
+          "transferred": "Transferiu a propriedade"
+        },
+        "plan": {
+          "change_requested": "Pediu a troca de plano",
+          "changed": "Trocou o plano"
+        },
+        "public_link": {
+          "created": "Criou um link público",
+          "revoked": "Revogou um link público"
+        },
+        "settlement": {
+          "created": "Criou um acerto",
+          "deleted": "Excluiu um acerto",
+          "paid": "Confirmou um pagamento"
+        },
+        "store": {
+          "created": "Criou a loja",
+          "updated": "Alterou as configurações da loja"
+        }
+      }
+    }
   },
   "home": {
     "loading": "Carregando a home",

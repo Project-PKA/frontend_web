@@ -210,6 +210,50 @@ body:has(dialog[open]) {
 /* ---------- home ---------- */
 .home__steps {
   margin: var(--sp-2) 0 0;
+}
+
+/* ---------- notifications and activity ---------- */
+.activity__bar {
+  justify-content: flex-end;
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.activity__more {
+  justify-content: center;
+}
+
+/* A bar on the edge, not a tinted row: the tint took the time (text-3) below 4.5:1 in both themes. */
+.feed__item--unread {
+  box-shadow: inset 3px 0 0 var(--primary);
+}
+
+/* ---------- profile ---------- */
+.profile__identity {
+  gap: var(--sp-5);
+}
+
+.profile__avatar {
+  width: 84px;
+  height: 84px;
+}
+
+.profile__name {
+  margin: 0;
+  font: 600 var(--fs-xl) var(--font-display);
+  overflow-wrap: anywhere;
+}
+
+.profile__roles {
+  margin-top: var(--sp-2);
+}
+
+.profile__save {
+  justify-content: flex-end;
+}
+
+.profile__sessions {
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -233,4 +277,14 @@ body:has(dialog[open]) {
 .grid--kpi5 {
   display: grid;
   gap: var(--sp-4);
+}
+
+.profile__small {
+  font-size: var(--fs-xs);
+}
+
+.activity__feed {
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
