@@ -163,6 +163,37 @@ Sem imagem do catalogo (licenca, D5). Excluir exige `can_delete` **e** carta dis
 nunca foi a leilao; a tela explica o motivo quando o botao esta desabilitado e a API
 (`CARD_HAS_HISTORY`, `CARD_NOT_AVAILABLE`) confere de novo. O detalhe da API vem como
 `{ card, auctions }`. Cadastrar e editar sao das issues #27 e #28.
+**Home** — `/home` e ao vivo e **so os componentes atualizam, nunca a pagina**: a pagina so
+organiza `HomeSetup`, `HomePollAlert`, `HomeKpis`, `HomeNoAuction` e `HomeSettlements`, e cada
+um chama `useHomeData(select)` (TanStack Query, 15 s enquanto a aba esta visivel). Todos usam a
+mesma chave, entao a API (`/v1/dashboard/home`) e chamada uma vez por rodada, e como o `select`
+mantem a identidade quando o conteudo nao mudou, so o componente cujo dado mudou e tocado. O
+erro de carga aparece so em `HomeKpis` (os outros calam). Sem periodo e sem ranking. O "ha 12 minutos" conta
+a partir do momento em que o dado chegou (`useFormat().relative`). O contrato nao marca como
+obrigatorios os campos de dentro das listas, entao `app/utils/home.ts` normaliza as linhas
+(sem `id` a linha sai; texto ausente vira vazio) e o valor segue como a string que a API
+mandou. A lista de passos da loja nova (`setupSteps`) some quando os quatro estao feitos.
+Links so para telas de menu (`/settings`, `/inventory/new`, `/auctions`, `/customers/:id`),
+e so para quem tem a permissao. Fica de fora o que o design tem e a API nao da: selo de
+"proximo leilao as 14:30" e "ultimo lance ha 8 s", origem e "parada ha" das cartas, o
+alerta de WhatsApp caido (issue #32) e a aprovacao da enquete (issue #31).
+**Notificacoes e atividade** — `/activity` (o sino da barra do topo, que mostra o numero de
+nao lidas via `useUnreadCount`, a cada 60 s). A API manda so `kind`/`action` e ids: o texto
+e nosso (`app/utils/activity.ts` lista os codigos conhecidos; um codigo novo cai no texto
+generico e `activity.test.ts` falha se faltar traducao de um conhecido). O log e do
+proprietario (a aba nem aparece para staff). Quem fez vem da equipe (`/v1/team`); quem saiu
+aparece como "Ex-integrante". Sem os filtros do design (usuario e acao): a API nao filtra e
+filtrar so a pagina carregada enganaria (Backend#106). Linhas sem link ate as telas de
+destino existirem.
+**Perfil** — `/profile` (link do rodape do menu) usa so o que a API tem: preferencias
+(`preferences.saveProfile` manda so o que mudou; idioma e tema valem na hora, como na barra
+do topo), notificacoes (`in_app` e `email`; o design tinha tres avisos por tipo) e sessoes
+(`authApi.listSessions` e `revokeSession`; a atual nao tem botao de encerrar). Nome, e-mail,
+telefone, CPF, data de nascimento e endereco **nao tem endpoint** de edicao (Backend#105):
+a tela mostra nome e e-mail desabilitados e o selo "Edicao em breve". Nao invente campo
+nem botao ate a API existir; "Sair de todos os aparelhos" e foto tambem ficam de fora.
+`describeUserAgent` resume o aparelho ("Chrome, Windows") e `timeZoneOptions` lista os
+fusos sem perder o salvo.
 
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o

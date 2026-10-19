@@ -40,6 +40,8 @@ export default defineNuxtConfig({
     '/home': { ssr: false },
     '/inventory': { ssr: false },
     '/inventory/**': { ssr: false },
+    '/activity': { ssr: false },
+    '/profile': { ssr: false },
   },
   nitro: {
     prerender: {

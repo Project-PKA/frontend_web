@@ -148,6 +148,36 @@ describe('preferences store', () => {
     expect(languageStorage.get()).toBe('en');
   });
 
+  it('saves the other preferences and keeps what the server answered', async () => {
+    const update = vi
+      .fn()
+      .mockResolvedValue(
+        profile({ timezone: 'America/Manaus', notifications: { in_app: true, email: false } }),
+      );
+    const { store, api } = setup({ authenticated: true, api: { update } });
+
+    await store.saveProfile({ timezone: 'America/Manaus', notifications: { email: false } });
+
+    expect(api.update).toHaveBeenCalledWith({
+      timezone: 'America/Manaus',
+      notifications: { email: false },
+    });
+    expect(store.timezone).toBe('America/Manaus');
+    expect(store.profile?.notifications.email).toBe(false);
+  });
+
+  it('keeps the profile as it was when saving fails', async () => {
+    const update = vi.fn().mockRejectedValue(new ApiError('network'));
+    const { store } = setup({ authenticated: true, api: { update } });
+    await store.load();
+
+    await expect(store.saveProfile({ timezone: 'America/Manaus' })).rejects.toMatchObject({
+      kind: 'network',
+    });
+
+    expect(store.timezone).toBe('America/Sao_Paulo');
+  });
+
   it('forgets the profile but keeps the language on screen', async () => {
     const { store } = setup();
     await store.load();

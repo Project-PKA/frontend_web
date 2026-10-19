@@ -1,4 +1,4 @@
-import { formatDate, formatDateTime, formatMoney } from '../utils/format';
+import { formatDate, formatDateTime, formatMoney, formatRelative } from '../utils/format';
 
 /**
  * Formatting in the active language, the profile's time zone and currency.
@@ -12,5 +12,8 @@ export function useFormat() {
     money: (amount: string) => formatMoney(amount, locale.value, preferences.currency),
     dateTime: (iso: string) => formatDateTime(iso, locale.value, preferences.timezone),
     date: (iso: string) => formatDate(iso, locale.value, preferences.timezone),
+    /** "12 minutes ago". Pass `now` from a clock that ticks so the text stays current. */
+    relative: (iso: string, now: number = Date.now()) =>
+      formatRelative(iso, locale.value, now, preferences.timezone),
   };
 }

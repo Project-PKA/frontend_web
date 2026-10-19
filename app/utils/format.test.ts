@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { browserTimeZone, formatDate, formatDateTime, formatMoney } from './format';
+import { browserTimeZone, formatDate, formatDateTime, formatMoney, formatRelative } from './format';
 
 const plain = (text: string) => text.replaceAll(String.fromCharCode(160), ' ');
 
@@ -60,5 +60,28 @@ describe('formatDate', () => {
 describe('browserTimeZone', () => {
   it('returns an IANA zone name', () => {
     expect(browserTimeZone()).toMatch(/^[A-Za-z_]+(\/[A-Za-z_+-]+)*$/);
+  });
+});
+
+describe('formatRelative', () => {
+  const now = Date.parse('2026-10-18T15:00:00Z');
+  const ago = (ms: number) => new Date(now - ms).toISOString();
+  const zone = 'America/Sao_Paulo';
+
+  it('says how long ago, in the language asked', () => {
+    expect(formatRelative(ago(12 * 60_000), 'en', now, zone)).toBe('12 minutes ago');
+    expect(formatRelative(ago(3 * 3_600_000), 'en', now, zone)).toBe('3 hours ago');
+    expect(formatRelative(ago(2 * 86_400_000), 'en', now, zone)).toBe('2 days ago');
+    expect(formatRelative(ago(12 * 60_000), 'pt-BR', now, zone)).toBe('há 12 minutos');
+  });
+
+  it('says "now" for the last minute', () => {
+    expect(formatRelative(ago(20_000), 'en', now, zone)).toBe('now');
+  });
+
+  it('shows the date and time for a moment in the future or an unreadable one', () => {
+    const future = new Date(now + 60_000).toISOString();
+    expect(formatRelative(future, 'en', now, zone)).toBe(formatDateTime(future, 'en', zone));
+    expect(formatRelative('not a date', 'en', now, zone)).toBe('not a date');
   });
 });
