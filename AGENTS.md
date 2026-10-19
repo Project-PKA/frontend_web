@@ -160,6 +160,15 @@ proprietario (a aba nem aparece para staff). Quem fez vem da equipe (`/v1/team`)
 aparece como "Ex-integrante". Sem os filtros do design (usuario e acao): a API nao filtra e
 filtrar so a pagina carregada enganaria (Backend#106). Linhas sem link ate as telas de
 destino existirem.
+**Perfil** — `/profile` (link do rodape do menu) usa so o que a API tem: preferencias
+(`preferences.saveProfile` manda so o que mudou; idioma e tema valem na hora, como na barra
+do topo), notificacoes (`in_app` e `email`; o design tinha tres avisos por tipo) e sessoes
+(`authApi.listSessions` e `revokeSession`; a atual nao tem botao de encerrar). Nome, e-mail,
+telefone, CPF, data de nascimento e endereco **nao tem endpoint** de edicao (Backend#105):
+a tela mostra nome e e-mail desabilitados e o selo "Edicao em breve". Nao invente campo
+nem botao ate a API existir; "Sair de todos os aparelhos" e foto tambem ficam de fora.
+`describeUserAgent` resume o aparelho ("Chrome, Windows") e `timeZoneOptions` lista os
+fusos sem perder o salvo.
 
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o

@@ -221,6 +221,7 @@
     "team": "Team",
     "settings": "Settings",
     "finance": "Finance",
+    "profile": "My profile",
     "activity": "Notifications and activity"
   },
   "role": {
@@ -284,6 +285,60 @@
       "home": "Back to the home page"
     },
     "description": "Request access to run card auctions in your WhatsApp group. Access is by invitation."
+  },
+  "profile": {
+    "loading": "Loading your profile",
+    "error": {
+      "title": "We could not load your profile",
+      "text": "Check your connection and try again.",
+      "retry": "Try again"
+    },
+    "identity": "You",
+    "later": "Editing comes later",
+    "personal": {
+      "title": "Personal data",
+      "name": "Full name",
+      "email": "E-mail (login)",
+      "text": "Phone, CPF and date of birth will be editable here when the service allows it."
+    },
+    "address": {
+      "title": "Address",
+      "text": "Your address will be editable here when the service allows it."
+    },
+    "preferences": {
+      "title": "Preferences",
+      "language": "Language",
+      "timezone": "Time zone",
+      "currency": "Currency"
+    },
+    "languages": {
+      "en": "English",
+      "pt-BR": "Português (Brasil)"
+    },
+    "currencies": {
+      "BRL": "Real (R$)"
+    },
+    "notifications": {
+      "title": "Notifications",
+      "inApp": "Notifications inside the app",
+      "email": "Notifications by e-mail"
+    },
+    "save": "Save changes",
+    "saved": "Changes saved.",
+    "security": {
+      "title": "Security",
+      "loading": "Loading your sessions",
+      "empty": "No active sessions",
+      "errorTitle": "We could not load your sessions",
+      "errorText": "Try again in a moment.",
+      "current": "Current",
+      "since": "Signed in on {date}",
+      "unknownDevice": "Unknown device",
+      "end": "End session",
+      "endNamed": "End the session on {device}",
+      "ended": "Session ended."
+    },
+    "changeStore": "Change store"
   },
   "activity": {
     "tabs": {
