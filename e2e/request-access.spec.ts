@@ -1,4 +1,5 @@
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from './fixtures';
+import type { Page } from '@playwright/test';
 
 function problem(status: number, code: string) {
   return {
@@ -168,5 +169,16 @@ test('is in Portuguese for a browser in Portuguese', async ({ browser }) => {
 
   await expect(page.getByRole('heading', { level: 1, name: 'Solicitar acesso' })).toBeVisible();
   await expect(page.getByRole('button', { name: 'Enviar solicitação' })).toBeVisible();
+  await context.close();
+});
+
+test('has no form that could submit by itself before the page is hydrated', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+
+  await page.goto('/request-access');
+
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page.locator('form')).toHaveCount(0);
   await context.close();
 });

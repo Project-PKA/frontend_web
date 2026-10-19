@@ -89,78 +89,85 @@ const submit = form.handleSubmit(async (values) => {
         <p class="muted">{{ t('requestAccess.intro') }}</p>
       </div>
 
-      <form class="stack" novalidate @submit.prevent="submit">
-        <AppInput
-          v-model="name"
-          v-bind="nameAttrs"
-          :label="t('requestAccess.name')"
-          :error="error('name')"
-          name="name"
-          autocomplete="name"
-          maxlength="120"
-        />
-        <AppInput
-          v-model="email"
-          v-bind="emailAttrs"
-          :label="t('requestAccess.email')"
-          :error="error('email')"
-          type="email"
-          name="email"
-          autocomplete="email"
-          inputmode="email"
-          maxlength="254"
-        />
-        <AppInput
-          v-model="whatsapp"
-          :label="t('requestAccess.whatsapp')"
-          :hint="t('requestAccess.whatsappHint')"
-          :error="error('whatsapp')"
-          type="tel"
-          name="whatsapp"
-          autocomplete="tel-national"
-          inputmode="numeric"
-          placeholder="(00) 00000-0000"
-          maxlength="15"
-        />
-        <AppInput
-          v-model="storeName"
-          v-bind="storeNameAttrs"
-          :label="t('requestAccess.storeName')"
-          :error="error('storeName')"
-          name="store"
-          autocomplete="organization"
-          maxlength="120"
-        />
-        <AppTextarea
-          v-model="message"
-          v-bind="messageAttrs"
-          :label="t('requestAccess.message')"
-          :error="error('message')"
-          :placeholder="t('requestAccess.messagePlaceholder')"
-          name="message"
-          maxlength="1000"
-        />
+      <!-- Only in the browser: before hydration a <form> would submit by itself (a GET with
+           the personal data in the address). -->
+      <ClientOnly>
+        <form class="stack" novalidate @submit.prevent="submit">
+          <AppInput
+            v-model="name"
+            v-bind="nameAttrs"
+            :label="t('requestAccess.name')"
+            :error="error('name')"
+            name="name"
+            autocomplete="name"
+            maxlength="120"
+          />
+          <AppInput
+            v-model="email"
+            v-bind="emailAttrs"
+            :label="t('requestAccess.email')"
+            :error="error('email')"
+            type="email"
+            name="email"
+            autocomplete="email"
+            inputmode="email"
+            maxlength="254"
+          />
+          <AppInput
+            v-model="whatsapp"
+            :label="t('requestAccess.whatsapp')"
+            :hint="t('requestAccess.whatsappHint')"
+            :error="error('whatsapp')"
+            type="tel"
+            name="whatsapp"
+            autocomplete="tel-national"
+            inputmode="numeric"
+            placeholder="(00) 00000-0000"
+            maxlength="15"
+          />
+          <AppInput
+            v-model="storeName"
+            v-bind="storeNameAttrs"
+            :label="t('requestAccess.storeName')"
+            :error="error('storeName')"
+            name="store"
+            autocomplete="organization"
+            maxlength="120"
+          />
+          <AppTextarea
+            v-model="message"
+            v-bind="messageAttrs"
+            :label="t('requestAccess.message')"
+            :error="error('message')"
+            :placeholder="t('requestAccess.messagePlaceholder')"
+            name="message"
+            maxlength="1000"
+          />
 
-        <!-- The decoy: out of sight, out of the keyboard and the screen reader. -->
-        <div class="visually-hidden" inert aria-hidden="true">
-          <label for="website">
-            Website
-            <input
-              id="website"
-              v-model="decoy"
-              type="text"
-              name="website"
-              tabindex="-1"
-              autocomplete="off"
-            />
-          </label>
-        </div>
+          <!-- The decoy: out of sight, out of the keyboard and the screen reader. -->
+          <div class="visually-hidden" inert aria-hidden="true">
+            <label for="website">
+              Website
+              <input
+                id="website"
+                v-model="decoy"
+                type="text"
+                name="website"
+                tabindex="-1"
+                autocomplete="off"
+              />
+            </label>
+          </div>
 
-        <p v-if="submitError" role="alert" class="hint hint--error">{{ submitError }}</p>
-        <AppButton type="submit" variant="primary" size="lg" block :busy="busy">
-          {{ t('requestAccess.submit') }}
-        </AppButton>
-      </form>
+          <p v-if="submitError" role="alert" class="hint hint--error">{{ submitError }}</p>
+          <AppButton type="submit" variant="primary" size="lg" block :busy="busy">
+            {{ t('requestAccess.submit') }}
+          </AppButton>
+        </form>
+        <template #fallback>
+          <div class="form-placeholder form-placeholder--tall" aria-hidden="true" />
+        </template>
+      </ClientOnly>
 
       <p class="faint">
         {{ t('requestAccess.reply') }}
