@@ -8,7 +8,15 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text-summary', 'lcov'],
       include: ['app/**/*.{ts,vue}'],
-      exclude: ['app/**/*.test.ts', 'app/api/generated.ts', 'app/app.vue', 'app/pages/**'],
+      exclude: [
+        'app/**/*.test.ts',
+        'app/api/generated.ts',
+        // Nuxt glue (auto-imports, runtime config): covered by the e2e tests.
+        'app/app.vue',
+        'app/pages/**',
+        'app/composables/**',
+        'app/plugins/**',
+      ],
       thresholds: {
         lines: 70,
         branches: 70,

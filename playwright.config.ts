@@ -15,6 +15,8 @@ export default defineConfig({
         // The CI e2e job does not build first, so the server command builds the static site.
         command: 'npm run generate && npm run preview -- --port 4173 --strictPort',
         url: baseURL,
+        // The API runs on the same origin in the tests, where Playwright mocks it.
+        env: { NUXT_PUBLIC_API_BASE_URL: baseURL },
         timeout: 180_000,
         reuseExistingServer: !process.env.CI,
       },

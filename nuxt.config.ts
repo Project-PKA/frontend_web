@@ -19,6 +19,18 @@ export default defineNuxtConfig({
     // Absolute origin for canonical and hreflang links; set at build time per environment.
     baseUrl: process.env.SITE_URL ?? '',
   },
+  runtimeConfig: {
+    public: {
+      // Origin of the API. Resolved at build time (NUXT_PUBLIC_API_BASE_URL).
+      apiBaseUrl: 'http://localhost:8080',
+    },
+  },
+  // The logged-in app is a client-only SPA (STACK.md section 1).
+  routeRules: {
+    '/login': { ssr: false },
+    // Temporary: the app routes get no language prefix once #13 lands.
+    '/pt-BR/login': { ssr: false },
+  },
   nitro: {
     prerender: { routes: ['/', '/pt-BR'] },
   },
