@@ -206,3 +206,24 @@ body:has(dialog[open]) {
 .form-placeholder--tall {
   min-height: 28rem;
 }
+
+/* ---------- notifications and activity ---------- */
+.activity__bar {
+  justify-content: flex-end;
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.activity__more {
+  justify-content: center;
+}
+
+.feed__item--unread {
+  background: var(--primary-soft);
+}
+
+.activity__feed {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

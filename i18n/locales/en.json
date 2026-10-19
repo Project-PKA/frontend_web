@@ -220,7 +220,8 @@
     "shipments": "Shipments",
     "team": "Team",
     "settings": "Settings",
-    "finance": "Finance"
+    "finance": "Finance",
+    "activity": "Notifications and activity"
   },
   "role": {
     "OWNER": "Owner",
@@ -237,7 +238,8 @@
     "notifications": "Notifications",
     "changeStore": "Store {store}, {role}. Change store",
     "viewProfile": "View profile",
-    "profileOf": "Profile of {email}"
+    "profileOf": "Profile of {email}",
+    "notificationsCount": "Notifications, {count} unread"
   },
   "invite": {
     "title": "You were invited",
@@ -282,5 +284,117 @@
       "home": "Back to the home page"
     },
     "description": "Request access to run card auctions in your WhatsApp group. Access is by invitation."
+  },
+  "activity": {
+    "tabs": {
+      "label": "Notifications and activity",
+      "notifications": "Notifications",
+      "notificationsCount": "Notifications ({count})",
+      "log": "Activity log"
+    },
+    "notifications": {
+      "markAll": "Mark all as read",
+      "markRead": "Mark as read",
+      "new": "New",
+      "loading": "Loading notifications",
+      "emptyTitle": "No notifications",
+      "emptyText": "New notices about your store show up here.",
+      "errorTitle": "We could not load the notifications",
+      "errorText": "Check your connection and try again.",
+      "retry": "Try again",
+      "loadMore": "Show more",
+      "unknownKind": "New notification",
+      "kinds": {
+        "POLL_CEILING_REACHED": "A poll auction reached its ceiling and is waiting for validation",
+        "BUYER_DATA_SUBMITTED": "A buyer sent their data on the settlement page"
+      },
+      "allRead": "All notifications marked as read."
+    },
+    "log": {
+      "caption": "Activity of the people in the store",
+      "loading": "Loading the activity log",
+      "emptyTitle": "No activity yet",
+      "emptyText": "What the team does in the store is recorded here.",
+      "errorTitle": "We could not load the activity log",
+      "errorText": "Check your connection and try again.",
+      "loadMore": "Show more",
+      "ownerOnly": "The log is visible only to the owner",
+      "system": "System",
+      "formerMember": "Former member",
+      "columns": {
+        "when": "When",
+        "user": "User",
+        "action": "Action",
+        "item": "Item"
+      },
+      "unknownAction": "Did something",
+      "unknownTarget": "Item",
+      "targets": {
+        "auction": "Auction",
+        "card": "Card",
+        "customer": "Customer",
+        "invitation": "Invitation",
+        "member": "Team member",
+        "message_template": "Message template",
+        "plan_request": "Plan request",
+        "public_link": "Public link",
+        "settlement": "Settlement",
+        "store": "Store"
+      },
+      "actions": {
+        "auction": {
+          "cancelled": "Cancelled an auction",
+          "created": "Created an auction",
+          "updated": "Updated an auction"
+        },
+        "bid": {
+          "registered": "Registered a bid"
+        },
+        "card": {
+          "created": "Added a card",
+          "deleted": "Deleted a card",
+          "photo_added": "Added a card photo",
+          "photo_removed": "Removed a card photo",
+          "updated": "Updated a card"
+        },
+        "customer": {
+          "created": "Added a customer",
+          "updated": "Updated a customer"
+        },
+        "invitation": {
+          "revoked": "Revoked an invitation",
+          "sent": "Sent an invitation"
+        },
+        "member": {
+          "joined": "Joined the team",
+          "permissions_updated": "Changed permissions",
+          "removed": "Removed a team member"
+        },
+        "message_template": {
+          "reset": "Reset a message template",
+          "updated": "Updated a message template"
+        },
+        "ownership": {
+          "transferred": "Transferred ownership"
+        },
+        "plan": {
+          "change_requested": "Asked for a plan change",
+          "changed": "Changed the plan"
+        },
+        "public_link": {
+          "created": "Created a public link",
+          "revoked": "Revoked a public link"
+        },
+        "settlement": {
+          "created": "Created a settlement",
+          "deleted": "Deleted a settlement",
+          "paid": "Confirmed a payment"
+        },
+        "store": {
+          "created": "Created the store",
+          "updated": "Updated the store settings"
+        }
+      }
+    }
   }
 }

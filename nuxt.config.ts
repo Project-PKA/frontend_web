@@ -38,6 +38,7 @@ export default defineNuxtConfig({
     '/convite': { ssr: false },
     '/stores/**': { ssr: false },
     '/home': { ssr: false },
+    '/activity': { ssr: false },
   },
   nitro: {
     prerender: {
