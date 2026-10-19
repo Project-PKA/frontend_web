@@ -8,7 +8,7 @@
 > a decisao ainda nao foi tomada — e perguntar, nao escolher sozinho.
 > O [`BOOTSTRAP.md`](BOOTSTRAP.md) conduz essas perguntas.
 
-**Ultima revisao:** <!-- AAAA-MM-DD --> · **Responsavel:** <!-- time/pessoa -->
+**Ultima revisao:** 2026-10-18 · **Responsavel:** Igor (@IgorOCosta)
 
 ---
 
@@ -28,7 +28,8 @@ graph LR
 
 <!-- Ajuste o diagrama a realidade: CDN, BFF, auth, quantos backends. -->
 
-**Tipo de aplicacao:** `A DECIDIR` — ver [`STACK.md`](STACK.md) secao 1.
+**Tipo de aplicacao:** Hibrido (SSG para landing, termos e privacidade; SPA
+para app, `/admin` e paginas por token) — ver [`STACK.md`](STACK.md) secao 1.
 
 ### Consequencias do tipo escolhido
 
@@ -37,10 +38,10 @@ adiante:
 
 | Pergunta | Resposta |
 | --- | --- |
-| Onde o codigo executa? | <!-- cliente / servidor / ambos --> |
-| Variavel de ambiente resolvida em build ou runtime? | <!-- --> |
-| Um artefato pode ser promovido entre ambientes? | <!-- --> |
-| Existe onde guardar segredo? | <!-- em SPA: nao --> |
+| Onde o codigo executa? | Cliente. Paginas estaticas geradas em build; sem servidor proprio |
+| Variavel de ambiente resolvida em build ou runtime? | Build (a revisar na etapa 6) |
+| Um artefato pode ser promovido entre ambientes? | Nao, enquanto a URL da API for resolvida em build |
+| Existe onde guardar segredo? | Nao. Nada sensivel no frontend; access token so em memoria |
 
 > Se as variaveis sao resolvidas em **build**, cada ambiente refaz o build e
 > nao existe "build once, deploy many". Isso e uma restricao operacional
@@ -64,14 +65,18 @@ adiante:
 
 ### O que o projeto define
 
-<!--
-Documente a estrutura escolhida. Sugestao de ponto de partida; ajuste ao
-que a ferramenta de scaffolding gerou.
--->
+Nuxt 4: o codigo do app fica em `app/` (srcDir).
 
 ```
-src/
-├── ...
+app/
+├── api/              cliente HTTP, ApiError, tipos gerados (generated.ts)
+├── pages/            rotas por arquivo (mapa na secao 4)
+├── app.vue           raiz: skip link, cabecalho de idioma
+└── (a criar)         components/, composables/, stores/, middleware/
+i18n/locales/         en.json, pt-BR.json (unico lugar com texto visivel)
+e2e/                  testes Playwright
+design/               prototipo e design-system (fonte; nao e codigo do produto)
+public/               arquivos estaticos
 ```
 
 ### Regras estruturais (valem para qualquer stack)
@@ -95,7 +100,7 @@ src/
 
 ## 3. Gerenciamento de estado
 
-**Status: A DECIDIR.**
+**Status: decidido (bootstrap, etapa 9).**
 
 ### Criterio de decisao
 
@@ -118,20 +123,26 @@ dedicada, nao por um store.
 
 ### Decisao do projeto
 
-<!--
-  - Ferramenta e versao
-  - Quais tipos da tabela acima ela cobre
-  - O que ficou de fora e por que
-  - Onde os providers sao montados
--->
+| Tipo de estado | Ferramenta |
+| --- | --- |
+| Servidor (listas, cache, revalidacao, polling por componente na Home) | TanStack Query (`@tanstack/vue-query`) |
+| Global de UI e sessao | Pinia, **so** para: sessao (access token apenas em memoria), loja atual (valor do `x-store-id`), idioma e tema |
+| Formularios | VeeValidate com Zod; mensagens por chave de i18n; o servidor sempre vale e seus erros por `code` aparecem nos campos |
+| Local, irmaos, URL | Estado local do componente, ancestral proximo e query string (filtros, abas, paginacao por cursor) |
 
-`A DECIDIR`
+Tudo o mais que vem da API fica no cache de servidor, nunca copiado para o
+Pinia. Versoes sao fixadas no scaffold, com aprovacao das dependencias.
+
+**Observabilidade:** sem telemetria nem analytics de terceiros (LGPD). Coleta
+de erro em producao fica para depois da VPS (A7), com GlitchTip na propria
+VPS; qualquer relatorio remove dado pessoal e **o fragmento da URL**, onde
+vai o token das paginas publicas.
 
 ---
 
 ## 4. Roteamento
 
-**Status: A DECIDIR.**
+**Status: decidido (bootstrap, etapa 9).**
 
 ### O que a escolha do tipo de aplicacao ja implica
 
@@ -146,21 +157,46 @@ Ver `docker/nginx.conf.example` e [`DEPLOY.md`](DEPLOY.md).
 
 ### Decisao do projeto
 
-<!--
-  - Biblioteca e versao
-  - Estrutura: rotas em arquivo unico ou baseada em arquivos
-  - Code splitting: quais rotas sao lazy
-  - Rotas protegidas: onde mora a guarda de autenticacao
-  - Comportamento de 404 e de erro de rota
--->
-
-`A DECIDIR`
+- **Biblioteca:** roteador do Nuxt (vue-router), rotas baseadas em arquivos.
+- **URLs em ingles**, sem slugs traduzidos; o idioma nunca muda o caminho do
+  app. Landing, termos e privacidade: ingles em `/`, portugues em `/pt-BR/`,
+  com `hreflang` e `x-default` em `/` (pre-renderizadas).
+- **Code splitting:** por rota (padrao do Nuxt).
+- **Protecao:** middleware de rota para sessao, loja escolhida, permissao do
+  papel (OWNER/STAFF) e `is_platform_admin` em `/admin`. A verdade e o servidor
+  (403 `MISSING_PERMISSION` ou `OWNER_REQUIRED` mostra o estado de sem permissao).
+- **404 e erro:** pagina 404 do design; o erro de rota usa a mesma tela.
+- **Rotas privadas e por token:** `noindex` e `Referrer-Policy: no-referrer`
+  no proxy reverso. O app nao poe a loja na URL: ela vem do Pinia, entao o link
+  de uma tela nao muda de loja por conta propria.
+- **Redirecionamento temporario:** `/convite` vai para `/invite` preservando o
+  fragmento, ate o Backend mudar o link do e-mail (Backend#89).
 
 ### Mapa de rotas
 
-| Rota | Tela | Protegida | Observacao |
+| Rota | Tela (design) | Protegida | Observacao |
 | --- | --- | --- | --- |
-| <!-- --> | <!-- --> | <!-- --> | <!-- --> |
+| `/`, `/pt-BR/` | Landing (`landing.html`) | Nao | SSG, indexavel |
+| `/terms`, `/privacy` (e `/pt-BR/...`) | Termos, privacidade | Nao | SSG, indexavel |
+| `/request-access` | Solicitar acesso | Nao | Campo-isca `website` vazio |
+| `/login` | Login por OTP | Nao | |
+| `/invite` | Aceitar convite | Nao | Token no fragmento; noindex |
+| `/settlement` | Acerto do comprador | Nao | Token no fragmento; noindex |
+| `/consignor` | Acompanhamento do consignador | Nao | Token no fragmento + 4 digitos do CPF; noindex |
+| `/showcase` | Vitrine publica | Nao | Pagina de cliente, dado ao vivo |
+| `/stores`, `/stores/new` | Selecao e nova loja | Sessao | Nova loja so com a permissao global |
+| `/home` | Home ao vivo (e estados vazio, sem permissao, WhatsApp caiu) | Loja | |
+| `/inventory`, `/inventory/new`, `/inventory/:id` | Estoque, cadastro, detalhe | Loja | `can_manage_inventory`; excluir pede `can_delete` |
+| `/auctions`, `/auctions/:id`, `/auctions/:id/edit`, `/auctions/:id/poll` | Leiloes, sala, edicao, aprovar enquete | Loja | `can_manage_auctions` |
+| `/customers`, `/customers/:id`, `/blacklist` | Clientes, perfil 360, blacklist | Loja | `can_manage_customers` |
+| `/shipments` | Acertos e envios | Loja | |
+| `/finance` | Financeiro | Loja | `can_view_finance`; unico com periodo |
+| `/team` | Equipe | Proprietario | |
+| `/settings`, `/plan` | Configuracoes, plano | Loja | Plano: troca so por solicitacao |
+| `/activity` | Notificacoes e log | Loja | Log so do proprietario |
+| `/profile` | Perfil | Sessao | |
+| `/admin`, `/admin/users`, `/admin/users/:id`, `/admin/stores`, `/admin/stores/new`, `/admin/invitations` | Area de administracao | Administrador | Sem dado interno das lojas |
+| `*` | 404 | Nao | |
 
 ---
 
@@ -189,8 +225,14 @@ de rede se testa em milissegundos, sem mock.
 
 ### Design e tokens
 
-**Fonte do design:** `A DECIDIR` <!-- ferramenta e link: Claude Design, Figma,
-design system da organizacao -->
+**Fonte do design:** Claude Design; prototipo em `design/` (41 telas) e
+`design/design-system/` (`tokens.css`, `components.css`, `app.js`, `icons.svg`).
+**Decisao (etapa 9):** portar `tokens.css` e `components.css` como CSS global
+(classes BEM do design), com componentes Vue finos por cima e **sem Tailwind**.
+Os tokens so mudam por atualizacao vinda do design. Fontes (Sora, DM Sans,
+JetBrains Mono) autohospedadas via Fontsource, nunca do Google. `app.js` do
+design e so vitrine de componentes e nao vai para o produto. Tema claro,
+escuro e sistema por `data-theme`.
 
 A ferramenta de design nao muda a estrutura deste repositorio: o design e
 **insumo**, e o codigo continua passando pelo mesmo contrato (`project.mk`),
@@ -198,7 +240,7 @@ CI e revisao. Quatro regras fazem a ponte:
 
 1. **Tokens sao a interface entre design e codigo.** Cor, tipografia,
    espacamento, raio e sombra do design viram **um** arquivo de tokens no
-   codigo (<!-- ex.: src/styles/tokens.css com variaveis CSS, ou tokens.json -->).
+   codigo (`app/assets/css/tokens.css`, portado de `design/design-system/tokens.css`).
    Componente usa token, nunca valor literal. Mudou o visual global? Muda o
    token, nao cem componentes. De preferencia, faca disso regra de lint
    (ex.: proibir cor hexadecimal fora do arquivo de tokens).
@@ -261,12 +303,30 @@ Defina **um** tipo de erro da camada de rede, que distinga ao menos: status
 HTTP de erro, falha de rede, timeout, cancelamento e falha de
 desserializacao. A UI trata esse tipo, nunca o erro cru do transporte.
 
-<!--
-Preencha por projeto:
-  - Politica de retry: onde mora, quantas tentativas, backoff
-  - O que fazer em 401: redirecionar? renovar token? onde?
-  - Como o erro chega ao usuario: toast, boundary, inline
--->
+### Decisoes deste projeto (bootstrap, etapa 7)
+
+- **Contrato:** `openapi.yaml` gerado pelo Backend, publicado em
+  `Project-PKA/shared` (`CONTRACT_REPO`). Tipos gerados com `openapi-typescript`
+  em `app/api/generated.ts` (`make generate-types`); o arquivo gerado nunca e
+  editado a mao. O `sync-api-types.yml` abre PR quando o contrato muda.
+- **Cliente:** fino e proprio sobre `fetch` (sem biblioteca de cliente), em
+  `app/api/`. Regra de lint (`no-restricted-globals` para `fetch` e
+  `$fetch`) proibe chamada fora dessa pasta.
+- **Erro:** `ApiError` proprio, distinguindo erro HTTP (corpo RFC 9457 com
+  `code` estavel), falha de rede, timeout, cancelamento e falha de
+  desserializacao. A UI traduz pelo `code`, nunca mostra o `detail`.
+- **401:** uma tentativa de `POST /v1/auth/refresh` (cookie `refresh_token`,
+  `credentials: 'include'`) e repete a chamada; se falhar, vai para o login.
+  O access token vive so em memoria.
+- **403** com `MISSING_PERMISSION` ou `OWNER_REQUIRED`: estado de sem permissao.
+- **Rotas de loja:** `Authorization: Bearer` e `x-store-id` injetados pelo
+  cliente.
+- **Paginas publicas:** o token e lido do fragmento da URL e enviado no
+  corpo do POST; resposta `PUBLIC_LINK_NOT_FOUND` mostra uma mensagem generica
+  unica.
+- **Dinheiro:** string decimal da API, nunca convertida para `number`.
+- **Retry de rede:** a definir na implementacao do cliente; nao ha retry
+  automatico em escrita (POST/PATCH/DELETE).
 
 ---
 
@@ -317,8 +377,14 @@ Dois controles, ambos plugados no contrato e **bloqueantes** no CI:
 
 | Controle | Alvo do Makefile | Limite |
 | --- | --- | --- |
-| Orcamento de bundle | `make bundle-budget` | <!-- --> |
-| Core Web Vitals | `make perf` | <!-- LCP / CLS / INP --> |
+| Orcamento de bundle | `make bundle-budget` (`size-limit`) | A medir no primeiro build; folgado, apertado depois |
+| Core Web Vitals | `make perf` (Lighthouse CI, perfil mobile) | A medir no primeiro build. Alvo inicial: LCP, CLS e INP no "bom" do Web Vitals; acessibilidade >= 0.95 |
+
+**Decisao (etapa 8):** publico principal e lojista em celular, entao o perfil e
+mobile. Lighthouse CI cobre a landing (estatica) e o shell do app (login). Os
+limites so sao fixados depois do primeiro build real e entram em `project.mk`
+e na configuracao das ferramentas; ate la os alvos ficam pendentes. Fontes
+autohospedadas e imagens com dimensao explicita ajudam LCP e CLS.
 
 Comece com limites medidos a partir do build real e aperte depois. Limite
 irreal e desligado na primeira semana — e ai voce nao tem orcamento nenhum.

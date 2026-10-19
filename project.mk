@@ -23,23 +23,23 @@
 # -----------------------------------------------------------------------------
 
 # Instala dependencias de forma reprodutivel (lockfile obrigatorio no CI).
-SETUP_CMD =
+SETUP_CMD = npm ci --no-audit --no-fund
 
 # Sobe o servidor de desenvolvimento.
-DEV_CMD =
+DEV_CMD = npm run dev
 
 # Gera o artefato de producao em $(BUILD_DIR).
-BUILD_CMD =
+BUILD_CMD = npm run generate
 
 # Serve o build localmente. Usado por e2e e por auditoria de performance.
-PREVIEW_CMD =
+PREVIEW_CMD = npm run preview -- --port $(PREVIEW_PORT) --strictPort
 
 # Remove artefatos e relatorios.
-CLEAN_CMD =
+CLEAN_CMD = rm -rf .output .nuxt coverage playwright-report test-results .lighthouseci
 
 # Onde o build deposita o artefato. Ajuste conforme a ferramenta.
 # Vite/Astro: dist · Next: .next · CRA/Angular: build|dist · SvelteKit: build
-BUILD_DIR = dist
+BUILD_DIR = .output/public
 
 # Porta em que PREVIEW_CMD escuta. Usada pelo CI para esperar o servidor.
 PREVIEW_PORT = 4173
@@ -53,40 +53,40 @@ PREVIEW_PORT = 4173
 # Ver ARCHITECTURE.md e o checklist do BOOTSTRAP.md.
 # -----------------------------------------------------------------------------
 
-LINT_CMD =
-LINT_FIX_CMD =
-FORMAT_CMD =
-FORMAT_CHECK_CMD =
+LINT_CMD = npx eslint . --max-warnings=0
+LINT_FIX_CMD = npx eslint . --fix
+FORMAT_CMD = npx prettier --write .
+FORMAT_CHECK_CMD = npx prettier --check .
 
 # `skip` se o projeto nao usa tipagem estatica.
-TYPECHECK_CMD =
+TYPECHECK_CMD = npx nuxt typecheck
 
 # -----------------------------------------------------------------------------
 # Testes
 # -----------------------------------------------------------------------------
 
-TEST_CMD =
-TEST_WATCH_CMD =
+TEST_CMD = npx vitest run
+TEST_WATCH_CMD = npx vitest
 
 # Precisa produzir coverage/lcov.info — e o formato que o SonarCloud e o
 # comentario de cobertura no PR consomem.
-TEST_COVERAGE_CMD =
+TEST_COVERAGE_CMD = npx vitest run --coverage
 
 # `skip` enquanto nao houver e2e. Registre no TESTING.md quando isso mudar.
-E2E_CMD =
+E2E_CMD = npx playwright test
 
 # Instalacao de browsers/dependencias do e2e no CI. `skip` se nao precisar.
-E2E_INSTALL_CMD =
+E2E_INSTALL_CMD = npx playwright install --with-deps chromium
 
 # -----------------------------------------------------------------------------
 # Performance
 # -----------------------------------------------------------------------------
 
 # Orcamento de bundle. Deve FALHAR quando estourar, nao so avisar.
-BUNDLE_BUDGET_CMD =
+BUNDLE_BUDGET_CMD = npx size-limit
 
 # Core Web Vitals sobre o build (Lighthouse CI ou equivalente).
-PERF_CMD =
+PERF_CMD = npx lhci autorun
 
 # -----------------------------------------------------------------------------
 # Contrato de API
@@ -96,10 +96,10 @@ PERF_CMD =
 # `skip` se o projeto nao consome API tipada.
 # -----------------------------------------------------------------------------
 
-GENERATE_TYPES_CMD =
+GENERATE_TYPES_CMD = npx openapi-typescript $(OPENAPI_SPEC) -o app/api/generated.ts
 
 # Fonte do contrato. Tambem pode vir do ambiente (ver .env.example).
-OPENAPI_SPEC ?=
+OPENAPI_SPEC ?= ../Backend/docs/api/openapi.yaml
 
 # =============================================================================
 # EXEMPLOS — copie, ajuste e descomente o bloco da sua stack.

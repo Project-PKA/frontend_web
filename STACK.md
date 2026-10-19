@@ -33,17 +33,17 @@ inercia.
 
 | Camada | Escolha | Versao | Secao |
 | --- | --- | --- | --- |
-| Tipo de aplicacao | <!-- SPA / SSR / SSG / hibrido --> | — | 1 |
-| Framework de UI | <!-- --> | <!-- --> | 2 |
-| Linguagem | <!-- --> | <!-- --> | 3 |
-| Runtime e gerenciador de pacotes | <!-- --> | <!-- --> | 3 |
-| Build | <!-- --> | <!-- --> | 3 |
-| Lint e formatacao | <!-- --> | <!-- --> | 4 |
-| Testes unitarios/componente | <!-- --> | <!-- --> | 5 |
-| Testes e2e | <!-- --> | <!-- --> | 5 |
+| Tipo de aplicacao | Hibrido: SSG (landing, termos, privacidade) + SPA (app, /admin, paginas por token) | — | 1 |
+| Framework de UI | Vue 3 + Nuxt (estatico, `nuxi generate`) | ver `package.json` | 2 |
+| Linguagem | TypeScript estrito | ver `package.json` | 3 |
+| Runtime e gerenciador de pacotes | Node 22 + npm 10.9 | 22.23.3 | 3 |
+| Build | Nuxt (Vite) | ver `package.json` | 3 |
+| Lint e formatacao | ESLint (+ a11y Vue, sonarjs) e Prettier | ver `package.json` | 4 |
+| Testes unitarios/componente | Vitest + Vue Testing Library | ver `package.json` | 5 |
+| Testes e2e | Playwright | ver `package.json` | 5 |
 | Estilo | <!-- --> | <!-- --> | 6 |
-| Contrato de API | <!-- --> | <!-- --> | 7 |
-| Plataforma de deploy | <!-- --> | — | 8 |
+| Contrato de API | `openapi-typescript` (so tipos) + cliente fino proprio | ver `package.json` | 7 |
+| Plataforma de deploy | Mesma VPS do Backend, proxy reverso (execucao pendente: A7) | — | 8 |
 
 As versoes exatas do runtime ficam em `.tool-versions`; os comandos, em
 `project.mk`.
@@ -65,21 +65,31 @@ ruim?
 | **SSR** | SEO, first paint, segredo no servidor, dado fresco por requisicao. | Ha um processo em producao: custo, escala, monitoramento, mais superficie de falha. |
 | **SSG** | Rapido e barato como SPA, indexavel como SSR. | Conteudo precisa ser conhecido em build; rebuild a cada mudanca. |
 
-**Escolha:** <!-- -->
-**Criterio:** <!-- -->
-**Por que:** <!-- -->
-**Descartado:** <!-- -->
-**Quando reabrir:** <!-- ex.: se SEO virar requisito -->
+**Escolha:** Hibrido. Landing, Termos de uso e Politica de Privacidade
+estaticas (SSG, indexaveis). App logado, `/admin` e paginas publicas por token
+(acerto, consignador) como SPA, com `noindex` e `Referrer-Policy: no-referrer`.
+A vitrine publica fica como pagina de cliente (dado ao vivo); se precisar ser
+indexavel, reabrir.
+**Criterio:** SEO so onde ha ganho (landing); sem servidor para manter (um
+mantenedor); token no fragmento da URL nunca pode chegar a servidor ou log.
+**Por que:** o conteudo indexavel e conhecido em build; o resto e atras de
+login ou de token, onde SEO e indesejado. Evita processo SSR em producao.
+**Descartado:** SSR completo (custo operacional sem ganho no app logado); tudo
+SPA (landing com HTML vazio para buscador).
+**Quando reabrir:** se a vitrine precisar de SEO, ou se surgir conteudo
+dinamico indexavel.
 
 ### Consequencias registradas
 
-<!--
-Escreva o que essa escolha ja determinou, para ninguem redescobrir depois:
-  - Onde o deploy publica
-  - Se a variavel de ambiente e resolvida em build ou em runtime
-  - Se um artefato pode ser promovido entre ambientes
-  - Se o servidor precisa de fallback de rota
--->
+- Deploy estatico (arquivos em CDN/bucket/servidor web), sem processo Node em
+  producao. Plataforma ainda a decidir (etapa 6).
+- Variaveis de ambiente resolvidas em **build** (URL da API): cada ambiente
+  refaz o build, sem "build once, deploy many" (a revisar na etapa 6).
+- Fallback de rota para `index.html` nas rotas da SPA; paginas estaticas servidas
+  como arquivos proprios.
+- Sem segredo no frontend: nada sensivel em variavel de ambiente.
+- Cabecalhos (`Referrer-Policy`, CSP, `X-Robots-Tag`) precisam ser definidos na
+  camada de hospedagem, nao so em `<meta>`.
 
 ---
 
@@ -100,11 +110,17 @@ times):
 Criterio que **nao** vale: benchmark de runtime. Em frontend de produto, o
 gargalo quase nunca e o framework.
 
-**Escolha:** <!-- -->
-**Criterio:** <!-- -->
-**Por que:** <!-- -->
-**Descartado:** <!-- -->
-**Quando reabrir:** <!-- -->
+**Escolha:** Vue 3 com Nuxt em modo estatico (`nuxi generate`); rotas do app,
+`/admin` e paginas por token com `routeRules` `ssr: false`; landing, termos e
+privacidade pre-renderizadas.
+**Criterio:** dominio do mantenedor (Vue); hibrido SSG + SPA nativo; roteamento,
+`<head>` e i18n integrados para um mantenedor so.
+**Por que:** um unico projeto cobre as paginas indexaveis e a SPA, sem servidor
+em producao.
+**Descartado:** React (preferencia do mantenedor e Vue); Vite + vite-ssg (mais
+enxuto, mas exige montar roteamento, head e pre-render por conta propria).
+**Quando reabrir:** se o Nuxt travar atualizacoes de dependencia, ou se o app
+nao precisar mais do hibrido.
 
 ---
 
@@ -115,11 +131,14 @@ o alvo `typecheck` (`TYPECHECK_CMD = skip`) e enfraquece o contrato de API da
 secao 7. E uma escolha legitima em prototipo; e cara em produto de longa
 duracao.
 
-**Escolha:** <!-- linguagem, runtime, gerenciador de pacotes, bundler -->
-**Criterio:** <!-- -->
-**Por que:** <!-- -->
-**Descartado:** <!-- -->
-**Quando reabrir:** <!-- -->
+**Escolha:** TypeScript em modo estrito; Node 22 (22.23.3 em `.tool-versions`);
+npm 10.9 com `package-lock.json`; build do Nuxt (Vite).
+**Criterio:** o projeto pede Node 22; tipos gerados do OpenAPI exigem
+tipagem estatica; npm vem com o Node e funciona no Windows sem passo extra.
+**Por que:** tipo gerado vira erro de compilacao quando o Backend muda.
+**Descartado:** JavaScript puro (enfraquece o contrato); pnpm (ganho pequeno
+para um mantenedor, mais um passo de instalacao no CI).
+**Quando reabrir:** se o tempo de instalacao no CI virar problema.
 
 Versoes exatas em `.tool-versions` — e o que garante que a sua maquina, a do
 colega e o CI rodem a mesma coisa.
@@ -145,11 +164,17 @@ outras:
 - [ ] Formatacao verificada separadamente (`make format-check`)
 - [ ] Falha em warning no CI, nao so em error
 
-**Escolha:** <!-- -->
-**Criterio:** <!-- -->
-**Por que:** <!-- -->
-**Descartado:** <!-- ex.: Biome vs ESLint+Prettier -->
-**Quando reabrir:** <!-- -->
+**Escolha:** ESLint (flat config, via `@nuxt/eslint`) com
+`eslint-plugin-vuejs-accessibility` e `eslint-plugin-sonarjs`; Prettier para
+formatacao; `vue-tsc` para tipos. Lint com `--max-warnings=0`.
+**Criterio:** acessibilidade WCAG AA e code smells sao requisitos; cobertura
+madura para Vue.
+**Por que:** e a combinacao com regras de a11y para templates Vue e o
+ecossistema do Nuxt.
+**Descartado:** Biome (mais rapido, mas sem cobertura equivalente de
+acessibilidade em templates Vue).
+**Quando reabrir:** se o Biome ganhar regras de a11y para Vue, ou se o lint
+ficar lento.
 
 ---
 
@@ -159,13 +184,17 @@ outras:
 `coverage/lcov.info`. E o formato que o SonarCloud e o comentario de
 cobertura no PR consomem, e praticamente toda ferramenta sabe emitir.
 
-**Escolha:** <!-- unitario/componente + e2e -->
-**Criterio:** <!-- -->
-**Por que:** <!-- -->
-**Descartado:** <!-- -->
-**Quando reabrir:** <!-- -->
+**Escolha:** Vitest + Vue Testing Library (unidade e componente); Playwright
+(e2e desde o inicio, nos 9 fluxos de `TESTING.md`, com a API simulada por rota).
+**Criterio:** integracao nativa com Vite/Nuxt; consulta por papel acessivel;
+e2e nos fluxos em que falha custa caro.
+**Por que:** o Backend precisa de banco e e-mail, entao e2e contra ele nao e
+reprodutivel no CI; o contrato tipado reduz o risco de divergencia.
+**Descartado:** Jest (mais configuracao com Vite); Cypress; e2e contra o Backend
+real (revisitar quando houver ambiente `test` estavel).
+**Quando reabrir:** se a simulacao de API divergir do Backend em producao.
 
-**Piso de cobertura:** <!-- % --> — o valor importa menos que ele existir e
+**Piso de cobertura:** 70% global; 85% nos modulos criticos — o valor importa menos que ele existir e
 nao cair.
 
 O criterio de **o que testar onde** esta em [`TESTING.md`](TESTING.md).
@@ -199,20 +228,37 @@ nao mantenha copia aqui.
 **Se nao**, registre como risco em `ARCHITECTURE.md`. E divida que cobra
 juros.
 
-**Escolha:** <!-- gerador, ou `skip` -->
-**Onde mora o contrato:** <!-- URL / repositorio / artefato -->
-**Quem avisa quando muda:** <!-- -->
-**Descartado:** <!-- ex.: gerar o cliente inteiro vs so os tipos -->
+**Escolha:** `openapi-typescript` gera so os tipos (`app/api/generated.ts`);
+cliente fino proprio sobre `fetch`, com `ApiError` (RFC 9457) e regra de lint
+contra `fetch` fora de `app/api/`. Detalhes em `ARCHITECTURE.md` secao 6.
+**Onde mora o contrato:** `Project-PKA/shared` (`openapi.yaml`), gerado pelo
+Backend (`../Backend/docs/api/openapi.yaml` localmente).
+**Quem avisa quando muda:** o `shared` dispara o `sync-api-types.yml` deste
+repositorio, que abre PR. Exige `CONTRACT_REPO=Project-PKA/shared` e o secret
+`AUTOMATION_TOKEN` (A2 em `shared/OWNER.md`, a criar pelo dono).
+**Descartado:** cliente gerado (`openapi-fetch` ou similar): menos codigo, mas
+o refresh, o `x-store-id` e o `ApiError` precisariam de adaptacao de qualquer
+forma e a dependencia ficaria acoplada ao gerador.
 
 ---
 
 ## 8. Plataforma de deploy
 
-**Escolha:** <!-- -->
-**Criterio:** <!-- onde a org ja hospeda, restricao de nuvem, quem opera -->
-**Por que:** <!-- -->
-**Descartado:** <!-- -->
-**Quando reabrir:** <!-- -->
+**Escolha:** arquivos estaticos (saida de `nuxi generate`) servidos pela
+**mesma VPS do Backend**, atras do proxy reverso. **Decisao tomada, execucao
+pendente:** depende de VPS e dominio (A7 em `shared/OWNER.md`). Sem isso nao
+ha deploy real nem smoke test publicado.
+**Criterio:** controlar cabecalhos (CSP, `Referrer-Policy: no-referrer`,
+`X-Robots-Tag: noindex` nas rotas privadas e por token); manter o cookie
+`refresh_token` (httpOnly) no mesmo site da API; dados na infraestrutura do
+proprio produto (LGPD); um unico operador.
+**Por que:** o proxy reverso aplica os cabecalhos por rota, o que um `<meta>`
+nao garante; app e API no mesmo site evitam cookie de terceiros.
+**Descartado:** plataforma de borda (Cloudflare Pages, Netlify, S3 + CDN):
+cabecalhos e cookie entre sites exigiriam configuracao extra, e traria mais um
+operador de dados.
+**Quando reabrir:** se o trafego da landing exigir CDN; ou se a VPS virar
+gargalo. A landing poderia ir para a borda sem tocar o app.
 
 O modelo de ambientes (dev / test / homolog / prod, aprovacao em homologacao
 e producao) **nao** depende da plataforma e ja esta pronto. So a publicacao
@@ -229,13 +275,17 @@ Nao precisam ser tomadas no primeiro dia, mas precisam ser **conscientes**.
 
 | Decisao | Pergunta que revela a necessidade | Status |
 | --- | --- | --- |
-| Roteador | Ha mais de uma tela? Rota protegida? URL compartilhavel? | <!-- --> |
-| Estado de servidor | Ha cache de resposta de API? Revalidacao? Offline? | <!-- --> |
-| Estado global de UI | Tema, idioma, notificacao — ou o estado local basta? | <!-- --> |
-| Formularios | Quantos campos? Que validacao? Valida no servidor? | <!-- --> |
-| Design | Fonte do visual (Claude Design, Figma, design system da org) e onde ficam os tokens | <!-- --> |
-| i18n | Mais de um idioma, hoje ou no roadmap? | <!-- --> |
-| Observabilidade | Como voce descobre que quebrou em producao? | <!-- --> |
+| Roteador | Ha mais de uma tela? Rota protegida? URL compartilhavel? | Decidido: roteador do Nuxt, URLs em ingles, middleware de guarda (ARCHITECTURE.md secao 4) |
+| Estado de servidor | Ha cache de resposta de API? Revalidacao? Offline? | Decidido: TanStack Query (`@tanstack/vue-query`), polling por componente |
+| Estado global de UI | Tema, idioma, notificacao — ou o estado local basta? | Decidido: Pinia so para sessao, loja atual, idioma e tema |
+| Formularios | Quantos campos? Que validacao? Valida no servidor? | Decidido: VeeValidate + Zod; servidor sempre vale |
+| Design | Fonte do visual (Claude Design, Figma, design system da org) e onde ficam os tokens | Decidido: Claude Design; CSS global do `design-system`, sem Tailwind, fontes via Fontsource |
+| i18n | Mais de um idioma, hoje ou no roadmap? | Decidido: `@nuxtjs/i18n` (vue-i18n), `en` e `pt-BR` (ADR 0017); landing em `/` (en) e `/pt-BR/` com hreflang |
+| Observabilidade | Como voce descobre que quebrou em producao? | Sem telemetria de terceiros; GlitchTip na VPS depois de A7, sem dado pessoal nem fragmento da URL |
+
+Dependencias citadas aqui (TanStack Query, Pinia, VeeValidate, Zod,
+`@nuxtjs/i18n`, Fontsource, `openapi-typescript`, size-limit, Lighthouse CI,
+Playwright, Vitest) ainda precisam de aprovacao explicita ao instalar.
 
 > A maior parte do que vira "estado global" e, na verdade, **cache de
 > servidor**: resposta de API com invalidacao e revalidacao. Isso e problema

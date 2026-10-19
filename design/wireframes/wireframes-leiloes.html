@@ -1,0 +1,1496 @@
+<title>Wireframes Leilões TCG</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: protótipo navegável por hash. Faixa de telas no topo; telas públicas (1-3) centradas; telas 4-10 dentro do shell sidebar + topbar. */
+:root{
+  --bg:#f2f2f0; --surface:#ffffff; --line:#9a9a96; --line-soft:#d4d4d0; --fg:#1d1d1b; --muted:#6b6b67; --fill:#e6e6e3; --hatch:#cfcfcb; --stage:#d3d3cf;
+  --font:'IBM Plex Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#171716;--surface:#212120;--line:#6d6d69;--line-soft:#3a3a38;--fg:#ececea;--muted:#9b9b97;--fill:#2d2d2b;--hatch:#3a3a37;--stage:#0c0c0b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#171716;--surface:#212120;--line:#6d6d69;--line-soft:#3a3a38;--fg:#ececea;--muted:#9b9b97;--fill:#2d2d2b;--hatch:#3a3a37;--stage:#0c0c0b;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:13px;line-height:1.4;margin:0;padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px)}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)}
+h1,h2,h3{margin:0}
+button,input,select,textarea{font:inherit;color:inherit}
+button{background:var(--surface);border:1px solid var(--line);padding:6px 12px;cursor:pointer}
+button.pri{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
+button.sm{padding:2px 8px;font-size:12px}
+input,select,textarea{background:var(--surface);border:1px solid var(--line);padding:6px 8px;width:100%;min-width:0}
+textarea{resize:vertical;min-height:70px}
+label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--muted)}
+label.chk{flex-direction:row;align-items:center;gap:8px;color:var(--fg);font-size:13px}
+label.chk input{width:auto}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.hatch{background:repeating-linear-gradient(135deg,var(--surface) 0 10px,var(--fill) 10px 20px)}
+.ph{border:1px dashed var(--line);background:var(--hatch);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px;text-align:center}
+
+/* strip */
+.strip{display:flex;gap:4px;overflow-x:auto;padding:6px 12px;background:var(--fg);position:sticky;top:0;z-index:20;align-items:center}
+.strip b{color:var(--bg);font-size:11px;letter-spacing:.06em;margin-right:6px;white-space:nowrap}
+.strip a{color:var(--bg);text-decoration:none;font-size:12px;padding:3px 8px;border:1px solid transparent;white-space:nowrap;opacity:.75}
+.strip a.on{opacity:1;border-color:var(--bg)}
+
+.screen{display:none}
+.screen.show{display:block}
+
+/* public */
+.center{min-height:calc(100vh - 40px);display:flex;align-items:center;justify-content:center;padding:24px 16px}
+.card{border:1px solid var(--line);background:var(--surface);padding:20px;width:100%}
+.stack{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.grow{flex:1 1 0;min-width:0}
+.otp{display:flex;gap:8px}
+.otp input{text-align:center;font-size:20px;font-family:var(--mono);padding:10px 0}
+
+/* landing */
+.lp-nav{display:flex;justify-content:space-between;align-items:center;padding:12px 24px;border-bottom:1px solid var(--line);background:var(--surface);gap:10px;flex-wrap:wrap}
+.lp-wrap{max-width:1000px;margin:0 auto;padding:32px 24px;display:flex;flex-direction:column;gap:36px}
+.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:28px;align-items:center}
+.hero h1{font-size:34px;line-height:1.15;text-wrap:balance}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.feat{border:1px solid var(--line);background:var(--surface);padding:14px;display:flex;flex-direction:column;gap:8px}
+.price.hl{border:2px solid var(--fg)}
+.price .v{font-size:26px;font-family:var(--mono);font-weight:600}
+.price ul{margin:0;padding-left:18px}
+
+/* lojas */
+.lojas{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;width:100%}
+.loja{border:1px solid var(--line);background:var(--surface);padding:14px;display:flex;flex-direction:column;gap:8px;text-decoration:none}
+.loja.new{border-style:dashed;align-items:center;justify-content:center;min-height:130px;font-weight:600}
+
+/* shell */
+.app{display:none;grid-template-columns:220px minmax(0,1fr);grid-template-areas:"side top" "side main";grid-template-rows:auto 1fr;min-height:calc(100vh - 40px)}
+.app.show{display:grid}
+.side{grid-area:side;border-right:1px solid var(--line);background:var(--surface);padding:12px;display:flex;flex-direction:column;gap:14px}
+.store{border:1px solid var(--line);padding:8px;display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo{width:34px;height:34px;border:1px dashed var(--line);background:var(--hatch);flex:none}
+.store b{display:block}.store small{color:var(--muted)}
+.store .caret{margin-left:auto}
+.nav{display:flex;flex-direction:column;gap:2px}
+.nav a{display:flex;gap:8px;padding:8px;text-decoration:none;border:1px solid transparent}
+.nav a i{width:14px;height:14px;border:1px solid var(--line);flex:none;margin-top:1px}
+.nav a.on{background:var(--fill);border-color:var(--line);font-weight:600}
+.nav a.on i{background:var(--fg)}
+.profile{margin-top:auto;display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--muted);font-size:12px;border-top:1px solid var(--line-soft);padding-top:10px}
+.avatar{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--hatch);flex:none}
+.top{grid-area:top;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:10px 20px;border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:30px;z-index:5}
+.top h1{font-size:15px;margin-right:auto}
+.wa{display:flex;align-items:center;gap:8px;border:1px solid var(--line);padding:5px 10px;font-weight:600}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--fg);flex:none}
+.wa.off{border:2px solid var(--fg);background:repeating-linear-gradient(45deg,var(--fill) 0 6px,var(--surface) 6px 12px)}
+.wa.off .dot{background:transparent;border:2px solid var(--fg);animation:blink 1s steps(2,start) infinite}
+@keyframes blink{50%{opacity:.15}}
+@media (prefers-reduced-motion:reduce){.wa.off .dot{animation:none}}
+main{grid-area:main;padding:18px 20px 40px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.pg{display:none;flex-direction:column;gap:16px}
+.pg.show{display:flex}
+.crumb{font-size:12px;color:var(--muted)}
+.bar{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center}
+.bar .right{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.bar select,.bar input{width:auto;min-width:120px}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pills button{border-radius:999px}
+.pills button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.tabs button{border:1px solid transparent;border-bottom:0;background:none;padding:8px 14px}
+.tabs button.on{border-color:var(--line);background:var(--surface);font-weight:600;margin-bottom:-1px;border-bottom:1px solid var(--surface)}
+.tp{display:none;flex-direction:column;gap:12px}
+.tp.show{display:flex}
+.alert{border:2px solid var(--fg);padding:10px 14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.alert p{margin:0;flex:1 1 260px}
+.alert .tag{background:var(--fg);color:var(--bg);padding:2px 8px;font-weight:700;font-size:11px;letter-spacing:.06em}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpis.k5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.kpi{border:1px solid var(--line);background:var(--surface);padding:12px;display:flex;flex-direction:column;gap:4px}
+.kpi .l{color:var(--muted);font-size:12px}
+.kpi .v{font-size:26px;font-weight:600;font-family:var(--mono)}
+.kpi .s{font-size:12px;color:var(--muted)}
+section.box{border:1px solid var(--line);background:var(--surface);min-width:0}
+.box>header{display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:10px 12px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.box h2{font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+.box .pad{padding:12px}
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;white-space:nowrap}
+th,td{text-align:left;padding:7px 12px;border-bottom:1px solid var(--line-soft)}
+th{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;background:var(--fill);font-weight:600}
+td.n,th.n{text-align:right}
+tr:last-child td{border-bottom:0}
+tr.go{cursor:pointer}tr.go:hover td{background:var(--fill)}
+.badge{display:inline-block;border:1px solid var(--line);padding:0 6px;font-size:11px;border-radius:3px}
+.badge.alt{background:var(--fill);border-style:dashed}
+.badge.hot{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.id{font-family:var(--mono);border:1px dashed var(--line);padding:0 5px;cursor:copy}
+.thumb{display:inline-block;width:22px;height:30px;border:1px solid var(--line);background:var(--hatch);vertical-align:middle;margin-right:8px}
+.note{margin:0;padding:8px 12px;font-size:11px;color:var(--muted);border-top:1px dashed var(--line)}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.form .full{grid-column:1/-1}
+.cols2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.seg{display:inline-flex}
+.seg button{border-radius:0;margin-left:-1px}
+.seg button.on{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.dd{border:1px solid var(--line);background:var(--surface);box-shadow:3px 3px 0 var(--line-soft)}
+.dd div{display:flex;gap:10px;align-items:center;padding:6px 10px;border-bottom:1px solid var(--line-soft)}
+.dd div:first-child{background:var(--fill)}
+.photos{display:flex;gap:8px;flex-wrap:wrap}
+.photos .ph{width:90px;height:120px}
+.qr{width:200px;height:200px;border:2px solid var(--fg);background:repeating-conic-gradient(var(--fg) 0 25%,var(--surface) 0 50%) 0 0/24px 24px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chips span{font-family:var(--mono);border:1px dashed var(--line);padding:0 6px;font-size:12px}
+.lance{display:flex;gap:12px;padding:5px 12px;border-bottom:1px solid var(--line-soft);font-size:12px}
+.lance:first-child{font-weight:600;background:var(--fill)}
+.win{border:2px solid var(--fg);padding:8px 12px;background:var(--fill)}
+
+/* lojas: carrossel de cartas */
+.pick{min-height:calc(100vh - 40px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:24px 0;overflow:hidden}
+.deckwrap{display:flex;align-items:center;width:100%;gap:4px}
+.deck{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding:36px calc(50% - 125px);flex:1;min-width:0;scrollbar-width:none;scroll-behavior:smooth}
+.deck::-webkit-scrollbar{display:none}
+.arr{font-size:26px;border-radius:50%;width:40px;height:40px;padding:0;flex:none}
+.pk{flex:none;width:250px;aspect-ratio:63/88;scroll-snap-align:center;border:3px solid var(--fg);border-radius:14px;background:var(--surface);padding:12px;display:flex;flex-direction:column;gap:8px;text-decoration:none;transform:scale(.88);opacity:.55;transition:transform .25s,opacity .25s,box-shadow .25s}
+.pk.sel{transform:scale(1.04);opacity:1;box-shadow:6px 6px 0 var(--line-soft)}
+.pk-h{display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.pk-n{font-size:19px}
+.pk-art{flex:1;min-height:0;border:2px solid var(--fg)}
+.pk-f{display:flex;justify-content:space-between;gap:6px;font-size:11px;color:var(--muted);border-top:1px solid var(--line);padding-top:6px}
+.pk.new{border-style:dashed;align-items:center;justify-content:center;background:var(--hatch)}
+.dots{display:flex;gap:8px}
+.dots i{width:9px;height:9px;border-radius:50%;border:1px solid var(--fg)}
+.dots i.on{background:var(--fg)}
+@media (prefers-reduced-motion:reduce){.pk{transition:none}.deck{scroll-behavior:auto}}
+
+/* ao vivo */
+.livegrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.live{border:1px solid var(--line);background:var(--surface);padding:12px;display:flex;flex-direction:column;gap:8px}
+.live-top{display:flex;justify-content:space-between;align-items:center}
+.live-on{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:11px;letter-spacing:.06em}
+.live-on .dot{animation:blink 1s steps(2,start) infinite}
+.live-img{height:170px}
+.live-n{font-size:15px}
+.live-bid{display:flex;flex-direction:column;border:1px solid var(--line);padding:8px;background:var(--fill)}
+.live-bid b{font-size:24px}
+@media (prefers-reduced-motion:reduce){.live-on .dot{animation:none}}
+
+/* graficos */
+.cg2{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:12px}
+.cg2e{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.cg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+svg.chart{width:100%;height:auto;display:block}
+.ax{fill:var(--muted);font-size:10px;font-family:var(--mono)}
+.c1{fill:var(--fg);background:var(--fg)}.c2{fill:var(--line);background:var(--line)}.c3{fill:var(--hatch);background:var(--hatch)}.c4{fill:var(--fill);background:var(--fill)}
+svg path.c1,svg path.c2,svg path.c3,svg path.c4{stroke:var(--surface);stroke-width:2}
+.pie-wrap{display:flex;gap:16px;align-items:center;flex-wrap:wrap;justify-content:center}
+.legend{display:flex;flex-direction:column;gap:6px;min-width:0}
+.lg{display:flex;gap:8px;align-items:center}
+.lg b{margin-left:auto;padding-left:10px}
+.sw{width:12px;height:12px;border:1px solid var(--fg);flex:none;display:inline-block}
+.hb{display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:8px;align-items:center}
+.hbt{height:12px;background:var(--fill);border:1px solid var(--line)}
+.hbt div{height:100%;background:var(--fg)}
+
+/* dispositivo */
+.devs{margin-left:auto;display:flex;gap:4px;padding-left:12px}
+.devs button{background:none;color:var(--bg);border:1px solid var(--bg);opacity:.7;padding:2px 10px;font-size:12px}
+.devs button.on{opacity:1;background:var(--bg);color:var(--fg)}
+#frame{container-type:inline-size;width:100%;margin:0 auto;background:var(--bg)}
+body[data-dev="tablet"],body[data-dev="mobile"]{background:var(--stage)}
+body[data-dev="tablet"] #frame{max-width:820px;border:1px solid var(--line);border-top:0;border-bottom:0;box-shadow:0 0 0 8px var(--stage)}
+body[data-dev="mobile"] #frame{max-width:390px;border:1px solid var(--line);border-top:0;border-bottom:0;box-shadow:0 0 0 8px var(--stage)}
+.menubtn{display:none;padding:4px 10px;font-size:16px}
+
+/* responsivo por container */
+@container (max-width:1100px){
+  .cols2,.grid3,.hero,.cg2,.cg2e{grid-template-columns:minmax(0,1fr)}
+  .cg3{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@container (min-width:641px) and (max-width:1100px){
+  .app.show{grid-template-columns:64px minmax(0,1fr)}
+  .side{padding:10px 8px;align-items:stretch}
+  .side .lb{display:none}
+  .store{justify-content:center;padding:6px}
+  .nav a{justify-content:center;padding:10px 0}
+  .profile{justify-content:center}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpis.k5{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .kpis.k5 .kpi{grid-column:span 2}
+  .kpis.k5 .kpi:nth-child(n+4){grid-column:span 3}
+}
+@container (max-width:640px){
+  .app.show{grid-template-columns:minmax(0,1fr);grid-template-areas:"top" "side" "main";grid-template-rows:auto}
+  .app .side{display:none;border-right:0;border-bottom:1px solid var(--line)}
+  .app.menu .side{display:flex}
+  .menubtn{display:inline-flex}
+  .top{padding:8px 12px;gap:8px;top:30px}
+  .top h1{font-size:14px}
+  .wa{padding:3px 8px;font-size:12px}
+  main{padding:12px 12px 32px}
+  .kpis,.kpis.k5{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .kpis .kpi:last-child:nth-child(odd){grid-column:1/-1}
+  .kpi .v{font-size:22px}
+  .cg3{grid-template-columns:minmax(0,1fr)}
+  .tabs{flex-wrap:nowrap;overflow-x:auto}
+  .tabs button{white-space:nowrap}
+  .lp-wrap,.lp-nav{padding-left:16px;padding-right:16px}
+  .hero h1{font-size:26px}
+  .bar select,.bar input{width:100%;min-width:0}
+  .bar .right{margin-left:0;width:100%}
+  .pills{overflow-x:auto;flex-wrap:nowrap}.pills button{white-space:nowrap}
+  .modal{padding:16px 8px}
+  .tw{overflow:visible}
+  table,tbody,tr,td{display:block;white-space:normal}
+  thead{display:none}
+  tr{border-bottom:1px solid var(--line);padding:8px 12px}
+  tr:last-child{border-bottom:0}
+  td{border:0;padding:3px 0;text-align:right;overflow:hidden}
+  td::before{content:attr(data-label);float:left;margin-right:12px;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;text-align:left}
+  td[data-label=""]::before{content:none}
+  td[data-label=""]{text-align:left}
+  .box>header{padding:8px 12px}
+}
+
+.srch{display:grid;grid-template-columns:minmax(0,1fr) 190px;gap:20px;align-items:start}
+.art{width:170px;aspect-ratio:63/88}
+.eq{display:flex;flex-direction:column}
+.eq>section:last-child{flex:1}
+@container (max-width:640px){.srch{grid-template-columns:minmax(0,1fr)}}
+.themes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:4px}
+.th{display:flex;flex-direction:column;gap:6px;align-items:stretch;padding:6px;text-align:center}
+.th.on{border:2px solid var(--fg);font-weight:600}
+.tv{height:34px;border:1px solid var(--line);display:block}
+.tl{background:linear-gradient(90deg,#fff 70%,#d4d4d0 70%)}
+.td{background:linear-gradient(90deg,#212120 70%,#3a3a38 70%)}
+.ts{background:linear-gradient(90deg,#fff 50%,#212120 50%)}
+/* landing ampliada */
+.eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+.lp-wrap h2{font-size:22px;text-wrap:balance}
+.lp-wrap h3{font-size:15px}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;align-items:center}
+.minis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.how{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;counter-reset:st}
+.how li{border:1px solid var(--line);background:var(--surface);padding:12px;display:flex;flex-direction:column;gap:4px;counter-increment:st}
+.how li::before{content:counter(st);width:24px;height:24px;border:1px solid var(--fg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px}
+.faq details{border:1px solid var(--line);background:var(--surface);padding:10px 14px;margin-bottom:8px}
+.faq summary{cursor:pointer;font-weight:600}
+.faq p{margin:8px 0 0}
+@container (max-width:1100px){.two{grid-template-columns:minmax(0,1fr)}}
+.lp-nav3{display:grid;grid-template-columns:1fr auto 1fr;gap:12px}
+.navc{justify-content:center;gap:18px}
+.navr{justify-content:flex-end}
+.feat.ctr{align-items:center;text-align:center}
+@container (max-width:1100px){.lp-nav3{grid-template-columns:minmax(0,1fr)}.lp-nav3 .row{justify-content:center}}
+.adm .side{background:var(--fill)}
+.keys input{width:56px;height:60px;padding:0;text-align:center;font-size:24px;font-family:var(--mono);border:2px solid var(--fg)}
+.keys-demo{display:inline-flex;gap:3px;vertical-align:middle;margin-left:4px}
+.keys-demo i{width:16px;height:20px;border:2px solid var(--fg);display:inline-block}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-start;justify-content:center;padding:60px 16px 16px;z-index:50;overflow:auto}
+.modal.show{display:flex}
+.modal .card{max-width:640px}
+
+</style>
+
+<nav class="strip" id="strip" aria-label="Telas do protótipo">
+  <b>TELAS</b>
+  <a href="#landing" data-s="landing">1 Landing</a>
+  <a href="#login" data-s="login">2 Login</a>
+  <a href="#lojas" data-s="lojas">3 Lojas</a>
+  <a href="#home" data-s="home">4 Home</a>
+  <a href="#estoque" data-s="estoque">5.1 Estoque</a>
+  <a href="#estoque-novo" data-s="estoque-novo">5.2 Cadastro (steps)</a>
+  <a href="#leiloes" data-s="leiloes">6.1 Leilões</a>
+  <a href="#leilao" data-s="leilao">6.2 Monitor</a>
+  <a href="#clientes" data-s="clientes">7.1 Clientes</a>
+  <a href="#cliente" data-s="cliente">7.2 Cliente</a>
+  <a href="#blacklist" data-s="blacklist">7.3 Blacklist</a>
+  <a href="#funcionarios" data-s="funcionarios">8 Funcionários</a>
+  <a href="#config" data-s="config">9 Config</a>
+  <a href="#financeiro" data-s="financeiro">10 Financeiro</a>
+  <a href="#perfil" data-s="perfil">Perfil</a>
+  <a href="#ao-vivo" data-s="ao-vivo">11 Ao vivo (público)</a>
+  <a href="#carta" data-s="carta">5.3 Carta</a>
+  <a href="#enquete" data-s="enquete">6.3 Enquete</a>
+  <a href="#leilao-editar" data-s="leilao-editar">6.4 Editar leilão</a>
+  <a href="#nova-loja" data-s="nova-loja">12 Nova loja</a>
+  <a href="#acerto" data-s="acerto">13 Acerto (público)</a>
+  <a href="#convite" data-s="convite">14 Convite</a>
+  <a href="#solicitar" data-s="solicitar">15 Solicitar acesso</a>
+  <a href="#admin" data-s="admin">A1 Admin</a>
+  <a href="#admin-usuarios" data-s="admin-usuarios">A2 Usuários</a>
+  <a href="#admin-usuario" data-s="admin-usuario">A3 Usuário</a>
+  <a href="#admin-lojas" data-s="admin-lojas">A4 Lojas</a>
+  <a href="#admin-loja-nova" data-s="admin-loja-nova">A5 Criar loja</a>
+  <a href="#admin-convites" data-s="admin-convites">A6 Convites</a>
+  <a href="#consignado" data-s="consignado">P1 Acompanhar carta</a>
+  <a href="#envios" data-s="envios">B2 Envios</a>
+  <a href="#plano" data-s="plano">B1 Plano</a>
+  <a href="#atividade" data-s="atividade">B3 Atividade</a>
+  <a href="#sem-permissao" data-s="sem-permissao">E1 Sem permissão</a>
+  <a href="#home-vazio" data-s="home-vazio">E2 Home vazia</a>
+  <a href="#estoque-vazio" data-s="estoque-vazio">E3 Estoque vazio</a>
+  <a href="#wa-caiu" data-s="wa-caiu">E4 WhatsApp caiu</a>
+  <a href="#404" data-s="404">E5 404</a>
+  <a href="#termos" data-s="termos">L1 Termos</a>
+  <a href="#privacidade" data-s="privacidade">L2 Privacidade</a>
+  <span class="devs" role="group" aria-label="Dispositivo"><button data-dev="desktop" class="on">Desktop</button><button data-dev="tablet">Tablet</button><button data-dev="mobile">Mobile</button></span>
+</nav>
+
+<div id="frame">
+<!-- ========== 1 LANDING ========== -->
+<div class="screen" id="s-landing">
+  <div class="lp-nav lp-nav3"><div class="row"><div class="logo"></div><b>Logo do Produto</b></div>
+    <nav class="row navc" aria-label="Seções"><a href="#funcionalidades">Funcionalidades</a><a href="#vitrine">Vitrine</a><a href="#dashboards">Dashboards</a><a href="#precos">Preços</a><a href="#faq">Perguntas</a></nav>
+    <div class="row navr"><a href="#login"><button>Entrar</button></a><a href="#solicitar"><button class="pri">Solicitar acesso</button></a></div></div>
+  <div class="lp-wrap">
+    <header class="hero">
+      <div class="stack">
+        <span class="eyebrow">Plataforma para lojistas de cartas Pokémon TCG</span>
+        <h1>Leilões de cartas Pokémon no WhatsApp, do estoque ao acerto.</h1>
+        <p class="muted" style="margin:0;font-size:15px">Cadastre suas cartas, agende leilões individuais, deixe o bot cuidar do grupo e acompanhe tudo em dashboards. Seus leilões ainda aparecem em uma vitrine pública que atrai novos compradores.</p>
+        <div class="row"><a href="#solicitar"><button class="pri">Solicitar acesso</button></a><a href="#ao-vivo"><button>Ver leilões ao vivo</button></a></div>
+        <div class="chips"><span>Catálogo de cartas</span><span>Leilão no WhatsApp</span><span>Vitrine pública</span><span>Dashboards</span></div>
+      </div>
+      <div class="ph" style="height:280px">[ imagem: conversa do grupo com leilão em andamento ]</div>
+    </header>
+
+    <section class="stack" aria-labelledby="h-como"><h2 id="h-como">Como funciona um leilão de cartas Pokémon na plataforma</h2>
+      <ol class="how"><li><b>Cadastre a carta</b><span class="muted">Busque a carta no catálogo, informe estado, fotos e observações e escolha se é estoque próprio ou consignada.</span></li><li><b>Agende o leilão</b><span class="muted">Defina início, fim, tipo (lance livre ou enquete), lance mínimo e valor teto.</span></li><li><b>O bot cuida do grupo</b><span class="muted">A carta é postada no WhatsApp, os lances são registrados e o vencedor é anunciado.</span></li><li><b>Feche o acerto</b><span class="muted">O comprador completa os dados, combina o pagamento com a loja e você confirma a venda.</span></li></ol>
+      <p class="muted" style="margin:0">A plataforma organiza o leilão e o acerto. O pagamento e o envio acontecem diretamente entre a loja e o comprador.</p>
+    </section>
+
+    <section class="stack" id="funcionalidades" aria-labelledby="h-func"><h2 id="h-func">Funcionalidades para quem vende cartas Pokémon TCG</h2>
+      <p class="muted" style="margin:0;max-width:70ch">Tudo o que o lojista precisa para vender cartas colecionáveis em grupos de WhatsApp sem planilhas: estoque, agenda de leilões, lances, acertos, consignados e equipe.</p>
+      <div class="grid3"><div class="feat ctr"><div class="ph" style="height:64px;width:100%">ícone</div><h3>Estoque organizado</h3><span class="muted">Cadastre cada carta com busca rápida no catálogo, fotos reais, idioma, estado de conservação e observações. Cada uma ganha um código #ID curto para usar nas conversas do grupo.</span></div><div class="feat ctr"><div class="ph" style="height:64px;width:100%">ícone</div><h3>Leilões no WhatsApp</h3><span class="muted">Agende um leilão para cada carta, em lance livre ou enquete, com lance mínimo e valor teto. O bot publica a carta no grupo, registra cada lance e anuncia o vencedor.</span></div><div class="feat ctr"><div class="ph" style="height:64px;width:100%">ícone</div><h3>Vitrine de leilões ao vivo</h3><span class="muted">Seus leilões em andamento aparecem em uma página pública, com a carta, o último lance e o tempo restante. Quem se interessa entra direto no seu grupo de WhatsApp.</span><a href="#ao-vivo">Ver a vitrine →</a></div><div class="feat ctr"><div class="ph" style="height:64px;width:100%">ícone</div><h3>Acertos sem planilha</h3><span class="muted">Quem arremata recebe um link para informar CPF e endereço e ver o resumo da compra. Você soma o frete, envia o resumo no WhatsApp e confirma a venda quando o pagamento for feito.</span></div><div class="feat ctr"><div class="ph" style="height:64px;width:100%">ícone</div><h3>Gestão de consignados</h3><span class="muted">Cadastre cartas de terceiros com a sua comissão. O sistema calcula o valor vendido, a comissão retida e quanto repassar a cada dono.</span></div><div class="feat ctr"><div class="ph" style="height:64px;width:100%">ícone</div><h3>Dashboards completos</h3><span class="muted">Acompanhe o que acontece agora na Home e analise faturamento, lucro, ticket médio e vendas por período no painel financeiro, com gráficos e lista de repasses.</span></div><div class="feat ctr"><div class="ph" style="height:64px;width:100%">ícone</div><h3>Moderação do grupo</h3><span class="muted">Mantenha uma lista de números bloqueados e remova automaticamente quem ficar inativo por muito tempo, com aviso de quem está prestes a sair.</span></div><div class="feat ctr"><div class="ph" style="height:64px;width:100%">ícone</div><h3>Equipe e permissões</h3><span class="muted">Convide funcionários por e-mail e escolha o que cada um pode fazer: estoque, leilões, acertos ou financeiro. Excluir registros fica bloqueado por padrão.</span></div><div class="feat ctr"><div class="ph" style="height:64px;width:100%">ícone</div><h3>Mensagens personalizadas</h3><span class="muted">Personalize o texto da postagem de cada carta e a mensagem de encerramento para falar com o seu grupo do seu jeito.</span></div></div>
+    </section>
+
+    <section class="two" id="vitrine" aria-labelledby="h-vit">
+      <div class="stack"><span class="eyebrow">Novo</span><h2 id="h-vit">Vitrine de leilões ao vivo</h2>
+        <p class="muted" style="margin:0">Cada leilão ativo aparece em uma página pública com a foto da carta, o estado, o idioma, o último lance e o tempo restante. O comprador clica em “Ir para o leilão” e cai direto no grupo de WhatsApp da loja.</p>
+        <ul class="muted" style="margin:0;padding-left:18px"><li>Mais visibilidade para as suas cartas, mesmo para quem ainda não está no grupo.</li><li>Atualização automática dos lances e do tempo.</li><li>Você escolhe se a sua loja aparece na vitrine.</li></ul>
+        <div class="row"><a href="#ao-vivo"><button class="pri">Abrir a vitrine</button></a></div></div>
+      <div class="stack" style="align-items:center;gap:6px">
+        <article class="live" style="width:230px"><div class="live-top"><span class="badge">Poké Card Hub</span><span class="live-on"><span class="dot"></span> AO VIVO</span></div><div class="ph" style="height:130px">[ foto da carta ]</div><b>Charizard ex 199/165</b><div class="live-bid"><span class="muted">Maior lance</span><b class="mono">R$ 820,00</b><span class="muted mono">54 lances</span></div></article>
+        <small class="muted" style="font-size:11px;opacity:.75">* imagem de exemplo</small>
+      </div>
+    </section>
+
+    <section class="two" id="dashboards" aria-labelledby="h-dash">
+      <div class="stack"><span class="eyebrow">Dashboards</span><h2 id="h-dash">Dashboards operacional e financeiro</h2>
+        <p class="muted" style="margin:0">A <b>Home operacional</b> mostra o que precisa de atenção agora: leilões ativos, enquetes aguardando aprovação, acertos pendentes e cartas sem leilão agendado.</p>
+        <p class="muted" style="margin:0">O <b>painel financeiro</b> reúne faturamento bruto, lucro líquido, ticket médio, gráficos por período, distribuição das vendas por valor, idioma e estado de conservação, e a lista de repasses de consignação.</p>
+        <p class="muted" style="margin:0">O acesso ao financeiro é exclusivo do proprietário ou de quem receber essa permissão.</p></div>
+      <div class="stack"><div class="ph" style="height:150px">[ gráfico: faturamento e lucro por dia ]</div><div class="cols2"><div class="ph" style="height:110px">[ histograma: vendas por valor ]</div><div class="ph" style="height:110px">[ pizza: origem do faturamento ]</div></div></div>
+    </section>
+
+    <section class="stack" aria-labelledby="h-quem"><h2 id="h-quem">Para quem é</h2>
+      <div class="grid3">
+        <div class="feat"><h3>Lojistas de TCG</h3><span class="muted">Que já vendem por grupos de WhatsApp e querem sair do controle manual.</span></div>
+        <div class="feat"><h3>Colecionadores que vendem</h3><span class="muted">Que organizam leilões de cartas raras e precisam registrar lances e vencedores.</span></div>
+        <div class="feat"><h3>Lojas com equipe</h3><span class="muted">Que dividem tarefas entre estoque, leilões e acertos, com permissões por pessoa.</span></div>
+      </div>
+    </section>
+
+    <section class="stack" id="precos" aria-labelledby="h-preco"><h2 id="h-preco">Preços</h2>
+      <div class="grid3">
+        <div class="feat price"><b>Inicial</b><span class="v">R$ [ 00 ]/mês</span><ul><li>1 grupo de WhatsApp</li><li>1 usuário</li><li>[ limite de cartas ]</li></ul><a href="#solicitar"><button style="width:100%">Solicitar acesso</button></a></div>
+        <div class="feat price hl"><b>Loja</b><span class="v">R$ [ 00 ]/mês</span><ul><li>Vários grupos</li><li>Funcionários</li><li>Consignados e financeiro</li></ul><a href="#solicitar"><button class="pri" style="width:100%">Solicitar acesso</button></a><span class="muted" style="text-align:center">Mais escolhido</span></div>
+        <div class="feat price"><b>Rede</b><span class="v">R$ [ 00 ]/mês</span><ul><li>Várias lojas</li><li>Vitrine em destaque</li><li>Suporte dedicado</li></ul><a href="#solicitar"><button style="width:100%">Solicitar acesso</button></a></div>
+      </div>
+    </section>
+
+    <section class="stack" id="faq" aria-labelledby="h-faq"><h2 id="h-faq">Perguntas frequentes</h2><div class="faq"><details><summary>Como faço para começar?</summary><p class="muted">O acesso é somente por convite. Você solicita acesso, nossa equipe cria a sua loja, define você como proprietário e envia o convite por e-mail.</p></details><details><summary>O que é a plataforma?</summary><p class="muted">Um painel para lojistas de cartas Pokémon TCG organizarem leilões em grupos de WhatsApp: estoque, agenda de leilões, lances, acertos, consignados e dashboards em um só lugar.</p></details><details><summary>Vocês processam os pagamentos ou enviam as cartas?</summary><p class="muted">Não. A plataforma organiza o leilão e o acerto. O pagamento e o envio são combinados diretamente entre a loja e o comprador.</p></details><details><summary>Preciso de um número de WhatsApp exclusivo?</summary><p class="muted">Recomendamos um número dedicado à loja. Você conecta lendo um QR Code e escolhe qual grupo o bot vai monitorar.</p></details><details><summary>O que é a vitrine de leilões ao vivo?</summary><p class="muted">Uma página pública que lista os leilões em andamento de várias lojas, com a carta, o último lance e um botão para entrar no grupo do leilão.</p></details><details><summary>Como funcionam as cartas consignadas?</summary><p class="muted">Você cadastra a carta em nome do dono e define a comissão da loja. Quando ela é vendida, o painel financeiro mostra quanto repassar a ele.</p></details><details><summary>Funcionários podem apagar registros?</summary><p class="muted">Só se você liberar. Excluir itens e registros vem bloqueado por padrão, e cada permissão é escolhida por funcionário.</p></details><details><summary>Quais cartas e idiomas posso cadastrar?</summary><p class="muted">Qualquer carta do catálogo, em português, inglês, japonês e outros idiomas, com estados de conservação de M a DMG.</p></details></div></section>
+
+    <div class="card hatch row" style="justify-content:space-between"><h2>Pronto para organizar seus leilões?</h2><a href="#solicitar"><button class="pri">Solicitar acesso</button></a></div>
+
+    <footer class="stack muted" style="border-top:1px solid var(--line);padding-top:16px">
+      <div class="row"><a href="#ao-vivo">Leilões ao vivo</a><a href="#funcionalidades">Funcionalidades</a><a href="#precos">Preços</a><a href="#faq">Perguntas</a><a href="#termos">Termos de uso</a><a href="#privacidade">Política de Privacidade</a><a href="#landing">Contato</a></div>
+      <span>Plataforma de leilões de cartas Pokémon TCG no WhatsApp para lojistas e colecionadores. Pokémon e os nomes das cartas pertencem aos seus respectivos titulares.</span>
+    </footer>
+  </div>
+</div>
+
+<!-- ========== 2 LOGIN ========== -->
+<div class="screen" id="s-login">
+  <div class="center"><div class="card" style="max-width:400px">
+    <div class="stack" id="loginA">
+      <div class="logo"></div><h2>Entrar</h2><span class="muted">Sem senha. Enviamos um código para o seu e-mail.</span>
+      <label>E-mail<input type="email" placeholder="voce@email.com"></label>
+      <button class="pri" id="sendCode">Enviar código</button>
+      <span class="muted">O acesso é por convite. Sem convite? <a href="#solicitar">Solicitar acesso</a></span>
+      <span class="muted">Estado A</span>
+    </div>
+    <div class="stack" id="loginB" hidden>
+      <div class="logo"></div><h2>Digite o código</h2><span class="muted">Enviado para <b>igor@loja.com</b>. <a href="#login" id="back">Trocar e-mail</a></span>
+      <div class="otp"><input maxlength="1" aria-label="Dígito 1"><input maxlength="1" aria-label="Dígito 2"><input maxlength="1" aria-label="Dígito 3"><input maxlength="1" aria-label="Dígito 4"><input maxlength="1" aria-label="Dígito 5"><input maxlength="1" aria-label="Dígito 6"></div>
+      <a href="#lojas"><button class="pri" style="width:100%">Entrar</button></a>
+      <span class="muted">Não chegou? <a href="#login">Reenviar código</a> (em 30s) · Estado B</span>
+    </div>
+  </div></div>
+</div>
+
+<!-- ========== 3 LOJAS ========== -->
+<div class="screen" id="s-lojas">
+  <div class="pick">
+    <h2>Escolha a loja</h2>
+    <div class="deckwrap">
+      <button class="arr" id="prevL" aria-label="Loja anterior">‹</button>
+      <div class="deck" id="deck" tabindex="0" aria-label="Lojas">
+        <a class="pk" href="#home">
+          <div class="pk-h"><span class="badge hot">Proprietário</span><span class="mono"><span class="dot" style="display:inline-block"></span> BOT ON</span></div>
+          <b class="pk-n">Poké Card Hub</b>
+          <div class="pk-art ph">[ logo da loja ]</div>
+          <div class="pk-f"><span>Grupo: Leilões PCH</span><span class="mono">312 membros</span></div>
+        </a>
+        <a class="pk" href="#home">
+          <div class="pk-h"><span class="badge alt">Funcionário</span><span class="mono">◌ BOT OFF</span></div>
+          <b class="pk-n">Cards do Zé</b>
+          <div class="pk-art ph">[ logo da loja ]</div>
+          <div class="pk-f"><span>Grupo: Zé Leilões</span><span class="mono">88 membros</span></div>
+        </a>
+        <a class="pk" href="#home">
+          <div class="pk-h"><span class="badge hot">Proprietário</span><span class="mono"><span class="dot" style="display:inline-block"></span> BOT ON</span></div>
+          <b class="pk-n">TCG Sul</b>
+          <div class="pk-art ph">[ logo da loja ]</div>
+          <div class="pk-f"><span>Grupo: TCG Sul</span><span class="mono">540 membros</span></div>
+        </a>
+        <a class="pk new" href="#nova-loja">
+          <b style="font-size:46px;line-height:1">+</b><b>Criar nova loja</b>
+        </a>
+      </div>
+      <button class="arr" id="nextL" aria-label="Próxima loja">›</button>
+    </div>
+    <div class="dots" id="dotsL"></div>
+    <span class="muted">Arraste ou use ← → · clique na carta do centro para entrar</span>
+    <span class="muted" style="font-size:11px">O card “Criar nova loja” só aparece para quem recebeu essa permissão do administrador.</span>
+  </div>
+</div>
+
+<!-- ========== 11 AO VIVO (público) ========== -->
+<div class="screen" id="s-ao-vivo">
+  <div class="lp-nav"><a class="row" href="#landing" style="text-decoration:none"><div class="logo"></div><b>Logo do Produto</b></a><div class="row"><a href="#landing">Para lojistas</a><a href="#login"><button>Entrar</button></a></div></div>
+  <div class="lp-wrap">
+    <div class="stack">
+      <div class="row"><h1 style="font-size:26px">Leilões ao vivo agora</h1><span class="live-on"><span class="dot"></span> 6 acontecendo</span></div>
+      <span class="muted">Escolha uma carta e dê seu lance direto no grupo de WhatsApp da loja.</span>
+      <div class="bar"><input type="search" placeholder="Buscar carta" style="min-width:220px" aria-label="Buscar carta"><select aria-label="Loja"><option>Loja: todas</option><option>Poké Card Hub</option><option>Cards do Zé</option><option>TCG Sul</option></select><select aria-label="Idioma"><option>Idioma: todos</option><option>Português</option><option>Inglês</option><option>Japonês</option></select><select aria-label="Ordenar"><option>Terminando primeiro</option><option>Maior lance</option><option>Mais lances</option></select></div>
+    </div>
+    <div class="livegrid">
+      <article class="live">
+        <div class="live-top"><span class="badge">Poké Card Hub</span><span class="live-on"><span class="dot"></span> AO VIVO</span></div>
+        <div class="ph live-img">[ foto real da carta ]</div>
+        <div><b class="live-n">Charizard ex 199/165</b><br><span class="muted">151</span></div>
+        <div class="row" style="gap:6px"><span class="badge">NM</span><span class="badge">EN</span></div>
+        <div class="live-bid"><span class="muted">Maior lance</span><b class="mono">R$ 820,00</b><span class="muted mono">54 lances · último há 8s</span></div>
+        <div class="muted mono">Termina em 00:12:40</div>
+        <a class="live-go" href="#ao-vivo" title="Abre o grupo de WhatsApp da loja"><button class="pri" style="width:100%">Ir para o leilão ↗</button></a>
+      </article>
+      <article class="live">
+        <div class="live-top"><span class="badge">Cards do Zé</span><span class="live-on"><span class="dot"></span> AO VIVO</span></div>
+        <div class="ph live-img">[ foto real da carta ]</div>
+        <div><b class="live-n">Pikachu VMAX 044/185</b><br><span class="muted">Vivid Voltage</span></div>
+        <div class="row" style="gap:6px"><span class="badge">SP</span><span class="badge">PT</span></div>
+        <div class="live-bid"><span class="muted">Maior lance</span><b class="mono">R$ 465,00</b><span class="muted mono">41 lances · último há 25s</span></div>
+        <div class="muted mono">Termina em 00:41:05</div>
+        <a class="live-go" href="#ao-vivo" title="Abre o grupo de WhatsApp da loja"><button class="pri" style="width:100%">Ir para o leilão ↗</button></a>
+      </article>
+      <article class="live">
+        <div class="live-top"><span class="badge">TCG Sul</span><span class="live-on"><span class="dot"></span> AO VIVO</span></div>
+        <div class="ph live-img">[ foto real da carta ]</div>
+        <div><b class="live-n">Umbreon V Alt Art</b><br><span class="muted">Evolving Skies</span></div>
+        <div class="row" style="gap:6px"><span class="badge">NM</span><span class="badge">PT</span></div>
+        <div class="live-bid"><span class="muted">Maior lance</span><b class="mono">R$ 390,00</b><span class="muted mono">33 lances · último há 1 min</span></div>
+        <div class="muted mono">Termina em 01:05:12</div>
+        <a class="live-go" href="#ao-vivo" title="Abre o grupo de WhatsApp da loja"><button class="pri" style="width:100%">Ir para o leilão ↗</button></a>
+      </article>
+      <article class="live">
+        <div class="live-top"><span class="badge">Poké Card Hub</span><span class="live-on"><span class="dot"></span> AO VIVO</span></div>
+        <div class="ph live-img">[ foto real da carta ]</div>
+        <div><b class="live-n">Lugia V Alt Art</b><br><span class="muted">Silver Tempest</span></div>
+        <div class="row" style="gap:6px"><span class="badge">NM</span><span class="badge">EN</span></div>
+        <div class="live-bid"><span class="muted">Maior lance</span><b class="mono">R$ 340,00</b><span class="muted mono">12 lances · último há 3 min</span></div>
+        <div class="muted mono">Termina em 02:20:00</div>
+        <a class="live-go" href="#ao-vivo" title="Abre o grupo de WhatsApp da loja"><button class="pri" style="width:100%">Ir para o leilão ↗</button></a>
+      </article>
+      <article class="live">
+        <div class="live-top"><span class="badge">TCG Sul</span><span class="live-on"><span class="dot"></span> AO VIVO</span></div>
+        <div class="ph live-img">[ foto real da carta ]</div>
+        <div><b class="live-n">Mew ex 151</b><br><span class="muted">151</span></div>
+        <div class="row" style="gap:6px"><span class="badge">MP</span><span class="badge">JP</span></div>
+        <div class="live-bid"><span class="muted">Maior lance</span><b class="mono">R$ 210,00</b><span class="muted mono">27 lances · último há 40s</span></div>
+        <div class="muted mono">Termina em 00:08:33</div>
+        <a class="live-go" href="#ao-vivo" title="Abre o grupo de WhatsApp da loja"><button class="pri" style="width:100%">Ir para o leilão ↗</button></a>
+      </article>
+      <article class="live">
+        <div class="live-top"><span class="badge">Cards do Zé</span><span class="live-on"><span class="dot"></span> AO VIVO</span></div>
+        <div class="ph live-img">[ foto real da carta ]</div>
+        <div><b class="live-n">Gengar VMAX</b><br><span class="muted">Fusion Strike</span></div>
+        <div class="row" style="gap:6px"><span class="badge">NM</span><span class="badge">PT</span></div>
+        <div class="live-bid"><span class="muted">Maior lance</span><b class="mono">R$ 155,00</b><span class="muted mono">22 lances · último há 2 min</span></div>
+        <div class="muted mono">Termina em 00:55:48</div>
+        <a class="live-go" href="#ao-vivo" title="Abre o grupo de WhatsApp da loja"><button class="pri" style="width:100%">Ir para o leilão ↗</button></a>
+      </article>
+    </div>
+    <span class="muted">Os lances e o tempo se atualizam sozinhos em cada cartão. O botão abre o WhatsApp do grupo da loja.</span>
+  </div>
+</div>
+
+<!-- ========== 12 NOVA LOJA ========== -->
+<div class="screen" id="s-nova-loja">
+  <div class="lp-nav"><a class="row" href="#lojas" style="text-decoration:none"><div class="logo"></div><b>Logo do Produto</b></a><a href="#lojas">← Voltar às lojas</a></div>
+  <div class="lp-wrap" style="max-width:720px">
+    <div class="stack"><h1 style="font-size:26px">Criar nova loja</h1><span class="muted">Três passos rápidos para o bot começar a trabalhar.</span></div>
+    <section class="box"><header><h2>1 · Dados da loja</h2></header><div class="pad form">
+      <label>Nome da loja<input placeholder="Ex.: Poké Card Hub"></label>
+      <label>Cidade / UF<input placeholder="São Paulo / SP"></label>
+      <label class="full">Logo da loja<div class="photos"><div class="ph" style="width:90px;height:90px">+ Logo</div></div></label>
+    </div></section>
+    <section class="box"><header><h2>2 · Conectar o WhatsApp</h2><span class="badge alt">Aguardando leitura</span></header><div class="pad row" style="gap:20px;align-items:flex-start">
+      <div class="qr" role="img" aria-label="QR Code"></div>
+      <ol class="muted" style="margin:0;padding-left:18px;flex:1 1 220px"><li>Abra o WhatsApp no celular da loja.</li><li>Vá em Aparelhos conectados.</li><li>Toque em Conectar aparelho e leia o código.</li></ol>
+    </div></section>
+    <section class="box"><header><h2>3 · Escolher o grupo</h2></header><div class="pad stack">
+      <label>Grupo que o bot vai monitorar e onde vai postar<select disabled><option>Disponível depois de conectar o WhatsApp</option></select></label>
+      <label class="chk"><input type="checkbox" checked> Mostrar os leilões desta loja na vitrine pública</label>
+    </div></section>
+    <div class="row" style="justify-content:flex-end"><a href="#lojas"><button>Cancelar</button></a><a href="#home"><button class="pri">Criar loja</button></a></div>
+  </div>
+</div>
+
+<!-- ========== 13 ACERTO (público do cliente) ========== -->
+<div class="screen" id="s-acerto">
+  <div class="lp-nav"><div class="row"><div class="logo"></div><b>Poké Card Hub</b></div><span class="muted">Página do seu acerto</span></div>
+  <div class="lp-wrap" style="max-width:680px">
+    <div class="stack"><div class="row"><h1 style="font-size:24px">Seu acerto, Bruno</h1><span class="badge alt">Aguardando pagamento</span></div>
+      <span class="muted">Você arrematou 2 cartas nos leilões da Poké Card Hub. Confira o resumo, complete seus dados e combine o pagamento com a loja.</span></div>
+    <section class="box"><header><h2>Cartas arrematadas</h2></header><div class="tw"><table><thead><tr><th>#ID</th><th>Carta</th><th class="n">Valor</th></tr></thead><tbody>
+      <tr><td><span class="id">#0366</span></td><td><span class="thumb"></span>Gardevoir ex</td><td class="n mono">R$ 95,00</td></tr>
+      <tr><td><span class="id">#0359</span></td><td><span class="thumb"></span>Ralts Promo</td><td class="n mono">R$ 20,00</td></tr>
+      <tr><td></td><td class="muted">Frete (informado pela loja)</td><td class="n mono">R$ 18,00</td></tr>
+      <tr><td></td><td><b>Total</b></td><td class="n mono"><b>R$ 133,00</b></td></tr>
+    </tbody></table></div></section>
+    <section class="box"><header><h2>Seus dados</h2><span class="muted">usados pela loja para o envio</span></header><div class="pad form">
+      <label>Nome<input value="Bruno A."></label><label>Telefone (do WhatsApp)<input value="(31) 98400-7731" disabled></label>
+      <label>CPF<input id="aCpf" inputmode="numeric" maxlength="14" placeholder="000.000.000-00"></label><label>E-mail<input type="email" placeholder="email@exemplo.com"></label>
+      <label>CEP<input id="aCep" inputmode="numeric" maxlength="9" placeholder="00000-000"></label><label>Rua<input></label>
+      <label>Número<input></label><label>Complemento<input></label>
+      <label>Bairro<input></label><label>Cidade / UF<input></label>
+      <div class="full row" style="justify-content:space-between"><span class="muted" style="font-size:12px">Ao salvar, você concorda com a <a href="#privacidade">Política de Privacidade</a>.</span><button class="pri">Salvar meus dados</button></div>
+    </div></section>
+    <section class="box"><header><h2>Pagamento</h2></header><div class="pad stack">
+      <span class="muted">O pagamento é feito diretamente à loja. A plataforma não processa nem garante a transação.</span>
+      <div class="row"><span class="mono grow" style="border:1px dashed var(--line);padding:8px">Chave PIX: [ chave da loja ]</span><button>Copiar chave</button></div>
+      <label>Comprovante (opcional)<div class="photos"><div class="ph" style="width:120px;height:80px">+ Anexar</div></div></label>
+      <button class="pri">Já paguei, avisar a loja</button>
+    </div></section>
+  </div>
+</div>
+
+<!-- ========== 14 CONVITE ========== -->
+<div class="screen" id="s-convite">
+  <div class="center"><div class="card stack" style="max-width:440px">
+    <div class="logo"></div>
+    <h2>Você foi convidado(a)</h2>
+    <span class="muted"><b>igor@loja.com</b> convidou <b>ana@loja.com</b> para fazer parte da loja <b>Poké Card Hub</b> como Funcionário.</span>
+    <div class="box" style="border:1px solid var(--line)"><header><h2>Suas permissões</h2></header><div class="pad stack">
+      <span>✓ Cadastrar Estoque</span><span>✓ Criar Leilões</span><span>✓ Fazer Acertos</span><span class="muted">— Ver Dashboard Financeiro</span><span class="muted">— Deletar Itens/Registros</span>
+    </div></div>
+    <span class="muted">Você entra com um código enviado ao seu e-mail, sem senha.</span>
+    <a href="#login"><button class="pri" style="width:100%">Aceitar convite e entrar</button></a>
+    <a href="#landing" style="text-align:center">Recusar convite</a>
+  </div></div>
+</div>
+
+<!-- ========== 15 SOLICITAR ACESSO ========== -->
+<div class="screen" id="s-solicitar">
+  <div class="center"><div class="card stack" style="max-width:460px">
+    <div class="logo"></div><h2>Solicitar acesso</h2>
+    <span class="muted">O acesso é por convite. Conte sobre a sua loja e nossa equipe cria o seu acesso e envia o convite por e-mail.</span>
+    <label>Seu nome<input></label>
+    <label>E-mail<input type="email" placeholder="voce@email.com"></label>
+    <label>WhatsApp<input id="sTel" inputmode="numeric" maxlength="15" placeholder="(00) 00000-0000"></label>
+    <label>Nome da loja<input></label>
+    <label>Mensagem (opcional)<textarea placeholder="Quantos grupos você tem? Já faz leilões hoje?"></textarea></label>
+    <button class="pri">Enviar solicitação</button>
+    <span class="muted">Respondemos por e-mail em até [ 1 dia útil ]. <a href="#login">Já tenho convite</a></span>
+  </div></div>
+</div>
+
+<!-- ========== TERMOS DE USO ========== -->
+<div class="screen" id="s-termos">
+  <div class="lp-nav"><a class="row" href="#landing" style="text-decoration:none"><div class="logo"></div><b>Logo do Produto</b></a><div class="row"><a href="#privacidade">Política de Privacidade</a><a href="#login"><button>Entrar</button></a></div></div>
+  <div class="lp-wrap" style="max-width:760px">
+    <div class="stack"><h1 style="font-size:28px">Termos de uso</h1><span class="muted">Última atualização: [ data ] · texto ilustrativo para revisão jurídica</span></div>
+    <section class="stack"><h2>1. Sobre a plataforma</h2><p class="muted" style="margin:0">A plataforma organiza leilões de cartas Pokémon TCG em grupos de WhatsApp: estoque, agenda, registro de lances, acertos e relatórios. [ texto ]</p></section><section class="stack"><h2>2. Acesso por convite</h2><p class="muted" style="margin:0">O acesso é concedido pela administração por convite. Cada usuário é responsável pelo uso da própria conta. [ texto ]</p></section><section class="stack"><h2>3. Vendas e pagamentos</h2><p class="muted" style="margin:0">A plataforma não realiza vendas, não processa pagamentos nem garante a entrega. A negociação ocorre diretamente entre loja e comprador. [ texto ]</p></section><section class="stack"><h2>4. Conduta e moderação</h2><p class="muted" style="margin:0">Lojas são responsáveis pelo conteúdo e pela moderação dos seus grupos, incluindo a lista de números bloqueados. [ texto ]</p></section><section class="stack"><h2>5. Planos e cobrança</h2><p class="muted" style="margin:0">Valores, prazos de renovação e cancelamento seguem o plano contratado pela loja. [ texto ]</p></section><section class="stack"><h2>6. Contato</h2><p class="muted" style="margin:0">Dúvidas sobre estes termos: [ e-mail de contato ].</p></section>
+  </div>
+</div>
+
+<!-- ========== POLÍTICA DE PRIVACIDADE ========== -->
+<div class="screen" id="s-privacidade">
+  <div class="lp-nav"><a class="row" href="#landing" style="text-decoration:none"><div class="logo"></div><b>Logo do Produto</b></a><div class="row"><a href="#termos">Termos de uso</a><a href="#login"><button>Entrar</button></a></div></div>
+  <div class="lp-wrap" style="max-width:760px">
+    <div class="stack"><h1 style="font-size:28px">Política de Privacidade</h1><span class="muted">Última atualização: [ data ] · texto ilustrativo para revisão jurídica</span></div>
+    <section class="stack"><h2>1. Quais dados coletamos</h2><p class="muted" style="margin:0">Nome, e-mail, telefone, CPF e endereço informados por lojistas, compradores e consignadores, além de registros de lances e de uso da plataforma. [ texto ]</p></section><section class="stack"><h2>2. Para que usamos</h2><p class="muted" style="margin:0">Identificar compradores, confirmar acertos, organizar envios e repasses de consignação e manter a segurança do serviço. [ texto ]</p></section><section class="stack"><h2>3. Base legal (LGPD)</h2><p class="muted" style="margin:0">Execução de contrato, legítimo interesse e consentimento, conforme a finalidade de cada dado. [ texto ]</p></section><section class="stack"><h2>4. Com quem compartilhamos</h2><p class="muted" style="margin:0">Os dados de um comprador são visíveis para a loja em que ele participou do leilão. Não vendemos dados pessoais. [ texto ]</p></section><section class="stack"><h2>5. Por quanto tempo guardamos</h2><p class="muted" style="margin:0">Pelo tempo necessário para as finalidades acima e para cumprir obrigações legais. [ texto ]</p></section><section class="stack"><h2>6. Seus direitos</h2><p class="muted" style="margin:0">Você pode pedir acesso, correção, portabilidade, anonimização ou exclusão dos seus dados e revogar consentimentos. [ canal de atendimento ]</p></section><section class="stack"><h2>7. Encarregado (DPO)</h2><p class="muted" style="margin:0">Contato do encarregado pelo tratamento de dados: [ e-mail do DPO ].</p></section>
+  </div>
+</div>
+
+<!-- ========== 404 ========== -->
+<div class="screen" id="s-404">
+  <div class="center"><div class="card stack" style="max-width:420px;text-align:center;align-items:center">
+    <b class="mono" style="font-size:56px;line-height:1">404</b>
+    <h2>Página não encontrada</h2>
+    <span class="muted">O endereço não existe ou foi movido. Confira o link ou volte para o início.</span>
+    <div class="row"><a href="#landing"><button>Ir para o início</button></a><a href="#home"><button class="pri">Ir para a Home</button></a></div>
+  </div></div>
+</div>
+
+<!-- ========== P1 ACOMPANHAR CARTA (consignador) ========== -->
+<div class="screen" id="s-consignado">
+  <div class="lp-nav"><div class="row"><div class="logo"></div><b>Poké Card Hub</b></div><span class="muted">Acompanhamento da sua carta</span></div>
+  <div class="center" style="min-height:auto;padding-top:32px" id="cGate"><div class="card stack" style="max-width:420px">
+    <h2>Acompanhe a sua carta</h2>
+    <span class="muted">Digite a sua chave de acesso: os 4 primeiros números do seu CPF.</span>
+    <div class="otp keys"><input id="cK1" maxlength="1" inputmode="numeric" aria-label="Dígito"/><input id="cK2" maxlength="1" inputmode="numeric" aria-label="Dígito"/><input id="cK3" maxlength="1" inputmode="numeric" aria-label="Dígito"/><input id="cK4" maxlength="1" inputmode="numeric" aria-label="Dígito"/></div>
+    <button class="pri" id="cGo">Acessar</button>
+    <span class="muted" style="font-size:12px">Ao acessar, você concorda com a <a href="#privacidade">Política de Privacidade</a>. Chave errada? Fale com a loja.</span>
+  </div></div>
+  <div class="lp-wrap" style="max-width:680px" id="cView" hidden>
+    <div class="stack"><div class="row"><h1 style="font-size:24px">Pikachu VMAX</h1><span class="id">#0431</span><span class="badge hot">Leilão em andamento</span></div>
+      <span class="muted">Vivid Voltage · 044/185 · NM · PT · Consignada por você</span></div>
+    <div class="cols2" style="align-items:start">
+      <section class="box"><header><h2>Ao vivo</h2><span class="live-on"><span class="dot"></span> AO VIVO</span></header><div class="pad stack">
+        <div class="live-bid"><span class="muted">Maior lance</span><b class="mono">R$ 465,00</b><span class="muted mono">41 lances · último há 25s</span></div>
+        <div class="mono">Termina em 00:41:05</div>
+        <div class="ph" style="height:150px">[ foto real da carta ]</div>
+      </div></section>
+      <section class="box"><header><h2>Lances recentes</h2></header>
+        <div class="lance"><span class="mono">21:42:10</span><span class="mono">(11) 9****-1020</span><span class="mono" style="margin-left:auto">R$ 465,00</span></div>
+        <div class="lance"><span class="mono">21:41:55</span><span class="mono">(21) 9****-4455</span><span class="mono" style="margin-left:auto">R$ 450,00</span></div>
+        <div class="lance"><span class="mono">21:40:02</span><span class="mono">(31) 9****-7731</span><span class="mono" style="margin-left:auto">R$ 420,00</span></div>
+        <p class="note">Telefones parcialmente ocultos</p></section>
+    </div>
+    <section class="box"><header><h2>Estimativa de repasse</h2></header><div class="pad stack">
+      <div class="row"><span class="grow">Lance atual</span><span class="mono">R$ 465,00</span></div>
+      <div class="row"><span class="grow">Comissão da loja (15%)</span><span class="mono">− R$ 69,75</span></div>
+      <div class="row"><b class="grow">Líquido estimado</b><b class="mono">R$ 395,25</b></div>
+      <span class="muted">Valor final definido quando o leilão encerrar e a venda for confirmada pela loja.</span>
+    </div></section>
+    <section class="box"><header><h2>Suas outras cartas na loja</h2></header><div class="tw"><table><thead><tr><th>#ID</th><th>Carta</th><th>Situação</th></tr></thead><tbody>
+      <tr><td><span class="id">#0450</span></td><td>Mew ex</td><td><span class="badge alt">Leilão agendado · dom 20:00</span></td></tr>
+      <tr><td><span class="id">#0301</span></td><td>Mew ex 151</td><td><span class="badge">Vendida</span></td></tr>
+    </tbody></table></div></section>
+  </div>
+</div>
+
+<!-- ========== SHELL ========== -->
+<div class="app" id="shell">
+  <aside class="side">
+    <a class="store" href="#lojas" title="Dropdown: trocar de loja"><div class="logo"></div><div class="lb"><b>Poké Card Hub</b><small>Proprietário</small></div><span class="caret lb">▾</span></a>
+    <nav class="nav" aria-label="Principal">
+      <a href="#home" data-n="home"><i></i><span class="lb">Home</span></a>
+      <a href="#estoque" data-n="estoque"><i></i><span class="lb">Estoque</span></a>
+      <a href="#leiloes" data-n="leiloes"><i></i><span class="lb">Leilões</span></a>
+      <a href="#clientes" data-n="clientes"><i></i><span class="lb">Clientes</span></a>
+      <a href="#envios" data-n="envios"><i></i><span class="lb">Envios</span></a>
+      <a href="#funcionarios" data-n="funcionarios"><i></i><span class="lb">Funcionários</span></a>
+      <a href="#config" data-n="config"><i></i><span class="lb">Configurações</span></a>
+      <a href="#financeiro" data-n="financeiro"><i></i><span class="lb">Financeiro</span></a>
+    </nav>
+    <a class="profile" href="#perfil"><span class="avatar"></span><span class="lb">igor@loja.com<br><small>Ver perfil</small></span></a>
+  </aside>
+  <div style="display:contents">
+    <header class="top">
+      <button class="menubtn" id="menuBtn" aria-label="Abrir menu">☰</button>
+      <h1 id="pgTitle">Home</h1>
+      <div class="wa" id="wa" role="status"><span class="dot"></span><span id="waTxt">WhatsApp: Online</span></div>
+      <button id="waToggle" class="sm" title="Só para o wireframe">Simular queda</button>
+      <a href="#atividade"><button class="sm">Notificações · 3</button></a>
+    </header>
+    <main>
+
+<!-- 4 HOME -->
+<div class="pg" id="p-home" data-title="Home" data-nav="home">
+  <div class="alert hatch" role="alert"><span class="tag">ATENÇÃO</span><p style="background:var(--surface);padding:2px 6px"><b>2 leilões de Enquete</b> aguardando validação do valor máximo! (#0412 Charizard ex · #0431 Pikachu VMAX)</p><a href="#enquete"><button class="pri">Revisar e aprovar encerramento</button></a></div>
+  <div class="kpis k5">
+    <div class="kpi"><span class="l">Leilões ativos agora</span><span class="v">6</span><a href="#leiloes">Abrir monitor</a></div>
+    <div class="kpi"><span class="l">Agendados para hoje</span><span class="v">4</span><span class="s">próximo em [ 14:30 ]</span></div>
+    <div class="kpi"><span class="l">Lances nos leilões ativos</span><span class="v">128</span><span class="s">último lance há [ 8s ]</span></div>
+    <div class="kpi"><span class="l">Acertos pendentes</span><span class="v">9</span><a href="#home">Ir para a fila ↓</a></div>
+    <div class="kpi"><span class="l">Cartas sem leilão</span><span class="v">3</span><a href="#home">Ver lembretes ↓</a></div>
+  </div>
+  <section class="box"><header><h2>Cartas sem leilão agendado · lembrete</h2><a href="#estoque">Ver estoque</a></header>
+    <div class="tw"><table><thead><tr><th>#ID</th><th>Carta</th><th>Origem</th><th>Parada há</th><th>Ação</th></tr></thead><tbody>
+      <tr><td><span class="id">#0471</span></td><td><span class="thumb"></span>Pikachu VMAX</td><td><span class="badge">Própria</span></td><td class="mono">agora</td><td><a href="#estoque-agendar">Agendar leilão →</a></td></tr>
+      <tr><td><span class="id">#0440</span></td><td><span class="thumb"></span>Gengar VMAX</td><td><span class="badge">Própria</span></td><td class="mono">3 dias</td><td><a href="#estoque-agendar">Agendar leilão →</a></td></tr>
+      <tr><td><span class="id">#0450</span></td><td><span class="thumb"></span>Mew ex</td><td><span class="badge alt">Consignada</span></td><td class="mono">9 dias</td><td><a href="#estoque-agendar">Agendar leilão →</a></td></tr>
+    </tbody></table></div><p class="note">Todas as cartas “Disponível” sem leilão · as mais antigas aparecem primeiro</p></section>
+  <section class="box"><header><h2>Fila de acertos rápidos · Esperando confirmação</h2><a href="#clientes">Ver todos (9)</a></header>
+    <div class="tw"><table><thead><tr><th>#ID</th><th>Carta</th><th>Vencedor</th><th class="n">Valor</th><th>Encerrou</th><th>Ação</th></tr></thead><tbody>
+      <tr><td><span class="id">#0377</span></td><td><span class="thumb"></span>Lugia V Alt Art</td><td>Rafael M.</td><td class="n mono">R$ 340,00</td><td class="mono">há 12 min</td><td><a href="#cliente">Fechar na página do cliente →</a></td></tr>
+      <tr><td><span class="id">#0381</span></td><td><span class="thumb"></span>Rayquaza VMAX</td><td>Rafael M.</td><td class="n mono">R$ 210,00</td><td class="mono">há 12 min</td><td><a href="#cliente">Fechar na página do cliente →</a></td></tr>
+      <tr><td><span class="id">#0366</span></td><td><span class="thumb"></span>Gardevoir ex</td><td>Bruno A. <span class="badge alt">Sem CPF/endereço</span></td><td class="n mono">R$ 95,00</td><td class="mono">há 1 h</td><td><a href="#cliente">Completar cadastro →</a></td></tr>
+      <tr><td><span class="id">#0352</span></td><td><span class="thumb"></span>Eevee Promo</td><td>Camila T.</td><td class="n mono">R$ 60,00</td><td class="mono">há 3 h</td><td><a href="#cliente">Fechar na página do cliente →</a></td></tr>
+    </tbody></table></div>
+  </section>
+</div>
+
+<!-- 5.1 ESTOQUE -->
+<div class="pg" id="p-estoque" data-title="Estoque" data-nav="estoque">
+  <div class="bar">
+    <input type="search" placeholder="Buscar por #ID ou nome" aria-label="Buscar" style="min-width:200px">
+    <select aria-label="Status"><option>Status: todos</option><option>Disponível</option><option>Agendada em Leilão</option><option>Esperando Confirmação</option><option>Vendida</option></select>
+    <select aria-label="Origem"><option>Origem: todas</option><option>Própria</option><option>Consignada</option></select>
+    <select aria-label="Idioma"><option>Idioma: todos</option><option>Português</option><option>Inglês</option><option>Japonês</option></select>
+    <div class="right"><a href="#estoque-novo"><button class="pri">+ Cadastrar carta</button></a></div>
+  </div>
+  <section class="box"><div class="tw"><table><thead><tr><th>#ID</th><th>Carta</th><th>Coleção</th><th>Idioma</th><th>Estado</th><th>Origem</th><th>Status</th><th></th></tr></thead><tbody>
+    <tr class="go" data-go="carta"><td><span class="id" title="Clique para copiar">#0412</span></td><td><span class="thumb"></span>Charizard ex 199/165</td><td>151</td><td>EN</td><td>NM</td><td><span class="badge">Própria</span></td><td><span class="badge hot">Agendada em Leilão</span></td><td><button class="sm">⋯</button></td></tr>
+    <tr class="go" data-go="carta"><td><span class="id">#0431</span></td><td><span class="thumb"></span>Pikachu VMAX 044/185</td><td>Vivid Voltage</td><td>PT</td><td>SP</td><td><span class="badge alt">Consignada</span></td><td><span class="badge hot">Agendada em Leilão</span></td><td><button class="sm">⋯</button></td></tr>
+    <tr class="go" data-go="carta"><td><span class="id">#0440</span></td><td><span class="thumb"></span>Gengar VMAX</td><td>Fusion Strike</td><td>PT</td><td>NM</td><td><span class="badge">Própria</span></td><td><span class="badge">Disponível</span></td><td><a href="#estoque-agendar"><button class="sm">Agendar</button></a></td></tr>
+    <tr class="go" data-go="carta"><td><span class="id">#0377</span></td><td><span class="thumb"></span>Lugia V Alt Art</td><td>Silver Tempest</td><td>EN</td><td>NM</td><td><span class="badge">Própria</span></td><td><span class="badge alt">Esperando Confirmação</span></td><td><button class="sm">⋯</button></td></tr>
+    <tr class="go" data-go="carta"><td><span class="id">#0301</span></td><td><span class="thumb"></span>Mew ex 151</td><td>151</td><td>JP</td><td>MP</td><td><span class="badge alt">Consignada</span></td><td><span class="badge" style="text-decoration:line-through">Vendida</span></td><td><button class="sm">⋯</button></td></tr>
+  </tbody></table></div><p class="note">Clicar no #ID copia o código para usar no WhatsApp · paginação: [ ‹ 1 2 3 › ]</p></section>
+</div>
+
+<!-- 5.2 CADASTRO (1 TELA) -->
+<div class="pg" id="p-estoque-novo" data-title="Estoque · Cadastrar carta" data-nav="estoque">
+  <div class="crumb"><a href="#estoque">Estoque</a> / Cadastrar carta</div>
+  <section class="box"><header><h2>Buscar carta</h2></header><div class="pad srch">
+    <div class="stack" style="min-width:0">
+      <label>Busca rápida: nome ou número<input value="p" aria-label="Busca de carta"></label>
+      <div class="dd">
+        <div class="muted"><span>Resultados para “p” · digite mais para filtrar</span></div>
+        <div><span class="thumb"></span><b>Pikachu VMAX</b><span class="muted">Vivid Voltage · 044/185</span></div>
+        <div><span class="thumb"></span><b>Pikachu ex</b><span class="muted">Surging Sparks · 057/191</span></div>
+        <div><span class="thumb"></span><b>Piplup</b><span class="muted">Brilliant Stars · 035/172</span></div>
+      </div>
+    </div>
+    <div class="stack" style="align-items:center">
+      <div class="ph art">arte oficial</div>
+      <span class="muted" style="text-align:center">Pikachu VMAX<br>Vivid Voltage · 044/185</span>
+    </div>
+  </div></section>
+  <div class="cols2" style="align-items:stretch">
+    <section class="box eqbox"><header><h2>Dados da carta e estado físico</h2></header><div class="pad stack">
+      <div><b>Pikachu VMAX</b> <span class="muted">· Vivid Voltage · 044/185 · Raridade [ Rara Ultra ]</span></div>
+      <div class="form">
+        <label>Idioma<select><option>Português</option><option>Inglês</option><option>Japonês</option></select></label>
+        <label>Estado de conservação<select><option>M · Mint</option><option>NM · Near Mint</option><option>SP · Slightly Played</option><option>MP · Moderately Played</option><option>HP · Heavily Played</option><option>DMG · Danificada</option></select></label>
+        <label class="full">Fotos reais da carta (frente / verso / detalhes)<div class="photos"><div class="ph">+ Frente</div><div class="ph">+ Verso</div><div class="ph">+ Detalhe</div></div></label>
+        <label class="full">Observações<textarea placeholder="Ex.: leve marca na borda inferior, sleeve desde a abertura, vem com toploader…"></textarea></label>
+      </div>
+    </div></section>
+    <div class="stack eq" style="min-width:0">
+      <section class="box"><header><h2>Origem</h2></header><div class="pad stack">
+        <div class="seg" id="origem"><button data-o="p">Estoque Próprio</button><button data-o="c">Consignada</button></div>
+        <span class="muted" id="origemHint">Escolha a origem para continuar.</span>
+        <div class="form" id="consig" hidden>
+          <label>Cliente consignador<input placeholder="Buscar cliente por nome, telefone ou CPF"></label>
+          <label>% de comissão da loja<input type="number" value="15"></label>
+          <div class="full" style="border:1px dashed var(--line);padding:10px;display:flex;flex-direction:column;gap:6px">
+            <b style="color:var(--fg)">Link de acompanhamento para o consignador</b>
+            <span class="mono" style="color:var(--fg)">app.com/c/x7k2 <small class="muted">(gerado ao salvar)</small></span>
+            <span>Ele acompanha quando o leilão acontece e vê os lances ao vivo. Chave de acesso: 4 primeiros números do CPF <span class="keys-demo"><i></i><i></i><i></i><i></i></span></span>
+            <div class="row"><button class="sm" type="button">Copiar link</button><button class="sm" type="button">Enviar no WhatsApp</button></div>
+            <span>Requer CPF cadastrado no cliente consignador.</span>
+          </div>
+        </div>
+      </div></section>
+      <section class="box" id="leilaoBox"><header><h2>Leilão</h2></header><div class="pad stack">
+        <div class="seg" id="quando"><button class="on" data-q="a">Agendar</button><button data-q="n">Lançar agora</button><button data-q="d">Deixar para depois</button></div>
+        <div id="qAg" class="form"><label>Início<input type="datetime-local"></label><label>Fim<input type="datetime-local"></label></div>
+        <div id="qNow" hidden class="muted">A carta é postada no grupo assim que você salvar. Defina só o fim do leilão.<div class="form" style="margin-top:8px"><label>Fim<input type="datetime-local"></label></div></div>
+        <div id="qLater" hidden class="muted">A carta fica como <span class="badge">Disponível</span> e aparece na Home como lembrete de “sem leilão agendado”.</div>
+        <div id="qCfg" class="stack">
+          <div class="seg" id="tipo2"><button class="on" data-k="l">Lance livre</button><button data-k="e">Enquete</button></div>
+          <div class="form"><label>Lance mínimo (R$)<input type="number" value="20"></label><label id="teto2" hidden>Valor teto da enquete (R$)<input type="number" value="500"></label><label>Incremento mínimo (R$)<input type="number" value="5"></label></div>
+          <div class="muted">Prévia no grupo: <span class="mono">🃏 #0471 · Pikachu VMAX · NM · PT · lance mínimo R$ 20</span></div>
+        </div>
+      </div></section>
+    </div>
+  </div>
+  <div class="row" style="justify-content:flex-end"><a href="#estoque"><button>Cancelar</button></a><button class="pri" id="wzNext" disabled title="Escolha a origem da carta">Salvar e agendar leilão</button></div>
+</div>
+
+<!-- 6.1 LEILOES -->
+<div class="pg" id="p-leiloes" data-title="Leilões" data-nav="leiloes">
+  <div class="bar"><div class="tabs" data-tabs="lt" style="flex:1"><button class="on" data-t="lt1">Em andamento (6)</button><button data-t="lt2">Agendados (4)</button><button data-t="lt3">Encerrados</button></div><button class="pri" data-open="mLeilao">+ Novo leilão</button></div>
+  <div class="tp show" id="lt1"><section class="box"><div class="tw"><table><thead><tr><th>Leilão</th><th>Cartas</th><th>Tipo</th><th>Termina</th><th class="n">Lances</th><th class="n">Maior lance</th></tr></thead><tbody>
+    <tr class="go" data-go="leilao"><td>Noite Alt Art</td><td class="n">3</td><td><span class="badge">Lance livre</span></td><td class="mono">hoje 22:00</td><td class="n mono">54</td><td class="n mono">R$ 820,00</td></tr>
+    <tr class="go" data-go="leilao"><td>Enquete Pikachu</td><td class="n">1</td><td><span class="badge alt">Enquete</span></td><td class="mono">hoje 21:30</td><td class="n mono">41</td><td class="n mono">R$ 465,00</td></tr>
+  </tbody></table></div><p class="note">Clicar na linha abre o monitor (6.2)</p></section></div>
+  <div class="tp" id="lt2"><section class="box"><div class="tw"><table><thead><tr><th>Leilão</th><th>Cartas</th><th>Tipo</th><th>Início</th><th>Fim</th><th></th></tr></thead><tbody>
+    <tr><td>Domingo Raros</td><td class="n">5</td><td><span class="badge">Lance livre</span></td><td class="mono">dom 20:00</td><td class="mono">dom 23:00</td><td><a href="#leilao-editar"><button class="sm">Editar</button></a></td></tr>
+  </tbody></table></div></section></div>
+  <div class="tp" id="lt3"><section class="box"><div class="tw"><table><thead><tr><th>Leilão</th><th>Cartas</th><th>Encerrou</th><th class="n">Arrecadado</th><th>Vencedor(es)</th></tr></thead><tbody>
+    <tr class="go" data-go="leilao"><td>Sexta Especial</td><td class="n">4</td><td class="mono">sex 23:00</td><td class="n mono">R$ 1.020,00</td><td>Rafael M. +2</td></tr>
+  </tbody></table></div></section></div>
+</div>
+
+<!-- 6.2 MONITOR -->
+<div class="pg" id="p-leilao" data-title="Leilões · Monitor" data-nav="leiloes">
+  <div class="crumb"><a href="#leiloes">Leilões</a> / Noite Alt Art</div>
+  <div class="row"><b style="font-size:16px">Noite Alt Art</b><span class="badge hot">Em andamento</span><span class="muted mono">termina hoje 22:00</span><span class="badge">Lance livre</span><a href="#leilao-editar" style="margin-left:auto"><button class="sm">Editar leilão</button></a></div>
+  <div class="cols2">
+    <section class="box"><header><h2><span class="id">#0412</span> Charizard ex</h2><span class="mono"><b>R$ 820,00</b></span></header>
+      <div class="lance"><span class="mono">21:42:10</span><span class="mono">(11) 98877-1020</span><span class="mono" style="margin-left:auto">R$ 820,00</span></div>
+      <div class="lance"><span class="mono">21:41:55</span><span class="mono">(21) 99120-4455</span><span class="mono" style="margin-left:auto">R$ 800,00</span></div>
+      <div class="lance"><span class="mono">21:40:02</span><span class="mono">(31) 98400-7731</span><span class="mono" style="margin-left:auto">R$ 750,00</span></div>
+      <p class="note">Histórico de lances vindos do WhatsApp · horário, telefone, valor</p></section>
+    <section class="box"><header><h2><span class="id">#0377</span> Lugia V Alt Art</h2><span class="badge">Encerrada</span></header>
+      <div class="pad stack"><div class="win"><b>Vencedor:</b> <a href="#cliente">Rafael M. · (11) 98877-1020</a><br><span class="mono">R$ 340,00</span> · 12 lances</div></div>
+      <div class="lance"><span class="mono">20:58:01</span><span class="mono">(11) 98877-1020</span><span class="mono" style="margin-left:auto">R$ 340,00</span></div>
+      <div class="lance"><span class="mono">20:57:30</span><span class="mono">(21) 99120-4455</span><span class="mono" style="margin-left:auto">R$ 330,00</span></div>
+      <p class="note">Carta encerrada: destaque do vencedor com link para a página do cliente</p></section>
+  </div>
+</div>
+
+<!-- 6.3 APROVAR ENQUETE -->
+<div class="pg" id="p-enquete" data-title="Leilões · Aprovar enquete" data-nav="leiloes">
+  <div class="crumb"><a href="#leiloes">Leilões</a> / Enquetes aguardando validação</div>
+  <div class="alert hatch"><span class="tag">2 PENDENTES</span><p style="background:var(--surface);padding:2px 6px">O lance chegou ao valor máximo definido. Aprove o encerramento para anunciar o vencedor no grupo.</p></div>
+  <div class="cols2" style="align-items:start">
+    <section class="box"><header><h2><span class="id">#0412</span> Charizard ex</h2><span class="badge alt">Enquete</span></header><div class="pad stack">
+      <div class="row"><div class="ph" style="width:70px;height:98px">carta</div><div class="grow"><span class="muted">Valor máximo</span><br><b class="mono" style="font-size:20px">R$ 800,00</b><br><span class="muted">Maior lance: </span><b class="mono">R$ 820,00</b></div></div>
+      <div class="win"><b>Vencedor provisório:</b> <a href="#cliente">Rafael M. · (11) 98877-1020</a></div>
+      <div class="box" style="border:1px solid var(--line)"><div class="lance"><span class="mono">21:42:10</span><span class="mono">(11) 98877-1020</span><span class="mono" style="margin-left:auto">R$ 820,00</span></div><div class="lance"><span class="mono">21:41:55</span><span class="mono">(21) 99120-4455</span><span class="mono" style="margin-left:auto">R$ 800,00</span></div></div>
+      <div class="row" style="justify-content:flex-end"><button>Manter aberto</button><button class="pri">Aprovar encerramento</button></div>
+    </div></section>
+    <section class="box"><header><h2><span class="id">#0431</span> Pikachu VMAX</h2><span class="badge alt">Enquete</span></header><div class="pad stack">
+      <div class="row"><div class="ph" style="width:70px;height:98px">carta</div><div class="grow"><span class="muted">Valor máximo</span><br><b class="mono" style="font-size:20px">R$ 450,00</b><br><span class="muted">Maior lance: </span><b class="mono">R$ 465,00</b></div></div>
+      <div class="win"><b>Vencedor provisório:</b> <a href="#cliente">Camila T. · (21) 99120-4455</a></div>
+      <div class="box" style="border:1px solid var(--line)"><div class="lance"><span class="mono">21:30:44</span><span class="mono">(21) 99120-4455</span><span class="mono" style="margin-left:auto">R$ 465,00</span></div><div class="lance"><span class="mono">21:29:10</span><span class="mono">(11) 98877-1020</span><span class="mono" style="margin-left:auto">R$ 440,00</span></div></div>
+      <div class="row" style="justify-content:flex-end"><button>Manter aberto</button><button class="pri">Aprovar encerramento</button></div>
+    </div></section>
+  </div>
+</div>
+
+<!-- 5.3 DETALHE DA CARTA -->
+<div class="pg" id="p-carta" data-title="Estoque · Detalhe da carta" data-nav="estoque">
+  <div class="crumb"><a href="#estoque">Estoque</a> / #0412</div>
+  <div class="bar"><span class="id">#0412</span><b style="font-size:18px">Charizard ex 199/165</b><span class="badge hot">Agendada em Leilão</span>
+    <div class="right"><button>Editar</button><a href="#leilao-editar"><button>Ver leilão</button></a><button disabled title="Requer permissão para deletar">Excluir</button></div></div>
+  <div class="cols2" style="align-items:stretch">
+    <section class="box"><header><h2>Dados da carta</h2></header><div class="pad stack">
+      <div class="row" style="align-items:flex-start"><div class="ph" style="width:120px;aspect-ratio:63/88">arte oficial</div>
+        <div class="form grow"><label>Coleção<b style="color:var(--fg);font-size:13px">151</b></label><label>Número<b style="color:var(--fg);font-size:13px">199/165</b></label><label>Idioma<b style="color:var(--fg);font-size:13px">Inglês</b></label><label>Estado<b style="color:var(--fg);font-size:13px">NM</b></label><label>Origem<b style="color:var(--fg);font-size:13px">Estoque próprio</b></label><label>Cadastrada em<b style="color:var(--fg);font-size:13px">10/10</b></label></div></div>
+      <div><span class="muted" style="font-size:12px">Fotos reais</span><div class="photos"><div class="ph">Frente</div><div class="ph">Verso</div><div class="ph">Detalhe</div></div></div>
+      <div><span class="muted" style="font-size:12px">Observações</span><br>Leve marca na borda inferior, guardada em sleeve desde a abertura.</div>
+    </div></section>
+    <section class="box"><header><h2>Histórico de leilões</h2></header><div class="tw"><table><thead><tr><th>Data</th><th>Tipo</th><th class="n">Maior lance</th><th>Resultado</th></tr></thead><tbody>
+      <tr><td class="mono">hoje</td><td><span class="badge">Lance livre</span></td><td class="n mono">R$ 820,00</td><td><span class="badge hot">Em andamento</span></td></tr>
+      <tr><td class="mono">03/10</td><td><span class="badge">Lance livre</span></td><td class="n mono">R$ 610,00</td><td><span class="badge alt">Sem vencedor</span></td></tr>
+    </tbody></table></div><p class="note">Cada leilão é de uma carta só · clicar abre o monitor</p></section>
+  </div>
+</div>
+
+<!-- 6.4 EDITAR LEILAO -->
+<div class="pg" id="p-leilao-editar" data-title="Leilões · Editar leilão" data-nav="leiloes">
+  <div class="crumb"><a href="#leiloes">Leilões</a> / <span class="id">#0452</span> Umbreon V Alt Art</div>
+  <div class="bar"><b style="font-size:18px">Editar leilão</b><span class="badge alt">Agendado</span></div>
+  <section class="box"><div class="pad stack">
+    <div class="row"><div class="ph" style="width:70px;height:98px">carta</div><div><b>Umbreon V Alt Art</b><br><span class="muted">Evolving Skies · NM · PT · Estoque próprio</span></div></div>
+    <div class="form"><label>Início<input type="datetime-local"></label><label>Fim<input type="datetime-local"></label></div>
+    <div class="seg" id="tipo3"><button class="on">Lance livre</button><button>Enquete</button></div>
+    <div class="form"><label>Lance mínimo (R$)<input type="number" value="20"></label><label>Incremento mínimo (R$)<input type="number" value="5"></label><label>Valor teto da enquete (R$)<input type="number" placeholder="Só para enquete"></label></div>
+  </div></section>
+  <div class="row" style="justify-content:space-between"><button>Cancelar leilão</button><div class="row"><a href="#leiloes"><button>Voltar</button></a><a href="#leiloes"><button class="pri">Salvar alterações</button></a></div></div>
+</div>
+
+<!-- E1 SEM PERMISSAO -->
+<div class="pg" id="p-sem-permissao" data-title="Sem permissão" data-nav="">
+  <section class="box"><div class="pad stack" style="align-items:center;text-align:center;padding:48px 16px">
+    <div class="ph" style="width:72px;height:72px;border-radius:50%">cadeado</div>
+    <h2 style="font-size:18px;text-transform:none;letter-spacing:0">Você não tem permissão para acessar esta tela</h2>
+    <span class="muted" style="max-width:48ch">Esta área exige a permissão <b>Ver Dashboard Financeiro</b>. Peça ao proprietário da loja para liberar o seu acesso.</span>
+    <div class="row"><a href="#home"><button>Voltar para a Home</button></a><button class="pri">Pedir acesso ao proprietário</button></div>
+  </div></section>
+</div>
+
+<!-- E2 HOME VAZIA -->
+<div class="pg" id="p-home-vazio" data-title="Home" data-nav="home">
+  <section class="box"><header><h2>Bem-vindo, vamos preparar a sua loja</h2><span class="muted mono">1 de 4 concluído</span></header><div class="pad stack">
+    <div class="hbt" style="height:10px"><div style="width:25%"></div></div>
+    <div class="row"><span class="badge hot">Feito</span><b class="grow">Loja criada</b></div>
+    <div class="row"><span class="badge alt">Pendente</span><span class="grow"><b>Conectar o WhatsApp e escolher o grupo</b><br><span class="muted">O bot precisa do grupo para postar os leilões.</span></span><a href="#config"><button class="sm pri">Conectar</button></a></div>
+    <div class="row"><span class="badge alt">Pendente</span><span class="grow"><b>Cadastrar a primeira carta</b><br><span class="muted">Busque a carta, adicione fotos e informe o estado.</span></span><a href="#estoque-novo"><button class="sm pri">Cadastrar</button></a></div>
+    <div class="row"><span class="badge alt">Pendente</span><span class="grow"><b>Agendar o primeiro leilão</b><br><span class="muted">Disponível depois de cadastrar uma carta.</span></span><button class="sm" disabled>Agendar</button></div>
+  </div></section>
+  <div class="kpis k5">
+    <div class="kpi"><span class="l">Leilões ativos agora</span><span class="v muted">0</span></div>
+    <div class="kpi"><span class="l">Agendados para hoje</span><span class="v muted">0</span></div>
+    <div class="kpi"><span class="l">Lances nos leilões ativos</span><span class="v muted">0</span></div>
+    <div class="kpi"><span class="l">Acertos pendentes</span><span class="v muted">0</span></div>
+    <div class="kpi"><span class="l">Cartas sem leilão</span><span class="v muted">0</span></div>
+  </div>
+</div>
+
+<!-- E3 ESTOQUE VAZIO -->
+<div class="pg" id="p-estoque-vazio" data-title="Estoque" data-nav="estoque">
+  <section class="box"><div class="pad stack" style="align-items:center;text-align:center;padding:56px 16px">
+    <div class="ph" style="width:120px;height:90px">[ ilustração ]</div>
+    <h2 style="font-size:18px;text-transform:none;letter-spacing:0">Seu estoque ainda está vazio</h2>
+    <span class="muted" style="max-width:46ch">Cadastre a primeira carta para poder agendar um leilão e ver os números aparecerem na Home.</span>
+    <a href="#estoque-novo"><button class="pri">+ Cadastrar carta</button></a>
+  </div></section>
+</div>
+
+<!-- E4 WHATSAPP CAIU -->
+<div class="pg" id="p-wa-caiu" data-title="Home" data-nav="home">
+  <div class="alert hatch" role="alert"><span class="tag">WHATSAPP DESCONECTADO</span><p style="background:var(--surface);padding:2px 6px"><b>3 leilões ativos</b> estão sem receber lances desde 21:38. Reconecte para o bot voltar a registrar.</p><a href="#config"><button class="pri">Reconectar agora</button></a></div>
+  <div class="cols2" style="align-items:start">
+    <section class="box"><header><h2>Ler o QR Code</h2><span class="badge alt">Aguardando leitura</span></header><div class="pad row" style="gap:16px;align-items:flex-start"><div class="qr" role="img" aria-label="QR Code" style="width:170px;height:170px"></div>
+      <ol class="muted" style="margin:0;padding-left:18px;flex:1 1 180px"><li>Abra o WhatsApp da loja.</li><li>Aparelhos conectados.</li><li>Conectar aparelho e ler o código.</li></ol></div></section>
+    <section class="box"><header><h2>Leilões afetados</h2></header><div class="tw"><table><thead><tr><th>Carta</th><th>Termina em</th><th class="n">Lances</th><th></th></tr></thead><tbody>
+      <tr><td><span class="id">#0412</span> Charizard ex</td><td class="mono">00:12:40</td><td class="n mono">54</td><td><button class="sm">+30 min</button></td></tr>
+      <tr><td><span class="id">#0431</span> Pikachu VMAX</td><td class="mono">00:41:05</td><td class="n mono">41</td><td><button class="sm">+30 min</button></td></tr>
+      <tr><td><span class="id">#0388</span> Umbreon V</td><td class="mono">01:05:12</td><td class="n mono">33</td><td><button class="sm">+30 min</button></td></tr>
+    </tbody></table></div><p class="note">Lances enviados no grupo durante a queda podem não ter sido registrados · estenda o prazo se precisar</p>
+    <div class="pad row" style="justify-content:flex-end"><button>Estender todos em 30 min</button></div></section>
+  </div>
+</div>
+
+<!-- B1 PLANO -->
+<div class="pg" id="p-plano" data-title="Configurações · Plano e cobrança" data-nav="config">
+  <div class="crumb"><a href="#config">Configurações</a> / Plano e cobrança</div>
+  <div class="cols2" style="align-items:start">
+    <section class="box"><header><h2>Plano atual</h2><span class="badge hot">Ativo</span></header><div class="pad stack">
+      <div><b style="font-size:20px">Loja</b> <span class="mono">R$ [ 00 ]/mês</span></div>
+      <span class="muted">Próxima cobrança em [ 05/11 ]. Para mudar de plano, fale com a administração.</span>
+      <div class="stack"><div class="row"><span class="grow">Grupos de WhatsApp</span><span class="mono">1 de 3</span></div><div class="hbt"><div style="width:33%"></div></div>
+      <div class="row"><span class="grow">Membros da equipe</span><span class="mono">3 de 5</span></div><div class="hbt"><div style="width:60%"></div></div>
+      <div class="row"><span class="grow">Cartas no estoque</span><span class="mono">120 de 500</span></div><div class="hbt"><div style="width:24%"></div></div></div>
+      <div class="row"><button>Falar com a administração</button></div>
+    </div></section>
+    <div class="stack" style="min-width:0">
+      <section class="box"><header><h2>Forma de pagamento</h2></header><div class="pad stack">
+        <div class="row"><span class="ph" style="width:46px;height:30px">cartão</span><span class="grow">Cartão final [ 0000 ]<br><span class="muted">Validade [ 00/00 ]</span></span><button class="sm">Trocar</button></div>
+        <label>E-mail para recibos<input value="igor@loja.com"></label>
+      </div></section>
+      <section class="box"><header><h2>Faturas</h2></header><div class="tw"><table><thead><tr><th>Data</th><th class="n">Valor</th><th>Status</th><th></th></tr></thead><tbody>
+        <tr><td class="mono">05/10</td><td class="n mono">R$ [ 00 ]</td><td><span class="badge">Paga</span></td><td><button class="sm">Baixar</button></td></tr>
+        <tr><td class="mono">05/09</td><td class="n mono">R$ [ 00 ]</td><td><span class="badge">Paga</span></td><td><button class="sm">Baixar</button></td></tr>
+      </tbody></table></div></section>
+    </div>
+  </div>
+</div>
+
+<!-- B2 ENVIOS -->
+<div class="pg" id="p-envios" data-title="Envios" data-nav="envios">
+  <div class="bar"><select aria-label="Status"><option>Status: todos</option><option>A enviar</option><option>Enviado</option><option>Entregue</option></select><input type="search" placeholder="Buscar cliente ou rastreio" style="min-width:220px" aria-label="Buscar"></div>
+  <section class="box"><div class="tw"><table><thead><tr><th>Cliente</th><th>Cartas</th><th>Destino</th><th>Status</th><th>Rastreio</th><th></th></tr></thead><tbody>
+    <tr><td><a href="#cliente">Rafael M.</a></td><td>#0377, #0381</td><td>São Paulo / SP</td><td><span class="badge alt">A enviar</span></td><td><input placeholder="Código de rastreio" style="min-width:160px"></td><td><button class="sm pri">Marcar como enviado</button></td></tr>
+    <tr><td><a href="#cliente">Camila T.</a></td><td>#0352</td><td>Rio de Janeiro / RJ</td><td><span class="badge hot">Enviado</span></td><td class="mono">BR123456789BR</td><td><button class="sm">Avisar cliente no WhatsApp</button></td></tr>
+    <tr><td><a href="#cliente">Diego S.</a></td><td>#0299, #0301</td><td>Fortaleza / CE</td><td><span class="badge">Entregue</span></td><td class="mono">BR987654321BR</td><td></td></tr>
+  </tbody></table></div><p class="note">Entram aqui as vendas confirmadas · o envio é feito e combinado diretamente entre loja e comprador</p></section>
+</div>
+
+<!-- B3 ATIVIDADE -->
+<div class="pg" id="p-atividade" data-title="Notificações e atividade" data-nav="">
+  <div class="tabs" data-tabs="at"><button class="on" data-t="at1">Notificações (3)</button><button data-t="at2">Log de atividades</button></div>
+  <div class="tp show" id="at1"><section class="box">
+    <div class="lance"><span class="mono">21:42</span><span><b>Enquete aguardando validação</b> · #0412 Charizard ex</span><a href="#enquete" style="margin-left:auto">Revisar</a></div>
+    <div class="lance"><span class="mono">21:38</span><span><b>WhatsApp desconectado</b></span><a href="#wa-caiu" style="margin-left:auto">Ver</a></div>
+    <div class="lance"><span class="mono">20:58</span><span><b>Leilão encerrado</b> · #0377 Lugia V · Rafael M.</span><a href="#cliente" style="margin-left:auto">Fechar acerto</a></div>
+    <p class="note">Notificações lidas somem desta lista após 7 dias</p></section></div>
+  <div class="tp" id="at2"><div class="bar"><select aria-label="Usuário"><option>Usuário: todos</option><option>igor@loja.com</option><option>ana@loja.com</option></select><select aria-label="Ação"><option>Ação: todas</option><option>Exclusão</option><option>Aprovação</option><option>Alteração de permissão</option><option>Acerto</option></select></div>
+    <section class="box"><div class="tw"><table><thead><tr><th>Quando</th><th>Usuário</th><th>Ação</th><th>Item</th></tr></thead><tbody>
+      <tr><td class="mono">hoje 21:50</td><td>igor@loja.com</td><td>Aprovou encerramento</td><td>#0431 Pikachu VMAX</td></tr>
+      <tr><td class="mono">hoje 18:12</td><td>ana@loja.com</td><td>Confirmou pagamento</td><td>Acerto de Camila T.</td></tr>
+      <tr><td class="mono">ontem</td><td>igor@loja.com</td><td><span class="badge hot">Excluiu</span></td><td>Carta #0290</td></tr>
+      <tr><td class="mono">12/10</td><td>igor@loja.com</td><td>Alterou permissões</td><td>ana@loja.com</td></tr>
+    </tbody></table></div><p class="note">O log é visível apenas para o proprietário</p></section></div>
+</div>
+
+<!-- 7.1 CLIENTES -->
+<div class="pg" id="p-clientes" data-title="Clientes" data-nav="clientes">
+  <div class="bar"><input type="search" placeholder="Buscar por nome, telefone ou CPF" style="min-width:280px" aria-label="Buscar cliente"><select aria-label="Tipo"><option>Tipo: todos</option><option>Visitante</option><option>Cliente Cadastrado</option><option>Consignador</option></select><div class="right"><a href="#blacklist"><button>Blacklist e inatividade</button></a></div></div>
+  <section class="box"><div class="tw"><table><thead><tr><th>Nome</th><th>Telefone</th><th>CPF</th><th>Tipo</th><th class="n">Compras</th></tr></thead><tbody>
+    <tr class="go" data-go="cliente"><td>Rafael M.</td><td class="mono">(11) 98877-1020</td><td class="mono">***.***.***-12</td><td><span class="badge">Cliente Cadastrado</span></td><td class="n mono">6</td></tr>
+    <tr class="go" data-go="cliente"><td>Bruno A.</td><td class="mono">(31) 98400-7731</td><td class="muted">—</td><td><span class="badge alt">Visitante (Cadastro Incompleto)</span></td><td class="n mono">0</td></tr>
+    <tr class="go" data-go="cliente"><td>Camila T.</td><td class="mono">(21) 99120-4455</td><td class="mono">***.***.***-55</td><td><span class="badge hot">Consignador</span></td><td class="n mono">4</td></tr>
+  </tbody></table></div></section>
+</div>
+
+<!-- 7.2 CLIENTE -->
+<div class="pg" id="p-cliente" data-title="Clientes · Bruno A." data-nav="clientes">
+  <div class="crumb"><a href="#clientes">Clientes</a> / Bruno A.</div>
+  <div class="alert hatch"><span class="tag">VISITANTE</span><p style="background:var(--surface);padding:2px 6px">Preencha CPF e Endereço para liberar a confirmação de venda.</p></div>
+  <section class="box"><header><h2>Dados do cliente</h2><button class="pri sm">Salvar</button></header><div class="pad form">
+    <label>Nome<input value="Bruno A."></label><label>Telefone<input value="(31) 98400-7731"></label>
+    <label>E-mail<input placeholder="email@exemplo.com"></label><label>CPF<input placeholder="000.000.000-00"></label>
+    <label>CEP<input placeholder="00000-000"></label><label>Rua<input></label>
+    <label>Número<input></label><label>Complemento<input></label>
+    <label>Bairro<input></label><label>Cidade / UF<input></label>
+  </div></section>
+  <div class="tabs" data-tabs="ct"><button class="on" data-t="ct1">Acertos pendentes</button><button data-t="ct2">Histórico de compras e lances</button><button data-t="ct3">Carteira de consignação</button></div>
+  <div class="tp show" id="ct1"><section class="box"><div class="tw"><table><thead><tr><th>#ID</th><th>Carta</th><th class="n">Valor</th></tr></thead><tbody>
+    <tr><td><span class="id">#0366</span></td><td><span class="thumb"></span>Gardevoir ex</td><td class="n mono">R$ 95,00</td></tr>
+    <tr><td><span class="id">#0359</span></td><td><span class="thumb"></span>Ralts Promo</td><td class="n mono">R$ 20,00</td></tr>
+  </tbody></table></div>
+  <div class="pad row" style="border-top:1px solid var(--line-soft)"><label style="width:160px">Frete (opcional)<input placeholder="R$ 0,00"></label><span class="mono grow" style="text-align:right">Total: <b>R$ 115,00</b></span></div>
+  <div class="pad row"><span class="muted">Link do acerto para o cliente: <span class="mono">app.com/acerto/x7k2</span> · <a href="#acerto">ver como cliente</a></span></div>
+  <div class="pad row" style="justify-content:flex-end"><button>Copiar resumo para WhatsApp</button><button class="pri" disabled title="Bloqueado até completar CPF e endereço">Confirmar pagamento (marcar como vendidas)</button></div></section></div>
+  <div class="tp" id="ct2"><section class="box"><div class="tw"><table><thead><tr><th>Data</th><th>Tipo</th><th>Carta</th><th class="n">Valor</th><th>Resultado</th></tr></thead><tbody>
+    <tr><td class="mono">12/10</td><td>Lance</td><td>Gengar VMAX</td><td class="n mono">R$ 140,00</td><td><span class="badge">Superado</span></td></tr>
+    <tr><td class="mono">10/10</td><td>Compra</td><td>Eevee Promo</td><td class="n mono">R$ 60,00</td><td><span class="badge hot">Pago</span></td></tr>
+  </tbody></table></div></section></div>
+  <div class="tp" id="ct3"><section class="box"><div class="tw"><table><thead><tr><th>#ID</th><th>Carta</th><th>Status</th><th class="n">Vendido</th><th class="n">Comissão</th><th class="n">Líquido a repassar</th></tr></thead><tbody>
+    <tr><td><span class="id">#0431</span></td><td>Pikachu VMAX</td><td><span class="badge">Vendida</span></td><td class="n mono">R$ 465,00</td><td class="n mono">− R$ 69,75</td><td class="n mono"><b>R$ 395,25</b></td></tr>
+    <tr><td><span class="id">#0450</span></td><td>Mew ex</td><td><span class="badge alt">Disponível</span></td><td class="n muted">—</td><td class="n muted">—</td><td class="n muted">—</td></tr>
+  </tbody></table></div><div class="pad row"><span class="muted">Link de acompanhamento do consignador: <span class="mono">app.com/c/x7k2</span> · <a href="#consignado">ver como consignador</a></span><button class="sm">Copiar link</button></div><p class="note">Exemplo ilustrativo: a aba aparece completa para clientes consignadores</p></section></div>
+</div>
+
+<!-- 7.3 BLACKLIST -->
+<div class="pg" id="p-blacklist" data-title="Clientes · Blacklist" data-nav="clientes">
+  <div class="crumb"><a href="#clientes">Clientes</a> / Blacklist e inatividade</div>
+  <section class="box"><header><h2>Números bloqueados</h2><button class="pri sm">Adicionar à Blacklist e Expulsar do Grupo</button></header><div class="tw"><table><thead><tr><th>Telefone</th><th>Nome</th><th>Motivo</th><th>Desde</th><th></th></tr></thead><tbody>
+    <tr><td class="mono">(11) 90000-1111</td><td>Marcos L.</td><td>Não finalizou 2 compras</td><td class="mono">02/10</td><td><button class="sm">Remover</button></td></tr>
+    <tr><td class="mono">(19) 90000-2222</td><td>—</td><td>Lances falsos</td><td class="mono">28/09</td><td><button class="sm">Remover</button></td></tr>
+  </tbody></table></div></section>
+  <section class="box"><header><h2>Área cinza · Inatividade do grupo</h2></header><div class="pad stack">
+    <div class="row">Expulsar automaticamente membros sem interação no grupo há <input type="number" value="60" style="width:80px" aria-label="Dias"> dias <button class="pri sm">Salvar</button></div>
+    <div class="tw"><table><thead><tr><th>Membro prestes a cair</th><th>Última interação</th><th>Expulsão em</th></tr></thead><tbody>
+      <tr><td class="mono">(21) 98888-3030</td><td class="mono">há 54 dias</td><td class="mono">6 dias</td></tr>
+      <tr><td class="mono">(47) 97777-4040</td><td class="mono">há 58 dias</td><td class="mono">2 dias</td></tr>
+    </tbody></table></div>
+  </div></section>
+</div>
+
+<!-- 8 FUNCIONARIOS -->
+<div class="pg" id="p-funcionarios" data-title="Funcionários" data-nav="funcionarios">
+  <div class="bar"><div class="right"><button class="pri" data-open="mConvite">+ Convidar funcionário</button></div></div>
+  <section class="box"><div class="tw"><table><thead><tr><th>Membro</th><th>Papel</th><th>Permissões</th><th>Status</th><th></th></tr></thead><tbody>
+    <tr><td>igor@loja.com</td><td><span class="badge hot">Proprietário</span></td><td class="muted">Todas</td><td>Ativo</td><td></td></tr>
+    <tr><td>ana@loja.com</td><td><span class="badge">Funcionário</span></td><td>Estoque, Leilões, Acertos</td><td>Ativo</td><td><button class="sm" data-open="mConvite">Editar permissões</button></td></tr>
+    <tr><td>leo@loja.com</td><td><span class="badge">Funcionário</span></td><td>Estoque</td><td><span class="badge alt">Convite pendente</span></td><td><button class="sm">Reenviar</button> <a href="#convite">Ver convite</a></td></tr>
+  </tbody></table></div></section>
+</div>
+
+<!-- 9 CONFIG -->
+<div class="pg" id="p-config" data-title="Configurações" data-nav="config">
+  <div class="cols2">
+    <section class="box"><header><h2>Conexão do WhatsApp</h2><span class="badge" id="cfgBadge">Online</span></header><div class="pad stack" style="align-items:flex-start">
+      <div id="cfgOn"><b>Aparelho conectado</b><br><span class="muted mono">+55 11 9XXXX-XXXX · conectado desde 10/10</span><br><br><button>Desconectar</button></div>
+      <div id="cfgOff" hidden class="stack"><div class="qr" role="img" aria-label="QR Code"></div><span class="muted">WhatsApp &gt; Aparelhos conectados &gt; Conectar aparelho. O QR renova a cada 20s.</span></div>
+      <span class="muted">Alterna com o botão “Simular queda” da topbar</span>
+    </div></section>
+    <section class="box"><header><h2>Grupo monitorado</h2></header><div class="pad stack">
+      <label>Grupo onde o bot monitora e posta<select><option>Leilões Poké Card Hub (312 membros)</option><option>Teste interno (4 membros)</option></select></label>
+      <button class="sm" style="align-self:flex-start">↻ Recarregar grupos</button>
+    </div></section>
+  </div>
+  <section class="box"><header><h2>Assinatura</h2><a href="#plano">Plano e cobrança →</a></header><div class="pad row"><span class="grow">Plano <b>Loja</b> · próxima cobrança em [ 05/11 ]</span><span class="badge hot">Ativo</span></div></section>
+  <section class="box"><header><h2>Vitrine pública</h2></header><div class="pad stack">
+    <label class="chk"><input type="checkbox" checked> Mostrar os leilões desta loja na vitrine de leilões ao vivo</label>
+    <span class="muted">Quem clicar em “Ir para o leilão” vai para o grupo monitorado. <a href="#ao-vivo">Ver a vitrine</a></span>
+  </div></section>
+  <section class="box"><header><h2>Mensagens automáticas</h2></header><div class="pad stack">
+    <div class="chips"><span>{id}</span><span>{nome}</span><span>{estado}</span><span>{idioma}</span><span>{lance_minimo}</span><span>{vencedor}</span></div>
+    <label>Postagem da carta<textarea>🃏 #{id} · {nome}
+Estado: {estado} · Idioma: {idioma}
+Lance mínimo: {lance_minimo}</textarea></label>
+    <label>Encerramento<textarea>Parabéns @{vencedor}, iremos entrar em contato</textarea></label>
+    <div class="row" style="justify-content:flex-end"><button>Restaurar padrão</button><button class="pri">Salvar mensagens</button></div>
+  </div></section>
+</div>
+
+<!-- 10 FINANCEIRO -->
+<div class="pg" id="p-financeiro" data-title="Financeiro" data-nav="financeiro">
+  <div class="bar"><div class="pills" data-pills><button class="on">Hoje</button><button>Últimos 7 dias</button><button>Últimos 15 dias</button><button>Últimos 30 dias</button><button>Escolher mês ▾</button></div></div>
+  <div class="kpis">
+    <div class="kpi"><span class="l">Faturamento bruto</span><span class="v">R$ 8.420</span></div>
+    <div class="kpi"><span class="l">Lucro líquido da loja</span><span class="v">R$ 5.980</span><span class="s">vendas próprias + comissões</span></div>
+    <div class="kpi"><span class="l">A pagar a consignadores</span><span class="v">R$ 2.440</span><span class="s">passivo</span></div>
+    <div class="kpi"><span class="l">Ticket médio</span><span class="v">R$ 187</span></div>
+  </div>
+  <p class="note" style="border:0;padding:0">Gráficos com dados de exemplo para validar os tipos de visualização.</p>
+  <div class="cg2">
+    <section class="box"><header><h2>Faturamento e lucro por dia</h2><span class="muted"><b style="color:var(--fg)">━</b> bruto &nbsp; <b>╌</b> líquido</span></header><div class="pad"><svg class="chart" viewBox="0 0 640 224" role="img" aria-label="Faturamento e lucro por dia"><line x1="48" x2="624" y1="200.0" y2="200.0" stroke="var(--line-soft)"/><text class="ax" x="42" y="203.0" text-anchor="end">0</text><line x1="48" x2="624" y1="154.0" y2="154.0" stroke="var(--line-soft)"/><text class="ax" x="42" y="157.0" text-anchor="end">150</text><line x1="48" x2="624" y1="108.0" y2="108.0" stroke="var(--line-soft)"/><text class="ax" x="42" y="111.0" text-anchor="end">300</text><line x1="48" x2="624" y1="62.0" y2="62.0" stroke="var(--line-soft)"/><text class="ax" x="42" y="65.0" text-anchor="end">450</text><line x1="48" x2="624" y1="16.0" y2="16.0" stroke="var(--line-soft)"/><text class="ax" x="42" y="19.0" text-anchor="end">600</text><text class="ax" x="48.0" y="216" text-anchor="middle">1</text><text class="ax" x="147.3" y="216" text-anchor="middle">6</text><text class="ax" x="246.6" y="216" text-anchor="middle">11</text><text class="ax" x="345.9" y="216" text-anchor="middle">16</text><text class="ax" x="445.2" y="216" text-anchor="middle">21</text><text class="ax" x="544.6" y="216" text-anchor="middle">26</text><text class="ax" x="624.0" y="216" text-anchor="middle">30</text>
+<polygon points="48.0,200 48.0,132.5 67.9,119.3 87.7,107.4 107.6,97.9 127.4,91.7 147.3,43.9 167.2,91.7 187.0,97.3 206.9,105.9 226.8,116.3 246.6,127.3 266.5,137.4 286.3,99.7 306.2,150.6 326.1,152.2 345.9,149.4 365.8,143.0 385.7,132.8 405.5,120.9 425.4,61.4 445.2,94.2 465.1,82.5 485.0,73.7 504.8,68.1 524.7,66.6 544.6,69.4 564.4,29.2 584.3,84.4 604.1,94.8 624.0,105.9 624.0,200" fill="var(--fill)"/>
+<polyline points="48.0,132.5 67.9,119.3 87.7,107.4 107.6,97.9 127.4,91.7 147.3,43.9 167.2,91.7 187.0,97.3 206.9,105.9 226.8,116.3 246.6,127.3 266.5,137.4 286.3,99.7 306.2,150.6 326.1,152.2 345.9,149.4 365.8,143.0 385.7,132.8 405.5,120.9 425.4,61.4 445.2,94.2 465.1,82.5 485.0,73.7 504.8,68.1 524.7,66.6 544.6,69.4 564.4,29.2 584.3,84.4 604.1,94.8 624.0,105.9" fill="none" stroke="var(--fg)" stroke-width="2"/>
+<polyline points="48.0,152.2 67.9,142.7 87.7,134.4 107.6,127.6 127.4,123.0 147.3,89.3 167.2,123.0 187.0,127.0 206.9,133.1 226.8,140.5 246.6,148.5 266.5,155.5 286.3,128.9 306.2,165.0 326.1,166.0 345.9,164.1 365.8,159.5 385.7,152.5 405.5,143.9 425.4,101.6 445.2,124.9 465.1,116.6 485.0,110.1 504.8,106.5 524.7,105.2 544.6,107.4 564.4,78.9 584.3,117.8 604.1,125.2 624.0,133.1" fill="none" stroke="var(--muted)" stroke-width="2" stroke-dasharray="5 4"/>
+<circle cx="624.0" cy="105.9" r="4" fill="var(--fg)"/>
+<text class="ax" x="48" y="10">R$</text></svg></div><p class="note">Linha com área · eixo X: dia do período · eixo Y: R$</p></section>
+    <section class="box"><header><h2>Faturamento por origem</h2></header><div class="pad pie-wrap"><svg viewBox="0 0 150 150" width="150" height="150" role="img" style="flex:none"><path d="M75.0,75.0 L75.0,4.0 A71.0,71.0 0 1 1 40.8,137.2 Z" class="c1"/><path d="M75.0,75.0 L40.8,137.2 A71.0,71.0 0 0 1 75.0,4.0 Z" class="c2"/></svg><div class="legend"><div class="lg"><i class="sw c1"></i><span>Estoque próprio</span><b class="mono">58%</b></div><div class="lg"><i class="sw c2"></i><span>Consignadas</span><b class="mono">42%</b></div></div></div><p class="note">Pizza · inclui a parte repassada aos consignadores</p></section>
+  </div>
+  <div class="cg2e">
+    <section class="box"><header><h2>Distribuição das vendas por valor</h2><span class="muted">histograma · nº de cartas</span></header><div class="pad"><svg class="chart" viewBox="0 0 320 200" role="img"><line x1="30" x2="312" y1="174.0" y2="174.0" stroke="var(--line-soft)"/><text class="ax" x="25" y="177.0" text-anchor="end">0</text><line x1="30" x2="312" y1="135.9" y2="135.9" stroke="var(--line-soft)"/><text class="ax" x="25" y="138.9" text-anchor="end">11</text><line x1="30" x2="312" y1="97.7" y2="97.7" stroke="var(--line-soft)"/><text class="ax" x="25" y="100.7" text-anchor="end">22</text><line x1="30" x2="312" y1="59.6" y2="59.6" stroke="var(--line-soft)"/><text class="ax" x="25" y="62.6" text-anchor="end">33</text><line x1="30" x2="312" y1="21.5" y2="21.5" stroke="var(--line-soft)"/><text class="ax" x="25" y="24.5" text-anchor="end">44</text><rect x="35.6" y="125.5" width="35.7" height="48.5" fill="var(--line)"/><text class="ax" x="53.5" y="121.5" text-anchor="middle">14</text><text class="ax" x="53.5" y="190" text-anchor="middle">&lt;50</text><rect x="82.6" y="66.5" width="35.7" height="107.5" fill="var(--line)"/><text class="ax" x="100.5" y="62.5" text-anchor="middle">31</text><text class="ax" x="100.5" y="190" text-anchor="middle">50-100</text><rect x="129.6" y="28.4" width="35.7" height="145.6" fill="var(--fg)"/><text class="ax" x="147.5" y="24.4" text-anchor="middle">42</text><text class="ax" x="147.5" y="190" text-anchor="middle">100-200</text><rect x="176.6" y="80.4" width="35.7" height="93.6" fill="var(--line)"/><text class="ax" x="194.5" y="76.4" text-anchor="middle">27</text><text class="ax" x="194.5" y="190" text-anchor="middle">200-400</text><rect x="223.6" y="132.4" width="35.7" height="41.6" fill="var(--line)"/><text class="ax" x="241.5" y="128.4" text-anchor="middle">12</text><text class="ax" x="241.5" y="190" text-anchor="middle">400-800</text><rect x="270.6" y="160.1" width="35.7" height="13.9" fill="var(--line)"/><text class="ax" x="288.5" y="156.1" text-anchor="middle">4</text><text class="ax" x="288.5" y="190" text-anchor="middle">&gt;800</text><line x1="30" x2="312" y1="174" y2="174" stroke="var(--fg)"/></svg></div><p class="note">Faixas de R$ · mostra se o forte são cartas baratas ou caras</p></section>
+    <section class="box"><header><h2>Lances por horário</h2><span class="muted">histograma · nº de lances</span></header><div class="pad"><svg class="chart" viewBox="0 0 360 200" role="img"><line x1="30" x2="352" y1="174.0" y2="174.0" stroke="var(--line-soft)"/><text class="ax" x="25" y="177.0" text-anchor="end">0</text><line x1="30" x2="352" y1="135.0" y2="135.0" stroke="var(--line-soft)"/><text class="ax" x="25" y="138.0" text-anchor="end">10</text><line x1="30" x2="352" y1="96.0" y2="96.0" stroke="var(--line-soft)"/><text class="ax" x="25" y="99.0" text-anchor="end">20</text><line x1="30" x2="352" y1="57.0" y2="57.0" stroke="var(--line-soft)"/><text class="ax" x="25" y="60.0" text-anchor="end">30</text><line x1="30" x2="352" y1="18.0" y2="18.0" stroke="var(--line-soft)"/><text class="ax" x="25" y="21.0" text-anchor="end">40</text><rect x="31.6" y="170.1" width="10.2" height="3.9" fill="var(--line)"/><text class="ax" x="36.7" y="190" text-anchor="middle">0h</text><rect x="45.0" y="174.0" width="10.2" height="0.0" fill="var(--line)"/><rect x="58.4" y="174.0" width="10.2" height="0.0" fill="var(--line)"/><rect x="71.9" y="174.0" width="10.2" height="0.0" fill="var(--line)"/><text class="ax" x="77.0" y="190" text-anchor="middle">3h</text><rect x="85.3" y="174.0" width="10.2" height="0.0" fill="var(--line)"/><rect x="98.7" y="170.1" width="10.2" height="3.9" fill="var(--line)"/><rect x="112.1" y="166.2" width="10.2" height="7.8" fill="var(--line)"/><text class="ax" x="117.2" y="190" text-anchor="middle">6h</text><rect x="125.5" y="162.3" width="10.2" height="11.7" fill="var(--line)"/><rect x="138.9" y="158.4" width="10.2" height="15.6" fill="var(--line)"/><rect x="152.4" y="154.5" width="10.2" height="19.5" fill="var(--line)"/><text class="ax" x="157.5" y="190" text-anchor="middle">9h</text><rect x="165.8" y="150.6" width="10.2" height="23.4" fill="var(--line)"/><rect x="179.2" y="146.7" width="10.2" height="27.3" fill="var(--line)"/><rect x="192.6" y="142.8" width="10.2" height="31.2" fill="var(--line)"/><text class="ax" x="197.7" y="190" text-anchor="middle">12h</text><rect x="206.0" y="138.9" width="10.2" height="35.1" fill="var(--line)"/><rect x="219.4" y="135.0" width="10.2" height="39.0" fill="var(--line)"/><rect x="232.9" y="127.2" width="10.2" height="46.8" fill="var(--line)"/><text class="ax" x="238.0" y="190" text-anchor="middle">15h</text><rect x="246.3" y="119.4" width="10.2" height="54.6" fill="var(--line)"/><rect x="259.7" y="107.7" width="10.2" height="66.3" fill="var(--line)"/><rect x="273.1" y="88.2" width="10.2" height="85.8" fill="var(--line)"/><text class="ax" x="278.2" y="190" text-anchor="middle">18h</text><rect x="286.5" y="53.1" width="10.2" height="120.9" fill="var(--line)"/><rect x="299.9" y="25.8" width="10.2" height="148.2" fill="var(--fg)"/><rect x="313.4" y="60.9" width="10.2" height="113.1" fill="var(--line)"/><text class="ax" x="318.5" y="190" text-anchor="middle">21h</text><rect x="326.8" y="127.2" width="10.2" height="46.8" fill="var(--line)"/><rect x="340.2" y="158.4" width="10.2" height="15.6" fill="var(--line)"/><line x1="30" x2="352" y1="174" y2="174" stroke="var(--fg)"/></svg></div><p class="note">Mostra o melhor horário para agendar os leilões</p></section>
+  </div>
+  <div class="cg3">
+    <section class="box"><header><h2>Vendas por idioma</h2></header><div class="pad pie-wrap"><svg viewBox="0 0 150 150" width="150" height="150" role="img" style="flex:none"><path d="M75.0,75.0 L75.0,4.0 A71.0,71.0 0 1 1 66.1,145.4 Z" class="c1"/><path d="M75.0,75.0 L66.1,145.4 A71.0,71.0 0 0 1 12.8,40.8 Z" class="c2"/><path d="M75.0,75.0 L12.8,40.8 A71.0,71.0 0 0 1 75.0,4.0 Z" class="c3"/></svg><div class="legend"><div class="lg"><i class="sw c1"></i><span>Português</span><b class="mono">52%</b></div><div class="lg"><i class="sw c2"></i><span>Inglês</span><b class="mono">31%</b></div><div class="lg"><i class="sw c3"></i><span>Japonês</span><b class="mono">17%</b></div></div></div><p class="note">Pizza · por nº de cartas vendidas</p></section>
+    <section class="box"><header><h2>Vendas por estado</h2></header><div class="pad pie-wrap"><svg viewBox="0 0 150 150" width="150" height="150" role="img" style="flex:none"><path d="M75.0,75.0 L75.0,4.0 A71.0,71.0 0 1 1 29.7,129.7 Z" class="c1"/><path d="M75.0,75.0 L29.7,129.7 A71.0,71.0 0 0 1 12.8,40.8 Z" class="c2"/><path d="M75.0,75.0 L12.8,40.8 A71.0,71.0 0 0 1 53.1,7.5 Z" class="c3"/><path d="M75.0,75.0 L53.1,7.5 A71.0,71.0 0 0 1 75.0,4.0 Z" class="c4"/></svg><div class="legend"><div class="lg"><i class="sw c1"></i><span>NM</span><b class="mono">61%</b></div><div class="lg"><i class="sw c2"></i><span>SP</span><b class="mono">22%</b></div><div class="lg"><i class="sw c3"></i><span>MP</span><b class="mono">12%</b></div><div class="lg"><i class="sw c4"></i><span>HP/DMG</span><b class="mono">5%</b></div></div></div><p class="note">Pizza · por nº de cartas vendidas</p></section>
+    <section class="box"><header><h2>Top compradores</h2></header><div class="pad stack"><div class="hb"><span>Rafael M.</span><div class="hbt"><div style="width:100%"></div></div><b class="mono">R$ 1.240</b></div><div class="hb"><span>Camila T.</span><div class="hbt"><div style="width:73%"></div></div><b class="mono">R$ 905</b></div><div class="hb"><span>Bruno A.</span><div class="hbt"><div style="width:49%"></div></div><b class="mono">R$ 610</b></div><div class="hb"><span>Letícia P.</span><div class="hbt"><div style="width:31%"></div></div><b class="mono">R$ 380</b></div><div class="hb"><span>Diego S.</span><div class="hbt"><div style="width:22%"></div></div><b class="mono">R$ 270</b></div></div><p class="note">Barras horizontais · valor total no período</p></section>
+  </div>
+  <section class="box"><header><h2>Repasses de consignação</h2><span class="muted">Cartas vendidas e já pagas pelos compradores</span></header><div class="tw"><table><thead><tr><th>Consignador</th><th class="n">Cartas</th><th class="n">Vendido</th><th class="n">Comissão</th><th class="n">A repassar</th><th></th></tr></thead><tbody>
+    <tr><td><a href="#cliente">Camila T.</a></td><td class="n mono">3</td><td class="n mono">R$ 1.100,00</td><td class="n mono">R$ 165,00</td><td class="n mono"><b>R$ 935,00</b></td><td><button class="sm">Marcar repasse como realizado</button></td></tr>
+    <tr><td><a href="#cliente">Diego S.</a></td><td class="n mono">1</td><td class="n mono">R$ 210,00</td><td class="n mono">R$ 31,50</td><td class="n mono"><b>R$ 178,50</b></td><td><button class="sm">Marcar repasse como realizado</button></td></tr>
+  </tbody></table></div></section>
+</div>
+
+<!-- PERFIL -->
+<div class="pg" id="p-perfil" data-title="Meu perfil" data-nav="">
+  <section class="box"><div class="pad row" style="gap:18px">
+    <div class="avatar" style="width:84px;height:84px"></div>
+    <div class="grow"><b style="font-size:18px">Igor Costa</b><br><span class="muted">igor@loja.com</span><br><span class="badge hot">Proprietário · Poké Card Hub</span> <span class="badge alt">Funcionário · Cards do Zé</span></div>
+    <div class="row"><button>Trocar foto</button><button>Remover</button></div>
+  </div></section>
+
+  <div class="cols2" style="align-items:start">
+    <div class="stack" style="min-width:0">
+      <section class="box"><header><h2>Dados pessoais</h2></header><div class="pad form">
+        <label>Nome completo<input value="Igor Costa" autocomplete="name"></label>
+        <label>E-mail (login)<input value="igor@loja.com" disabled></label>
+        <label>Telefone<input id="mTel" inputmode="numeric" placeholder="(00) 00000-0000" value="(11) 98877-1020" maxlength="15"></label>
+        <label>CPF<input id="mCpf" inputmode="numeric" placeholder="000.000.000-00" maxlength="14"></label>
+        <label>Data de nascimento<input type="date"></label>
+      </div></section>
+      <section class="box"><header><h2>Endereço</h2></header><div class="pad form">
+        <label>CEP<input id="mCep" inputmode="numeric" placeholder="00000-000" maxlength="9"></label>
+        <label class="full">Rua<input placeholder="Rua, avenida…"></label>
+        <label>Número<input></label><label>Complemento<input></label>
+        <label>Bairro<input></label><label>Cidade / UF<input placeholder="São Paulo / SP"></label>
+      </div></section>
+    </div>
+
+    <div class="stack" style="min-width:0">
+      <section class="box"><header><h2>Preferências</h2></header><div class="pad stack">
+        <label>Idioma padrão<select id="pLang"><option>Português (Brasil)</option><option>English</option><option>Español</option></select></label>
+        <div><span class="muted" style="font-size:12px">Tema padrão</span>
+          <div class="themes" id="themes" role="group" aria-label="Tema">
+            <button data-th="light" class="th"><span class="tv tl"></span>Claro</button>
+            <button data-th="dark" class="th"><span class="tv td"></span>Escuro</button>
+            <button data-th="system" class="th on"><span class="tv ts"></span>Sistema</button>
+          </div>
+        </div>
+        <div class="form"><label>Fuso horário<select><option>America/Sao_Paulo (UTC−3)</option><option>America/Manaus (UTC−4)</option></select></label>
+        <label>Moeda<select><option>Real (R$)</option><option>Dólar (US$)</option></select></label></div>
+      </div></section>
+      <section class="box"><header><h2>Notificações</h2></header><div class="pad stack">
+        <label class="chk"><input type="checkbox" checked> Avisar quando o WhatsApp desconectar</label>
+        <label class="chk"><input type="checkbox" checked> Leilões de enquete aguardando validação</label>
+        <label class="chk"><input type="checkbox"> Resumo diário por e-mail</label>
+      </div></section>
+      <section class="box"><header><h2>Segurança</h2></header><div class="pad stack">
+        <div class="row"><span class="grow">Este aparelho · Chrome, Windows<br><span class="muted">Ativo agora</span></span><span class="badge">Atual</span></div>
+        <div class="row"><span class="grow">iPhone · Safari<br><span class="muted">Há 2 dias</span></span><button class="sm">Encerrar</button></div>
+        <div class="row" style="justify-content:flex-end"><button class="sm">Sair de todos os aparelhos</button></div>
+      </div></section>
+    </div>
+  </div>
+
+  <div class="row" style="justify-content:space-between"><div class="row"><a href="#lojas"><button>Trocar de loja</button></a><a href="#login"><button>Sair</button></a></div><button class="pri">Salvar alterações</button></div>
+</div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ========== ADMIN SHELL ========== -->
+<div class="app adm" id="ashell">
+  <aside class="side">
+    <a class="store" href="#admin"><div class="logo"></div><div class="lb"><b>Administração</b><small>Logo do Produto</small></div></a>
+    <nav class="nav" aria-label="Admin">
+      <a href="#admin" data-n="admin"><i></i><span class="lb">Painel</span></a>
+      <a href="#admin-usuarios" data-n="admin-usuarios"><i></i><span class="lb">Usuários</span></a>
+      <a href="#admin-lojas" data-n="admin-lojas"><i></i><span class="lb">Lojas</span></a>
+      <a href="#admin-convites" data-n="admin-convites"><i></i><span class="lb">Convites e solicitações</span></a>
+    </nav>
+    <a class="profile" href="#lojas"><span class="avatar"></span><span class="lb">igor@loja.com<br><small>Voltar ao app das lojas</small></span></a>
+  </aside>
+  <div style="display:contents">
+    <header class="top">
+      <button class="menubtn" id="aMenuBtn" aria-label="Abrir menu">☰</button>
+      <h1 id="aTitle">Admin</h1>
+      <span class="badge hot">/admin</span>
+    </header>
+    <main>
+
+<!-- A1 PAINEL -->
+<div class="pg" id="p-admin" data-title="Admin · Painel" data-nav="admin">
+  <div class="kpis">
+    <div class="kpi"><span class="l">Usuários ativos</span><span class="v">48</span><a href="#admin-usuarios">Gerenciar</a></div>
+    <div class="kpi"><span class="l">Lojas ativas</span><span class="v">31</span><a href="#admin-lojas">Ver lojas</a></div>
+    <div class="kpi"><span class="l">Convites pendentes</span><span class="v">5</span><a href="#admin-convites">Ver convites</a></div>
+    <div class="kpi"><span class="l">Solicitações de acesso</span><span class="v">3</span><a href="#admin-convites">Responder</a></div>
+  </div>
+  <div class="cols2" style="align-items:start">
+    <section class="box"><header><h2>Solicitações de acesso novas</h2><a href="#admin-convites">Ver todas</a></header><div class="tw"><table><thead><tr><th>Nome</th><th>Loja</th><th>Quando</th><th></th></tr></thead><tbody>
+      <tr><td>Marina C.</td><td>Marina Cards</td><td class="mono">há 2 h</td><td><a href="#admin-loja-nova"><button class="sm">Criar loja e convidar</button></a></td></tr>
+      <tr><td>Paulo R.</td><td>Sul TCG</td><td class="mono">ontem</td><td><a href="#admin-loja-nova"><button class="sm">Criar loja e convidar</button></a></td></tr>
+    </tbody></table></div></section>
+    <section class="box"><header><h2>Lojas com WhatsApp desconectado</h2><a href="#admin-lojas">Ver lojas</a></header><div class="tw"><table><thead><tr><th>Loja</th><th>Proprietário</th><th>Desde</th></tr></thead><tbody>
+      <tr><td>Cards do Zé</td><td>ze@cards.com</td><td class="mono">há 3 h</td></tr>
+      <tr><td>Pocket Hub</td><td>ana@pocket.com</td><td class="mono">há 2 dias</td></tr>
+    </tbody></table></div><p class="note">Só para acompanhamento · alterações na loja são feitas pelo proprietário</p></section>
+  </div>
+</div>
+
+<!-- A2 USUARIOS -->
+<div class="pg" id="p-admin-usuarios" data-title="Admin · Usuários" data-nav="admin-usuarios">
+  <div class="bar"><input type="search" placeholder="Buscar por nome ou e-mail" style="min-width:240px" aria-label="Buscar usuário">
+    <select aria-label="Status"><option>Status: todos</option><option>Ativo</option><option>Convite pendente</option><option>Suspenso</option></select>
+    <select aria-label="Criar lojas"><option>Criar lojas: todos</option><option>Pode criar</option><option>Não pode criar</option></select>
+    <div class="right"><button class="pri" data-open="mUser">+ Cadastrar usuário</button></div></div>
+  <section class="box"><div class="tw"><table><thead><tr><th>Usuário</th><th class="n">Lojas</th><th>Pode criar lojas</th><th>Status</th><th>Último acesso</th><th></th></tr></thead><tbody>
+    <tr class="go" data-go="admin-usuario"><td>Igor Costa<br><span class="muted mono">igor@loja.com</span></td><td class="n mono">2</td><td><span class="badge hot">Sim · até 3</span></td><td><span class="badge">Ativo</span></td><td class="mono">agora</td><td><a href="#admin-usuario"><button class="sm">Gerenciar</button></a></td></tr>
+    <tr class="go" data-go="admin-usuario"><td>Ana Souza<br><span class="muted mono">ana@loja.com</span></td><td class="n mono">1</td><td><span class="badge">Não</span></td><td><span class="badge">Ativo</span></td><td class="mono">há 2 h</td><td><a href="#admin-usuario"><button class="sm">Gerenciar</button></a></td></tr>
+    <tr class="go" data-go="admin-usuario"><td>Marina C.<br><span class="muted mono">marina@cards.com</span></td><td class="n mono">0</td><td><span class="badge">Não</span></td><td><span class="badge alt">Convite pendente</span></td><td class="muted">nunca</td><td><a href="#admin-usuario"><button class="sm">Gerenciar</button></a></td></tr>
+    <tr class="go" data-go="admin-usuario"><td>Leo P.<br><span class="muted mono">leo@loja.com</span></td><td class="n mono">1</td><td><span class="badge">Não</span></td><td><span class="badge" style="text-decoration:line-through">Suspenso</span></td><td class="mono">há 20 dias</td><td><a href="#admin-usuario"><button class="sm">Gerenciar</button></a></td></tr>
+  </tbody></table></div><p class="note">Usuários só entram por convite · não existe cadastro aberto</p></section>
+</div>
+
+<!-- A3 USUARIO -->
+<div class="pg" id="p-admin-usuario" data-title="Admin · Usuário" data-nav="admin-usuarios">
+  <div class="crumb"><a href="#admin-usuarios">Usuários</a> / Ana Souza</div>
+  <div class="bar"><b style="font-size:18px">Ana Souza</b><span class="muted mono">ana@loja.com</span><span class="badge">Ativo</span></div>
+  <div class="cols2" style="align-items:start">
+    <div class="stack" style="min-width:0">
+      <section class="box"><header><h2>Dados</h2></header><div class="pad form"><label>Nome<input value="Ana Souza"></label><label>E-mail<input value="ana@loja.com" disabled></label><label>Telefone<input value="(21) 99120-4455" disabled></label><label>Criado em<input value="03/10/2026" disabled></label></div></section>
+      <section class="box"><header><h2>Permissões globais</h2></header><div class="pad stack">
+        <label class="chk"><input type="checkbox"> Pode criar novas lojas</label>
+        <label>Limite de lojas próprias<input type="number" value="0" style="width:120px"></label>
+        <span class="muted">Sem essa permissão, o usuário só entra em lojas para as quais foi convidado ou que o administrador criou para ele.</span>
+      </div></section>
+    </div>
+    <div class="stack" style="min-width:0">
+      <section class="box"><header><h2>Lojas vinculadas</h2></header><div class="tw"><table><thead><tr><th>Loja</th><th>Papel</th><th>WhatsApp</th></tr></thead><tbody>
+        <tr><td>Poké Card Hub</td><td><span class="badge">Funcionário</span></td><td>Online</td></tr>
+      </tbody></table></div><p class="note">Somente leitura · o administrador não altera dados das lojas</p></section>
+      <section class="box"><header><h2>Acesso</h2></header><div class="pad stack">
+        <div class="row"><button>Reenviar convite</button><button>Suspender acesso</button></div>
+        <span class="muted">Suspender impede o login em todas as lojas, sem apagar nenhum dado.</span>
+      </div></section>
+    </div>
+  </div>
+  <div class="row" style="justify-content:flex-end"><a href="#admin-usuarios"><button>Voltar</button></a><button class="pri">Salvar alterações</button></div>
+</div>
+
+<!-- A4 LOJAS -->
+<div class="pg" id="p-admin-lojas" data-title="Admin · Lojas" data-nav="admin-lojas">
+  <div class="bar"><input type="search" placeholder="Buscar loja ou proprietário" style="min-width:240px" aria-label="Buscar loja">
+    <select aria-label="WhatsApp"><option>WhatsApp: todos</option><option>Online</option><option>Desconectado</option></select>
+    <select aria-label="Plano"><option>Plano: todos</option><option>Inicial</option><option>Loja</option><option>Rede</option></select>
+    <div class="right"><a href="#admin-loja-nova"><button class="pri">+ Criar loja</button></a></div></div>
+  <section class="box"><div class="tw"><table><thead><tr><th>Loja</th><th>Proprietário</th><th>Plano</th><th class="n">Membros</th><th>WhatsApp</th><th>Criada em</th><th></th></tr></thead><tbody>
+    <tr><td>Poké Card Hub</td><td class="mono">igor@loja.com</td><td><span class="badge">Loja</span></td><td class="n mono">3</td><td>Online</td><td class="mono">10/09</td><td><button class="sm" data-open="mTransfer">Transferir propriedade</button></td></tr>
+    <tr><td>Cards do Zé</td><td class="mono">ze@cards.com</td><td><span class="badge">Inicial</span></td><td class="n mono">1</td><td><span class="badge alt">Desconectado</span></td><td class="mono">22/09</td><td><button class="sm" data-open="mTransfer">Transferir propriedade</button></td></tr>
+    <tr><td>TCG Sul</td><td class="mono">paulo@sul.com</td><td><span class="badge">Rede</span></td><td class="n mono">6</td><td>Online</td><td class="mono">01/10</td><td><button class="sm" data-open="mTransfer">Transferir propriedade</button></td></tr>
+  </tbody></table></div><p class="note">O administrador cria a loja e define o proprietário · o restante (WhatsApp, estoque, equipe) é gerenciado pelo proprietário</p></section>
+</div>
+
+<!-- A5 CRIAR LOJA -->
+<div class="pg" id="p-admin-loja-nova" data-title="Admin · Criar loja" data-nav="admin-lojas">
+  <div class="crumb"><a href="#admin-lojas">Lojas</a> / Criar loja</div>
+  <section class="box"><header><h2>Dados da loja</h2></header><div class="pad form">
+    <label>Nome da loja<input placeholder="Ex.: Marina Cards"></label><label>Cidade / UF<input placeholder="São Paulo / SP"></label>
+    <label>Plano<select><option>Inicial</option><option>Loja</option><option>Rede</option></select></label><label>Limite de membros<input type="number" value="3"></label>
+  </div></section>
+  <section class="box"><header><h2>Proprietário</h2></header><div class="pad stack">
+    <div class="seg" id="ownerSeg"><button class="on" data-w="n">Convidar novo usuário</button><button data-w="e">Usuário existente</button></div>
+    <div class="form" id="ownNew"><label>Nome<input></label><label>E-mail<input type="email"></label></div>
+    <div id="ownEx" hidden><label>Buscar usuário<input placeholder="Nome ou e-mail"></label></div>
+    <label class="chk"><input type="checkbox"> Permitir que este usuário crie novas lojas</label>
+    <label class="chk"><input type="checkbox" checked> Enviar convite por e-mail agora</label>
+    <span class="muted">O proprietário entra com um código por e-mail, conecta o WhatsApp e convida a própria equipe.</span>
+  </div></section>
+  <div class="row" style="justify-content:flex-end"><a href="#admin-lojas"><button>Cancelar</button></a><a href="#admin-lojas"><button class="pri">Criar loja e enviar convite</button></a></div>
+</div>
+
+<!-- A6 CONVITES -->
+<div class="pg" id="p-admin-convites" data-title="Admin · Convites e solicitações" data-nav="admin-convites">
+  <div class="tabs" data-tabs="ac"><button class="on" data-t="ac1">Convites enviados (5)</button><button data-t="ac2">Solicitações de acesso (3)</button></div>
+  <div class="tp show" id="ac1"><section class="box"><div class="tw"><table><thead><tr><th>E-mail</th><th>Tipo</th><th>Loja</th><th>Enviado</th><th>Expira</th><th>Status</th><th></th></tr></thead><tbody>
+    <tr><td class="mono">marina@cards.com</td><td>Proprietário</td><td>Marina Cards</td><td class="mono">há 2 h</td><td class="mono">em 7 dias</td><td><span class="badge alt">Pendente</span></td><td><button class="sm">Reenviar</button> <button class="sm">Revogar</button></td></tr>
+    <tr><td class="mono">leo@loja.com</td><td>Funcionário</td><td>Poké Card Hub</td><td class="mono">há 3 dias</td><td class="mono">em 4 dias</td><td><span class="badge alt">Pendente</span></td><td><button class="sm">Reenviar</button> <button class="sm">Revogar</button></td></tr>
+    <tr><td class="mono">ana@loja.com</td><td>Funcionário</td><td>Poké Card Hub</td><td class="mono">03/10</td><td class="muted">—</td><td><span class="badge">Aceito</span></td><td></td></tr>
+  </tbody></table></div></section></div>
+  <div class="tp" id="ac2"><section class="box"><div class="tw"><table><thead><tr><th>Nome</th><th>E-mail</th><th>WhatsApp</th><th>Loja pretendida</th><th>Quando</th><th></th></tr></thead><tbody>
+    <tr><td>Marina C.</td><td class="mono">marina@cards.com</td><td class="mono">(11) 98877-1020</td><td>Marina Cards</td><td class="mono">há 2 h</td><td><a href="#admin-loja-nova"><button class="sm">Criar loja e convidar</button></a> <button class="sm">Recusar</button></td></tr>
+    <tr><td>Paulo R.</td><td class="mono">paulo@sul.com</td><td class="mono">(51) 99120-4455</td><td>Sul TCG</td><td class="mono">ontem</td><td><a href="#admin-loja-nova"><button class="sm">Criar loja e convidar</button></a> <button class="sm">Recusar</button></td></tr>
+  </tbody></table></div></section></div>
+</div>
+
+    </main>
+  </div>
+</div>
+
+<!-- MODAIS -->
+<div class="modal" id="mLeilao" role="dialog" aria-modal="true" aria-label="Novo leilão"><div class="card stack">
+  <h2>Novo leilão</h2>
+  <label>Nome do leilão<input value="Noite Alt Art"></label>
+  <div><span class="muted">Cartas disponíveis no estoque</span>
+    <div class="box" style="border:1px solid var(--line);margin-top:4px">
+      <label class="chk" style="padding:6px 10px;border-bottom:1px solid var(--line-soft)"><input type="checkbox" checked><span class="id">#0440</span> Gengar VMAX · NM</label>
+      <label class="chk" style="padding:6px 10px;border-bottom:1px solid var(--line-soft)"><input type="checkbox" checked><span class="id">#0452</span> Umbreon V Alt Art · NM</label>
+      <label class="chk" style="padding:6px 10px"><input type="checkbox"><span class="id">#0460</span> Mewtwo V · SP</label>
+    </div></div>
+  <div class="form"><label>Início<input type="datetime-local"></label><label>Fim<input type="datetime-local"></label></div>
+  <div class="seg" id="tipo"><button class="on" data-k="l">Lance livre</button><button data-k="e">Enquete</button></div>
+  <div class="form"><label>Lance mínimo (R$)<input type="number" value="20"></label><label id="teto" hidden>Valor teto da enquete (R$)<input type="number" value="500"></label></div>
+  <div class="row" style="justify-content:flex-end"><button data-close>Cancelar</button><button class="pri" data-close>Agendar leilão</button></div>
+</div></div>
+
+<div class="modal" id="mConvite" role="dialog" aria-modal="true" aria-label="Convidar funcionário"><div class="card stack">
+  <h2>Convidar funcionário</h2>
+  <label>E-mail<input type="email" placeholder="funcionario@email.com"></label>
+  <b>Permissões</b>
+  <label class="chk"><input type="checkbox" checked> Cadastrar Estoque</label>
+  <label class="chk"><input type="checkbox" checked> Criar Leilões</label>
+  <label class="chk"><input type="checkbox" checked> Fazer Acertos</label>
+  <label class="chk"><input type="checkbox"> Ver Dashboard Financeiro</label>
+  <label class="chk"><input type="checkbox"> Pode Deletar Itens/Registros <span class="badge alt">Bloqueado por padrão</span></label>
+  <div class="row" style="justify-content:flex-end"><button data-close>Cancelar</button><button class="pri" data-close>Enviar convite</button></div>
+</div></div>
+<div class="modal" id="mUser" role="dialog" aria-modal="true" aria-label="Cadastrar usuário"><div class="card stack">
+  <h2>Cadastrar usuário</h2>
+  <label>Nome<input></label><label>E-mail<input type="email" placeholder="usuario@email.com"></label>
+  <label class="chk"><input type="checkbox"> Pode criar novas lojas</label>
+  <label>Limite de lojas próprias<input type="number" value="0" style="width:120px"></label>
+  <span class="muted">O usuário recebe um convite por e-mail. Para dar uma loja a ele, use “Criar loja”.</span>
+  <div class="row" style="justify-content:flex-end"><button data-close>Cancelar</button><button class="pri" data-close>Enviar convite</button></div>
+</div></div>
+<div class="modal" id="mTransfer" role="dialog" aria-modal="true" aria-label="Transferir propriedade"><div class="card stack">
+  <h2>Transferir propriedade</h2>
+  <span class="muted">Loja: <b>Cards do Zé</b> · proprietário atual: ze@cards.com</span>
+  <label>Novo proprietário (e-mail)<input type="email"></label>
+  <span class="muted">O proprietário atual passa a funcionário da loja. Nenhum dado da loja é alterado.</span>
+  <div class="row" style="justify-content:flex-end"><button data-close>Cancelar</button><button class="pri" data-close>Transferir</button></div>
+</div></div>
+
+</div>
+<script>
+(function(){
+  var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return [].slice.call((r||document).querySelectorAll(s))};
+  var pub=['landing','login','lojas','ao-vivo','nova-loja','acerto','convite','solicitar','404','termos','privacidade','consignado'],lsec=['funcionalidades','vitrine','dashboards','precos','faq'];
+  function route(){
+    var h=(location.hash||'#landing').slice(1),alias=null;
+    if(h==='estoque-agendar'){alias=h;h='estoque-novo'}
+    var sec=null;if(lsec.indexOf(h)>=0){sec=h;h='landing'}
+    if(!$('#s-'+h)&&!$('#p-'+h))h='404';
+    $$('.screen').forEach(function(e){e.classList.remove('show')});
+    $$('.pg').forEach(function(e){e.classList.remove('show')});
+    $('#shell').classList.remove('show','menu');$('#ashell').classList.remove('show','menu');
+    $$('.modal').forEach(function(m){m.classList.remove('show')});
+    if(pub.indexOf(h)>=0){$('#s-'+h).classList.add('show')}
+    else{
+      var p=$('#p-'+h),sh=p.closest('#ashell')?$('#ashell'):$('#shell');
+      sh.classList.add('show');p.classList.add('show');
+      $(sh.id==='ashell'?'#aTitle':'#pgTitle').textContent=p.getAttribute('data-title');
+      var n=p.getAttribute('data-nav');
+      $$('.nav a').forEach(function(a){a.classList.toggle('on',a.getAttribute('data-n')===n)});
+    }
+    $$('#strip a').forEach(function(a){a.classList.toggle('on',a.getAttribute('data-s')===h)});
+    if(alias){var lb=$('#leilaoBox');if(lb)setTimeout(function(){lb.scrollIntoView()},0)}
+    if(h==='lojas')setTimeout(deckInit,30);
+    window.scrollTo(0,0);
+    if(h==='wa-caiu')setTimeout(function(){setWa(true)},0);
+    if(h==='consignado'){$('#cGate').hidden=false;$('#cView').hidden=true}
+    if(sec)setTimeout(function(){var e=document.getElementById(sec);if(e)e.scrollIntoView()},0);
+  }
+
+
+  function qLabel(){var q=$('#quando .on').getAttribute('data-q');return q==='a'?'Salvar e agendar leilão':q==='n'?'Salvar e lançar agora':'Salvar e deixar para depois'}
+  $('#wzNext').addEventListener('click',function(){location.hash='#estoque'});
+
+  $$('table').forEach(function(t){
+    var hs=$$('th',t).map(function(h){return h.textContent.trim()});
+    $$('tbody tr',t).forEach(function(r){$$('td',r).forEach(function(c,i){c.setAttribute('data-label',hs[i]||'')})});
+  });
+  $$('.nav a').forEach(function(a){a.title=a.textContent.trim()});
+  $('#aMenuBtn').addEventListener('click',function(){$('#ashell').classList.toggle('menu');window.scrollTo(0,0)});
+  $$('#ownerSeg button').forEach(function(b){b.addEventListener('click',function(){$$('#ownerSeg button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');$('#ownNew').hidden=b.getAttribute('data-w')!=='n';$('#ownEx').hidden=b.getAttribute('data-w')!=='e'})});
+  mask('#sTel',function(d){d=d.slice(0,11);return d.length>10?'('+d.slice(0,2)+') '+d.slice(2,7)+'-'+d.slice(7):d.length>6?'('+d.slice(0,2)+') '+d.slice(2,6)+'-'+d.slice(6):d.length>2?'('+d.slice(0,2)+') '+d.slice(2):d.length?'('+d:''});
+  $('#cGo').addEventListener('click',function(){$('#cGate').hidden=true;$('#cView').hidden=false;window.scrollTo(0,0)});
+  var ck=['cK1','cK2','cK3','cK4'].map(function(i){return $('#'+i)});
+  ck.forEach(function(e,i){
+    e.addEventListener('input',function(){e.value=e.value.replace(/\D/g,'');if(e.value&&ck[i+1])ck[i+1].focus()});
+    e.addEventListener('keydown',function(ev){if(ev.key==='Backspace'&&!e.value&&ck[i-1])ck[i-1].focus()});
+  });
+  $('#menuBtn').addEventListener('click',function(){$('#shell').classList.toggle('menu');window.scrollTo(0,0)});
+  $$('.devs button').forEach(function(b){b.addEventListener('click',function(){
+    $$('.devs button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+    document.body.setAttribute('data-dev',b.getAttribute('data-dev'));
+  })});
+  $$('[data-open]').forEach(function(b){b.addEventListener('click',function(){window.scrollTo(0,0)})});
+
+  function mask(id,f){var e=$(id);e.addEventListener('input',function(){e.value=f(e.value.replace(/\D/g,''))})}
+  mask('#mTel',function(d){d=d.slice(0,11);return d.length>10?'('+d.slice(0,2)+') '+d.slice(2,7)+'-'+d.slice(7):d.length>6?'('+d.slice(0,2)+') '+d.slice(2,6)+'-'+d.slice(6):d.length>2?'('+d.slice(0,2)+') '+d.slice(2):d.length?'('+d:''});
+  mask('#mCpf',function(d){d=d.slice(0,11);return d.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2')});
+  mask('#aCpf',function(d){d=d.slice(0,11);return d.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})(\d{1,2})$/,'$1-$2')});
+  mask('#aCep',function(d){d=d.slice(0,8);return d.length>5?d.slice(0,5)+'-'+d.slice(5):d});
+  $$('#tipo3 button').forEach(function(b){b.addEventListener('click',function(){$$('#tipo3 button').forEach(function(x){x.classList.remove('on')});b.classList.add('on')})});
+  mask('#mCep',function(d){d=d.slice(0,8);return d.length>5?d.slice(0,5)+'-'+d.slice(5):d});
+  $$('#themes button').forEach(function(b){b.addEventListener('click',function(){
+    $$('#themes button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+    var t=b.getAttribute('data-th'),r=document.documentElement;
+    if(t==='system')r.removeAttribute('data-theme');else r.setAttribute('data-theme',t);
+  })});
+
+  var deck=$('#deck'),cards=$$('.pk'),dots=$('#dotsL');
+  cards.forEach(function(){dots.appendChild(document.createElement('i'))});
+  function sel(){
+    var c=deck.getBoundingClientRect(),mid=c.left+c.width/2,best=0,bd=1e9;
+    cards.forEach(function(k,i){var r=k.getBoundingClientRect(),d=Math.abs(r.left+r.width/2-mid);if(d<bd){bd=d;best=i}});
+    cards.forEach(function(k,i){k.classList.toggle('sel',i===best)});
+    $$('i',dots).forEach(function(d,i){d.classList.toggle('on',i===best)});
+    return best;
+  }
+  function go(i){i=Math.max(0,Math.min(cards.length-1,i));var k=cards[i];deck.scrollTo({left:k.offsetLeft-(deck.clientWidth-k.offsetWidth)/2,behavior:'smooth'})}
+  function deckInit(){deck.style.scrollBehavior='auto';deck.scrollLeft=0;sel();deck.style.scrollBehavior=''}
+  deck.addEventListener('scroll',sel);
+  $('#prevL').addEventListener('click',function(){go(sel()-1)});
+  $('#nextL').addEventListener('click',function(){go(sel()+1)});
+  deck.addEventListener('keydown',function(e){if(e.key==='ArrowRight'){e.preventDefault();go(sel()+1)}if(e.key==='ArrowLeft'){e.preventDefault();go(sel()-1)}});
+  cards.forEach(function(k,i){k.addEventListener('click',function(e){if(sel()!==i){e.preventDefault();go(i)}})});
+
+  window.addEventListener('hashchange',route);route();
+
+  $$('[data-tabs]').forEach(function(t){
+    $$('button',t).forEach(function(b){b.addEventListener('click',function(){
+      $$('button',t).forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+      var pg=t.closest('.pg');
+      $$('.tp',pg).forEach(function(p){p.classList.toggle('show',p.id===b.getAttribute('data-t'))});
+    })});
+  });
+  $$('[data-pills] button').forEach(function(b){b.addEventListener('click',function(){
+    $$('[data-pills] button').forEach(function(x){x.classList.remove('on')});b.classList.add('on')})});
+  $$('tr.go').forEach(function(r){r.addEventListener('click',function(e){if(e.target.closest('a,button'))return;location.hash=r.getAttribute('data-go')})});
+  $$('[data-open]').forEach(function(b){b.addEventListener('click',function(){$('#'+b.getAttribute('data-open')).classList.add('show')})});
+  $$('[data-close]').forEach(function(b){b.addEventListener('click',function(){b.closest('.modal').classList.remove('show')})});
+  $$('.modal').forEach(function(m){m.addEventListener('click',function(e){if(e.target===m)m.classList.remove('show')})});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')$$('.modal').forEach(function(m){m.classList.remove('show')})});
+
+  $('#sendCode').addEventListener('click',function(){$('#loginA').hidden=true;$('#loginB').hidden=false});
+  $('#back').addEventListener('click',function(e){e.preventDefault();$('#loginB').hidden=true;$('#loginA').hidden=false});
+  $$('#origem button').forEach(function(b){b.addEventListener('click',function(){
+    $$('#origem button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+    $('#wzNext').disabled=false;$('#wzNext').title='';$('#origemHint').hidden=true;
+    $('#consig').hidden=b.getAttribute('data-o')!=='c'})});
+  $$('#tipo button').forEach(function(b){b.addEventListener('click',function(){
+    $$('#tipo button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+    $('#teto').hidden=b.getAttribute('data-k')!=='e'})});
+  $$('.id').forEach(function(i){i.addEventListener('click',function(){
+    try{navigator.clipboard.writeText(i.textContent).catch(function(){})}catch(e){}})});
+
+  $$('#quando button').forEach(function(b){b.addEventListener('click',function(){
+    $$('#quando button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+    var q=b.getAttribute('data-q');
+    $('#qAg').hidden=q!=='a';$('#qNow').hidden=q!=='n';$('#qLater').hidden=q!=='d';$('#qCfg').hidden=q==='d';
+    $('#wzNext').textContent=qLabel()})});
+  $$('#tipo2 button').forEach(function(b){b.addEventListener('click',function(){
+    $$('#tipo2 button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');
+    $('#teto2').hidden=b.getAttribute('data-k')!=='e'})});
+
+  var wa=$('#wa'),txt=$('#waTxt'),tg=$('#waToggle');
+  function setWa(off){if(wa.classList.contains('off')!==off)tg.click()}
+  tg.addEventListener('click',function(){
+    var off=wa.classList.toggle('off');
+    txt.textContent=off?'Desconectado · Ler QR Code':'WhatsApp: Online';
+    tg.textContent=off?'Simular online':'Simular queda';
+    $('#cfgOn').hidden=off;$('#cfgOff').hidden=!off;
+    $('#cfgBadge').textContent=off?'Desconectado':'Online';
+  });
+})();
+</script>

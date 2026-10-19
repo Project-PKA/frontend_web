@@ -1,0 +1,14 @@
+design/
+docs/
+docker/
+scripts/
+.github/
+.nuxt/
+.output/
+coverage/
+playwright-report/
+test-results/
+.lighthouseci/
+package-lock.json
+app/api/generated.ts
+*.md

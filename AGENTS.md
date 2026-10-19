@@ -1,267 +1,217 @@
 # AGENTS.md
 
-> **Este arquivo pertence a um repositorio TEMPLATE.**
->
-> Se voce esta lendo isto dentro de um projeto criado a partir do template
-> — ou seja: o repositorio tem nome proprio, tem produto, tem gente usando —
-> entao **este arquivo esta desatualizado por definicao** e reescreve-lo e a
-> sua primeira tarefa.
+> Contexto para pessoas e agentes de IA. Leia antes de tocar em qualquer
+> arquivo. Responda ao dono em portugues; o **codigo, os commits e as chaves de
+> traducao sao em ingles** (ADR 0017). Portugues so aparece nos arquivos de
+> traducao e nos documentos.
 
----
+## 1. Visao geral
 
-## Para agentes de IA: leia isto antes de qualquer coisa
+Frontend web do **pokemonAuction** (nome provisorio): SaaS B2B multi-tenant para
+lojistas de cartas TCG fazerem leiloes em grupos de WhatsApp. Este repositorio
+tem o app da loja, a area `/admin` da plataforma, as paginas publicas por token
+(acerto do comprador, acompanhamento do consignador), a vitrine e a landing.
+Consome a API do repositorio `Backend`. Produto novo indo para producao,
+mantido por uma pessoa. Requisitos: WCAG AA, LGPD, idiomas `en` e `pt-BR`.
 
-### Se este repositorio ainda E o template
+Nao esta aqui: API, banco, bot de WhatsApp (repos `Backend` e
+`whatsapp_microservice`).
 
-Voce esta no `template-frontend`: a fundacao de qualidade, CI/CD e
-documentacao que todo frontend recebe no primeiro commit.
+**docs/shared do projeto:** `Project-PKA/shared` (clonado em `../shared`).
+Comece por `../shared/OWNER.md` (canal com o dono: se um item bloqueia a
+tarefa, pare e avise). Antes de decisao de arquitetura ou de contrato, leia o
+`ARCHITECTURE.md`, as ADRs (`docs/adr/`) e o `GLOSSARY.md` de la, e
+`docs/produto.md` (escopo e regras). Tipos de API vem do contrato; nunca os
+escreva a mao.
 
-Ele **nao tem stack**. Nao ha framework, nem ferramenta de teste, nem
-plataforma de deploy escolhida — e isso e intencional, nao uma lacuna a
-preencher. A fundacao conversa com a stack por um contrato de comandos
-(`Makefile` + `project.mk`).
+**Contrato:** gerado pelo Backend em `../Backend/docs/api/openapi.yaml`. A copia
+em `shared/openapi.yaml` ainda e um stub (a publicacao depende do secret
+`AUTOMATION_TOKEN`, A2); por isso `OPENAPI_SPEC` aponta para o Backend. Se
+faltar algo na API, **nao mexa no Backend**: abra issue no repo `Backend`.
 
-Regras aqui:
+**Fonte do design:** Claude Design; prototipo em `design/` (41 telas) e
+`design/design-system/` (tokens, componentes). Tela nova ou alterada e
+implementada A PARTIR do design, nao inventada. Valores visuais vem dos tokens
+(`ARCHITECTURE.md` secao 5). Se o design e o codigo divergirem, pergunte qual
+vale. Divergencias ja conhecidas: `design/README.md`.
 
-- **Nao adicione stack.** Nada de `package.json`, framework, biblioteca de
-  teste ou plataforma de deploy. Se a mudanca amarra o template a uma
-  tecnologia, ela nao pertence a este repositorio.
-- **Nao adicione funcionalidade de produto.** Nenhuma tela, nenhum dominio.
-- Mudancas validas: melhorar um workflow, melhorar um esqueleto de
-  documentacao, corrigir um script de convencao, deixar uma regra mais clara,
-  acrescentar uma receita a `DEPLOY.md` ou um exemplo a `project.mk`.
-- Ao mexer aqui, pense no efeito em **todos** os projetos futuros.
+## 2. Comandos
 
-### Se este repositorio FOI CRIADO a partir do template
+O `Makefile` e o contrato; os comandos reais estao em `project.mk`. No Windows
+o `make` nao existe: rode o equivalente npm/npx de `project.mk` (com Node 22 e
+npm 10.9).
 
-**Antes de escrever qualquer codigo, conduza o bootstrap:**
-[`BOOTSTRAP.md`](BOOTSTRAP.md) — ele traz as dez etapas de decisao (tipo de
-aplicacao, stack, qualidade, testes, deploy, contrato de API...), o que
-perguntar em cada uma e onde registrar a resposta.
-
-Rode `make doctor` primeiro: ele mostra o que ja foi decidido e o que falta.
-
-**A ultima etapa do bootstrap e reescrever este arquivo** com o conteudo real
-do projeto, seguindo o modelo abaixo. Por que isso importa: este arquivo e o
-contexto que todo agente le primeiro. Enquanto ele falar do template, cada
-agente vai comecar com a premissa errada. E escreve-lo obriga o time a
-decidir coisas que costumam ficar implicitas.
-
-Como fazer: apague tudo acima da linha `<!-- INICIO DO MODELO -->`, preencha
-o modelo, apague os comentarios de instrucao, e commite sozinho
-(`docs: define AGENTS.md do projeto`).
-
-Enquanto este arquivo nao for reescrito, um agente deve **avisar quem pediu a
-tarefa** e oferecer a reescrita antes de seguir.
-
-### Faxina do primeiro commit
-
-| Arquivo | O que fazer |
-| --- | --- |
-| `AGENTS.md` | Reescrever (este arquivo) |
-| `README.md` | Reescrever para o produto |
-| `BOOTSTRAP.md` | Apagar depois de concluir as dez etapas |
-| `SETUP-GITHUB.md` | Apagar depois de executar o checklist |
-| `project.mk` | Preencher; remover os blocos de exemplo que nao usar |
-| `.tool-versions` | Fixar a versao do runtime |
-| `STACK.md`, `ARCHITECTURE.md`, `TESTING.md`, `DEPLOY.md` | Preencher os esqueletos |
-| `.github/CODEOWNERS` | Trocar `@SUA-ORG/...` por times reais |
-| `.github/ISSUE_TEMPLATE/config.yml` | Trocar as URLs |
-| `sonar-project.properties` | Trocar organization e projectKey |
-| `release-please-config.json` | Trocar `release-type` pelo da stack |
-| `docker/*.example` | Copiar o que usar para a raiz; apagar o resto |
-| `scripts/deploy.sh` | Implementar com a receita de `DEPLOY.md` |
-
-**Nao remova:** `Makefile`, `.githooks/`, `scripts/conventions.sh` e os
-validadores, os workflows, `CLAUDE.md`, `.editorconfig`, `.gitattributes`,
-os arquivos do release-please.
-
----
-
-<!-- INICIO DO MODELO — em um projeto real, tudo acima disto sai -->
-
-## Estrutura obrigatoria do AGENTS.md do projeto
-
-As sete secoes abaixo sao obrigatorias, nesta ordem. O conteudo entre
-`<!-- -->` e instrucao de preenchimento e deve ser apagado.
-
----
-
-### 1. Visao geral
-
-<!--
-Em ate 10 linhas, o que um dev novo (ou um agente sem contexto) precisa saber
-antes de tocar em qualquer arquivo:
-  - O que este produto faz e para quem.
-  - O papel DESTE repositorio no sistema (quais backends consome, quem
-    depende dele).
-  - Em que estagio esta: prototipo, producao, legado em manutencao.
-  - O que NAO esta aqui e as pessoas costumam procurar aqui.
-Sem historia do projeto, sem lista de features. Contexto operacional.
-
-Mantenha SEMPRE a linha do docs/shared abaixo (ou diga que nao ha):
--->
-
-**docs/shared do projeto:** <!-- org/repo, ou "nao ha" -->. Antes de decisao de
-arquitetura ou de contrato de API, leia o `ARCHITECTURE.md`, as ADRs
-(`docs/adr/`) e o `GLOSSARY.md` de la — de preferencia clonado ao lado deste
-repositorio (`../<nome-do-shared>`). Se nao estiver clonado, peca para clonar.
-Tipos de API vem de la via `sync-api-types.yml`; nunca os escreva a mao.
-
-**Fonte do design:** <!-- ferramenta e link (Claude Design, Figma, design system
-da org), ou "nao ha" -->. Tela nova ou alterada e implementada A PARTIR do
-design de referencia (link na issue), nao inventada. Valores visuais vem dos
-tokens (`ARCHITECTURE.md` secao 5). Se o design e o codigo divergirem, pergunte
-qual vale antes de escolher.
-
-### 2. Comandos
-
-Todos os comandos passam pelo contrato do `Makefile`. Os comandos reais de
-cada alvo ficam em `project.mk` — e la que se troca de ferramenta.
-
-| Comando | O que faz | Observacao |
+| Comando | Equivalente | Observacao |
 | --- | --- | --- |
-| `make setup` | Instala dependencias e ativa os hooks | Primeira coisa apos o clone |
-| `make dev` | Sobe o servidor de desenvolvimento | <!-- porta --> |
-| `make build` | Gera o artefato de producao | Saida em <!-- BUILD_DIR --> |
-| `make preview` | Serve o build localmente | <!-- porta --> |
-| `make lint` | Analise estatica (a11y + code smells) | `make lint-fix` corrige |
-| `make format` | Formata | `make format-check` so verifica |
-| `make typecheck` | Checagem de tipos | |
-| `make test` | Testes unitarios / de componente | `make test-watch` em watch |
-| `make test-coverage` | Testes com cobertura | Minimo <!-- % --> |
-| `make e2e` | Testes end-to-end | |
-| `make bundle-budget` | Orcamento de bundle | Falha se estourar |
-| `make perf` | Core Web Vitals | |
-| `make generate-types` | Gera tipos do contrato de API | |
-| `make validate` | Formato + lint + tipos + testes | **Rode antes de abrir PR** |
-| `make doctor` | O que esta configurado e o que falta | |
-| `make help` | Lista os alvos | |
+| `make setup` | `npm ci --no-audit --no-fund` | Primeira coisa apos o clone |
+| `make dev` | `npm run dev` | http://localhost:3000 |
+| `make build` | `npm run generate` | Saida estatica em `.output/public` |
+| `make preview` | `npm run preview -- --port 4173 --strictPort` | Serve o build |
+| `make lint` | `npx eslint . --max-warnings=0` | `make lint-fix` corrige |
+| `make format` | `npx prettier --write .` | `make format-check` so verifica |
+| `make typecheck` | `npx nuxt typecheck` | |
+| `make test` | `npx vitest run` | `make test-watch` em watch |
+| `make test-coverage` | `npx vitest run --coverage` | Piso 70% global, 85% em `app/api/**` |
+| `make e2e` | `npx playwright test` | Precisa do build; `E2E_INSTALL_CMD` instala o Chromium |
+| `make bundle-budget` | `npx size-limit` | Apos o build |
+| `make perf` | `npx lhci autorun` | Apos o build |
+| `make generate-types` | `npx openapi-typescript $OPENAPI_SPEC -o app/api/generated.ts` | |
+| `make validate` | formato, lint, tipos, testes | **Rode antes de abrir PR** |
+| `make doctor` | | O que esta configurado e o que falta |
 
-<!--
-Ajuste a tabela: remova as linhas dos alvos marcados como `skip` em
-project.mk e anote porta, diretorio de build e meta de cobertura reais.
--->
+**Windows:** `make` nao vem instalado (`winget install ezwinports.make`, ou
+WSL). O Node local pode ser o 20: use um Node 22 isolado (`npm i node@22` numa
+pasta temporaria, prefixando o `PATH`) e `npm@10.9.9`.
 
-**Windows:** `make` nao vem instalado. Use WSL, ou
-`winget install ezwinports.make`.
+## 3. Convencoes
 
-### 3. Convencoes
+**Estrutura** — codigo em `app/` (Nuxt 4); texto visivel so em
+`i18n/locales/*.json`; testes ao lado do codigo (`*.test.ts`), e2e em `e2e/`.
 
-<!--
-Regras que um agente deve seguir sem perguntar. Escreva as que o projeto
-realmente segue; apague as que nao valerem. Prefira regra verificavel a
-principio abstrato. Sugestoes do que cobrir:
+**Linguagem** — TypeScript estrito. `any` so com justificativa.
 
-**Estrutura** — onde ficam componentes, paginas, hooks, utilitarios;
-  co-localizacao de teste e estilo; alias de import.
-**Linguagem** — modo estrito? `any` proibido? padrao de nomenclatura?
-**Rede** — toda chamada passa pela camada X; nada de fetch/axios solto.
-  (Faca disso uma regra de LINT, nao um acordo verbal — acordo verbal nao
-  sobrevive ao terceiro mes.)
-**Tipos de API** — gerados do contrato, nunca escritos a mao.
-**Estilo** — escopo por componente, tokens em vez de valores literais,
-  mobile-first.
-**Design** — onde ficam os tokens; como o design chega ao agente (link na
-  issue, export em docs/design/); o que fazer com codigo exportado pela
-  ferramenta de design (ARCHITECTURE.md secao 5).
-**Acessibilidade** — semantica antes de ARIA, tudo alcancavel por teclado.
-**Ambiente** — leitura de variavel de ambiente em um unico modulo, validada
-  no boot; variavel nova documentada em .env.example.
--->
+**Rede** — toda chamada passa por `app/api/`. Regra de lint proibe `fetch`,
+`$fetch` e `useFetch` fora dessa pasta. Erros viram `ApiError`.
 
-### 4. Regras de commit e PR
+**Tipos de API** — gerados em `app/api/generated.ts`; nunca editar a mao.
+
+**Erros da API** — RFC 9457 com `code` estavel. Traduza pelo `code`; **nunca
+mostre o `detail`** (vem em portugues do Backend). Todo `code` do contrato
+precisa de traducao em `en` e `pt-BR`.
+
+**Localizacao** — `en` e `pt-BR`; idioma inicial pelo navegador, troca manual,
+preferencia em `GET/PATCH /v1/me/preferences`. Data, hora, numero e moeda com
+`Intl` na localidade ativa. URLs sempre em ingles.
+
+**Dinheiro e datas** — dinheiro chega como string decimal (`"25.50"`): nunca
+converta para `number`. Datas em UTC na API, exibidas no fuso do usuario.
+
+**Listas** — paginacao por cursor (`cursor`, `limit`, `next_cursor`). A Home e
+"ao vivo" (polling por componente, sem periodo); so o Financeiro tem periodo.
+
+**Autenticacao** — access token so em memoria (Pinia); refresh em cookie
+httpOnly (`credentials: 'include'` so nas chamadas de auth); `401` tenta um
+refresh. Rotas de loja levam `Authorization` e `x-store-id`. `403` com
+`MISSING_PERMISSION` ou `OWNER_REQUIRED` mostra o estado de sem permissao.
+Esconda ou desabilite pela permissao, mas a verdade e o servidor.
+
+**Paginas publicas** — o token vai no **fragmento** da URL (`#token=`), nunca em
+path ou query, e segue no corpo do POST. Link invalido, expirado, revogado,
+bloqueado ou chave errada respondem o mesmo `404` (`PUBLIC_LINK_NOT_FOUND`):
+uma unica mensagem generica. `noindex` e `Referrer-Policy: no-referrer`.
+
+**Produto** — nao existe cadastro aberto (botao e "Solicitar acesso", nunca
+"Criar conta"; campo-isca `website` vai vazio). Linguagem de garantia e
+proibida em qualquer tela ou e-mail ("anti-calote", "compra segura"). Nao cite
+a marca do catalogo na interface (licenca pendente).
+
+**Estilo** — CSS global do design-system (classes BEM), sem Tailwind; sem cor
+literal fora dos tokens; sem emoji como icone; fontes autohospedadas
+(Fontsource), nunca do Google.
+
+**Acessibilidade** — semantica antes de ARIA, tudo por teclado, contraste AA,
+responsivo (desktop, tablet ate 1100px, mobile ate 640px), tema claro, escuro
+e sistema.
+
+**Seguranca** — nada de segredo ou token em codigo, log, issue ou chat; nada de
+dado pessoal real nos testes (`@example.com`, CPFs ficticios); CSP restritiva;
+sem `innerHTML` com dado externo.
+
+**Ambiente** — variavel de ambiente lida em um unico modulo e documentada em
+`.env.example`. Resolvidas em **build** (`SITE_URL` etc.).
+
+## 4. Regras de commit e PR
 
 **Branches** — `feature/`, `fix/`, `hotfix/`, `release/`, `chore/`, `docs/`,
 `refactor/` ou `test/` + slug em minusculas.
-Ex.: `feature/filtro-por-data`.
+Ex.: `feature/store-selection`.
 
-**Commits** — [Conventional Commits](https://www.conventionalcommits.org):
-`tipo(escopo): descricao no imperativo`.
+**Commits** — [Conventional Commits](https://www.conventionalcommits.org), em
+ingles: `tipo(escopo): descricao no imperativo`.
 
 ```
-feat(checkout): valida cupom antes de habilitar o botao
-fix(http): trata timeout como erro recuperavel
-feat(api)!: remove o campo legado de resposta
+feat(auth): add OTP login form
+fix(api): treat timeout as a recoverable error
 ```
 
 Tipos: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`,
-`ci`, `chore`, `revert`.
+`ci`, `chore`, `revert`. As regras vivem em `scripts/conventions.sh` e valem
+nos hooks e no CI.
 
-As duas regras vivem em `scripts/conventions.sh` e sao aplicadas nos hooks de
-git **e** no CI — local e pipeline nao podem divergir.
+**Pull requests** — titulo tambem em Conventional Commits; template inteiro
+preenchido; `Closes #N`; PR pequeno e **em rascunho** ate o `ci-success` ficar
+verde. Uma issue por entrega, em sprints (milestones) como em
+`../shared/docs/processo.md`. Merge so com `ci-success` verde e e do dono: o
+agente **nao faz merge**.
 
-**Pull requests**
+## 5. Checklist de conclusao de tarefa
 
-- Titulo tambem em Conventional Commits (vira a mensagem do squash merge).
-- Preencha o template inteiro; nao apague secoes.
-- Vincule a issue com `Closes #N`.
-- PR pequeno. Refatoracao ampla vai separada da mudanca de comportamento.
-- Merge so com `ci-success` verde e aprovacao de CODEOWNER.
+Rode os comandos; nao suponha o resultado.
 
-### 5. Checklist de conclusao de tarefa
-
-Uma tarefa **nao esta pronta** enquanto todos os itens abaixo nao forem
-verdade. Rode os comandos; nao suponha o resultado.
-
-- [ ] `make validate` passa
+- [ ] `make validate` passa (formato, lint, tipos, testes)
 - [ ] `make e2e` passa quando a mudanca afeta fluxo de tela
 - [ ] `make build` e `make bundle-budget` passam
 - [ ] Teste novo cobrindo o comportamento adicionado ou o bug corrigido
-- [ ] Nenhum log de depuracao, teste marcado como `only`/`skip`, ou supressao
-      de tipo sem justificativa
-- [ ] Variavel de ambiente nova documentada onde a secao 3 exige
+- [ ] Nenhum log de depuracao, teste `only`/`skip`, ou supressao de tipo sem
+      justificativa
+- [ ] Texto visivel nos dois idiomas; `code` de erro novo traduzido
+- [ ] Variavel de ambiente nova em `.env.example`
 - [ ] UI nova verificada no teclado e em viewport de 320px
-- [ ] UI confere com o design de referencia, ou a divergencia esta explicada
-      no PR (acessibilidade vence o design: contraste e teclado nao se negociam)
+- [ ] UI confere com o design, ou a divergencia esta explicada no PR
+      (acessibilidade vence o design)
 - [ ] Documentacao atualizada quando o comportamento ou a arquitetura mudou
 - [ ] Mensagem de commit e nome de branch nos padroes da secao 4
-- [ ] Descricao do PR explica **o que** e **por que**, com evidencia visual
-      se mexeu na UI
+- [ ] PR explica **o que** e **por que**, com evidencia visual se mexeu na UI
 
-Se algum item nao se aplica, diga na descricao do PR por que.
+## 6. Pontos que exigem aprovacao humana
 
-### 6. Pontos que exigem aprovacao humana
+Pare e pergunte antes de:
 
-Um agente **para e pergunta** antes de fazer qualquer coisa desta lista.
-Propor o diff e explicar o motivo esta liberado; aplicar sem confirmacao, nao.
-
-- Adicionar, remover ou trocar dependencia
+- Adicionar, remover ou trocar dependencia (diga o motivo e a alternativa)
 - Mudar `project.mk` de forma que altere o que o CI executa
 - Mudar `.github/workflows/**`, permissao de token ou regra de deploy
-- Mudar secret, variavel de ambiente ou configuracao de infraestrutura
+- Criar secrets, mexer em protecao de branch ou Environments (sao do dono)
 - Rodar deploy para `homolog` ou `prod`
 - Mudar o contrato de API consumido, ou editar codigo gerado a mao
-- Mudar tokens de design (cor, tipografia, espacamento) fora de uma
-  atualizacao vinda do design de referencia: afeta todas as telas
+- Mudar tokens de design fora de uma atualizacao vinda do design
 - Afrouxar regra de qualidade: desligar regra de lint, baixar o piso de
   cobertura, aumentar o orcamento de bundle, marcar um alvo como `skip`
 - Migracao ampla (framework, build, gerenciador de pacotes, roteador)
-- `git push --force`, reescrita de historico, mexer em branch protegida
-- Apagar teste, ou marca-lo como `skip` para fazer o CI passar
-- Qualquer coisa que envolva dado real de usuario
+- `git push --force`, reescrita de historico, `push` na branch padrao
+- Apagar teste, ou marca-lo como `skip` para o CI passar
+- Qualquer coisa com dado real de usuario
+- Implementar o que depende de decisao do dono em `../shared/OWNER.md`:
+  comprovante em arquivo, cobranca e faturas, licenca das imagens da vitrine,
+  nome do produto
 
-**Regra geral:** se o erro sai caro, sai em producao ou e dificil de
-reverter, pergunte primeiro.
+## 7. Armadilhas conhecidas
 
-### 7. Armadilhas conhecidas
-
-<!--
-A secao mais util com o tempo. Registre o que ja fez alguem (ou algum agente)
-perder uma tarde. Uma linha por armadilha. Exemplos do tipo de coisa:
-  - "O endpoint X devolve 200 com corpo de erro; trate pelo campo `status`."
-  - "O teste Y e flaky por causa de animacao; respeite prefers-reduced-motion."
-  - "Nao rode `make generate-types` sem VPN: o contrato e interno."
-Comece vazio e va preenchendo.
--->
-
-- <!-- -->
+- `npm` 10.9.9 quebra ao resolver peers do Nuxt (`Cannot read properties of
+  null (reading 'edgesOut')`). Por isso `.npmrc` tem `legacy-peer-deps=true`;
+  peers que o projeto usa sao instalados explicitamente. Rever quando o npm
+  corrigir ou se migrarmos para o npm 11.
+- `typescript` fica em `~5.9`: o TypeScript 7 nao e suportado pelo `vue-tsc`
+  nem pelo `openapi-typescript` (peer `^5`).
+- `nuxt preview` nao serve o build estatico (`.output/server` nao existe). O
+  `preview` usa `vite preview --outDir .output/public`, que nao resolve
+  `/pt-BR` sem barra final: no e2e use `/pt-BR/`. O proxy reverso precisa de
+  `try_files $uri $uri/index.html` e do fallback da SPA.
+- `shared/openapi.yaml` e um stub de 78 linhas. O contrato real e o do Backend.
+- O Backend envia o link de convite como `/convite#token=...`. O frontend usa
+  `/invite` e mantem `/convite` como redirecionamento ate o Backend mudar
+  (Backend#89).
+- O `Response` do `fetch` so le o corpo uma vez: em testes use
+  `mockImplementation(() => Promise.resolve(new Response(...)))`, nao
+  `mockResolvedValue` reaproveitado.
+- Nunca regrave arquivos de texto com `Set-Content` do PowerShell 5 (BOM). Em
+  Bash, heredoc com aspas as vezes quebra: escreva scripts em arquivo.
+- Pare containers e servidores que subir para teste ao terminar.
+- `app/api/generated.ts` e gerado (13 mil linhas): fora do lint, do Prettier e
+  da cobertura.
 
 ---
 
 ## Como a fundacao funciona (referencia)
-
-Util para um agente entender por que as coisas estao onde estao.
 
 | Peca | Papel |
 | --- | --- |
@@ -269,15 +219,13 @@ Util para um agente entender por que as coisas estao onde estao.
 | `project.mk` | Os comandos reais. **O unico ponto de acoplamento com a stack.** |
 | `scripts/conventions.sh` | Regras de branch e commit, compartilhadas por hooks e CI |
 | `.githooks/` | Hooks versionados, sem dependencia de runtime |
-| `scripts/deploy.sh` | O unico lugar que sabe para onde publicar |
-| `.github/workflows/ci.yml` | Portao de merge (`ci-success`). Falha e bloqueia. |
-| `.github/workflows/github-agent.yml` | Feedback: rotula, comenta, organiza. Nunca bloqueia. |
+| `scripts/deploy.sh` | O unico lugar que sabe para onde publicar (pendente: A7) |
+| `.github/workflows/ci.yml` | Portao de merge (`ci-success`) |
+| `.github/workflows/github-agent.yml` | Feedback: rotula, comenta, organiza. Nunca bloqueia |
 | `.github/workflows/release.yml` | Versao e CHANGELOG a partir dos commits (release-please) |
-| `.github/workflows/sync-api-types.yml` | Regenera os tipos quando o contrato no docs/shared muda |
-| `IgorOCosta/workflows` (`@v1`) | Onde mora a logica dos workflows acima e as regras centrais de convencao |
+| `.github/workflows/sync-api-types.yml` | Regenera os tipos quando o contrato no shared muda |
+| `IgorOCosta/workflows` (`@v1`) | Logica dos workflows e regras centrais de convencao |
 | `.tool-versions` | Versao do runtime, instalada pelo CI |
-| `CLAUDE.md` | Uma linha (`@AGENTS.md`): o Claude Code carrega este arquivo |
+| `CLAUDE.md` | Uma linha (`@AGENTS.md`) |
 
-**Um alvo `skip` em `project.mk` e uma decisao registrada**, revisitavel —
-nao um esquecimento. `make doctor` mostra os tres estados (configurado,
-`skip`, pendente).
+Um alvo `skip` em `project.mk` e uma decisao registrada e revisavel.
