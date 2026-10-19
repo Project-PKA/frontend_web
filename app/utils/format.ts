@@ -34,3 +34,24 @@ export function formatDate(iso: string, locale: string, timeZone: string): strin
 export function browserTimeZone(): string {
   return Intl.DateTimeFormat().resolvedOptions().timeZone;
 }
+
+const UNITS: ReadonlyArray<[Intl.RelativeTimeFormatUnit, number]> = [
+  ['day', 86_400_000],
+  ['hour', 3_600_000],
+  ['minute', 60_000],
+];
+
+/**
+ * How long ago an instant was ("12 minutes ago", "now"), in the language of the interface.
+ * A moment in the future or an unreadable value is shown as the plain date and time instead.
+ */
+export function formatRelative(iso: string, locale: string, now: number, timeZone: string): string {
+  const time = new Date(iso).getTime();
+  if (Number.isNaN(time) || time > now) return formatDateTime(iso, locale, timeZone);
+  const elapsed = now - time;
+  const formatter = new Intl.RelativeTimeFormat(locale, { numeric: 'auto' });
+  for (const [unit, size] of UNITS) {
+    if (elapsed >= size) return formatter.format(-Math.floor(elapsed / size), unit);
+  }
+  return formatter.format(0, 'second');
+}

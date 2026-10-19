@@ -207,6 +207,11 @@ body:has(dialog[open]) {
   min-height: 28rem;
 }
 
+/* ---------- home ---------- */
+.home__steps {
+  margin: var(--sp-2) 0 0;
+}
+
 /* ---------- notifications and activity ---------- */
 .activity__bar {
   justify-content: flex-end;
@@ -251,6 +256,27 @@ body:has(dialog[open]) {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+.home__step {
+  gap: var(--sp-4);
+  align-items: center;
+  padding: var(--sp-3) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.home__step:last-child {
+  border-bottom: 0;
+}
+
+.home__kpi-link {
+  font-size: var(--fs-xs);
+}
+
+/* The grid of indicators comes with its own gap in the design; the page stack only spaces blocks. */
+.grid--kpi5 {
+  display: grid;
+  gap: var(--sp-4);
 }
 
 .profile__small {

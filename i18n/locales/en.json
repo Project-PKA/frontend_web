@@ -451,5 +451,76 @@
         }
       }
     }
+  },
+  "home": {
+    "loading": "Loading the home",
+    "error": {
+      "title": "We could not load the home",
+      "text": "Check your connection and try again.",
+      "retry": "Try again"
+    },
+    "setup": {
+      "title": "Welcome, let's get your store ready",
+      "progress": "{done} of {total} done",
+      "done": "Done",
+      "pending": "Pending",
+      "steps": {
+        "store": {
+          "title": "Store created",
+          "text": "Everything is ready to start."
+        },
+        "whatsapp": {
+          "title": "Connect WhatsApp and choose the group",
+          "text": "The bot needs the group to post the auctions.",
+          "action": "Connect"
+        },
+        "card": {
+          "title": "Register the first card",
+          "text": "Search for the card, add photos and say its condition.",
+          "action": "Register"
+        },
+        "auction": {
+          "title": "Schedule the first auction",
+          "text": "Available after you register a card.",
+          "action": "Schedule"
+        }
+      }
+    },
+    "pollAlert": {
+      "title": "One poll auction is waiting for validation of its maximum value | {count} poll auctions are waiting for validation of their maximum value",
+      "action": "Review and approve the closing"
+    },
+    "kpis": {
+      "label": "Live indicators",
+      "active": "Active auctions now",
+      "scheduled": "Scheduled for today",
+      "bids": "Bids in active auctions",
+      "settlements": "Pending settlements",
+      "noAuction": "Cards without an auction",
+      "live": "live",
+      "attention": "attention",
+      "reminder": "reminder",
+      "openMonitor": "Open the monitor",
+      "goToQueue": "Go to the queue",
+      "seeCards": "See the cards"
+    },
+    "columns": {
+      "id": "#ID",
+      "card": "Card",
+      "customer": "Winner",
+      "items": "Items",
+      "value": "Amount",
+      "closed": "Closed"
+    },
+    "itemsCount": "1 item | {count} items",
+    "noAuction": {
+      "title": "Cards without a scheduled auction",
+      "seeStock": "See the stock",
+      "foot": "The oldest come first"
+    },
+    "settlements": {
+      "title": "Quick settlements queue",
+      "close": "Close the settlement"
+    }
   }
 }
