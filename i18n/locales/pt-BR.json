@@ -522,5 +522,125 @@
       "title": "Fila de acertos rápidos",
       "close": "Fechar acerto"
     }
+  },
+  "inventory": {
+    "caption": "Cartas em estoque",
+    "register": "Cadastrar carta",
+    "loading": "Carregando o estoque",
+    "error": {
+      "title": "Não foi possível carregar o estoque",
+      "text": "Confira sua conexão e tente de novo.",
+      "retry": "Tentar de novo"
+    },
+    "empty": {
+      "title": "Seu estoque ainda está vazio",
+      "text": "Cadastre a primeira carta para poder agendar um leilão e ver os números aparecerem na Home."
+    },
+    "noMatch": {
+      "title": "Nenhuma carta encontrada",
+      "text": "Mude ou limpe os filtros.",
+      "clear": "Limpar os filtros"
+    },
+    "loadMore": "Mostrar mais",
+    "copy": "Copiar {code}",
+    "copied": "{code} copiado.",
+    "copyFailed": "Não foi possível copiar. Selecione o texto e copie à mão.",
+    "filters": {
+      "search": "Buscar por #ID ou nome",
+      "status": "Status",
+      "statusAll": "Status: todos",
+      "origin": "Origem",
+      "originAll": "Origem: todas"
+    },
+    "columns": {
+      "id": "#ID",
+      "card": "Carta",
+      "set": "Coleção",
+      "language": "Idioma",
+      "condition": "Estado",
+      "origin": "Origem",
+      "status": "Status"
+    },
+    "status": {
+      "AVAILABLE": "Disponível",
+      "SCHEDULED": "Agendada em leilão",
+      "AWAITING_CONFIRMATION": "Esperando confirmação",
+      "SOLD": "Vendida"
+    },
+    "origin": {
+      "OWN": "Própria",
+      "CONSIGNED": "Consignada"
+    },
+    "conditions": {
+      "MINT": "Mint",
+      "NM": "Quase nova (NM)",
+      "SP": "Pouco usada (SP)",
+      "MP": "Usada (MP)",
+      "HP": "Muito usada (HP)",
+      "DMG": "Danificada"
+    },
+    "languages": {
+      "PT": "Português",
+      "EN": "Inglês",
+      "JP": "Japonês",
+      "ES": "Espanhol"
+    },
+    "detail": {
+      "title": "Carta",
+      "loading": "Carregando a carta",
+      "error": {
+        "title": "Não foi possível abrir esta carta",
+        "retry": "Tentar de novo"
+      },
+      "data": "Dados da carta",
+      "number": "Número",
+      "foil": "Foil",
+      "yes": "Sim",
+      "no": "Não",
+      "consignor": "Consignador",
+      "commission": "{pct}% de comissão",
+      "registered": "Cadastrada em",
+      "photos": "Fotos reais",
+      "photoAlt": "Foto {n} de {name}",
+      "photoLoading": "Carregando a foto",
+      "photoError": "A foto não carregou",
+      "noPhotos": "Nenhuma foto ainda.",
+      "notes": "Observações",
+      "noNotes": "Sem observações.",
+      "history": {
+        "title": "Histórico de leilões",
+        "empty": "Esta carta ainda não foi a leilão",
+        "foot": "Cada leilão é de uma carta só",
+        "columns": {
+          "date": "Data",
+          "type": "Tipo",
+          "highestBid": "Maior lance",
+          "result": "Resultado"
+        },
+        "types": {
+          "FREE_BID": "Lance livre",
+          "POLL": "Enquete"
+        },
+        "results": {
+          "scheduled": "Agendado",
+          "active": "Em andamento",
+          "awaitingValidation": "Em validação",
+          "sold": "Vendida",
+          "noWinner": "Sem vencedor",
+          "cancelled": "Cancelado"
+        }
+      },
+      "delete": {
+        "button": "Excluir",
+        "needsPermission": "Requer permissão para deletar",
+        "cannot": "Só uma carta disponível que nunca foi a leilão pode ser excluída",
+        "title": "Excluir esta carta?",
+        "text": "{code} {name} será removida do seu estoque. Isso não pode ser desfeito.",
+        "confirm": "Excluir a carta",
+        "cancel": "Cancelar",
+        "close": "Fechar",
+        "done": "Carta excluída."
+      }
+    }
   }
 }

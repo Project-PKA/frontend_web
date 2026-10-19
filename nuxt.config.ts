@@ -38,6 +38,8 @@ export default defineNuxtConfig({
     '/convite': { ssr: false },
     '/stores/**': { ssr: false },
     '/home': { ssr: false },
+    '/inventory': { ssr: false },
+    '/inventory/**': { ssr: false },
     '/activity': { ssr: false },
     '/profile': { ssr: false },
   },

@@ -207,6 +207,61 @@ body:has(dialog[open]) {
   min-height: 28rem;
 }
 
+/* ---------- inventory ---------- */
+/* The #ID of the design is a button here (it copies): the button look is taken off. */
+.id-chip--button {
+  appearance: none;
+  line-height: 1;
+}
+
+.id-chip--button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.inventory__empty-text {
+  max-width: 44ch;
+}
+
+.inventory__hint {
+  margin: 0;
+  font-size: var(--fs-sm);
+}
+
+.inventory__notes {
+  margin: var(--sp-1) 0 0;
+  white-space: pre-line;
+  overflow-wrap: anywhere;
+}
+
+.inventory__photos {
+  margin-top: var(--sp-2);
+}
+
+.card-photo {
+  width: 120px;
+  margin: 0;
+  aspect-ratio: 3 / 4;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: var(--fs-xs);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface-2);
+}
+
+.card-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.inventory__more {
+  justify-content: center;
+}
+
 /* ---------- home ---------- */
 .home__steps {
   margin: var(--sp-2) 0 0;
