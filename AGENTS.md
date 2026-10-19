@@ -152,6 +152,17 @@ QR do WhatsApp e grupo dependem do Backend (Backend#100) e a tela os mostra como
 de criar". 403 com codigo de uma acao (ex.: `CANNOT_CREATE_STORES`) nao manda a pessoa de
 volta a `/stores` (`forbiddenAction` devolve `none`): a tela mostra a mensagem.
 
+**Home** — `/home` e ao vivo: uma consulta (`/v1/dashboard/home`, TanStack Query) que repete
+a cada 15 s enquanto a aba esta visivel; sem periodo e sem ranking. O "ha 12 minutos" conta
+a partir do momento em que o dado chegou (`useFormat().relative`). O contrato nao marca como
+obrigatorios os campos de dentro das listas, entao `app/utils/home.ts` normaliza as linhas
+(sem `id` a linha sai; texto ausente vira vazio) e o valor segue como a string que a API
+mandou. A lista de passos da loja nova (`setupSteps`) some quando os quatro estao feitos.
+Links so para telas de menu (`/settings`, `/inventory/new`, `/auctions`, `/customers/:id`),
+e so para quem tem a permissao. Fica de fora o que o design tem e a API nao da: selo de
+"proximo leilao as 14:30" e "ultimo lance ha 8 s", origem e "parada ha" das cartas, o
+alerta de WhatsApp caido (issue #32) e a aprovacao da enquete (issue #31).
+
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
 layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).

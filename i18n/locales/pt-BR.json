@@ -282,5 +282,76 @@
       "home": "Voltar para a página inicial"
     },
     "description": "Solicite acesso para fazer leilões de cartas no seu grupo de WhatsApp. O acesso é por convite."
+  },
+  "home": {
+    "loading": "Carregando a home",
+    "error": {
+      "title": "Não foi possível carregar a home",
+      "text": "Confira sua conexão e tente de novo.",
+      "retry": "Tentar de novo"
+    },
+    "setup": {
+      "title": "Bem-vindo, vamos preparar a sua loja",
+      "progress": "{done} de {total} concluído",
+      "done": "Feito",
+      "pending": "Pendente",
+      "steps": {
+        "store": {
+          "title": "Loja criada",
+          "text": "Tudo pronto para começar."
+        },
+        "whatsapp": {
+          "title": "Conectar o WhatsApp e escolher o grupo",
+          "text": "O bot precisa do grupo para postar os leilões.",
+          "action": "Conectar"
+        },
+        "card": {
+          "title": "Cadastrar a primeira carta",
+          "text": "Busque a carta, adicione fotos e informe o estado.",
+          "action": "Cadastrar"
+        },
+        "auction": {
+          "title": "Agendar o primeiro leilão",
+          "text": "Disponível depois de cadastrar uma carta.",
+          "action": "Agendar"
+        }
+      }
+    },
+    "pollAlert": {
+      "title": "Um leilão de enquete aguarda validação do valor máximo | {count} leilões de enquete aguardam validação do valor máximo",
+      "action": "Revisar e aprovar encerramento"
+    },
+    "kpis": {
+      "label": "Indicadores ao vivo",
+      "active": "Leilões ativos agora",
+      "scheduled": "Agendados para hoje",
+      "bids": "Lances nos leilões ativos",
+      "settlements": "Acertos pendentes",
+      "noAuction": "Cartas sem leilão",
+      "live": "ao vivo",
+      "attention": "atenção",
+      "reminder": "lembrete",
+      "openMonitor": "Abrir monitor",
+      "goToQueue": "Ir para a fila",
+      "seeCards": "Ver cartas"
+    },
+    "columns": {
+      "id": "#ID",
+      "card": "Carta",
+      "customer": "Vencedor",
+      "items": "Itens",
+      "value": "Valor",
+      "closed": "Encerrou"
+    },
+    "itemsCount": "1 item | {count} itens",
+    "noAuction": {
+      "title": "Cartas sem leilão agendado",
+      "seeStock": "Ver estoque",
+      "foot": "As mais antigas aparecem primeiro"
+    },
+    "settlements": {
+      "title": "Fila de acertos rápidos",
+      "close": "Fechar acerto"
+    }
   }
 }
