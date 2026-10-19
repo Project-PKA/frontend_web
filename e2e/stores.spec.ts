@@ -123,7 +123,9 @@ test('brings a card that is not in the middle to the middle before choosing it',
       return still;
     })
     .toBe(true);
-  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+  // The card sticks out of the deck, which cuts it at its edge: click on the part that shows (near
+  // its left edge), not on its middle, which can be outside the deck.
+  await page.mouse.click(box.x + 40, box.y + box.height / 2);
 
   await expect(page).toHaveURL(/\/stores$/);
   await expect(card(page, 'Cards and Co')).toHaveClass(/is-sel/);
