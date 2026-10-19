@@ -34,10 +34,14 @@ export default defineNuxtConfig({
   },
   // The logged-in app is a client-only SPA (STACK.md section 1).
   routeRules: {
-    '/login': { ssr: false },
     '/stores/**': { ssr: false },
   },
   nitro: {
-    prerender: { routes: ['/', '/pt-BR'] },
+    prerender: {
+      routes: ['/', '/pt-BR'],
+      // The login page is rendered at build time (its title and form paint from the HTML, which is
+      // what its LCP needs) and links to a page that does not exist yet (/request-access).
+      ignore: ['/request-access'],
+    },
   },
 });
