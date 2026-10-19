@@ -169,6 +169,12 @@ Ver `docker/nginx.conf.example` e [`DEPLOY.md`](DEPLOY.md).
 - **Rotas privadas e por token:** `noindex` e `Referrer-Policy: no-referrer`
   no proxy reverso. O app nao poe a loja na URL: ela vem do Pinia, entao o link
   de uma tela nao muda de loja por conta propria.
+- **Idioma:** so landing, termos e privacidade tem idioma na URL (ingles em `/`,
+  portugues em `/pt-BR/`). Paginas do app usam `definePageMeta({ i18n: false })` e
+  recebem o idioma da pessoa: o salvo no perfil (logada), depois o escolhido a mao
+  neste aparelho (`localStorage`, chave `language`), depois o do navegador
+  (`pt` vira `pt-BR`, o resto `en`). Quem entra pelo `/` de um navegador em
+  portugues ve ingles: a landing nao redireciona, por causa do SEO.
 - **Guards por metadado:** cada pagina protegida declara
   `definePageMeta({ access: { level, owner?, permission? } })` (`level`:
   `session`, `store` ou `admin`). A pagina sem `access` e publica. O

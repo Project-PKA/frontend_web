@@ -71,5 +71,8 @@
       "title": "Something went wrong",
       "body": "We could not show this page. Try again in a moment."
     }
+  },
+  "language": {
+    "label": "Language"
   }
 }

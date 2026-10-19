@@ -10,6 +10,8 @@ const session = useSessionStore();
 const route = useRoute();
 const errorMessage = useErrorMessage();
 
+definePageMeta({ i18n: false });
+
 useHead({ title: () => t('auth.login.title'), meta: [{ name: 'robots', content: 'noindex' }] });
 
 /** Back to the page that asked for the login, if it is a path inside this app. */
@@ -121,6 +123,8 @@ onMounted(async () => {
               {{ t('auth.login.sendCode') }}
             </button>
           </form>
+
+          <LanguageSwitcher />
 
           <p class="faint">
             {{ t('auth.login.inviteOnly') }}

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { browserStoreStorage } from './store-storage';
+import { browserStoreStorage, localSetting } from './store-storage';
 
 function memoryStorage(): Storage {
   const data = new Map<string, string>();
@@ -19,6 +19,18 @@ describe('browserStoreStorage', () => {
     expect(storage.get()).toBe('store-1');
     storage.set(null);
     expect(storage.get()).toBeNull();
+  });
+
+  it('keeps each setting under its own key', () => {
+    const backing = memoryStorage();
+    const language = localSetting('language', () => backing);
+    const store = browserStoreStorage(() => backing);
+
+    language.set('pt-BR');
+    store.set('store-1');
+
+    expect(language.get()).toBe('pt-BR');
+    expect(store.get()).toBe('store-1');
   });
 
   it('works without storage', () => {

@@ -71,5 +71,8 @@
       "title": "Algo deu errado",
       "body": "Não foi possível mostrar esta página. Tente de novo em instantes."
     }
+  },
+  "language": {
+    "label": "Idioma"
   }
 }

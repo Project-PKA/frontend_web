@@ -1,28 +1,30 @@
-/** Where the current store id is remembered between page loads. It is not a secret. */
+/** A small value remembered between page loads, e.g. the current store id. Never a secret. */
 export interface StoreStorage {
   get(): string | null;
-  set(storeId: string | null): void;
+  set(value: string | null): void;
 }
 
-const KEY = 'current-store';
-
 /** Browser storage can be missing or blocked (private window): never let it break the app. */
-export function browserStoreStorage(storage: () => Storage | undefined): StoreStorage {
+export function localSetting(key: string, storage: () => Storage | undefined): StoreStorage {
   return {
     get() {
       try {
-        return storage()?.getItem(KEY) ?? null;
+        return storage()?.getItem(key) ?? null;
       } catch {
         return null;
       }
     },
-    set(storeId) {
+    set(value) {
       try {
-        if (storeId === null) storage()?.removeItem(KEY);
-        else storage()?.setItem(KEY, storeId);
+        if (value === null) storage()?.removeItem(key);
+        else storage()?.setItem(key, value);
       } catch {
-        // Without storage the person just picks the store again after a reload.
+        // Without storage the choice just is not remembered after a reload.
       }
     },
   };
+}
+
+export function browserStoreStorage(storage: () => Storage | undefined): StoreStorage {
+  return localSetting('current-store', storage);
 }

@@ -14,6 +14,7 @@ export default defineConfig({
         // Nuxt glue (auto-imports, runtime config): covered by the e2e tests.
         'app/app.vue',
         'app/pages/**',
+        'app/components/**',
         'app/composables/**',
         'app/plugins/**',
         'app/middleware/**',
