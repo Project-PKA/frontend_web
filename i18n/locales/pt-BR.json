@@ -220,7 +220,8 @@
     "shipments": "Envios",
     "team": "Funcionários",
     "settings": "Configurações",
-    "finance": "Financeiro"
+    "finance": "Financeiro",
+    "profile": "Meu perfil"
   },
   "role": {
     "OWNER": "Proprietário",
@@ -282,5 +283,59 @@
       "home": "Voltar para a página inicial"
     },
     "description": "Solicite acesso para fazer leilões de cartas no seu grupo de WhatsApp. O acesso é por convite."
+  },
+  "profile": {
+    "loading": "Carregando seu perfil",
+    "error": {
+      "title": "Não foi possível carregar seu perfil",
+      "text": "Confira sua conexão e tente de novo.",
+      "retry": "Tentar de novo"
+    },
+    "identity": "Você",
+    "later": "Edição em breve",
+    "personal": {
+      "title": "Dados pessoais",
+      "name": "Nome completo",
+      "email": "E-mail (login)",
+      "text": "Telefone, CPF e data de nascimento poderão ser editados aqui quando o serviço permitir."
+    },
+    "address": {
+      "title": "Endereço",
+      "text": "Seu endereço poderá ser editado aqui quando o serviço permitir."
+    },
+    "preferences": {
+      "title": "Preferências",
+      "language": "Idioma",
+      "timezone": "Fuso horário",
+      "currency": "Moeda"
+    },
+    "languages": {
+      "en": "English",
+      "pt-BR": "Português (Brasil)"
+    },
+    "currencies": {
+      "BRL": "Real (R$)"
+    },
+    "notifications": {
+      "title": "Notificações",
+      "inApp": "Notificações dentro do app",
+      "email": "Notificações por e-mail"
+    },
+    "save": "Salvar alterações",
+    "saved": "Alterações salvas.",
+    "security": {
+      "title": "Segurança",
+      "loading": "Carregando suas sessões",
+      "empty": "Nenhuma sessão ativa",
+      "errorTitle": "Não foi possível carregar suas sessões",
+      "errorText": "Tente de novo em instantes.",
+      "current": "Atual",
+      "since": "Entrou em {date}",
+      "unknownDevice": "Aparelho desconhecido",
+      "end": "Encerrar",
+      "endNamed": "Encerrar a sessão em {device}",
+      "ended": "Sessão encerrada."
+    },
+    "changeStore": "Trocar de loja"
   }
 }

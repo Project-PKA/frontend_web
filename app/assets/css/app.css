@@ -206,3 +206,37 @@ body:has(dialog[open]) {
 .form-placeholder--tall {
   min-height: 28rem;
 }
+
+/* ---------- profile ---------- */
+.profile__identity {
+  gap: var(--sp-5);
+}
+
+.profile__avatar {
+  width: 84px;
+  height: 84px;
+}
+
+.profile__name {
+  margin: 0;
+  font: 600 var(--fs-xl) var(--font-display);
+  overflow-wrap: anywhere;
+}
+
+.profile__roles {
+  margin-top: var(--sp-2);
+}
+
+.profile__save {
+  justify-content: flex-end;
+}
+
+.profile__sessions {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.profile__small {
+  font-size: var(--fs-xs);
+}
