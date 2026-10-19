@@ -58,6 +58,13 @@ async function openMenu() {
   sideNav.value?.$el.querySelector<HTMLElement>('.nav__item')?.focus();
 }
 
+const unread = useUnreadCount();
+const bellLabel = computed(() =>
+  unread.value > 0
+    ? t('shell.notificationsCount', { count: unread.value })
+    : t('shell.notifications'),
+);
+
 function closeMenu(restoreFocus = false) {
   if (!menuOpen.value) return;
   menuOpen.value = false;
@@ -133,8 +140,9 @@ watch(
         >
           {{ whatsapp.text }}
         </span>
-        <AppButton to="/activity" size="sm" :label="t('shell.notifications')">
+        <AppButton to="/activity" size="sm" :label="bellLabel">
           <AppIcon name="bell" />
+          <span v-if="unread > 0">{{ unread }}</span>
         </AppButton>
       </header>
       <main id="main" class="page">

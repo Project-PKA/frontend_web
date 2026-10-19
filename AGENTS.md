@@ -152,6 +152,14 @@ QR do WhatsApp e grupo dependem do Backend (Backend#100) e a tela os mostra como
 de criar". 403 com codigo de uma acao (ex.: `CANNOT_CREATE_STORES`) nao manda a pessoa de
 volta a `/stores` (`forbiddenAction` devolve `none`): a tela mostra a mensagem.
 
+**Notificacoes e atividade** — `/activity` (o sino da barra do topo, que mostra o numero de
+nao lidas via `useUnreadCount`, a cada 60 s). A API manda so `kind`/`action` e ids: o texto
+e nosso (`app/utils/activity.ts` lista os codigos conhecidos; um codigo novo cai no texto
+generico e `activity.test.ts` falha se faltar traducao de um conhecido). O log e do
+proprietario (a aba nem aparece para staff). Quem fez vem da equipe (`/v1/team`); quem saiu
+aparece como "Ex-integrante". Sem os filtros do design (usuario e acao): a API nao filtra e
+filtrar so a pagina carregada enganaria (Backend#106). Linhas sem link ate as telas de
+destino existirem.
 **Perfil** — `/profile` (link do rodape do menu) usa so o que a API tem: preferencias
 (`preferences.saveProfile` manda so o que mudou; idioma e tema valem na hora, como na barra
 do topo), notificacoes (`in_app` e `email`; o design tinha tres avisos por tipo) e sessoes
