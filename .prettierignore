@@ -12,3 +12,4 @@ test-results/
 package-lock.json
 app/api/generated.ts
 *.md
+app/api/error-codes.json

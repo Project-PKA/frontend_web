@@ -77,7 +77,11 @@ pasta temporaria, prefixando o `PATH`) e `npm@10.9.9`.
 
 **Erros da API** — RFC 9457 com `code` estavel. Traduza pelo `code`; **nunca
 mostre o `detail`** (vem em portugues do Backend). Todo `code` do contrato
-precisa de traducao em `en` e `pt-BR`.
+precisa de traducao em `errors.<CODE>` em `en` e `pt-BR`: o catalogo copiado do
+Backend esta em `app/api/error-codes.json` e `app/utils/translations.test.ts` falha
+se faltar chave, sobrar chave, as duas linguas divergirem ou houver linguagem de
+garantia. Quando o Backend ganhar codigo novo: `npm run sync:error-codes`, traduza
+e rode os testes (`node scripts/sync-error-codes.mjs --check` diz se esta defasado).
 
 **Localizacao** — `en` e `pt-BR`; idioma inicial pelo navegador, troca manual,
 preferencia em `GET/PATCH /v1/me/preferences` (store `preferences`). Formate com
@@ -207,6 +211,9 @@ Pare e pergunte antes de:
   nao tem o endpoint (Backend#94).
 - Pagina do app (sem idioma na URL) declara `definePageMeta({ i18n: false })`; sem isso o
   modulo cria tambem `/pt-BR/...` e o prerender renderiza essa copia.
+- O catalogo de codigos de erro vem de `Backend/docs/api/error-codes.json` (no `main`).
+  Se o Backend estiver em outra branch com codigos novos, `--check` acusa defasagem: sincronize
+  so a partir de codigo ja mergeado.
 - `shared/openapi.yaml` e um stub de 78 linhas. O contrato real e o do Backend.
 - O Backend envia o link de convite como `/convite#token=...`. O frontend usa
   `/invite` e mantem `/convite` como redirecionamento ate o Backend mudar
