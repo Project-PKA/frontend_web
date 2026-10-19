@@ -1,12 +1,14 @@
 /**
- * Keeps the interface language in step with the person on the app pages (the
- * ones without a language in the URL): the first language comes from the device,
- * and the language saved in the profile takes over once the person is logged in.
+ * Keeps the theme, and the interface language on the app pages (the ones without a
+ * language in the URL), in step with the person: the first values come from the device,
+ * and the ones saved in the profile take over once the person is logged in.
  */
 export default defineNuxtPlugin(() => {
   const router = useRouter();
   const session = useSessionStore();
   const preferences = usePreferencesStore();
+
+  preferences.initTheme();
 
   const isAppPage = (route: { meta: Record<string, unknown> }) => route.meta.i18n === false;
 
@@ -24,7 +26,7 @@ export default defineNuxtPlugin(() => {
       try {
         await preferences.load();
       } catch {
-        // Offline or a failed request: the language from this device stays.
+        // Offline or a failed request: what is on this device stays.
       }
     },
   );

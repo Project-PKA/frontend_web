@@ -15,6 +15,7 @@ export default defineConfig({
         'app/app.vue',
         'app/pages/**',
         'app/components/**',
+        'app/layouts/**',
         'app/composables/**',
         'app/plugins/**',
         'app/middleware/**',

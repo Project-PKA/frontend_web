@@ -112,7 +112,12 @@ a marca do catalogo na interface (licenca pendente).
 
 **Estilo** — CSS global do design-system (classes BEM), sem Tailwind; sem cor
 literal fora dos tokens; sem emoji como icone; fontes autohospedadas
-(Fontsource), nunca do Google.
+(Fontsource), nunca do Google. `app/assets/css/tokens.css`, `components.css` e
+`public/icons.svg` sao **copias identicas** de `design/design-system/`: so mudam
+quando o design muda (copie, nao edite) e ficam fora do Prettier. O que e do projeto
+vai em `app.css` (so tokens). `app/assets/css/design.test.ts` falha se uma copia
+divergir ou se aparecer cor literal (`#hex`, `rgb()`, `hsl()`) em `.css`, `<style>`
+ou `style=""` do projeto. Tema: `data-theme` no `<html>` (`SYSTEM` = sem atributo).
 
 **Acessibilidade** — semantica antes de ARIA, tudo por teclado, contraste AA,
 responsivo (desktop, tablet ate 1100px, mobile ate 640px), tema claro, escuro
@@ -209,6 +214,12 @@ Pare e pergunte antes de:
   rota em `routeRules` com `ssr: false`; sem isso o prerender a renderiza sem
   sessao. O botao "Pedir acesso ao proprietario" do design nao existe: a API
   nao tem o endpoint (Backend#94).
+- O `lighthouserc.json` mede a landing (SSR) e o `/login` (SPA). O `/login` nao entra no
+  SEO (tem `noindex`) e tem teto de LCP maior (3,5 s): o shell so pinta depois do JS.
+  A URL do Lighthouse precisa ser a rota (`/login/`), nao o arquivo (`/login/index.html`):
+  este ultimo cai no 404 do app.
+- `error.vue` substitui o app inteiro: precisa chamar `useAppHead()` (senao o `<html>` fica
+  sem `lang`).
 - Pagina do app (sem idioma na URL) declara `definePageMeta({ i18n: false })`; sem isso o
   modulo cria tambem `/pt-BR/...` e o prerender renderiza essa copia.
 - O catalogo de codigos de erro vem de `Backend/docs/api/error-codes.json` (no `main`).

@@ -10,7 +10,7 @@ const session = useSessionStore();
 const route = useRoute();
 const errorMessage = useErrorMessage();
 
-definePageMeta({ i18n: false });
+definePageMeta({ i18n: false, layout: 'public' });
 
 useHead({ title: () => t('auth.login.title'), meta: [{ name: 'robots', content: 'noindex' }] });
 
@@ -114,17 +114,20 @@ onMounted(async () => {
                   :aria-describedby="emailForm.errors.value.email ? 'email-error' : undefined"
                 />
               </label>
-              <p v-if="emailForm.errors.value.email" id="email-error" class="field__error">
+              <p v-if="emailForm.errors.value.email" id="email-error" class="hint hint--error">
                 {{ t(emailForm.errors.value.email) }}
               </p>
             </div>
-            <p v-if="submitError" role="alert" class="field__error">{{ submitError }}</p>
+            <p v-if="submitError" role="alert" class="hint hint--error">{{ submitError }}</p>
             <button class="btn btn--primary btn--lg btn--block" type="submit" :disabled="busy">
               {{ t('auth.login.sendCode') }}
             </button>
           </form>
 
-          <LanguageSwitcher />
+          <div class="row">
+            <LanguageSwitcher />
+            <ThemeSwitcher />
+          </div>
 
           <p class="faint">
             {{ t('auth.login.inviteOnly') }}
@@ -154,11 +157,11 @@ onMounted(async () => {
                   :aria-describedby="codeForm.errors.value.code ? 'code-error' : undefined"
                 />
               </label>
-              <p v-if="codeForm.errors.value.code" id="code-error" class="field__error">
+              <p v-if="codeForm.errors.value.code" id="code-error" class="hint hint--error">
                 {{ t(codeForm.errors.value.code) }}
               </p>
             </div>
-            <p v-if="submitError" role="alert" class="field__error">{{ submitError }}</p>
+            <p v-if="submitError" role="alert" class="hint hint--error">{{ submitError }}</p>
             <button class="btn btn--primary btn--lg btn--block" type="submit" :disabled="busy">
               {{ t('auth.code.submit') }}
             </button>

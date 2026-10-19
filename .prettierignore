@@ -13,3 +13,5 @@ package-lock.json
 app/api/generated.ts
 *.md
 app/api/error-codes.json
+app/assets/css/tokens.css
+app/assets/css/components.css

@@ -5,27 +5,33 @@ import { createAppClient } from '../api/instance';
 import { DEFAULT_LANGUAGE, detectLanguage, isLanguage, type Language } from '../utils/language';
 import { browserTimeZone } from '../utils/format';
 import { localSetting, type StoreStorage } from '../utils/store-storage';
+import { DEFAULT_THEME, applyTheme as setDocumentTheme, isTheme, type Theme } from '../utils/theme';
 
 export interface PreferencesDeps {
   getApi: () => PreferencesApi;
   /** Switches the interface language (the i18n module). */
   setLocale: (language: Language) => Promise<void>;
+  /** Puts the theme on the page. */
+  setTheme: (theme: Theme) => void;
   /** The language chosen by hand, remembered for people who are not logged in. */
   languageStorage: StoreStorage;
+  themeStorage: StoreStorage;
   navigatorLanguages: () => readonly string[] | undefined;
   isAuthenticated: () => boolean;
 }
 
 /**
- * The interface language and the profile preferences. Order of precedence for
- * the app pages: the language saved in the profile (when logged in), then the
- * one chosen by hand on this device, then the browser's language.
+ * The interface language, the theme and the profile preferences. Order of
+ * precedence: what is saved in the profile (when logged in), then what was chosen by
+ * hand on this device, then the browser's language and the system theme.
  */
 export function definePreferencesStore(deps: PreferencesDeps, id = 'preferences') {
   return defineStore(id, () => {
     const language = ref<Language>(DEFAULT_LANGUAGE);
+    const theme = ref<Theme>(DEFAULT_THEME);
     const profile = ref<Preferences | null>(null);
     let initialized = false;
+    let themeInitialized = false;
 
     const timezone = computed(() => profile.value?.timezone ?? browserTimeZone());
     const currency = computed(() => profile.value?.currency ?? 'BRL');
@@ -33,6 +39,11 @@ export function definePreferencesStore(deps: PreferencesDeps, id = 'preferences'
     async function applyLanguage(next: Language) {
       language.value = next;
       await deps.setLocale(next);
+    }
+
+    function applyTheme(next: Theme) {
+      theme.value = next;
+      deps.setTheme(next);
     }
 
     /** Picks the first language for the app pages: chosen by hand, or the browser's. */
@@ -43,10 +54,20 @@ export function definePreferencesStore(deps: PreferencesDeps, id = 'preferences'
       await applyLanguage(isLanguage(stored) ? stored : detectLanguage(deps.navigatorLanguages()));
     }
 
-    /** Loads the profile preferences. The language saved there wins over this device. */
+    /** Puts the theme chosen on this device on the page; the system theme otherwise. */
+    function initTheme() {
+      if (themeInitialized) return;
+      themeInitialized = true;
+      const stored = deps.themeStorage.get();
+      applyTheme(isTheme(stored) ? stored : DEFAULT_THEME);
+    }
+
+    /** Loads the profile preferences. What is saved there wins over this device. */
     async function load() {
       profile.value = await deps.getApi().get();
       deps.languageStorage.set(profile.value.language);
+      deps.themeStorage.set(profile.value.theme);
+      applyTheme(profile.value.theme);
       await applyLanguage(profile.value.language);
     }
 
@@ -68,14 +89,43 @@ export function definePreferencesStore(deps: PreferencesDeps, id = 'preferences'
       }
     }
 
-    /** Forgets the profile (after logout); the language on screen stays. */
+    /** Same as `changeLanguage`, for the theme. */
+    async function changeTheme(next: Theme) {
+      const previous = theme.value;
+      applyTheme(next);
+      deps.themeStorage.set(next);
+      if (!deps.isAuthenticated()) return;
+      try {
+        profile.value = await deps.getApi().update({ theme: next });
+      } catch (error) {
+        applyTheme(previous);
+        deps.themeStorage.set(previous);
+        throw error;
+      }
+    }
+
+    /** Forgets the profile (after logout); the language and the theme on screen stay. */
     function clearProfile() {
       profile.value = null;
     }
 
-    return { language, profile, timezone, currency, init, load, changeLanguage, clearProfile };
+    return {
+      language,
+      theme,
+      profile,
+      timezone,
+      currency,
+      init,
+      initTheme,
+      load,
+      changeLanguage,
+      changeTheme,
+      clearProfile,
+    };
   });
 }
+
+const browserStorage = () => (import.meta.client ? localStorage : undefined);
 
 export const usePreferencesStore = definePreferencesStore({
   getApi: () => {
@@ -88,7 +138,9 @@ export const usePreferencesStore = definePreferencesStore({
     );
   },
   setLocale: (language) => useNuxtApp().$i18n.setLocale(language),
-  languageStorage: localSetting('language', () => (import.meta.client ? localStorage : undefined)),
+  setTheme: (theme) => setDocumentTheme(theme, document.documentElement),
+  languageStorage: localSetting('language', browserStorage),
+  themeStorage: localSetting('theme', browserStorage),
   navigatorLanguages: () => (import.meta.client ? navigator.languages : undefined),
   isAuthenticated: () => useSessionStore().isAuthenticated,
 });

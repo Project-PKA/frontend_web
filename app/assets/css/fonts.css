@@ -1,0 +1,10 @@
+/*
+ * Self-hosted fonts (Fontsource), never Google Fonts (LGPD). The packages name the
+ * variable families "<Name> Variable"; this file points the design tokens at them.
+ * tokens.css stays a verbatim copy of design/design-system/tokens.css.
+ */
+:root {
+  --font-display: 'Sora Variable', system-ui, sans-serif;
+  --font-body: 'DM Sans Variable', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, 'SFMono-Regular', monospace;
+}

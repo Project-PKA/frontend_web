@@ -25,12 +25,12 @@ async function change(event: Event) {
   <div class="field">
     <label class="label" for="language">
       <span>{{ t('language.label') }}</span>
-      <select id="language" class="input" :value="preferences.language" @change="change">
+      <select id="language" class="select" :value="preferences.language" @change="change">
         <option v-for="code in LANGUAGES" :key="code" :value="code" :lang="code">
           {{ NAMES[code] }}
         </option>
       </select>
     </label>
-    <p v-if="failure" role="alert" class="field__error">{{ failure }}</p>
+    <p v-if="failure" role="alert" class="hint hint--error">{{ failure }}</p>
   </div>
 </template>
