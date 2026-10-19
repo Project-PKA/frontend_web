@@ -121,23 +121,30 @@ onMounted(async () => {
         <h1>{{ t('auth.login.title') }}</h1>
         <p class="muted">{{ t('auth.login.subtitle') }}</p>
 
-        <form class="stack" novalidate @submit.prevent="submitEmail">
-          <AppInput
-            ref="emailInput"
-            v-model="emailField"
-            v-bind="emailAttrs"
-            :label="t('auth.login.email')"
-            :error="emailError"
-            type="email"
-            name="email"
-            autocomplete="email"
-            inputmode="email"
-          />
-          <p v-if="submitError" role="alert" class="hint hint--error">{{ submitError }}</p>
-          <AppButton type="submit" variant="primary" size="lg" block :busy="busy">
-            {{ t('auth.login.sendCode') }}
-          </AppButton>
-        </form>
+        <!-- Only in the browser: before the page is hydrated a <form> would submit by itself
+             (a GET with the e-mail in the address). The title and the card are in the HTML. -->
+        <ClientOnly>
+          <form class="stack" novalidate @submit.prevent="submitEmail">
+            <AppInput
+              ref="emailInput"
+              v-model="emailField"
+              v-bind="emailAttrs"
+              :label="t('auth.login.email')"
+              :error="emailError"
+              type="email"
+              name="email"
+              autocomplete="email"
+              inputmode="email"
+            />
+            <p v-if="submitError" role="alert" class="hint hint--error">{{ submitError }}</p>
+            <AppButton type="submit" variant="primary" size="lg" block :busy="busy">
+              {{ t('auth.login.sendCode') }}
+            </AppButton>
+          </form>
+          <template #fallback>
+            <div class="form-placeholder" aria-hidden="true" />
+          </template>
+        </ClientOnly>
 
         <div class="row">
           <LanguageSwitcher />

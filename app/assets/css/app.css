@@ -186,3 +186,8 @@ body:has(dialog[open]) {
   min-width: 0;
   max-width: 100%;
 }
+
+/* Holds the place of a form that only exists in the browser, so the page does not jump. */
+.form-placeholder {
+  min-height: 7.6rem;
+}
