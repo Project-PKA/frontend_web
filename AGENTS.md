@@ -152,6 +152,16 @@ QR do WhatsApp e grupo dependem do Backend (Backend#100) e a tela os mostra como
 de criar". 403 com codigo de uma acao (ex.: `CANNOT_CREATE_STORES`) nao manda a pessoa de
 volta a `/stores` (`forbiddenAction` devolve `none`): a tela mostra a mensagem.
 
+**Busca no catalogo** — `CatalogSearch` e um combobox (padrao WAI-ARIA "list autocomplete":
+o foco fica no campo, `aria-activedescendant` aponta a sugestao, setas, Home/End, Enter e Esc;
+um segundo Esc limpa o texto) e so mostra o que recebe; `useCatalogSearch` pergunta a API
+(`/v1/catalog/search`) com 2 caracteres ou mais, 250 ms depois da ultima tecla, e mantem a
+lista anterior ate a proxima chegar. A arte vem do endereco de origem que o catalogo da (D5
+decidida em 18/10: texto, numero e arte por endereco de origem; a **marca** continua fora da
+interface, diga "catalogo de cartas"): so `https` (`artUrl`), com `referrerpolicy="no-referrer"`.
+A primeira etapa do cadastro vive em `/inventory/new`; o resto do formulario e da issue #28.
+Em teste de componente, importe `AppButton` e afins no `.vue` (o auto-import e do Nuxt).
+
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
 layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).

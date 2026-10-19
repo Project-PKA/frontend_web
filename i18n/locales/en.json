@@ -282,5 +282,27 @@
       "home": "Back to the home page"
     },
     "description": "Request access to run card auctions in your WhatsApp group. Access is by invitation."
+  },
+  "inventory": {
+    "new": {
+      "title": "Register card",
+      "search": {
+        "title": "Find the card",
+        "label": "Quick search: name or number",
+        "hint": "Type at least 2 characters.",
+        "loading": "Searching the cards",
+        "none": "No card found for \"{text}\".",
+        "error": "We could not search the cards.",
+        "retry": "Try again",
+        "count": "No cards found | One card found | {count} cards found"
+      },
+      "picked": {
+        "art": "Official art of {name}",
+        "placeholder": "Official art",
+        "noArt": "No art for this card",
+        "rarity": "Rarity: {rarity}",
+        "empty": "Pick a card from the list."
+      }
+    }
   }
 }

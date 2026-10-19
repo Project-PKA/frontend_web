@@ -206,3 +206,55 @@ body:has(dialog[open]) {
 .form-placeholder--tall {
   min-height: 28rem;
 }
+
+/* ---------- card search ---------- */
+.catalog__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  gap: var(--sp-4);
+  align-items: start;
+}
+
+.catalog__picked {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.catalog__art {
+  width: 170px;
+}
+
+.catalog__caption {
+  text-align: center;
+  font-size: var(--fs-sm);
+  overflow-wrap: anywhere;
+}
+
+/* The art of a card fills its frame (the design's `.tcg` is a frame with a placeholder inside). */
+.tcg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 640px) {
+  .catalog__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* The suggestions are a `<ul>` here: no browser indent, and the art keeps its size in the row. */
+.suggest {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.suggest .tcg--xs {
+  flex: none;
+}
