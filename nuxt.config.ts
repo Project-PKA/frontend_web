@@ -42,9 +42,6 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       routes: ['/', '/pt-BR'],
-      // The login page is rendered at build time (its title and form paint from the HTML, which is
-      // what its LCP needs) and links to a page that does not exist yet (/request-access).
-      ignore: ['/request-access'],
     },
   },
 });

@@ -202,3 +202,7 @@ body:has(dialog[open]) {
 .form-placeholder {
   min-height: 7.6rem;
 }
+
+.form-placeholder--tall {
+  min-height: 28rem;
+}

@@ -31,7 +31,8 @@
     "required": "This field is required.",
     "email": "Enter a valid e-mail address.",
     "otpCode": "Enter the 6 digits of the code.",
-    "tooLong": "This text is too long."
+    "tooLong": "This text is too long.",
+    "phone": "Enter the number with the area code."
   },
   "errors": {
     "unknown": "Something went wrong. Try again.",
@@ -261,5 +262,25 @@
       "text": "Check your connection and try again.",
       "retry": "Try again"
     }
+  },
+  "requestAccess": {
+    "title": "Request access",
+    "intro": "Access is by invitation. Tell us about your store and our team creates your access and sends the invitation by e-mail.",
+    "name": "Your name",
+    "email": "E-mail",
+    "whatsapp": "WhatsApp (optional)",
+    "whatsappHint": "With the area code.",
+    "storeName": "Store name",
+    "message": "Message (optional)",
+    "messagePlaceholder": "How many groups do you have? Do you run auctions today?",
+    "submit": "Send request",
+    "reply": "We reply by e-mail.",
+    "haveInvite": "I already have an invitation",
+    "sent": {
+      "title": "Request received",
+      "text": "Thank you. Our team will review it and reply to {email}.",
+      "home": "Back to the home page"
+    },
+    "description": "Request access to run card auctions in your WhatsApp group. Access is by invitation."
   }
 }

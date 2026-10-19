@@ -31,7 +31,8 @@
     "required": "Este campo é obrigatório.",
     "email": "Informe um e-mail válido.",
     "otpCode": "Informe os 6 dígitos do código.",
-    "tooLong": "Este texto é longo demais."
+    "tooLong": "Este texto é longo demais.",
+    "phone": "Informe o número com o DDD."
   },
   "errors": {
     "unknown": "Algo deu errado. Tente de novo.",
@@ -261,5 +262,25 @@
       "text": "Verifique a sua conexão e tente de novo.",
       "retry": "Tentar de novo"
     }
+  },
+  "requestAccess": {
+    "title": "Solicitar acesso",
+    "intro": "O acesso é por convite. Conte sobre a sua loja e a nossa equipe cria o seu acesso e envia o convite por e-mail.",
+    "name": "Seu nome",
+    "email": "E-mail",
+    "whatsapp": "WhatsApp (opcional)",
+    "whatsappHint": "Com o DDD.",
+    "storeName": "Nome da loja",
+    "message": "Mensagem (opcional)",
+    "messagePlaceholder": "Quantos grupos você tem? Já faz leilões hoje?",
+    "submit": "Enviar solicitação",
+    "reply": "Respondemos por e-mail.",
+    "haveInvite": "Já tenho convite",
+    "sent": {
+      "title": "Solicitação recebida",
+      "text": "Obrigado. Nossa equipe vai analisar e responder para {email}.",
+      "home": "Voltar para a página inicial"
+    },
+    "description": "Solicite acesso para fazer leilões de cartas no seu grupo de WhatsApp. O acesso é por convite."
   }
 }

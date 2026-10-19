@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/vue-query';
 import { ApiError } from '../api/errors';
 import { createAuthApi } from '../api/auth';
 import { createInvitationsApi } from '../api/invitations';
-import { createApiClient } from '../api/client';
 import { PERMISSIONS } from '../utils/permissions';
 import { tokenFromFragment } from '../utils/fragment-token';
 
@@ -14,7 +13,6 @@ const route = useRoute();
 const session = useSessionStore();
 const errorMessage = useErrorMessage();
 const format = useFormat();
-const config = useRuntimeConfig();
 
 // The token is in the fragment (never in the path or the query), so it does not reach a log.
 useHead({
@@ -25,12 +23,7 @@ useHead({
   ],
 });
 
-const client = createApiClient({
-  baseUrl: config.public.apiBaseUrl,
-  getAccessToken: () => null,
-  getStoreId: () => null,
-  refreshSession: () => Promise.resolve(false),
-});
+const client = usePublicApi();
 const invitations = createInvitationsApi(client);
 const auth = createAuthApi(client);
 
