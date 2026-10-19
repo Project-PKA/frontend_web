@@ -134,3 +134,8 @@ body:has(dialog[open]) {
   flex-wrap: nowrap;
   gap: var(--sp-2);
 }
+
+/* Holds the place of a form that only exists in the browser, so the page does not jump. */
+.form-placeholder {
+  min-height: 7.6rem;
+}
