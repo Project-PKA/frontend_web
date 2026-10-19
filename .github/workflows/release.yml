@@ -16,8 +16,11 @@
 name: Release
 
 on:
-  push:
-    branches: [main]
+  # Desligado ate o dono criar o AUTOMATION_TOKEN (A2 em shared/OWNER.md): sem ele, o
+  # release-please falha a cada push em main. Para religar, devolva o gatilho:
+  #   push:
+  #     branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
