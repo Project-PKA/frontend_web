@@ -108,3 +108,8 @@ body:has(dialog[open]) {
 .tabs {
   overflow-y: hidden;
 }
+
+/* Holds the place of a form that only exists in the browser, so the page does not jump. */
+.form-placeholder {
+  min-height: 7.6rem;
+}
