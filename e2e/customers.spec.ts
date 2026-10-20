@@ -70,6 +70,7 @@ interface Options {
   patchAnswer?: object;
   storePatchAnswer?: object;
   createAnswer?: object;
+  paidAnswer?: object;
 }
 
 interface Calls {
@@ -79,6 +80,7 @@ interface Calls {
   blacklisted: { id: string; reason: string }[];
   unblacklisted: string[];
   stores: Record<string, unknown>[];
+  paid: string[];
 }
 
 function problem(status: number, code: string) {
@@ -97,6 +99,7 @@ async function signedIn(page: Page, options: Options = {}): Promise<Calls> {
     blacklisted: [],
     unblacklisted: [],
     stores: [],
+    paid: [],
   };
   const people = options.people ?? PEOPLE();
   let limit = options.limit === undefined ? 60 : options.limit;
@@ -152,6 +155,13 @@ async function signedIn(page: Page, options: Options = {}): Promise<Calls> {
   await page.route('**/v1/notifications/unread-count', (route) =>
     route.fulfill({ status: 200, json: { count: 0 } }),
   );
+  await page.route(/\/v1\/settlements\/[^/]+\/paid$/, (route) => {
+    if (options.paidAnswer) {
+      return route.fulfill(options.paidAnswer as Parameters<typeof route.fulfill>[0]);
+    }
+    calls.paid.push(route.request().url().split('/').at(-2) ?? '');
+    return route.fulfill({ status: 200, json: { id: 's-1', status: 'PAID' } });
+  });
   await page.route(/\/v1\/customers\/[^/]+\/settlements/, (route) =>
     route.fulfill({
       status: 200,
@@ -551,6 +561,36 @@ test('shows what the customer owes and what they bid', async ({ page }) => {
   await expect(bids.getByText('Auction running')).toBeVisible();
   await expect(bids.getByText('Won', { exact: true })).toBeVisible();
   await expect(bids.getByText('Not won')).toBeVisible();
+});
+
+test('confirms the payment of a pending settlement after asking', async ({ page }) => {
+  const calls = await signedIn(page);
+  await page.goto('/customers/u-1');
+
+  const settlements = page.getByRole('table', { name: 'Settlements' });
+  await expect(settlements.getByRole('button', { name: 'Confirm payment' })).toHaveCount(1);
+  await settlements.getByRole('button', { name: 'Confirm payment' }).click();
+
+  const dialog = page.getByRole('dialog', { name: 'Confirm the payment' });
+  await expect(dialog).toContainText('The cards of this settlement become sold');
+  await dialog.getByRole('button', { name: 'Cancel' }).click();
+  expect(calls.paid).toEqual([]);
+
+  await settlements.getByRole('button', { name: 'Confirm payment' }).click();
+  await dialog.getByRole('button', { name: 'Confirm payment' }).click();
+  await expect(page.getByText('Payment confirmed.')).toBeVisible();
+  expect(calls.paid).toEqual(['s-1']);
+});
+
+test('shows the error of the confirmation translated, inside the dialog', async ({ page }) => {
+  await signedIn(page, { paidAnswer: problem(409, 'SETTLEMENT_NOT_PENDING') });
+  await page.goto('/customers/u-1');
+
+  await page.getByRole('button', { name: 'Confirm payment' }).first().click();
+  const dialog = page.getByRole('dialog', { name: 'Confirm the payment' });
+  await dialog.getByRole('button', { name: 'Confirm payment' }).click();
+  await expect(dialog.getByRole('alert')).toBeVisible();
+  await expect(page.getByText('mensagem em português')).toHaveCount(0);
 });
 
 test('says so when the customer does not exist', async ({ page }) => {
