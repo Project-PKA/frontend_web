@@ -15,6 +15,16 @@ export type CardDetail = paths['/v1/cards/{id}']['get'] extends {
   ? Body
   : never;
 
+/** The body of `POST /v1/cards`. The origin has no default: whoever registers chooses. */
+export type CreateCard = NonNullable<
+  paths['/v1/cards']['post']['requestBody']
+>['content']['application/json'];
+export type CreatedCard = paths['/v1/cards']['post'] extends {
+  responses: { 201: { content: { 'application/json': infer Body } } };
+}
+  ? Body
+  : never;
+
 export const CARD_STATUSES = ['AVAILABLE', 'SCHEDULED', 'AWAITING_CONFIRMATION', 'SOLD'] as const;
 export type CardStatus = (typeof CARD_STATUSES)[number];
 export const CARD_ORIGINS = ['OWN', 'CONSIGNED'] as const;
@@ -37,6 +47,14 @@ export function createInventoryApi(client: ApiClient) {
       }),
     get: (id: string, signal?: AbortSignal) =>
       client.request<CardDetail>(`/v1/cards/${encodeURIComponent(id)}`, { signal }),
+    create: (card: CreateCard) =>
+      client.request<CreatedCard>('/v1/cards', { method: 'POST', body: card }),
+    /** The body is the image itself (up to 8 per card, 5 MB each); the API checks the real type. */
+    addPhoto: (cardId: string, file: Blob) =>
+      client.request<{ photo: string; photos: string[] }>(
+        `/v1/cards/${encodeURIComponent(cardId)}/photos`,
+        { method: 'PUT', body: file },
+      ),
     /** Only an available card that never went to an auction can be deleted. */
     remove: (id: string) =>
       client.request<undefined>(`/v1/cards/${encodeURIComponent(id)}`, { method: 'DELETE' }),

@@ -168,7 +168,9 @@ test('picks a suggestion with the keyboard and shows its official art', async ({
   await expect(art).toBeVisible();
   await expect(art).toHaveAttribute('src', 'https://images.example.com/sv08-057/high.png');
   await expect(art).toHaveAttribute('referrerpolicy', 'no-referrer');
-  await expect(page.getByText('Surging Sparks · 057/191')).toBeVisible();
+  await expect(
+    page.locator('.catalog__caption').getByText('Surging Sparks · 057/191'),
+  ).toBeVisible();
 });
 
 test('picks a suggestion with the pointer and says its rarity', async ({ page }) => {
@@ -179,7 +181,7 @@ test('picks a suggestion with the pointer and says its rarity', async ({ page })
   await page.getByRole('option', { name: /Pikachu VMAX/ }).click();
 
   await expect(page.getByRole('img', { name: 'Official art of Pikachu VMAX' })).toBeVisible();
-  await expect(page.getByText('Rarity: Rare Ultra')).toBeVisible();
+  await expect(page.locator('.catalog__caption')).toContainText('Rarity: Rare Ultra');
   await expect(page.getByText('Pick a card from the list.')).toHaveCount(0);
 });
 
