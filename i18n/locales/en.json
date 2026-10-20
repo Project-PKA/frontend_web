@@ -1341,5 +1341,81 @@
       "whatsapp": "Send on WhatsApp",
       "message": "Hi, {name}! Follow your cards and the auctions here: {link}"
     }
+  },
+  "finance": {
+    "loading": "Loading the finance",
+    "noData": "No data in this period.",
+    "error": {
+      "title": "We could not load the finance",
+      "text": "Check the connection and try again.",
+      "retry": "Try again"
+    },
+    "period": {
+      "label": "Period",
+      "today": "Today",
+      "7": "7 days",
+      "15": "15 days",
+      "30": "30 days"
+    },
+    "kpi": {
+      "revenue": "Gross revenue",
+      "profit": "Net profit of the store",
+      "profitNote": "own + commissions",
+      "payable": "To pay to consignors",
+      "payableNote": "liability",
+      "average": "Average ticket"
+    },
+    "daily": {
+      "title": "Revenue and profit per day",
+      "gross": "gross",
+      "net": "net",
+      "axis": "X axis: day of the period · Y axis: R$"
+    },
+    "origin": {
+      "title": "Revenue by origin",
+      "note": "Includes the part passed on to the consignors"
+    },
+    "origins": {
+      "OWN": "Own stock",
+      "CONSIGNED": "Consigned"
+    },
+    "price": {
+      "title": "Sales by price range",
+      "unit": "number of cards",
+      "note": "Shows whether the strength is cheap or expensive cards"
+    },
+    "bands": {
+      "UP_TO_25": "up to 25",
+      "25_TO_50": "25–50",
+      "50_TO_100": "50–100",
+      "100_TO_200": "100–200",
+      "OVER_200": "over 200"
+    },
+    "hours": {
+      "title": "Bids by time of day",
+      "unit": "number of bids",
+      "note": "Best time to schedule the auctions"
+    },
+    "language": {
+      "title": "Sales by language"
+    },
+    "condition": {
+      "title": "Sales by condition"
+    },
+    "buyers": {
+      "title": "Top buyers",
+      "error": "We could not load the buyers."
+    },
+    "payouts": {
+      "title": "Consignment payouts",
+      "note": "cards sold and already paid by the buyers",
+      "empty": "No payouts in this period.",
+      "error": "We could not load the payouts",
+      "consignor": "Consignor",
+      "items": "Cards",
+      "gross": "Sold",
+      "commission": "Commission",
+      "payout": "To pass on"
+    }
   }
 }

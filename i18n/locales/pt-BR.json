@@ -1341,5 +1341,81 @@
       "whatsapp": "Enviar no WhatsApp",
       "message": "Oi, {name}! Acompanhe as suas cartas e os leilões aqui: {link}"
     }
+  },
+  "finance": {
+    "loading": "Carregando o financeiro",
+    "noData": "Sem dados neste período.",
+    "error": {
+      "title": "Não foi possível carregar o financeiro",
+      "text": "Confira a conexão e tente de novo.",
+      "retry": "Tentar de novo"
+    },
+    "period": {
+      "label": "Período",
+      "today": "Hoje",
+      "7": "7 dias",
+      "15": "15 dias",
+      "30": "30 dias"
+    },
+    "kpi": {
+      "revenue": "Faturamento bruto",
+      "profit": "Lucro líquido da loja",
+      "profitNote": "próprias + comissões",
+      "payable": "A pagar a consignadores",
+      "payableNote": "passivo",
+      "average": "Ticket médio"
+    },
+    "daily": {
+      "title": "Faturamento e lucro por dia",
+      "gross": "bruto",
+      "net": "líquido",
+      "axis": "Eixo X: dia do período · eixo Y: R$"
+    },
+    "origin": {
+      "title": "Faturamento por origem",
+      "note": "Inclui a parte repassada aos consignadores"
+    },
+    "origins": {
+      "OWN": "Estoque próprio",
+      "CONSIGNED": "Consignadas"
+    },
+    "price": {
+      "title": "Vendas por faixa de valor",
+      "unit": "nº de cartas",
+      "note": "Mostra se o forte são cartas baratas ou caras"
+    },
+    "bands": {
+      "UP_TO_25": "até 25",
+      "25_TO_50": "25–50",
+      "50_TO_100": "50–100",
+      "100_TO_200": "100–200",
+      "OVER_200": "acima de 200"
+    },
+    "hours": {
+      "title": "Lances por horário",
+      "unit": "nº de lances",
+      "note": "Melhor horário para agendar os leilões"
+    },
+    "language": {
+      "title": "Vendas por idioma"
+    },
+    "condition": {
+      "title": "Vendas por estado"
+    },
+    "buyers": {
+      "title": "Top compradores",
+      "error": "Não foi possível carregar os compradores."
+    },
+    "payouts": {
+      "title": "Repasses de consignação",
+      "note": "cartas vendidas e já pagas pelos compradores",
+      "empty": "Nenhum repasse neste período.",
+      "error": "Não foi possível carregar os repasses",
+      "consignor": "Consignador",
+      "items": "Cartas",
+      "gross": "Vendido",
+      "commission": "Comissão",
+      "payout": "A repassar"
+    }
   }
 }
