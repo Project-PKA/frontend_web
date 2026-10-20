@@ -237,6 +237,10 @@
       "status": 404
     },
     {
+      "code": "MESSAGE_TEMPLATE_PLACEHOLDER_UNKNOWN",
+      "status": 422
+    },
+    {
       "code": "MISSING_PERMISSION",
       "status": null
     },
@@ -297,6 +301,14 @@
       "status": 429
     },
     {
+      "code": "RECEIPT_INVALID",
+      "status": null
+    },
+    {
+      "code": "RECEIPT_NOT_FOUND",
+      "status": 404
+    },
+    {
       "code": "RESEND_TOO_SOON",
       "status": 429
     },
@@ -319,18 +331,6 @@
     {
       "code": "SETTLEMENT_NOT_PENDING",
       "status": 409
-    },
-    {
-      "code": "SHIPMENT_INVALID_TRANSITION",
-      "status": 409
-    },
-    {
-      "code": "SHIPMENT_NOT_FOUND",
-      "status": 404
-    },
-    {
-      "code": "SHIPMENT_TRACKING_REQUIRED",
-      "status": 422
     },
     {
       "code": "SHORT_CODE_TAKEN",

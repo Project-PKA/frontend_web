@@ -210,12 +210,6 @@
     "days": "Enter a whole number of days, 1 or more."
   },
   "errors": {
-    "unknown": "Something went wrong. Try again.",
-    "http": "We could not complete this action. Try again.",
-    "network": "We could not reach the server. Check your connection and try again.",
-    "timeout": "The server took too long to answer. Try again.",
-    "aborted": "The request was cancelled.",
-    "parse": "We received an unexpected answer from the server. Try again.",
     "ADMIN_ADMIN_PROTECTED": "This account is a platform administrator and cannot be changed here.",
     "ADMIN_ALREADY_OWNER": "This person already owns the store.",
     "ADMIN_EMAIL_TAKEN": "There is already an account with this e-mail.",
@@ -275,6 +269,7 @@
     "LAST_OWNER": "The store must keep at least one owner.",
     "MEMBER_LIMIT_REACHED": "The member limit of the plan was reached.",
     "MEMBER_NOT_FOUND": "We could not find this team member.",
+    "MESSAGE_TEMPLATE_PLACEHOLDER_UNKNOWN": "This message uses a placeholder that does not exist for it. Check the names between braces.",
     "MISSING_PERMISSION": "You do not have permission to do this.",
     "NOTIFICATION_NOT_FOUND": "We could not find this notification.",
     "OWNERSHIP_INVALID": "This ownership change is not valid.",
@@ -290,21 +285,26 @@
     "PUBLIC_LINK_NOT_FOUND": "This link is not available. Ask the store for a new one.",
     "PUBLIC_PHONE_INVALID": "Enter a valid phone number.",
     "RATE_LIMITED": "Too many attempts. Wait a moment and try again.",
+    "RECEIPT_INVALID": "The file is not an image. Send a JPEG, PNG or WebP.",
+    "RECEIPT_NOT_FOUND": "We could not find this receipt.",
     "RESEND_TOO_SOON": "Wait a moment before asking for the e-mail again.",
     "SESSION_NOT_FOUND": "This session no longer exists.",
     "SETTLEMENT_AUCTION_NOT_ELIGIBLE": "This auction cannot be settled yet.",
     "SETTLEMENT_CUSTOMER_NOT_FOUND": "We could not find this customer.",
     "SETTLEMENT_NOT_FOUND": "We could not find this settlement.",
     "SETTLEMENT_NOT_PENDING": "This settlement is no longer pending.",
-    "SHIPMENT_INVALID_TRANSITION": "The shipment cannot move to this status.",
-    "SHIPMENT_NOT_FOUND": "We could not find this shipment.",
-    "SHIPMENT_TRACKING_REQUIRED": "Enter the tracking code to mark the shipment as sent.",
     "SHORT_CODE_TAKEN": "This card code is already in use.",
     "SHOWCASE_ACK_REQUIRED": "Confirm that you know the group link becomes public to turn the showcase on.",
     "STORE_LIMIT_REACHED": "You reached the limit of stores you can own.",
     "UNAUTHENTICATED": "Sign in to continue.",
     "USER_NOT_FOUND": "We could not find this person.",
-    "VALIDATION_ERROR": "Check the data you entered and try again."
+    "VALIDATION_ERROR": "Check the data you entered and try again.",
+    "aborted": "The request was cancelled.",
+    "http": "We could not complete this action. Try again.",
+    "network": "We could not reach the server. Check your connection and try again.",
+    "parse": "We received an unexpected answer from the server. Try again.",
+    "timeout": "The server took too long to answer. Try again.",
+    "unknown": "Something went wrong. Try again."
   },
   "stores": {
     "title": "Choose a store",
@@ -392,7 +392,6 @@
     "inventory": "Inventory",
     "auctions": "Auctions",
     "customers": "Customers",
-    "shipments": "Shipments",
     "team": "Team",
     "settings": "Settings",
     "finance": "Finance",
@@ -1342,41 +1341,5 @@
       "whatsapp": "Send on WhatsApp",
       "message": "Hi, {name}! Follow your cards and the auctions here: {link}"
     }
-  },
-  "shipments": {
-    "caption": "Shipments",
-    "loading": "Loading the shipments",
-    "error": "We could not load the shipments",
-    "retry": "Try again",
-    "empty": {
-      "title": "No shipments here",
-      "text": "Paid sales show up here to be shipped. The shipping itself is arranged directly between the store and the buyer."
-    },
-    "filters": {
-      "status": "Status",
-      "all": "Status: all"
-    },
-    "status": {
-      "TO_SHIP": "To ship",
-      "SHIPPED": "Shipped",
-      "DELIVERED": "Delivered"
-    },
-    "columns": {
-      "customer": "Customer",
-      "destination": "Destination",
-      "status": "Status",
-      "tracking": "Tracking"
-    },
-    "trackingPlaceholder": "Tracking code",
-    "trackingFor": "Tracking code for {name}",
-    "markShipped": "Mark as shipped",
-    "markDelivered": "Mark as delivered",
-    "loadMore": "Show more",
-    "notify": {
-      "action": "Notify customer on WhatsApp",
-      "withCode": "Hi, {name}! Your order was shipped. Tracking code: {code}.",
-      "withoutCode": "Hi, {name}! Your order was shipped."
-    },
-    "note": "Paid sales come in here. The shipping is arranged directly between the store and the buyer, and the system sends no message by itself."
   }
 }

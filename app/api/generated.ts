@@ -252,6 +252,44 @@ export interface paths {
         patch: operations["updateCurrentStore"];
         trace?: never;
     };
+    "/v1/store/message-templates": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Modelos das mensagens do bot no grupo, com o padrão e o texto da loja */
+        get: operations["listMessageTemplates"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/store/message-templates/{key}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Define o texto da loja para uma mensagem do bot (só o proprietário)
+         * @description Só os marcadores listados em `placeholders` da chave valem; outro marcador responde 422.
+         */
+        put: operations["setMessageTemplate"];
+        post?: never;
+        /** Volta ao texto padrão (só o proprietário) */
+        delete: operations["resetMessageTemplate"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/team": {
         parameters: {
             query?: never;
@@ -726,7 +764,7 @@ export interface paths {
         put?: never;
         /**
          * Cria o acerto de um comprador com os leilões que ele ganhou
-         * @description Total = itens + frete informado pela loja. Cada leilão entra em no máximo um acerto. A plataforma não cobra nem garante o pagamento.
+         * @description Total = soma dos itens (o sistema não trata de frete). Cada leilão entra em no máximo um acerto. A plataforma não cobra nem garante o pagamento.
          */
         post: operations["createSettlement"];
         delete?: never;
@@ -750,8 +788,24 @@ export interface paths {
         delete: operations["deleteSettlement"];
         options?: never;
         head?: never;
-        /** Altera o frete de um acerto pendente (o total acompanha) */
-        patch: operations["updateSettlement"];
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/settlements/{id}/receipt": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Baixa o comprovante que o comprador enviou (imagem) */
+        get: operations["getSettlementReceipt"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/v1/settlements/{id}/paid": {
@@ -765,50 +819,13 @@ export interface paths {
         put?: never;
         /**
          * Marca o acerto como pago (só a loja; exige can_view_finance)
-         * @description As cartas viram vendidas e o envio entra na fila. Nunca é chamado pelo comprador: o "já paguei" dele só avisa a loja.
+         * @description As cartas viram vendidas. Nunca é chamado pelo comprador: o "já paguei" dele só avisa a loja.
          */
         post: operations["markSettlementPaid"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
-        trace?: never;
-    };
-    "/v1/shipments": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Fila de envios das vendas pagas */
-        get: operations["listShipments"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/v1/shipments/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        /**
-         * Atualiza o envio: rastreio e andamento (a enviar → enviado → entregue)
-         * @description Não envia mensagem a ninguém (ADR 0006): a loja avisa o comprador por conta própria.
-         */
-        patch: operations["updateShipment"];
         trace?: never;
     };
     "/v1/settlements/{id}/public-link": {
@@ -1385,6 +1402,44 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/cards/{id}/photos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Envia uma foto da carta (corpo = a imagem; até 8 por carta)
+         * @description Corpo binário `image/jpeg`, `image/png` ou `image/webp`, até 5 MB. O tipo é conferido pelo conteúdo.
+         */
+        put: operations["addCardPhoto"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/cards/{id}/photos/{photoId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Baixa uma foto da carta (exige login e a loja da carta) */
+        get: operations["getCardPhoto"];
+        put?: never;
+        post?: never;
+        /** Remove uma foto da carta */
+        delete: operations["deleteCardPhoto"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/public/settlement": {
         parameters: {
             query?: never;
@@ -1496,6 +1551,26 @@ export interface paths {
          * @description Chave errada responde igual a link inválido. 5 erros bloqueiam o link por 15 minutos. O repasse é só estimativa.
          */
         post: operations["publicConsignorView"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/public/settlement/receipt": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * O comprador anexa o comprovante de pagamento (imagem)
+         * @description Corpo binário `image/jpeg`, `image/png` ou `image/webp`, até 5 MB; o token vai no header `x-public-token`. Também vale como "já paguei". Um comprovante por acerto. Nunca marca o acerto como pago.
+         */
+        put: operations["publicSettlementReceipt"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -2338,6 +2413,239 @@ export interface operations {
             };
             /** @description Default Response */
             422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+        };
+    };
+    listMessageTemplates: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Id da loja. Obrigatório nas rotas de uma loja; só vale se a pessoa participa dela */
+                "x-store-id"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Default Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        items: {
+                            /** @enum {string} */
+                            key: "card_opened" | "bid_too_low" | "invalid_amount" | "not_started" | "ended" | "not_active" | "ceiling_reached" | "auction_won" | "auction_unsold";
+                            /** @description Marcadores aceitos no texto, escritos como `{nome}` */
+                            placeholders: string[];
+                            default_body: string;
+                            /** @description Texto da loja; `null` = o bot usa o padrão */
+                            custom_body: string | null;
+                        }[];
+                    };
+                };
+            };
+            /** @description Default Response */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+        };
+    };
+    setMessageTemplate: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Id da loja. Obrigatório nas rotas de uma loja; só vale se a pessoa participa dela */
+                "x-store-id"?: string;
+            };
+            path: {
+                key: "card_opened" | "bid_too_low" | "invalid_amount" | "not_started" | "ended" | "not_active" | "ceiling_reached" | "auction_won" | "auction_unsold";
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": {
+                    body: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Default Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        key: "card_opened" | "bid_too_low" | "invalid_amount" | "not_started" | "ended" | "not_active" | "ceiling_reached" | "auction_won" | "auction_unsold";
+                        /** @description Marcadores aceitos no texto, escritos como `{nome}` */
+                        placeholders: string[];
+                        default_body: string;
+                        /** @description Texto da loja; `null` = o bot usa o padrão */
+                        custom_body: string | null;
+                    };
+                };
+            };
+            /** @description Default Response */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+        };
+    };
+    resetMessageTemplate: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Id da loja. Obrigatório nas rotas de uma loja; só vale se a pessoa participa dela */
+                "x-store-id"?: string;
+            };
+            path: {
+                key: "card_opened" | "bid_too_low" | "invalid_amount" | "not_started" | "ended" | "not_active" | "ceiling_reached" | "auction_won" | "auction_unsold";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Default Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        key: "card_opened" | "bid_too_low" | "invalid_amount" | "not_started" | "ended" | "not_active" | "ceiling_reached" | "auction_won" | "auction_unsold";
+                        /** @description Marcadores aceitos no texto, escritos como `{nome}` */
+                        placeholders: string[];
+                        default_body: string;
+                        /** @description Texto da loja; `null` = o bot usa o padrão */
+                        custom_body: string | null;
+                    };
+                };
+            };
+            /** @description Default Response */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            403: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6660,7 +6968,6 @@ export interface operations {
                             /** @enum {string} */
                             status: "PENDING" | "PAID";
                             total_amount: string;
-                            shipping_cost: string;
                             items: number;
                             /** Format: date-time */
                             paid_at: string | null;
@@ -7239,8 +7546,7 @@ export interface operations {
                                 phone: string;
                             };
                             items_total: string;
-                            shipping_cost: string;
-                            /** @description Itens + frete informado pela loja */
+                            /** @description Soma dos itens */
                             total_amount: string;
                             /** Format: date-time */
                             paid_at: string | null;
@@ -7249,15 +7555,10 @@ export interface operations {
                              * @description O comprador avisou que pagou (a loja ainda precisa conferir e marcar como pago)
                              */
                             payment_claimed_at: string | null;
+                            /** @description O comprador enviou o comprovante (baixe em GET /v1/settlements/{id}/receipt) */
+                            has_receipt: boolean;
                             /** Format: date-time */
                             created_at: string;
-                            shipment: {
-                                /** Format: uuid */
-                                id: string;
-                                /** @enum {string} */
-                                status: "TO_SHIP" | "SHIPPED" | "DELIVERED";
-                                tracking_code: string | null;
-                            } | null;
                             items: {
                                 /** Format: uuid */
                                 auction_id: string;
@@ -7388,11 +7689,6 @@ export interface operations {
                     /** Format: uuid */
                     customer_id: string;
                     auction_ids: string[];
-                    /**
-                     * @description Reais, ex.: "25.50"
-                     * @default 0
-                     */
-                    shipping_cost?: string;
                 };
             };
         };
@@ -7417,8 +7713,7 @@ export interface operations {
                             phone: string;
                         };
                         items_total: string;
-                        shipping_cost: string;
-                        /** @description Itens + frete informado pela loja */
+                        /** @description Soma dos itens */
                         total_amount: string;
                         /** Format: date-time */
                         paid_at: string | null;
@@ -7427,15 +7722,10 @@ export interface operations {
                          * @description O comprador avisou que pagou (a loja ainda precisa conferir e marcar como pago)
                          */
                         payment_claimed_at: string | null;
+                        /** @description O comprador enviou o comprovante (baixe em GET /v1/settlements/{id}/receipt) */
+                        has_receipt: boolean;
                         /** Format: date-time */
                         created_at: string;
-                        shipment: {
-                            /** Format: uuid */
-                            id: string;
-                            /** @enum {string} */
-                            status: "TO_SHIP" | "SHIPPED" | "DELIVERED";
-                            tracking_code: string | null;
-                        } | null;
                         items: {
                             /** Format: uuid */
                             auction_id: string;
@@ -7582,8 +7872,7 @@ export interface operations {
                             phone: string;
                         };
                         items_total: string;
-                        shipping_cost: string;
-                        /** @description Itens + frete informado pela loja */
+                        /** @description Soma dos itens */
                         total_amount: string;
                         /** Format: date-time */
                         paid_at: string | null;
@@ -7592,15 +7881,10 @@ export interface operations {
                          * @description O comprador avisou que pagou (a loja ainda precisa conferir e marcar como pago)
                          */
                         payment_claimed_at: string | null;
+                        /** @description O comprador enviou o comprovante (baixe em GET /v1/settlements/{id}/receipt) */
+                        has_receipt: boolean;
                         /** Format: date-time */
                         created_at: string;
-                        shipment: {
-                            /** Format: uuid */
-                            id: string;
-                            /** @enum {string} */
-                            status: "TO_SHIP" | "SHIPPED" | "DELIVERED";
-                            tracking_code: string | null;
-                        } | null;
                         items: {
                             /** Format: uuid */
                             auction_id: string;
@@ -7832,7 +8116,7 @@ export interface operations {
             };
         };
     };
-    updateSettlement: {
+    getSettlementReceipt: {
         parameters: {
             query?: never;
             header?: {
@@ -7844,84 +8128,8 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": {
-                    /** @description Reais, ex.: "25.50" */
-                    shipping_cost: string;
-                };
-            };
-        };
+        requestBody?: never;
         responses: {
-            /** @description Default Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** Format: uuid */
-                        id: string;
-                        /** @enum {string} */
-                        status: "PENDING" | "PAID";
-                        customer: {
-                            /** Format: uuid */
-                            id: string;
-                            name: string;
-                            /** @enum {string} */
-                            kind: "VISITOR" | "CUSTOMER";
-                            phone: string;
-                        };
-                        items_total: string;
-                        shipping_cost: string;
-                        /** @description Itens + frete informado pela loja */
-                        total_amount: string;
-                        /** Format: date-time */
-                        paid_at: string | null;
-                        /**
-                         * Format: date-time
-                         * @description O comprador avisou que pagou (a loja ainda precisa conferir e marcar como pago)
-                         */
-                        payment_claimed_at: string | null;
-                        /** Format: date-time */
-                        created_at: string;
-                        shipment: {
-                            /** Format: uuid */
-                            id: string;
-                            /** @enum {string} */
-                            status: "TO_SHIP" | "SHIPPED" | "DELIVERED";
-                            tracking_code: string | null;
-                        } | null;
-                        items: {
-                            /** Format: uuid */
-                            auction_id: string;
-                            amount: string;
-                            card: {
-                                /** Format: uuid */
-                                id: string;
-                                short_code: string;
-                                name: string;
-                            };
-                        }[];
-                    };
-                };
-            };
-            /** @description Default Response */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
             /** @description Default Response */
             401: {
                 headers: {
@@ -7956,38 +8164,6 @@ export interface operations {
             };
             /** @description Default Response */
             404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
-            /** @description Default Response */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
-            /** @description Default Response */
-            422: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -8038,8 +8214,7 @@ export interface operations {
                             phone: string;
                         };
                         items_total: string;
-                        shipping_cost: string;
-                        /** @description Itens + frete informado pela loja */
+                        /** @description Soma dos itens */
                         total_amount: string;
                         /** Format: date-time */
                         paid_at: string | null;
@@ -8048,15 +8223,10 @@ export interface operations {
                          * @description O comprador avisou que pagou (a loja ainda precisa conferir e marcar como pago)
                          */
                         payment_claimed_at: string | null;
+                        /** @description O comprador enviou o comprovante (baixe em GET /v1/settlements/{id}/receipt) */
+                        has_receipt: boolean;
                         /** Format: date-time */
                         created_at: string;
-                        shipment: {
-                            /** Format: uuid */
-                            id: string;
-                            /** @enum {string} */
-                            status: "TO_SHIP" | "SHIPPED" | "DELIVERED";
-                            tracking_code: string | null;
-                        } | null;
                         items: {
                             /** Format: uuid */
                             auction_id: string;
@@ -8068,319 +8238,6 @@ export interface operations {
                                 name: string;
                             };
                         }[];
-                    };
-                };
-            };
-            /** @description Default Response */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
-            /** @description Default Response */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
-            /** @description Default Response */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
-            /** @description Default Response */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
-            /** @description Default Response */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
-            /** @description Default Response */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
-        };
-    };
-    listShipments: {
-        parameters: {
-            query?: {
-                cursor?: string;
-                limit?: number;
-                status?: "TO_SHIP" | "SHIPPED" | "DELIVERED";
-            };
-            header?: {
-                /** @description Id da loja. Obrigatório nas rotas de uma loja; só vale se a pessoa participa dela */
-                "x-store-id"?: string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Default Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        items: {
-                            /** Format: uuid */
-                            id: string;
-                            /** Format: uuid */
-                            settlement_id: string;
-                            /** @enum {string} */
-                            status: "TO_SHIP" | "SHIPPED" | "DELIVERED";
-                            tracking_code: string | null;
-                            /** Format: date-time */
-                            shipped_at: string | null;
-                            /** Format: date-time */
-                            delivered_at: string | null;
-                            /** Format: date-time */
-                            created_at: string;
-                            total_amount: string;
-                            recipient: {
-                                /** Format: uuid */
-                                id: string;
-                                name: string;
-                                phone: string;
-                                address: {
-                                    zip?: string | null;
-                                    street?: string | null;
-                                    number?: string | null;
-                                    comp?: string | null;
-                                    city?: string | null;
-                                    state?: string | null;
-                                };
-                            };
-                        }[];
-                        next_cursor: string | null;
-                    };
-                };
-            };
-            /** @description Default Response */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
-            /** @description Default Response */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
-            /** @description Default Response */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
-            /** @description Default Response */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
-            /** @description Default Response */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
-            /** @description Default Response */
-            422: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        type: string;
-                        title: string;
-                        status: number;
-                        detail?: string;
-                        instance?: string;
-                        code?: string;
-                    };
-                };
-            };
-        };
-    };
-    updateShipment: {
-        parameters: {
-            query?: never;
-            header?: {
-                /** @description Id da loja. Obrigatório nas rotas de uma loja; só vale se a pessoa participa dela */
-                "x-store-id"?: string;
-            };
-            path: {
-                id: string;
-            };
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": {
-                    /** @enum {string} */
-                    status?: "TO_SHIP" | "SHIPPED" | "DELIVERED";
-                    tracking_code?: string | null;
-                };
-            };
-        };
-        responses: {
-            /** @description Default Response */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": {
-                        /** Format: uuid */
-                        id: string;
-                        /** Format: uuid */
-                        settlement_id: string;
-                        /** @enum {string} */
-                        status: "TO_SHIP" | "SHIPPED" | "DELIVERED";
-                        tracking_code: string | null;
-                        /** Format: date-time */
-                        shipped_at: string | null;
-                        /** Format: date-time */
-                        delivered_at: string | null;
-                        /** Format: date-time */
-                        created_at: string;
-                        total_amount: string;
-                        recipient: {
-                            /** Format: uuid */
-                            id: string;
-                            name: string;
-                            phone: string;
-                            address: {
-                                zip?: string | null;
-                                street?: string | null;
-                                number?: string | null;
-                                comp?: string | null;
-                                city?: string | null;
-                                state?: string | null;
-                            };
-                        };
                     };
                 };
             };
@@ -13069,6 +12926,300 @@ export interface operations {
             };
         };
     };
+    addCardPhoto: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Id da loja. Obrigatório nas rotas de uma loja; só vale se a pessoa participa dela */
+                "x-store-id"?: string;
+            };
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Default Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @description Id da foto recém-enviada */
+                        photo: string;
+                        photos: string[];
+                    };
+                };
+            };
+            /** @description Default Response */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            415: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+        };
+    };
+    getCardPhoto: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Id da loja. Obrigatório nas rotas de uma loja; só vale se a pessoa participa dela */
+                "x-store-id"?: string;
+            };
+            path: {
+                id: string;
+                photoId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Default Response */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+        };
+    };
+    deleteCardPhoto: {
+        parameters: {
+            query?: never;
+            header?: {
+                /** @description Id da loja. Obrigatório nas rotas de uma loja; só vale se a pessoa participa dela */
+                "x-store-id"?: string;
+            };
+            path: {
+                id: string;
+                photoId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Default Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Default Response */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+        };
+    };
     publicSettlementView: {
         parameters: {
             query?: never;
@@ -13096,7 +13247,7 @@ export interface operations {
                         /** @enum {string} */
                         status?: "PENDING" | "PAID";
                         payment_claimed_at?: string | null;
-                        shipping_cost?: string;
+                        receipt_sent?: boolean;
                         total_amount?: string;
                         expires_at?: string;
                         items?: {
@@ -13627,6 +13778,127 @@ export interface operations {
             };
             /** @description Default Response */
             404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+        };
+    };
+    publicSettlementReceipt: {
+        parameters: {
+            query?: never;
+            header: {
+                "x-public-token": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Default Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @enum {string} */
+                        result: "OK" | "ALREADY_PAID" | "RECEIPT_EXISTS";
+                    };
+                };
+            };
+            /** @description Default Response */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        type: string;
+                        title: string;
+                        status: number;
+                        detail?: string;
+                        instance?: string;
+                        code?: string;
+                    };
+                };
+            };
+            /** @description Default Response */
+            415: {
                 headers: {
                     [name: string]: unknown;
                 };
