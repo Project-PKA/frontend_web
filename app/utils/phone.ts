@@ -22,3 +22,23 @@ export function maskBrazilPhone(value: string): string {
 /** A number with area code: 10 digits (landline) or 11 (mobile). */
 export const isBrazilPhone = (value: string): boolean =>
   [10, 11].includes(phoneDigits(value).length);
+
+/**
+ * A phone number as the API keeps it (digits with the country code: "5511988771020") written for
+ * a person: "(11) 98877-1020" for a Brazilian number, "+<digits>" for any other.
+ */
+export function formatStoredPhone(stored: string): string {
+  const digits = phoneDigits(stored);
+  const national =
+    digits.startsWith('55') && [12, 13].includes(digits.length) ? digits.slice(2) : '';
+  return national ? maskBrazilPhone(national) : `+${digits}`;
+}
+
+/**
+ * What a person typed as the phone of a customer, as the API keeps it (digits with the country
+ * code): a number with area code (10 or 11 digits) is Brazilian and gets the 55.
+ */
+export function toStoredPhone(typed: string): string {
+  const digits = phoneDigits(typed);
+  return isBrazilPhone(digits) ? `55${digits}` : digits;
+}

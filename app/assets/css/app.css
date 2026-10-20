@@ -589,3 +589,17 @@ body:has(dialog[open]) {
     grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
   }
 }
+
+/* ---------- customers ---------- */
+.customers__more {
+  justify-content: center;
+}
+
+.blacklist__days {
+  width: 90px;
+}
+
+.blacklist__error {
+  margin: 0;
+  padding: var(--sp-2) var(--sp-4);
+}

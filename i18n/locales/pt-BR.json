@@ -38,7 +38,11 @@
     "endFuture": "O fim precisa ser no futuro.",
     "endAfterStart": "O fim precisa ser depois do início.",
     "money": "Informe um valor acima de zero, como 25 ou 25,50.",
-    "ceilingAbove": "O teto precisa ser maior que o lance inicial."
+    "ceilingAbove": "O teto precisa ser maior que o lance inicial.",
+    "cpf": "Informe os 11 dígitos do CPF.",
+    "cep": "Informe os 8 dígitos do CEP.",
+    "state": "Informe as 2 letras do estado, como SP.",
+    "days": "Informe um número inteiro de dias, 1 ou mais."
   },
   "errors": {
     "unknown": "Algo deu errado. Tente de novo.",
@@ -963,5 +967,168 @@
     },
     "endsIn": "Termina em",
     "extended": "O fim foi adiado em {minutes} minutos."
+  },
+  "customers": {
+    "filters": {
+      "search": "Buscar por nome, telefone ou CPF",
+      "type": "Tipo",
+      "typeAll": "Tipo: todos"
+    },
+    "types": {
+      "VISITOR": "Visitante",
+      "CUSTOMER": "Cliente cadastrado",
+      "CONSIGNOR": "Consignador"
+    },
+    "kinds": {
+      "VISITOR": "Visitante (cadastro incompleto)",
+      "CUSTOMER": "Cliente cadastrado"
+    },
+    "blacklisted": "Na blacklist",
+    "blacklistLink": "Blacklist e inatividade",
+    "caption": "Clientes",
+    "loading": "Carregando os clientes",
+    "error": {
+      "title": "Não foi possível carregar os clientes",
+      "text": "Confira sua conexão e tente de novo.",
+      "retry": "Tentar de novo"
+    },
+    "empty": {
+      "title": "Nenhum cliente ainda",
+      "text": "As pessoas que dão lance nos seus grupos aparecem aqui."
+    },
+    "noMatch": {
+      "title": "Nenhum cliente encontrado",
+      "text": "Mude ou limpe os filtros.",
+      "clear": "Limpar os filtros"
+    },
+    "columns": {
+      "name": "Nome",
+      "phone": "Telefone",
+      "cpf": "CPF",
+      "type": "Tipo",
+      "last": "Última interação"
+    },
+    "loadMore": "Mostrar mais"
+  },
+  "customer": {
+    "title": "Cliente",
+    "loading": "Carregando o cliente",
+    "error": {
+      "title": "Não foi possível abrir este cliente",
+      "retry": "Tentar de novo"
+    },
+    "incomplete": {
+      "title": "Cadastro incompleto",
+      "text": "Preencha o CPF e o endereço para liberar a confirmação de venda."
+    },
+    "nothingChanged": "Nada foi alterado.",
+    "saved": "Cliente salvo.",
+    "blocked": "Adicionado à blacklist.",
+    "unblocked": "Removido da blacklist.",
+    "data": {
+      "title": "Dados do cliente",
+      "save": "Salvar",
+      "name": "Nome",
+      "phone": "Telefone",
+      "phoneHint": "O telefone é a identidade do cliente no grupo e não pode ser alterado.",
+      "email": "E-mail",
+      "cpf": "CPF",
+      "cpfHint": "Só o CPF mascarado fica visível.",
+      "cpfOnFile": "Cadastrado: {cpf}. Digite um novo para trocar.",
+      "cpfPlaceholder": "000.000.000-00",
+      "zip": "CEP",
+      "zipPlaceholder": "00000-000",
+      "street": "Rua",
+      "number": "Número",
+      "comp": "Complemento",
+      "city": "Cidade",
+      "state": "UF"
+    },
+    "moderation": {
+      "title": "Moderação",
+      "text": "Quem entra na blacklist é removido do grupo e bloqueado de novos leilões.",
+      "add": "Adicionar à blacklist",
+      "on": "Na blacklist",
+      "remove": "Remover da blacklist",
+      "modal": {
+        "title": "Adicionar à blacklist",
+        "reason": "Motivo",
+        "text": "O número é removido do grupo e bloqueado de novos leilões.",
+        "cancel": "Cancelar",
+        "confirm": "Adicionar e expulsar do grupo",
+        "close": "Fechar"
+      }
+    },
+    "tabs": {
+      "label": "O que o cliente deve e os lances dele",
+      "settlements": "Acertos",
+      "bids": "Histórico de lances"
+    },
+    "columns": {
+      "date": "Data",
+      "items": "Itens",
+      "total": "Total",
+      "status": "Status",
+      "card": "Carta",
+      "amount": "Valor",
+      "result": "Resultado"
+    },
+    "loadingList": "Carregando",
+    "errorList": "Não foi possível carregar esta lista",
+    "settlementsEmpty": "Nenhum acerto ainda",
+    "bidsEmpty": "Nenhum lance ainda",
+    "settlementPaid": "Pago",
+    "settlementPending": "Pendente",
+    "bidWon": "Ganhou",
+    "bidLost": "Não ganhou",
+    "bidOpen": "Leilão em andamento"
+  },
+  "blacklist": {
+    "title": "Blacklist e inatividade",
+    "add": "Adicionar à blacklist",
+    "loading": "Carregando",
+    "error": "Não foi possível carregar esta lista",
+    "retry": "Tentar de novo",
+    "remove": "Remover",
+    "removed": "Removido da blacklist.",
+    "added": "Adicionado à blacklist.",
+    "blocked": {
+      "title": "Números bloqueados",
+      "empty": "Nenhum número bloqueado",
+      "emptyText": "Os números que você adicionar aqui ficam bloqueados de novos leilões."
+    },
+    "columns": {
+      "phone": "Telefone",
+      "name": "Nome",
+      "reason": "Motivo"
+    },
+    "inactivity": {
+      "title": "Área cinza: inatividade do grupo",
+      "before": "Expulsar automaticamente membros sem interação no grupo há",
+      "after": "dias",
+      "days": "Dias",
+      "save": "Salvar",
+      "hint": "Deixe vazio para desligar. Só o proprietário pode alterar.",
+      "saved": "Limite salvo.",
+      "notSet": "Nenhum limite definido",
+      "notSetText": "Defina os dias acima para ver quem está prestes a cair.",
+      "empty": "Nenhum membro prestes a cair",
+      "columns": {
+        "member": "Membro prestes a cair",
+        "last": "Última interação",
+        "removal": "Expulsão em"
+      }
+    },
+    "modal": {
+      "title": "Adicionar à blacklist",
+      "phone": "Telefone",
+      "phonePlaceholder": "(00) 00000-0000",
+      "name": "Nome (opcional)",
+      "reason": "Motivo",
+      "text": "O número é removido do grupo e bloqueado de novos leilões.",
+      "cancel": "Cancelar",
+      "confirm": "Adicionar e expulsar do grupo",
+      "close": "Fechar"
+    }
   }
 }

@@ -1,5 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { isBrazilPhone, maskBrazilPhone, phoneDigits } from './phone';
+import {
+  formatStoredPhone,
+  isBrazilPhone,
+  maskBrazilPhone,
+  phoneDigits,
+  toStoredPhone,
+} from './phone';
 
 describe('maskBrazilPhone', () => {
   it.each([
@@ -49,5 +55,29 @@ describe('isBrazilPhone', () => {
     expect(isBrazilPhone('(11) 9123-4')).toBe(false);
     expect(isBrazilPhone('119123456789')).toBe(false);
     expect(isBrazilPhone('')).toBe(false);
+  });
+});
+
+describe('formatStoredPhone', () => {
+  it('writes a Brazilian number as a person writes it', () => {
+    expect(formatStoredPhone('5511988771020')).toBe('(11) 98877-1020');
+    expect(formatStoredPhone('551133334444')).toBe('(11) 3333-4444');
+  });
+
+  it('keeps any other number with its country code', () => {
+    expect(formatStoredPhone('351912345678')).toBe('+351912345678');
+    expect(formatStoredPhone('+1 (415) 555-0100')).toBe('+14155550100');
+  });
+});
+
+describe('toStoredPhone', () => {
+  it('adds the country code to a number with area code', () => {
+    expect(toStoredPhone('(11) 98877-1020')).toBe('5511988771020');
+    expect(toStoredPhone('1133334444')).toBe('551133334444');
+  });
+
+  it('keeps a number that already has its country code', () => {
+    expect(toStoredPhone('+55 11 98877-1020')).toBe('5511988771020');
+    expect(toStoredPhone('+351 912 345 678')).toBe('351912345678');
   });
 });

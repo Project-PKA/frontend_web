@@ -262,6 +262,23 @@ reconectar e a tabela dos afetados com "+30 min" por linha e "Estender todos"
 registrados. **O QR code nao aparece**: a API nao o entrega (Backend#100); a tela diz isso.
 Os textos ficam em `waDown.*` (a chave `whatsapp.*` e dos estados do chip).
 
+**Clientes** — `/customers` (lista), `/customers/:id` (perfil) e `/customers/blacklist`, so com
+`can_manage_customers`. Os filtros (`q`, `type`) ficam no endereco; "Consignador" nao e um
+`kind` da API (so `VISITOR` e `CUSTOMER`), e sim o filtro `consignor=true` (`toApiFilters`).
+Visitante = cadastro incompleto (CPF e endereco faltam). **O CPF e so de escrita**: a API devolve
+so o mascarado, entao o campo comeca vazio e so vai no `PATCH` se alguem digitou um (as
+mascaras de CPF e CEP estao em `utils/documents.ts`). `toChanges` manda so o que mudou; o
+endereco vai inteiro (campos vazios como `null`) assim que um muda. O telefone nao muda: e a
+identidade no grupo, guardado como digitos com o pais (`formatStoredPhone` / `toStoredPhone`).
+Sem a coluna "Compras", o "Consignador" na linha, o bairro e o "desde" da blacklist: a API
+nao da (Backend#108). Blacklist: adicionar um numero cria o cliente como visitante se ainda
+nao existir (`CUSTOMER_PHONE_TAKEN` faz achar o que ja existe pelo telefone) e depois bloqueia;
+o modal avisa que o numero sai do grupo. Inatividade: `PATCH /v1/store` com
+`inactivity_days_limit` (so o proprietario; um 403 leva a tela de sem permissao, como
+sempre) e `GET /v1/customers?inactive=true` (a expulsao e a ultima interacao + os dias). Um
+`<input type="number">` entrega `number`, nao texto: leia com `String()`. A carteira de
+consignacao e da #34 e confirmar pagamento, da #35.
+
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
 layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).

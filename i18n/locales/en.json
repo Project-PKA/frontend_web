@@ -38,7 +38,11 @@
     "endFuture": "The end must be in the future.",
     "endAfterStart": "The end must be after the start.",
     "money": "Enter an amount above zero, like 25 or 25.50.",
-    "ceilingAbove": "The ceiling must be above the opening bid."
+    "ceilingAbove": "The ceiling must be above the opening bid.",
+    "cpf": "Enter the 11 digits of the CPF.",
+    "cep": "Enter the 8 digits of the postal code (CEP).",
+    "state": "Enter the 2 letters of the state, like SP.",
+    "days": "Enter a whole number of days, 1 or more."
   },
   "errors": {
     "unknown": "Something went wrong. Try again.",
@@ -963,5 +967,168 @@
     },
     "endsIn": "Ends in",
     "extended": "The end was pushed {minutes} minutes later."
+  },
+  "customers": {
+    "filters": {
+      "search": "Search by name, phone or CPF",
+      "type": "Type",
+      "typeAll": "Type: all"
+    },
+    "types": {
+      "VISITOR": "Visitor",
+      "CUSTOMER": "Registered customer",
+      "CONSIGNOR": "Consignor"
+    },
+    "kinds": {
+      "VISITOR": "Visitor (incomplete registration)",
+      "CUSTOMER": "Registered customer"
+    },
+    "blacklisted": "Blacklisted",
+    "blacklistLink": "Blacklist and inactivity",
+    "caption": "Customers",
+    "loading": "Loading the customers",
+    "error": {
+      "title": "We could not load the customers",
+      "text": "Check your connection and try again.",
+      "retry": "Try again"
+    },
+    "empty": {
+      "title": "No customers yet",
+      "text": "People who bid in your groups show up here."
+    },
+    "noMatch": {
+      "title": "No customer found",
+      "text": "Change or clear the filters.",
+      "clear": "Clear the filters"
+    },
+    "columns": {
+      "name": "Name",
+      "phone": "Phone",
+      "cpf": "CPF",
+      "type": "Type",
+      "last": "Last interaction"
+    },
+    "loadMore": "Show more"
+  },
+  "customer": {
+    "title": "Customer",
+    "loading": "Loading the customer",
+    "error": {
+      "title": "We could not open this customer",
+      "retry": "Try again"
+    },
+    "incomplete": {
+      "title": "Incomplete registration",
+      "text": "Fill in the CPF and the address to release the confirmation of a sale."
+    },
+    "nothingChanged": "Nothing was changed.",
+    "saved": "Customer saved.",
+    "blocked": "Added to the blacklist.",
+    "unblocked": "Removed from the blacklist.",
+    "data": {
+      "title": "Customer data",
+      "save": "Save",
+      "name": "Name",
+      "phone": "Phone",
+      "phoneHint": "The phone is the customer's identity in the group and cannot be changed.",
+      "email": "E-mail",
+      "cpf": "CPF",
+      "cpfHint": "Only the masked CPF is kept visible.",
+      "cpfOnFile": "On file: {cpf}. Type a new one to replace it.",
+      "cpfPlaceholder": "000.000.000-00",
+      "zip": "Postal code (CEP)",
+      "zipPlaceholder": "00000-000",
+      "street": "Street",
+      "number": "Number",
+      "comp": "Complement",
+      "city": "City",
+      "state": "State"
+    },
+    "moderation": {
+      "title": "Moderation",
+      "text": "A customer on the blacklist is removed from the group and blocked from new auctions.",
+      "add": "Add to the blacklist",
+      "on": "On the blacklist",
+      "remove": "Remove from the blacklist",
+      "modal": {
+        "title": "Add to the blacklist",
+        "reason": "Reason",
+        "text": "The number is removed from the group and blocked from new auctions.",
+        "cancel": "Cancel",
+        "confirm": "Add and remove from the group",
+        "close": "Close"
+      }
+    },
+    "tabs": {
+      "label": "What the customer owes and bid",
+      "settlements": "Settlements",
+      "bids": "Bids history"
+    },
+    "columns": {
+      "date": "Date",
+      "items": "Items",
+      "total": "Total",
+      "status": "Status",
+      "card": "Card",
+      "amount": "Amount",
+      "result": "Result"
+    },
+    "loadingList": "Loading",
+    "errorList": "We could not load this list",
+    "settlementsEmpty": "No settlements yet",
+    "bidsEmpty": "No bids yet",
+    "settlementPaid": "Paid",
+    "settlementPending": "Pending",
+    "bidWon": "Won",
+    "bidLost": "Not won",
+    "bidOpen": "Auction running"
+  },
+  "blacklist": {
+    "title": "Blacklist and inactivity",
+    "add": "Add to the blacklist",
+    "loading": "Loading",
+    "error": "We could not load this list",
+    "retry": "Try again",
+    "remove": "Remove",
+    "removed": "Removed from the blacklist.",
+    "added": "Added to the blacklist.",
+    "blocked": {
+      "title": "Blocked numbers",
+      "empty": "No blocked number",
+      "emptyText": "Numbers you add here are blocked from new auctions."
+    },
+    "columns": {
+      "phone": "Phone",
+      "name": "Name",
+      "reason": "Reason"
+    },
+    "inactivity": {
+      "title": "Gray area: inactivity in the group",
+      "before": "Automatically remove members with no interaction in the group for",
+      "after": "days",
+      "days": "Days",
+      "save": "Save",
+      "hint": "Leave it empty to turn this off. Only the owner can change it.",
+      "saved": "Limit saved.",
+      "notSet": "No limit set",
+      "notSetText": "Set the number of days above to see who is about to be removed.",
+      "empty": "No member is about to be removed",
+      "columns": {
+        "member": "Member about to be removed",
+        "last": "Last interaction",
+        "removal": "Removal on"
+      }
+    },
+    "modal": {
+      "title": "Add to the blacklist",
+      "phone": "Phone",
+      "phonePlaceholder": "(00) 00000-0000",
+      "name": "Name (optional)",
+      "reason": "Reason",
+      "text": "The number is removed from the group and blocked from new auctions.",
+      "cancel": "Cancel",
+      "confirm": "Add and remove from the group",
+      "close": "Close"
+    }
   }
 }
