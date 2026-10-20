@@ -181,9 +181,11 @@ async function unblock() {
 }
 
 // ---- The tabs: what the customer owes, and what they bid
+// The wallet shows the store's money, so the API asks for `can_view_finance`: no tab without it.
 const tabs = computed(() => [
   { id: 'settlements', label: t('customer.tabs.settlements') },
   { id: 'bids', label: t('customer.tabs.bids') },
+  ...(access.can('can_view_finance') ? [{ id: 'wallet', label: t('customer.tabs.wallet') }] : []),
 ]);
 const active = ref('settlements');
 
@@ -443,6 +445,14 @@ const bidRows = computed(() =>
               </div>
             </AppDataState>
           </AppCard>
+
+          <ConsignmentWallet
+            v-else-if="current === 'wallet'"
+            :customer-id="customer.id"
+            :name="customer.name"
+            :phone="customer.phone"
+            :has-cpf="customer.cpf_masked !== null"
+          />
 
           <AppCard v-else as="section" :aria-label="t('customer.tabs.bids')">
             <AppDataState

@@ -78,6 +78,15 @@ describe('customers api', () => {
     });
   });
 
+  it('lists the cards a customer consigned', async () => {
+    const request = vi.fn().mockResolvedValue({ items: [], next_cursor: null, totals: {} });
+    await apiWith(request).consignments('u1', 'abc');
+    expect(request).toHaveBeenCalledWith('/v1/customers/u1/consignments', {
+      query: { cursor: 'abc', limit: 20 },
+      signal: undefined,
+    });
+  });
+
   it('creates the consignor link for one customer', async () => {
     const request = vi.fn().mockResolvedValue({});
     await apiWith(request).createConsignorLink('u/1');

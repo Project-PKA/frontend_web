@@ -1062,7 +1062,8 @@
     "tabs": {
       "label": "What the customer owes and bid",
       "settlements": "Settlements",
-      "bids": "Bids history"
+      "bids": "Bids history",
+      "wallet": "Consignment wallet"
     },
     "columns": {
       "date": "Date",
@@ -1129,6 +1130,43 @@
       "cancel": "Cancel",
       "confirm": "Add and remove from the group",
       "close": "Close"
+    }
+  },
+  "wallet": {
+    "title": "Consignment wallet",
+    "loading": "Loading the wallet",
+    "error": "We could not load the wallet",
+    "retry": "Try again",
+    "empty": {
+      "title": "No consigned cards",
+      "text": "The cards this customer leaves with the store show up here, with what is owed to them."
+    },
+    "totals": {
+      "inStock": "In stock",
+      "pending": "Sold, to pass on",
+      "paid": "Paid and confirmed",
+      "commission": "Store commission"
+    },
+    "columns": {
+      "card": "Card",
+      "status": "Status",
+      "sold": "Sold",
+      "commission": "Commission",
+      "net": "Net to pass on"
+    },
+    "link": {
+      "title": "Tracking link for the consignor",
+      "text": "They follow when their cards go to auction and watch the bids live. The link shows only once, when it is created: make a new one whenever you need to send it again.",
+      "needsCpf": "The link needs the consignor's CPF registered: the first 4 digits are the key to open it. Fill in the CPF in the customer data first.",
+      "key": "The key to open it is the first 4 digits of the consignor's CPF.",
+      "create": "Create the link",
+      "again": "Create a new link",
+      "copy": "Copy link",
+      "copied": "Link copied.",
+      "copyFailed": "Could not copy. Select the link and copy it by hand.",
+      "view": "View as consignor",
+      "whatsapp": "Send on WhatsApp",
+      "message": "Hi, {name}! Follow your cards and the auctions here: {link}"
     }
   }
 }
