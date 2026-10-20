@@ -1062,7 +1062,8 @@
     "tabs": {
       "label": "O que o cliente deve e os lances dele",
       "settlements": "Acertos",
-      "bids": "Histórico de lances"
+      "bids": "Histórico de lances",
+      "wallet": "Carteira de consignação"
     },
     "columns": {
       "date": "Data",
@@ -1129,6 +1130,43 @@
       "cancel": "Cancelar",
       "confirm": "Adicionar e expulsar do grupo",
       "close": "Fechar"
+    }
+  },
+  "wallet": {
+    "title": "Carteira de consignação",
+    "loading": "Carregando a carteira",
+    "error": "Não foi possível carregar a carteira",
+    "retry": "Tentar de novo",
+    "empty": {
+      "title": "Nenhuma carta consignada",
+      "text": "As cartas que este cliente deixa com a loja aparecem aqui, com o que é devido a ele."
+    },
+    "totals": {
+      "inStock": "Em estoque",
+      "pending": "Vendido, a repassar",
+      "paid": "Pago e confirmado",
+      "commission": "Comissão da loja"
+    },
+    "columns": {
+      "card": "Carta",
+      "status": "Status",
+      "sold": "Vendido",
+      "commission": "Comissão",
+      "net": "Líquido a repassar"
+    },
+    "link": {
+      "title": "Link de acompanhamento para o consignador",
+      "text": "Ele vê quando as cartas vão a leilão e acompanha os lances ao vivo. O link aparece só uma vez, quando é criado: crie um novo sempre que precisar enviar de novo.",
+      "needsCpf": "O link exige o CPF do consignador cadastrado: os 4 primeiros dígitos são a chave para abri-lo. Preencha o CPF nos dados do cliente antes.",
+      "key": "A chave para abri-lo são os 4 primeiros dígitos do CPF do consignador.",
+      "create": "Criar o link",
+      "again": "Criar um novo link",
+      "copy": "Copiar link",
+      "copied": "Link copiado.",
+      "copyFailed": "Não foi possível copiar. Selecione o link e copie à mão.",
+      "view": "Ver como consignador",
+      "whatsapp": "Enviar no WhatsApp",
+      "message": "Oi, {name}! Acompanhe as suas cartas e os leilões aqui: {link}"
     }
   }
 }

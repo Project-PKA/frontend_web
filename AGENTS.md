@@ -276,8 +276,16 @@ nao existir (`CUSTOMER_PHONE_TAKEN` faz achar o que ja existe pelo telefone) e d
 o modal avisa que o numero sai do grupo. Inatividade: `PATCH /v1/store` com
 `inactivity_days_limit` (so o proprietario; um 403 leva a tela de sem permissao, como
 sempre) e `GET /v1/customers?inactive=true` (a expulsao e a ultima interacao + os dias). Um
-`<input type="number">` entrega `number`, nao texto: leia com `String()`. A carteira de
-consignacao e da #34 e confirmar pagamento, da #35.
+`<input type="number">` entrega `number`, nao texto: leia com `String()`. Confirmar pagamento e da #35.
+
+**Carteira de consignacao** — terceira aba de `/customers/:id` (`ConsignmentWallet`), so com
+`can_view_finance` (a API exige: sem a permissao nao ha aba, para nao cair na tela de sem
+permissao). Os totais (`in_stock`, `pending_net`, `sold_net`, `commission`) vem da API a cada
+pagina, e sao estimativas ate o acerto; a linha mostra a comissao como `− R$` e `—` para o que
+ainda nao vendeu. O link do consignador (`POST /v1/customers/:id/consignor-link`) aparece **uma
+vez**, com o token no fragmento; exige CPF cadastrado (os 4 primeiros digitos sao a chave) e cada
+clique cria um link novo. Nao ha como listar ou revogar os links ja criados de um cliente: a API nao
+filtra por `customer_id` (Backend#108).
 
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o

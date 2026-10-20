@@ -33,6 +33,9 @@ export type CustomerSettlementPage = JsonBody<'/v1/customers/{id}/settlements', 
 export type CustomerSettlement = CustomerSettlementPage['items'][number];
 export type CustomerBidPage = JsonBody<'/v1/customers/{id}/bids', 'get', 200>;
 export type CustomerBid = CustomerBidPage['items'][number];
+/** `GET /v1/customers/{id}/consignments`: the cards a customer consigned, with what is owed to them. */
+export type ConsignmentPage = JsonBody<'/v1/customers/{id}/consignments', 'get', 200>;
+export type Consignment = ConsignmentPage['items'][number];
 /** `POST /v1/customers/{id}/consignor-link`: the link is built with the token, which shows only once. */
 export type ConsignorLink = JsonBody<'/v1/customers/{id}/consignor-link', 'post', 201>;
 
@@ -83,6 +86,11 @@ export function createCustomersApi(client: ApiClient) {
       ),
     bids: (id: string, cursor?: string, signal?: AbortSignal) =>
       client.request<CustomerBidPage>(`/v1/customers/${encodeURIComponent(id)}/bids`, {
+        query: { cursor, limit: PAGE_SIZE },
+        signal,
+      }),
+    consignments: (id: string, cursor?: string, signal?: AbortSignal) =>
+      client.request<ConsignmentPage>(`/v1/customers/${encodeURIComponent(id)}/consignments`, {
         query: { cursor, limit: PAGE_SIZE },
         signal,
       }),
