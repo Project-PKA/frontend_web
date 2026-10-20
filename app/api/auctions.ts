@@ -25,6 +25,13 @@ export type CreateAuction = JsonRequest<'/v1/auctions', 'post'>;
 /** The body of `PATCH /v1/auctions/{id}`: only what changes. */
 export type UpdateAuction = JsonRequest<'/v1/auctions/{id}', 'patch'>;
 
+/** `GET /v1/auctions/affected`: the running auctions hit by a WhatsApp that is not connected. */
+export type AffectedAuctions = paths['/v1/auctions/affected']['get'] extends {
+  responses: { 200: { content: { 'application/json': infer Body } } };
+}
+  ? Body
+  : never;
+
 export const AUCTION_STATUSES = [
   'PENDING',
   'ACTIVE',
@@ -60,6 +67,15 @@ export function createAuctionsApi(client: ApiClient) {
     /** Pushes the end of a running auction later by some minutes (1 to 1440). */
     extend: (id: string, minutes: number) =>
       client.request<{ extended: string[] }>(`/v1/auctions/${encodeURIComponent(id)}/extend`, {
+        method: 'POST',
+        body: { minutes },
+      }),
+    /** Empty while the store's WhatsApp is online; bids sent during an outage may not have been recorded. */
+    affected: (signal?: AbortSignal) =>
+      client.request<AffectedAuctions>('/v1/auctions/affected', { signal }),
+    /** Pushes the end of every running auction later (the "extend all" of an outage). */
+    extendAll: (minutes: number) =>
+      client.request<{ extended: string[] }>('/v1/auctions/extend', {
         method: 'POST',
         body: { minutes },
       }),

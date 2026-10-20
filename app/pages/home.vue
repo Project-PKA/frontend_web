@@ -12,6 +12,7 @@ definePageMeta({
 
 <template>
   <div class="stack">
+    <HomeWhatsapp />
     <HomeSetup />
     <HomePollAlert />
     <HomeKpis />

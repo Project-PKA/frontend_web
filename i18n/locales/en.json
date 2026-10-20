@@ -926,5 +926,42 @@
       "cancel": "Not yet",
       "close": "Close"
     }
+  },
+  "waDown": {
+    "pageTitle": "WhatsApp connection",
+    "title": "WhatsApp disconnected",
+    "affected": "One running auction is not receiving bids. | {count} running auctions are not receiving bids.",
+    "noneAffected": "No auction is running right now.",
+    "reconnectHint": "Reconnect so the bot goes back to recording the bids.",
+    "reconnect": "Reconnect now",
+    "loading": "Checking the WhatsApp connection",
+    "error": {
+      "title": "We could not check the WhatsApp connection",
+      "text": "Check your connection and try again.",
+      "retry": "Try again"
+    },
+    "online": {
+      "title": "WhatsApp connected",
+      "text": "The bot is receiving the bids of your running auctions."
+    },
+    "qr": {
+      "title": "Read the QR code",
+      "waiting": "Waiting for the reading",
+      "disconnected": "Disconnected",
+      "connected": "Connected",
+      "step1": "Open the store's WhatsApp.",
+      "step2": "Go to Linked devices.",
+      "step3": "Choose Link a device and read the code.",
+      "soon": "The QR code does not show on this screen yet: the code comes from the bot and the API does not give it to the web app. Ask the person who runs the bot to read it, or use the connection screen of the settings when it is available."
+    },
+    "table": {
+      "title": "Affected auctions",
+      "empty": "No running auction is affected",
+      "plus": "+{minutes} min",
+      "extendAll": "Extend all by {minutes} min",
+      "foot": "Bids sent in the group during the outage may not have been recorded: extend the end if you need to."
+    },
+    "endsIn": "Ends in",
+    "extended": "The end was pushed {minutes} minutes later."
   }
 }
