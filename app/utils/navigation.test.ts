@@ -20,7 +20,6 @@ describe('visibleNavItems', () => {
       'inventory',
       'auctions',
       'customers',
-      'shipments',
       'team',
       'settings',
       'finance',
@@ -37,13 +36,7 @@ describe('visibleNavItems', () => {
       can_manage_auctions: true,
       can_manage_customers: true,
     });
-    expect(ids({ ...base, permissions })).toEqual([
-      'home',
-      'inventory',
-      'auctions',
-      'customers',
-      'shipments',
-    ]);
+    expect(ids({ ...base, permissions })).toEqual(['home', 'inventory', 'auctions', 'customers']);
   });
 
   it('shows the finance only to staff that may see it', () => {

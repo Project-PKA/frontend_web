@@ -287,17 +287,27 @@ vez**, com o token no fragmento; exige CPF cadastrado (os 4 primeiros digitos sa
 clique cria um link novo. Nao ha como listar ou revogar os links ja criados de um cliente: a API nao
 filtra por `customer_id` (Backend#108).
 
-**Envios** — `/shipments` (item "Envios" do menu, com `can_manage_auctions`): a fila das vendas
-pagas (`GET /v1/shipments`, por cursor), com o filtro de status no endereco
-(`/shipments?status=SHIPPED`; `parseShipmentStatus` descarta valor desconhecido). A linha "A enviar"
-tem o campo de rastreio e "Marcar como enviado" (`PATCH /v1/shipments/:id`; o codigo vai junto so se
-foi digitado, `toShippedChanges`); a "Enviado" tem "Avisar cliente no WhatsApp" (link `wa.me`, a decisao
-D7: a API **nao manda mensagem** por conta propria, ADR 0006) e "Marcar como entregue" (o design nao
-tem esse botao, mas a API tem o estado). Sem a coluna "Cartas" e sem a busca do design: a API da fila
-nao devolve as cartas da venda nem filtra por texto (Backend#109). Confirmar o pagamento e sempre da loja: na aba "Acertos" de `/customers/:id`, o acerto pendente tem
-"Confirmar pagamento" (so com `can_view_finance`; modal de confirmacao, porque as cartas passam a
-vendidas; `POST /v1/settlements/:id/paid`). O aviso do comprador nao basta. Ainda falta o resumo do
-acerto para copiar e a criacao do acerto (`POST /v1/settlements`).
+**Acertos** — o frete e os envios sairam do produto por decisao do dono (shared ADR 0018): nao ha
+`/shipments`, nem frete no acerto, nem "Avisar cliente no WhatsApp" (o bot so fala no grupo). O
+total do acerto e so a soma dos itens. Confirmar o pagamento e sempre da loja: na aba "Acertos" de
+`/customers/:id`, o acerto pendente tem "Confirmar pagamento" (so com `can_view_finance`; modal de
+confirmacao, porque as cartas passam a vendidas; `POST /v1/settlements/:id/paid`). O aviso do
+comprador nao basta. Ainda falta o resumo do acerto para copiar e a criacao do acerto
+(`POST /v1/settlements`).
+
+**Landing** — `/` (ingles) e `/pt-BR` (portugues), estatica e indexavel; segue `design/landing.html`
+com as secoes da issue #49 (topo, heroi com a previa do painel, como funciona, funcionalidades, para
+quem e, perguntas, convite e rodape). Preco, vitrine e dashboards sao da #50. Quem ja esta logado vai
+de `/` para `/home` (`onMounted` + `session.restore()`; a pagina prerenderizada nao muda). Os textos em
+lista ficam em `landing.*.items.<n>` (o tipo de mensagem nao aceita lista) e a pagina os le por indice.
+O CTA leva a `/request-access` em vez de repetir o formulario do design. Sem "Mapa de telas", sem
+links para termos e privacidade (as telas ainda nao existem) e sem o botao "Ver leiloes ao vivo"
+(vitrine, #48). SEO: canonical e `hreflang` (`useAppHead`), JSON-LD `SoftwareApplication` +
+`FAQPage` (`utils/landing.ts`), e `robots.txt` e `sitemap.xml` gerados no build por
+`server/routes/` com `SITE_URL` (sem ele o sitemap sai vazio). As duas fontes da primeira tela
+(Sora e DM Sans, subconjunto latino) sao pre-carregadas para a fonte nao trocar de repente e mover
+a previa (CLS). O `login` e o `request-access` sao `i18n: false`: link para eles e `to="/login"`
+puro, nao `localePath` (que devolve vazio).
 
 **Financeiro** — `/finance` (so com `can_view_finance`) e o **unico** com periodo (Hoje, 7, 15, 30
 dias; `?period=7`, `parsePeriod` cai em "hoje" para o que nao conhece, como o design). Tres consultas
@@ -454,7 +464,10 @@ Pare e pergunte antes de:
   navegador): os testes de unidade cobrem so a nossa ligacao; foco preso e Esc foram
   conferidos no Chromium e entram no e2e na primeira tela que usar `AppModal`.
 - O `lighthouserc.json` mede a landing e o `/login` (3 execucoes, vale a mediana: uma so
-  oscilava acima do teto). O `/login` nao entra no SEO (tem `noindex`) e tem teto de LCP
+  oscilava acima do teto). A landing completa (#49) mede LCP perto de 3,3 s no Lighthouse
+  simulado (a `main` com a pagina provisoria media 2,1 s) e seu teto passou a 3,5 s, com
+  aprovacao do dono; nao achei uma secao culpada (testei sem fontes, sem o CSS da landing e so
+  com topo e heroi). O `/login` nao entra no SEO (tem `noindex`) e tem teto de LCP
   maior (3,5 s). Ele e pre-renderizado (o titulo e o formulario pintam do HTML; como
   SPA o LCP passava de 3,3 s) e a pagina so liga o comportamento no `onMounted`, entao a
   hidratacao e segura. Pagina pre-renderizada que linka para rota que ainda nao existe

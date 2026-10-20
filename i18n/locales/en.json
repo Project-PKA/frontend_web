@@ -5,7 +5,172 @@
   "landing": {
     "title": "Card auctions in your WhatsApp group",
     "description": "Run card auctions in your WhatsApp group and keep sales, buyers and settlements organized in one place.",
-    "subtitle": "A tool for trading card stores to run auctions and keep their sales organized."
+    "subtitle": "A tool for trading card stores to run auctions and keep their sales organized.",
+    "nav": {
+      "label": "Sections",
+      "features": "Features",
+      "who": "Who it is for",
+      "faq": "Questions",
+      "signIn": "Sign in",
+      "requestAccess": "Request access"
+    },
+    "hero": {
+      "pill": "A platform for Pokémon TCG store owners",
+      "title": "Pokémon card auctions on WhatsApp, ",
+      "emphasis": "from stock to settlement.",
+      "lead": "Register your cards, schedule single-card auctions, let the bot look after the group and follow everything on dashboards.",
+      "chips": {
+        "0": "Card catalog",
+        "1": "WhatsApp auctions",
+        "2": "Dashboards",
+        "3": "Consignments"
+      }
+    },
+    "preview": {
+      "label": "Preview of the panel",
+      "title": "Home",
+      "whatsapp": "WhatsApp online",
+      "active": "Active auctions",
+      "bids": "Live bids",
+      "pending": "Pending settlements",
+      "card": "Charizard ex 199/165",
+      "live": "LIVE",
+      "bidMeta": "54 bids · ends in 00:12:40",
+      "example": "* example data"
+    },
+    "how": {
+      "pill": "How it works",
+      "title": "A Pokémon card auction in four steps",
+      "lead": "The platform organizes the auction and the settlement. Payment and shipping happen directly between the store and the buyer.",
+      "steps": {
+        "0": {
+          "title": "Register the card",
+          "text": "Search the catalog, enter the condition, photos and notes, and choose whether it is your own stock or consigned."
+        },
+        "1": {
+          "title": "Schedule the auction",
+          "text": "Set the start, the end, the type (free bidding or poll), the minimum bid and the ceiling."
+        },
+        "2": {
+          "title": "The bot looks after the group",
+          "text": "The card is posted on WhatsApp, the bids are recorded and the winner is announced."
+        },
+        "3": {
+          "title": "Close the settlement",
+          "text": "The buyer completes their details, agrees on the payment with the store and you confirm the sale."
+        }
+      }
+    },
+    "features": {
+      "pill": "Features",
+      "title": "Everything for people who sell Pokémon cards",
+      "lead": "Stock, auction schedule, bids, settlements, consignments and team in one place, with no spreadsheets.",
+      "items": {
+        "0": {
+          "icon": "box",
+          "title": "Organized stock",
+          "text": "Register each card with a quick catalog search, real photos, language, condition and notes. Each one gets a short #ID to use in the group conversations."
+        },
+        "1": {
+          "icon": "bolt",
+          "title": "Auctions on WhatsApp",
+          "text": "Schedule one auction per card, in free bidding or poll, with a minimum bid and a ceiling. The bot posts the card in the group, records each bid and announces the winner."
+        },
+        "2": {
+          "icon": "wallet",
+          "title": "Settlements without spreadsheets",
+          "text": "Whoever wins gets a link to enter their details and see the purchase summary. You add the shipping, send the summary on WhatsApp and confirm the sale once the payment is made."
+        },
+        "3": {
+          "icon": "link",
+          "title": "Consignment management",
+          "text": "Register other people's cards with your commission. The system calculates the amount sold, the commission kept and how much to pass on to each owner, who follows the card through a link."
+        },
+        "4": {
+          "icon": "chart",
+          "title": "Complete dashboards",
+          "text": "Follow what is happening now on the Home and analyze revenue, profit, average ticket and sales by period on the finance panel, with charts and a list of payouts."
+        },
+        "5": {
+          "icon": "shield",
+          "title": "Group moderation",
+          "text": "Keep a list of blocked numbers and automatically remove whoever stays inactive for too long, with a warning about who is about to leave."
+        },
+        "6": {
+          "icon": "users",
+          "title": "Team and permissions",
+          "text": "Invite employees by e-mail and choose what each one can do: stock, auctions, settlements or finance. Deleting records is blocked by default."
+        },
+        "7": {
+          "icon": "message",
+          "title": "Custom messages",
+          "text": "Customize the text posted for each card and the closing message to talk to your group your own way."
+        }
+      }
+    },
+    "who": {
+      "pill": "Who it is for",
+      "title": "Made for people who sell cards in groups",
+      "items": {
+        "0": {
+          "title": "TCG store owners",
+          "text": "Who already sell through WhatsApp groups and want to leave manual control behind."
+        },
+        "1": {
+          "title": "Collectors who sell",
+          "text": "Who run auctions of rare cards and need to record bids and winners."
+        },
+        "2": {
+          "title": "Stores with a team",
+          "text": "Who share tasks between stock, auctions and settlements, with permissions per person."
+        }
+      }
+    },
+    "faq": {
+      "pill": "Frequently asked questions",
+      "title": "Get your questions answered",
+      "items": {
+        "0": {
+          "q": "How do I get started?",
+          "a": "Access is by invitation only. You request access, our team creates your store, makes you the owner and sends the invitation by e-mail."
+        },
+        "1": {
+          "q": "What is the platform?",
+          "a": "A panel for Pokémon TCG store owners to run auctions in WhatsApp groups: stock, auction schedule, bids, settlements, consignments and dashboards in one place."
+        },
+        "2": {
+          "q": "Do you process payments or ship the cards?",
+          "a": "No. The platform organizes the auction and the settlement. Payment and shipping are agreed directly between the store and the buyer."
+        },
+        "3": {
+          "q": "Do I need a dedicated WhatsApp number?",
+          "a": "We recommend a number dedicated to the store. You connect it by reading a QR code and choose which group the bot will watch."
+        },
+        "4": {
+          "q": "How do consigned cards work?",
+          "a": "You register the card in the owner's name and set the store's commission. When it is sold, the finance panel shows how much to pass on, and the owner follows the card through a link."
+        },
+        "5": {
+          "q": "Can employees delete records?",
+          "a": "Only if you allow it. Deleting items and records is blocked by default, and each permission is chosen per employee."
+        },
+        "6": {
+          "q": "Which cards and languages can I register?",
+          "a": "Any card in the catalog, in Portuguese, English, Japanese and other languages, with conditions from M to DMG."
+        }
+      }
+    },
+    "cta": {
+      "pill": "Access by invitation",
+      "title": "Ready to organize your auctions?",
+      "text": "Tell us about your store. Our team creates your access and sends the invitation by e-mail.",
+      "button": "Request access"
+    },
+    "footer": {
+      "nav": "Footer",
+      "language": "Language",
+      "note": "A platform for Pokémon TCG auctions on WhatsApp for store owners and collectors. Pokémon and the card names belong to their respective owners."
+    }
   },
   "auth": {
     "login": {
@@ -45,12 +210,6 @@
     "days": "Enter a whole number of days, 1 or more."
   },
   "errors": {
-    "unknown": "Something went wrong. Try again.",
-    "http": "We could not complete this action. Try again.",
-    "network": "We could not reach the server. Check your connection and try again.",
-    "timeout": "The server took too long to answer. Try again.",
-    "aborted": "The request was cancelled.",
-    "parse": "We received an unexpected answer from the server. Try again.",
     "ADMIN_ADMIN_PROTECTED": "This account is a platform administrator and cannot be changed here.",
     "ADMIN_ALREADY_OWNER": "This person already owns the store.",
     "ADMIN_EMAIL_TAKEN": "There is already an account with this e-mail.",
@@ -110,6 +269,7 @@
     "LAST_OWNER": "The store must keep at least one owner.",
     "MEMBER_LIMIT_REACHED": "The member limit of the plan was reached.",
     "MEMBER_NOT_FOUND": "We could not find this team member.",
+    "MESSAGE_TEMPLATE_PLACEHOLDER_UNKNOWN": "This message uses a placeholder that does not exist for it. Check the names between braces.",
     "MISSING_PERMISSION": "You do not have permission to do this.",
     "NOTIFICATION_NOT_FOUND": "We could not find this notification.",
     "OWNERSHIP_INVALID": "This ownership change is not valid.",
@@ -125,21 +285,26 @@
     "PUBLIC_LINK_NOT_FOUND": "This link is not available. Ask the store for a new one.",
     "PUBLIC_PHONE_INVALID": "Enter a valid phone number.",
     "RATE_LIMITED": "Too many attempts. Wait a moment and try again.",
+    "RECEIPT_INVALID": "The file is not an image. Send a JPEG, PNG or WebP.",
+    "RECEIPT_NOT_FOUND": "We could not find this receipt.",
     "RESEND_TOO_SOON": "Wait a moment before asking for the e-mail again.",
     "SESSION_NOT_FOUND": "This session no longer exists.",
     "SETTLEMENT_AUCTION_NOT_ELIGIBLE": "This auction cannot be settled yet.",
     "SETTLEMENT_CUSTOMER_NOT_FOUND": "We could not find this customer.",
     "SETTLEMENT_NOT_FOUND": "We could not find this settlement.",
     "SETTLEMENT_NOT_PENDING": "This settlement is no longer pending.",
-    "SHIPMENT_INVALID_TRANSITION": "The shipment cannot move to this status.",
-    "SHIPMENT_NOT_FOUND": "We could not find this shipment.",
-    "SHIPMENT_TRACKING_REQUIRED": "Enter the tracking code to mark the shipment as sent.",
     "SHORT_CODE_TAKEN": "This card code is already in use.",
     "SHOWCASE_ACK_REQUIRED": "Confirm that you know the group link becomes public to turn the showcase on.",
     "STORE_LIMIT_REACHED": "You reached the limit of stores you can own.",
     "UNAUTHENTICATED": "Sign in to continue.",
     "USER_NOT_FOUND": "We could not find this person.",
-    "VALIDATION_ERROR": "Check the data you entered and try again."
+    "VALIDATION_ERROR": "Check the data you entered and try again.",
+    "aborted": "The request was cancelled.",
+    "http": "We could not complete this action. Try again.",
+    "network": "We could not reach the server. Check your connection and try again.",
+    "parse": "We received an unexpected answer from the server. Try again.",
+    "timeout": "The server took too long to answer. Try again.",
+    "unknown": "Something went wrong. Try again."
   },
   "stores": {
     "title": "Choose a store",
@@ -227,7 +392,6 @@
     "inventory": "Inventory",
     "auctions": "Auctions",
     "customers": "Customers",
-    "shipments": "Shipments",
     "team": "Team",
     "settings": "Settings",
     "finance": "Finance",
@@ -1177,42 +1341,6 @@
       "whatsapp": "Send on WhatsApp",
       "message": "Hi, {name}! Follow your cards and the auctions here: {link}"
     }
-  },
-  "shipments": {
-    "caption": "Shipments",
-    "loading": "Loading the shipments",
-    "error": "We could not load the shipments",
-    "retry": "Try again",
-    "empty": {
-      "title": "No shipments here",
-      "text": "Paid sales show up here to be shipped. The shipping itself is arranged directly between the store and the buyer."
-    },
-    "filters": {
-      "status": "Status",
-      "all": "Status: all"
-    },
-    "status": {
-      "TO_SHIP": "To ship",
-      "SHIPPED": "Shipped",
-      "DELIVERED": "Delivered"
-    },
-    "columns": {
-      "customer": "Customer",
-      "destination": "Destination",
-      "status": "Status",
-      "tracking": "Tracking"
-    },
-    "trackingPlaceholder": "Tracking code",
-    "trackingFor": "Tracking code for {name}",
-    "markShipped": "Mark as shipped",
-    "markDelivered": "Mark as delivered",
-    "loadMore": "Show more",
-    "notify": {
-      "action": "Notify customer on WhatsApp",
-      "withCode": "Hi, {name}! Your order was shipped. Tracking code: {code}.",
-      "withoutCode": "Hi, {name}! Your order was shipped."
-    },
-    "note": "Paid sales come in here. The shipping is arranged directly between the store and the buyer, and the system sends no message by itself."
   },
   "finance": {
     "loading": "Loading the finance",
