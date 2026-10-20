@@ -643,3 +643,26 @@ body:has(dialog[open]) {
   display: block;
   font-size: var(--fs-xs);
 }
+
+/* ---------- finance ---------- */
+.finance__legend {
+  font-size: var(--fs-xs);
+}
+
+.finance__unit {
+  font-size: var(--fs-xs);
+}
+
+.finance__dot--revenue {
+  background: var(--primary);
+}
+
+.finance__dot--profit {
+  background: var(--info);
+}
+
+.finance__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

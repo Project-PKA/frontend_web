@@ -299,6 +299,20 @@ nao devolve as cartas da venda nem filtra por texto (Backend#109). Confirmar o p
 vendidas; `POST /v1/settlements/:id/paid`). O aviso do comprador nao basta. Ainda falta o resumo do
 acerto para copiar e a criacao do acerto (`POST /v1/settlements`).
 
+**Financeiro** — `/finance` (so com `can_view_finance`) e o **unico** com periodo (Hoje, 7, 15, 30
+dias; `?period=7`, `parsePeriod` cai em "hoje" para o que nao conhece, como o design). Tres consultas
+com a mesma chave de periodo: `overview` (KPIs, dia a dia, faixas, horarios, origem, idioma, estado),
+`top-buyers` (5) e `consignment-payouts`; so a `overview` bloqueia a tela, as outras falham sozinhas.
+Os graficos sao **SVG proprio**, sem biblioteca (`FinanceLineChart`, `FinanceBars`, `FinancePie`; a
+geometria esta em `utils/finance.ts`, testada). Dinheiro: o texto mostrado sai sempre da string da API
+(`useFormat().money`); os centavos inteiros (`toCents`, `sumMoney`) so servem para somar, achar a
+proporcao e posicionar o ponto. "A pagar a consignadores" e a soma de `payout` dos repasses (a
+`overview` nao traz esse total). Sem "Escolher mes" e sem "Marcar repasse como realizado" do design:
+a API nao tem periodo por mes nem endpoint de repasse. As chaves de origem, idioma e estado vem
+como o Backend manda (`OWN`, `PT`, `NM`...) e viram texto por `finance.origins`,
+`inventory.languages` e `inventory.conditions`; chave desconhecida aparece como veio. Sem permissao,
+quem digita o endereco nao ve nada do financeiro (nenhuma chamada e feita).
+
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
 layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).
