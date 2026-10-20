@@ -235,7 +235,7 @@ async function confirmPayment() {
     confirming.value = null;
     toast.success(t('customer.confirm.done'));
     await Promise.all(
-      ['customer-settlements', 'customer-bids', 'shipments', 'inventory', 'home'].map((key) =>
+      ['customer-settlements', 'customer-bids', 'inventory', 'home'].map((key) =>
         queryClient.invalidateQueries({ queryKey: [key] }),
       ),
     );

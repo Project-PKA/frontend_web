@@ -211,7 +211,6 @@ Ver `docker/nginx.conf.example` e [`DEPLOY.md`](DEPLOY.md).
 | `/inventory`, `/inventory/new`, `/inventory/:id` | Estoque, cadastro, detalhe | Loja | `can_manage_inventory`; excluir pede `can_delete` |
 | `/auctions`, `/auctions/:id`, `/auctions/:id/edit`, `/auctions/:id/poll` | Leiloes, sala, edicao, aprovar enquete | Loja | `can_manage_auctions` |
 | `/customers`, `/customers/:id`, `/blacklist` | Clientes, perfil 360, blacklist | Loja | `can_manage_customers` |
-| `/shipments` | Acertos e envios | Loja | |
 | `/finance` | Financeiro | Loja | `can_view_finance`; unico com periodo |
 | `/team` | Equipe | Proprietario | |
 | `/settings`, `/plan` | Configuracoes, plano | Loja | Plano: troca so por solicitacao |

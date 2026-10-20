@@ -45,12 +45,6 @@
     "days": "Informe um número inteiro de dias, 1 ou mais."
   },
   "errors": {
-    "unknown": "Algo deu errado. Tente de novo.",
-    "http": "Não foi possível concluir esta ação. Tente de novo.",
-    "network": "Não foi possível falar com o servidor. Verifique sua conexão e tente de novo.",
-    "timeout": "O servidor demorou demais para responder. Tente de novo.",
-    "aborted": "A solicitação foi cancelada.",
-    "parse": "Recebemos uma resposta inesperada do servidor. Tente de novo.",
     "ADMIN_ADMIN_PROTECTED": "Esta conta é de administrador da plataforma e não pode ser alterada aqui.",
     "ADMIN_ALREADY_OWNER": "Esta pessoa já é proprietária da loja.",
     "ADMIN_EMAIL_TAKEN": "Já existe uma conta com este e-mail.",
@@ -110,6 +104,7 @@
     "LAST_OWNER": "A loja precisa manter pelo menos um proprietário.",
     "MEMBER_LIMIT_REACHED": "O limite de membros do plano foi atingido.",
     "MEMBER_NOT_FOUND": "Não encontramos este membro da equipe.",
+    "MESSAGE_TEMPLATE_PLACEHOLDER_UNKNOWN": "Esta mensagem usa um marcador que não existe para ela. Confira os nomes entre chaves.",
     "MISSING_PERMISSION": "Você não tem permissão para fazer isso.",
     "NOTIFICATION_NOT_FOUND": "Não encontramos esta notificação.",
     "OWNERSHIP_INVALID": "Esta troca de propriedade não é válida.",
@@ -125,21 +120,26 @@
     "PUBLIC_LINK_NOT_FOUND": "Este link não está disponível. Peça um novo à loja.",
     "PUBLIC_PHONE_INVALID": "Informe um telefone válido.",
     "RATE_LIMITED": "Muitas tentativas. Aguarde um momento e tente de novo.",
+    "RECEIPT_INVALID": "O arquivo não é uma imagem. Envie um JPEG, PNG ou WebP.",
+    "RECEIPT_NOT_FOUND": "Não encontramos este comprovante.",
     "RESEND_TOO_SOON": "Aguarde um momento antes de pedir o e-mail de novo.",
     "SESSION_NOT_FOUND": "Esta sessão não existe mais.",
     "SETTLEMENT_AUCTION_NOT_ELIGIBLE": "Este leilão ainda não pode ser acertado.",
     "SETTLEMENT_CUSTOMER_NOT_FOUND": "Não encontramos este cliente.",
     "SETTLEMENT_NOT_FOUND": "Não encontramos este acerto.",
     "SETTLEMENT_NOT_PENDING": "Este acerto não está mais pendente.",
-    "SHIPMENT_INVALID_TRANSITION": "O envio não pode ir para este status.",
-    "SHIPMENT_NOT_FOUND": "Não encontramos este envio.",
-    "SHIPMENT_TRACKING_REQUIRED": "Informe o código de rastreio para marcar o envio como enviado.",
     "SHORT_CODE_TAKEN": "Este código de carta já está em uso.",
     "SHOWCASE_ACK_REQUIRED": "Confirme que você sabe que o link do grupo fica público para ligar a vitrine.",
     "STORE_LIMIT_REACHED": "Você atingiu o limite de lojas que pode ter.",
     "UNAUTHENTICATED": "Entre para continuar.",
     "USER_NOT_FOUND": "Não encontramos esta pessoa.",
-    "VALIDATION_ERROR": "Confira os dados informados e tente de novo."
+    "VALIDATION_ERROR": "Confira os dados informados e tente de novo.",
+    "aborted": "A solicitação foi cancelada.",
+    "http": "Não foi possível concluir esta ação. Tente de novo.",
+    "network": "Não foi possível falar com o servidor. Verifique sua conexão e tente de novo.",
+    "parse": "Recebemos uma resposta inesperada do servidor. Tente de novo.",
+    "timeout": "O servidor demorou demais para responder. Tente de novo.",
+    "unknown": "Algo deu errado. Tente de novo."
   },
   "stores": {
     "title": "Escolha a loja",
@@ -227,7 +227,6 @@
     "inventory": "Estoque",
     "auctions": "Leilões",
     "customers": "Clientes",
-    "shipments": "Envios",
     "team": "Funcionários",
     "settings": "Configurações",
     "finance": "Financeiro",
@@ -1177,41 +1176,5 @@
       "whatsapp": "Enviar no WhatsApp",
       "message": "Oi, {name}! Acompanhe as suas cartas e os leilões aqui: {link}"
     }
-  },
-  "shipments": {
-    "caption": "Envios",
-    "loading": "Carregando os envios",
-    "error": "Não foi possível carregar os envios",
-    "retry": "Tentar de novo",
-    "empty": {
-      "title": "Nenhum envio aqui",
-      "text": "As vendas pagas aparecem aqui para serem enviadas. O envio é combinado diretamente entre a loja e o comprador."
-    },
-    "filters": {
-      "status": "Status",
-      "all": "Status: todos"
-    },
-    "status": {
-      "TO_SHIP": "A enviar",
-      "SHIPPED": "Enviado",
-      "DELIVERED": "Entregue"
-    },
-    "columns": {
-      "customer": "Cliente",
-      "destination": "Destino",
-      "status": "Status",
-      "tracking": "Rastreio"
-    },
-    "trackingPlaceholder": "Código de rastreio",
-    "trackingFor": "Código de rastreio de {name}",
-    "markShipped": "Marcar como enviado",
-    "markDelivered": "Marcar como entregue",
-    "loadMore": "Mostrar mais",
-    "notify": {
-      "action": "Avisar cliente no WhatsApp",
-      "withCode": "Oi, {name}! Seu pedido foi enviado. Código de rastreio: {code}.",
-      "withoutCode": "Oi, {name}! Seu pedido foi enviado."
-    },
-    "note": "Entram aqui as vendas pagas. O envio é combinado diretamente entre a loja e o comprador, e o sistema não manda mensagem sozinho."
   }
 }

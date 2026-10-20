@@ -81,7 +81,6 @@ test('shows the owner the whole menu, the store and the page title', async ({ pa
     'Inventory',
     'Auctions',
     'Customers',
-    'Shipments',
     'Team',
     'Settings',
     'Finance',
@@ -111,12 +110,7 @@ test('hides from staff what their permissions do not open', async ({ page }) => 
   });
   await page.goto('/home');
 
-  await expect(menu(page).getByRole('link')).toHaveText([
-    'Home',
-    'Inventory',
-    'Auctions',
-    'Shipments',
-  ]);
+  await expect(menu(page).getByRole('link')).toHaveText(['Home', 'Inventory', 'Auctions']);
   await expect(page.getByRole('link', { name: /Store Card Hub, Staff/ })).toBeVisible();
 });
 

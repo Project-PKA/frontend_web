@@ -633,13 +633,3 @@ body:has(dialog[open]) {
 .wallet__link {
   border-top: 1px solid var(--border);
 }
-
-/* ---------- shipments ---------- */
-.shipments__code {
-  min-width: 170px;
-}
-
-.shipments__phone {
-  display: block;
-  font-size: var(--fs-xs);
-}
