@@ -490,3 +490,11 @@ body:has(dialog[open]) {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
 }
+
+/* The buttons of a modal's footer sit on the right with a gap (the design's `card__foot row`). */
+.modal .card__foot {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--sp-2);
+}
