@@ -55,3 +55,23 @@ export function formatRelative(iso: string, locale: string, now: number, timeZon
   }
   return formatter.format(0, 'second');
 }
+
+/** The time of day with the seconds, in the person's time zone ("21:42:10"). */
+export function formatTime(iso: string, locale: string, timeZone: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return iso;
+  return new Intl.DateTimeFormat(locale, { timeStyle: 'medium', timeZone }).format(date);
+}
+
+/**
+ * How long is left, as a clock ("00:12:40"), with the days in front when there are more than a day
+ * ("2d 03:12:40"). Zero or less is "00:00:00": the countdown never goes negative.
+ */
+export function formatCountdown(milliseconds: number): string {
+  const total = Math.max(0, Math.floor(milliseconds / 1000));
+  const days = Math.floor(total / 86_400);
+  const rest = total % 86_400;
+  const pad = (value: number) => String(value).padStart(2, '0');
+  const clock = `${pad(Math.floor(rest / 3600))}:${pad(Math.floor((rest % 3600) / 60))}:${pad(rest % 60)}`;
+  return days > 0 ? `${days}d ${clock}` : clock;
+}

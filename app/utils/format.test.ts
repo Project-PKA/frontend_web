@@ -1,5 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { browserTimeZone, formatDate, formatDateTime, formatMoney, formatRelative } from './format';
+import {
+  browserTimeZone,
+  formatCountdown,
+  formatDate,
+  formatDateTime,
+  formatMoney,
+  formatRelative,
+  formatTime,
+} from './format';
 
 const plain = (text: string) => text.replaceAll(String.fromCharCode(160), ' ');
 
@@ -83,5 +91,30 @@ describe('formatRelative', () => {
     const future = new Date(now + 60_000).toISOString();
     expect(formatRelative(future, 'en', now, zone)).toBe(formatDateTime(future, 'en', zone));
     expect(formatRelative('not a date', 'en', now, zone)).toBe('not a date');
+  });
+});
+
+describe('formatTime', () => {
+  it('shows the time of day with the seconds in the zone given', () => {
+    expect(formatTime('2026-10-19T00:42:10Z', 'en', 'America/Sao_Paulo')).toBe('9:42:10 PM');
+    expect(formatTime('2026-10-19T00:42:10Z', 'pt-BR', 'America/Sao_Paulo')).toBe('21:42:10');
+  });
+
+  it('gives back what it cannot read', () => {
+    expect(formatTime('nope', 'en', 'UTC')).toBe('nope');
+  });
+});
+
+describe('formatCountdown', () => {
+  it.each([
+    [760_000, '00:12:40'],
+    [3_723_000, '01:02:03'],
+    [59_999, '00:00:59'],
+    [0, '00:00:00'],
+    [-5_000, '00:00:00'],
+    [90_000_000, '1d 01:00:00'],
+    [186_760_000, '2d 03:52:40'],
+  ])('writes %i ms as %s', (ms, text) => {
+    expect(formatCountdown(ms)).toBe(text);
   });
 });

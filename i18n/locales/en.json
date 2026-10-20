@@ -854,5 +854,42 @@
       "cancel": "Cancel the auction",
       "close": "Close"
     }
+  },
+  "auctionRoom": {
+    "title": "Auction",
+    "loading": "Loading the auction",
+    "error": {
+      "title": "We could not open this auction",
+      "retry": "Try again"
+    },
+    "edit": "Edit auction",
+    "card": "Card",
+    "photoAlt": "Real photo of {name}",
+    "photoLoading": "Loading the photo",
+    "photoError": "The photo did not load",
+    "noPhoto": "No photo yet",
+    "highest": "Highest bid",
+    "noBids": "No bids yet",
+    "bidCount": "No bids | One bid | {count} bids",
+    "lastBid": "last bid {ago}",
+    "winner": "Winner:",
+    "endsIn": "Ends in {time}",
+    "startsAt": "Starts {date}",
+    "endedAt": "Ended {date}",
+    "extend": {
+      "label": "Extend the end",
+      "minutes": "+{n} min",
+      "hour": "+1 h"
+    },
+    "extended": "The end was pushed {minutes} minutes later.",
+    "bids": {
+      "title": "Bids received from WhatsApp",
+      "empty": "No bids yet. They show up here as they arrive in the group.",
+      "foot": "Time, phone and amount",
+      "footLive": "Time, phone and amount · updates automatically"
+    },
+    "initial": "Opening bid",
+    "increment": "Minimum increment",
+    "ceiling": "Poll ceiling"
   }
 }
