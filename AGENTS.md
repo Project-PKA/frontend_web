@@ -295,6 +295,20 @@ confirmacao, porque as cartas passam a vendidas; `POST /v1/settlements/:id/paid`
 comprador nao basta. Ainda falta o resumo do acerto para copiar e a criacao do acerto
 (`POST /v1/settlements`).
 
+**Landing** — `/` (ingles) e `/pt-BR` (portugues), estatica e indexavel; segue `design/landing.html`
+com as secoes da issue #49 (topo, heroi com a previa do painel, como funciona, funcionalidades, para
+quem e, perguntas, convite e rodape). Preco, vitrine e dashboards sao da #50. Quem ja esta logado vai
+de `/` para `/home` (`onMounted` + `session.restore()`; a pagina prerenderizada nao muda). Os textos em
+lista ficam em `landing.*.items.<n>` (o tipo de mensagem nao aceita lista) e a pagina os le por indice.
+O CTA leva a `/request-access` em vez de repetir o formulario do design. Sem "Mapa de telas", sem
+links para termos e privacidade (as telas ainda nao existem) e sem o botao "Ver leiloes ao vivo"
+(vitrine, #48). SEO: canonical e `hreflang` (`useAppHead`), JSON-LD `SoftwareApplication` +
+`FAQPage` (`utils/landing.ts`), e `robots.txt` e `sitemap.xml` gerados no build por
+`server/routes/` com `SITE_URL` (sem ele o sitemap sai vazio). As duas fontes da primeira tela
+(Sora e DM Sans, subconjunto latino) sao pre-carregadas para a fonte nao trocar de repente e mover
+a previa (CLS). O `login` e o `request-access` sao `i18n: false`: link para eles e `to="/login"`
+puro, nao `localePath` (que devolve vazio).
+
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
 layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).
@@ -436,7 +450,10 @@ Pare e pergunte antes de:
   navegador): os testes de unidade cobrem so a nossa ligacao; foco preso e Esc foram
   conferidos no Chromium e entram no e2e na primeira tela que usar `AppModal`.
 - O `lighthouserc.json` mede a landing e o `/login` (3 execucoes, vale a mediana: uma so
-  oscilava acima do teto). O `/login` nao entra no SEO (tem `noindex`) e tem teto de LCP
+  oscilava acima do teto). A landing completa (#49) mede LCP perto de 3,3 s no Lighthouse
+  simulado (a `main` com a pagina provisoria media 2,1 s) e seu teto passou a 3,5 s, com
+  aprovacao do dono; nao achei uma secao culpada (testei sem fontes, sem o CSS da landing e so
+  com topo e heroi). O `/login` nao entra no SEO (tem `noindex`) e tem teto de LCP
   maior (3,5 s). Ele e pre-renderizado (o titulo e o formulario pintam do HTML; como
   SPA o LCP passava de 3,3 s) e a pagina so liga o comportamento no `onMounted`, entao a
   hidratacao e segura. Pagina pre-renderizada que linka para rota que ainda nao existe

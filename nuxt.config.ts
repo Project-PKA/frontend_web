@@ -30,6 +30,8 @@ export default defineNuxtConfig({
     public: {
       // Origin of the API. Resolved at build time (NUXT_PUBLIC_API_BASE_URL).
       apiBaseUrl: 'http://localhost:8080',
+      // Public origin of the site (SITE_URL), for canonical links, structured data and the sitemap.
+      siteUrl: process.env.SITE_URL ?? '',
     },
   },
   // The logged-in app is a client-only SPA (STACK.md section 1).
@@ -50,7 +52,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      routes: ['/', '/pt-BR'],
+      routes: ['/', '/pt-BR', '/robots.txt', '/sitemap.xml'],
     },
   },
 });
