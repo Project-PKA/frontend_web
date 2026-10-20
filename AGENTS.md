@@ -323,6 +323,21 @@ como o Backend manda (`OWN`, `PT`, `NM`...) e viram texto por `finance.origins`,
 `inventory.languages` e `inventory.conditions`; chave desconhecida aparece como veio. Sem permissao,
 quem digita o endereco nao ve nada do financeiro (nenhuma chamada e feita).
 
+**Configuracoes** — `/settings` (so o proprietario). Cinco cartoes, todos pelo `PATCH /v1/store` com
+**so o que mudou** ou pelos modelos de mensagem: conexao do WhatsApp (so o estado e o caminho para
+`/whatsapp`; **sem QR e sem desconectar**, a API nao tem: Backend#100), grupo monitorado (o **link de
+convite** `https://chat.whatsapp.com/...`, conferido por `isGroupInviteUrl`; o design tinha uma lista
+de grupos para escolher e a API so guarda o link), chave PIX (campo vazio manda `null`; nao esta no
+design, vem da issue), vitrine publica e mensagens do bot. A vitrine e opt-in e **torna publico o link
+do grupo** (ADR 0014): so liga com o link salvo e depois de um modal com a confirmacao explicita
+(`acknowledge_public_group_link: true`); desligar vale na hora. O interruptor e um checkbox nativo que
+vira sozinho: ao cancelar ou falhar, `switchKey` o devolve ao estado da loja. As mensagens vem de
+`GET /v1/store/message-templates` (nove, com `placeholders`, `default_body` e `custom_body`): cada uma
+tem o seu "Salvar" (desligado enquanto o texto e o que a loja ja diz) e "Restaurar padrao"
+(`DELETE`); marcador que a mensagem nao aceita e barrado antes (`unknownPlaceholders`) e a API ainda
+responde `MESSAGE_TEMPLATE_PLACEHOLDER_UNKNOWN`. Sem o cartao "Assinatura" do design (cobranca e do
+dono, D6) e sem o link "Ver a vitrine" (a vitrine e da #48). Os marcadores aparecem como `{nome}` (escritos por codigo, nao por traducao).
+
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
 layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).
