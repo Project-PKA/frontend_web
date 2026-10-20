@@ -5,7 +5,172 @@
   "landing": {
     "title": "Leilões de cartas no seu grupo de WhatsApp",
     "description": "Faça leilões de cartas no seu grupo de WhatsApp e mantenha vendas, compradores e acertos organizados em um só lugar.",
-    "subtitle": "Uma ferramenta para lojas de cartas colecionáveis fazerem leilões e manterem as vendas organizadas."
+    "subtitle": "Uma ferramenta para lojas de cartas colecionáveis fazerem leilões e manterem as vendas organizadas.",
+    "nav": {
+      "label": "Seções",
+      "features": "Funcionalidades",
+      "who": "Para quem é",
+      "faq": "Perguntas",
+      "signIn": "Entrar",
+      "requestAccess": "Solicitar acesso"
+    },
+    "hero": {
+      "pill": "Plataforma para lojistas de cartas Pokémon TCG",
+      "title": "Leilões de cartas Pokémon no WhatsApp, ",
+      "emphasis": "do estoque ao acerto.",
+      "lead": "Cadastre suas cartas, agende leilões individuais, deixe o bot cuidar do grupo e acompanhe tudo em dashboards.",
+      "chips": {
+        "0": "Catálogo de cartas",
+        "1": "Leilão no WhatsApp",
+        "2": "Dashboards",
+        "3": "Consignados"
+      }
+    },
+    "preview": {
+      "label": "Prévia do painel",
+      "title": "Home",
+      "whatsapp": "WhatsApp online",
+      "active": "Leilões ativos",
+      "bids": "Lances ao vivo",
+      "pending": "Acertos pendentes",
+      "card": "Charizard ex 199/165",
+      "live": "AO VIVO",
+      "bidMeta": "54 lances · termina em 00:12:40",
+      "example": "* dados de exemplo"
+    },
+    "how": {
+      "pill": "Como funciona",
+      "title": "Um leilão de cartas Pokémon em quatro passos",
+      "lead": "A plataforma organiza o leilão e o acerto. O pagamento e o envio acontecem diretamente entre a loja e o comprador.",
+      "steps": {
+        "0": {
+          "title": "Cadastre a carta",
+          "text": "Busque no catálogo, informe estado, fotos e observações e escolha se é estoque próprio ou consignada."
+        },
+        "1": {
+          "title": "Agende o leilão",
+          "text": "Defina início, fim, tipo (lance livre ou enquete), lance mínimo e valor teto."
+        },
+        "2": {
+          "title": "O bot cuida do grupo",
+          "text": "A carta é postada no WhatsApp, os lances são registrados e o vencedor é anunciado."
+        },
+        "3": {
+          "title": "Feche o acerto",
+          "text": "O comprador completa os dados, combina o pagamento com a loja e você confirma a venda."
+        }
+      }
+    },
+    "features": {
+      "pill": "Funcionalidades",
+      "title": "Tudo para quem vende cartas Pokémon TCG",
+      "lead": "Estoque, agenda de leilões, lances, acertos, consignados e equipe em um só lugar, sem planilhas.",
+      "items": {
+        "0": {
+          "icon": "box",
+          "title": "Estoque organizado",
+          "text": "Cadastre cada carta com busca rápida no catálogo, fotos reais, idioma, estado de conservação e observações. Cada uma ganha um código #ID curto para usar nas conversas do grupo."
+        },
+        "1": {
+          "icon": "bolt",
+          "title": "Leilões no WhatsApp",
+          "text": "Agende um leilão para cada carta, em lance livre ou enquete, com lance mínimo e valor teto. O bot publica a carta no grupo, registra cada lance e anuncia o vencedor."
+        },
+        "2": {
+          "icon": "wallet",
+          "title": "Acertos sem planilha",
+          "text": "Quem arremata recebe um link para informar os dados e ver o resumo da compra. Você soma o frete, envia o resumo no WhatsApp e confirma a venda quando o pagamento for feito."
+        },
+        "3": {
+          "icon": "link",
+          "title": "Gestão de consignados",
+          "text": "Cadastre cartas de terceiros com a sua comissão. O sistema calcula o valor vendido, a comissão retida e quanto repassar a cada dono, que acompanha a carta por um link."
+        },
+        "4": {
+          "icon": "chart",
+          "title": "Dashboards completos",
+          "text": "Acompanhe o que acontece agora na Home e analise faturamento, lucro, ticket médio e vendas por período no painel financeiro, com gráficos e lista de repasses."
+        },
+        "5": {
+          "icon": "shield",
+          "title": "Moderação do grupo",
+          "text": "Mantenha uma lista de números bloqueados e remova automaticamente quem ficar inativo por muito tempo, com aviso de quem está prestes a sair."
+        },
+        "6": {
+          "icon": "users",
+          "title": "Equipe e permissões",
+          "text": "Convide funcionários por e-mail e escolha o que cada um pode fazer: estoque, leilões, acertos ou financeiro. Excluir registros fica bloqueado por padrão."
+        },
+        "7": {
+          "icon": "message",
+          "title": "Mensagens personalizadas",
+          "text": "Personalize o texto da postagem de cada carta e a mensagem de encerramento para falar com o seu grupo do seu jeito."
+        }
+      }
+    },
+    "who": {
+      "pill": "Para quem é",
+      "title": "Feito para quem vende cartas em grupos",
+      "items": {
+        "0": {
+          "title": "Lojistas de TCG",
+          "text": "Que já vendem por grupos de WhatsApp e querem sair do controle manual."
+        },
+        "1": {
+          "title": "Colecionadores que vendem",
+          "text": "Que organizam leilões de cartas raras e precisam registrar lances e vencedores."
+        },
+        "2": {
+          "title": "Lojas com equipe",
+          "text": "Que dividem tarefas entre estoque, leilões e acertos, com permissões por pessoa."
+        }
+      }
+    },
+    "faq": {
+      "pill": "Perguntas frequentes",
+      "title": "Tire suas dúvidas",
+      "items": {
+        "0": {
+          "q": "Como faço para começar?",
+          "a": "O acesso é somente por convite. Você solicita acesso, nossa equipe cria a sua loja, define você como proprietário e envia o convite por e-mail."
+        },
+        "1": {
+          "q": "O que é a plataforma?",
+          "a": "Um painel para lojistas de cartas Pokémon TCG organizarem leilões em grupos de WhatsApp: estoque, agenda de leilões, lances, acertos, consignados e dashboards em um só lugar."
+        },
+        "2": {
+          "q": "Vocês processam os pagamentos ou enviam as cartas?",
+          "a": "Não. A plataforma organiza o leilão e o acerto. O pagamento e o envio são combinados diretamente entre a loja e o comprador."
+        },
+        "3": {
+          "q": "Preciso de um número de WhatsApp exclusivo?",
+          "a": "Recomendamos um número dedicado à loja. Você conecta lendo um QR Code e escolhe qual grupo o bot vai monitorar."
+        },
+        "4": {
+          "q": "Como funcionam as cartas consignadas?",
+          "a": "Você cadastra a carta em nome do dono e define a comissão da loja. Quando ela é vendida, o painel financeiro mostra quanto repassar a ele, e o dono acompanha a carta por um link."
+        },
+        "5": {
+          "q": "Funcionários podem apagar registros?",
+          "a": "Só se você liberar. Excluir itens e registros vem bloqueado por padrão, e cada permissão é escolhida por funcionário."
+        },
+        "6": {
+          "q": "Quais cartas e idiomas posso cadastrar?",
+          "a": "Qualquer carta do catálogo, em português, inglês, japonês e outros idiomas, com estados de conservação de M a DMG."
+        }
+      }
+    },
+    "cta": {
+      "pill": "Acesso por convite",
+      "title": "Pronto para organizar seus leilões?",
+      "text": "Conte sobre a sua loja. Nossa equipe cria o seu acesso e envia o convite por e-mail.",
+      "button": "Solicitar acesso"
+    },
+    "footer": {
+      "nav": "Rodapé",
+      "language": "Idioma",
+      "note": "Plataforma de leilões de cartas Pokémon TCG no WhatsApp para lojistas e colecionadores. Pokémon e os nomes das cartas pertencem aos seus respectivos titulares."
+    }
   },
   "auth": {
     "login": {
