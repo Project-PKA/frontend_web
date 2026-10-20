@@ -220,11 +220,11 @@ test('changes the period, keeps it in the address and asks again', async ({ page
     'true',
   );
   await expect.poll(() => calls.overview.at(-1)).toBe('7');
-  expect(calls.payouts.at(-1)).toBe('7');
+  await expect.poll(() => calls.payouts.at(-1)).toBe('7');
 
   await page.goto('/finance?period=90');
   await expect(page.getByRole('button', { name: 'Today' })).toHaveAttribute('aria-pressed', 'true');
-  expect(calls.overview.at(-1)).toBe('today');
+  await expect.poll(() => calls.overview.at(-1)).toBe('today');
 });
 
 test('says there is no data when the period is empty', async ({ page }) => {

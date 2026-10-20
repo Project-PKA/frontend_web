@@ -323,6 +323,21 @@ como o Backend manda (`OWN`, `PT`, `NM`...) e viram texto por `finance.origins`,
 `inventory.languages` e `inventory.conditions`; chave desconhecida aparece como veio. Sem permissao,
 quem digita o endereco nao ve nada do financeiro (nenhuma chamada e feita).
 
+**Equipe** — `/team` (item "Equipe" do menu, **so o proprietario**: `access: { owner: true }`). Uma
+tabela junta os membros (`GET /v1/team`) e os convites ainda abertos (`GET /v1/team/invitations`,
+estados `PENDING` e `EXPIRED`; aceito ou revogado ja nao e convite em aberto), proprietario primeiro
+(`teamRows`). O proprietario nao tem botao: as permissoes dele sao fixas (`OWNER_PERMISSIONS_FIXED`)
+e a API nunca deixa a loja sem um (`LAST_OWNER`). "Convidar funcionario" abre o modal do design (e-mail
+e `PermissionMatrix`: estoque, leiloes, clientes, financeiro e excluir; excluir vem **desligado**, com
+o selo "Bloqueado por padrao"). A tela manda **as cinco chaves** sempre (`toChoice`), para um
+interruptor desligado tambem valer. O e-mail e conferido no cliente (`inviteSchema`) e a API envia o
+convite: o token nao volta para a tela, entao nao ha "Ver convite" como no design. Tambem ha
+"Editar permissoes" (`PATCH /v1/team/:id`), "Reenviar" (token novo; o link anterior deixa de valer),
+"Revogar" e "Remover", estes dois pedem confirmacao. Todo botao de linha leva o e-mail no nome
+acessivel (`label`). O "Acertos" do design e a permissao `can_manage_customers`.
+Um `@` dentro de uma mensagem de traducao quebra o vue-i18n (e a pagina cai em "Algo deu errado"
+sem erro no console do build): escreva `{'@'}` (ex.: `funcionario{'@'}email.com`).
+
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
 layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).
