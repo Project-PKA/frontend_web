@@ -253,6 +253,15 @@ maior lance, o vencedor provisorio (link para `/customers/:id`) e os ultimos lan
 Depois de decidir, `auctions`, `auction`, `home` e `inventory` sao invalidados (a carta muda de
 estado). `/auctions/polls` e rota fixa: vem antes de `/auctions/:id`.
 
+**WhatsApp caiu** — `useAffectedAuctions` (`GET /v1/auctions/affected`, a cada 15 s, sem
+retentar) responde duas coisas: o estado do WhatsApp da loja e os leiloes em andamento que ele
+afeta (vazio quando ONLINE). A Home mostra o alerta vermelho (`HomeWhatsapp`, so quando nao
+esta ONLINE) com a quantidade e "Reconectar agora"; `/whatsapp` tem os passos para
+reconectar e a tabela dos afetados com "+30 min" por linha e "Estender todos"
+(`POST /v1/auctions/extend`), mais o aviso de que lances da queda podem nao ter sido
+registrados. **O QR code nao aparece**: a API nao o entrega (Backend#100); a tela diz isso.
+Os textos ficam em `waDown.*` (a chave `whatsapp.*` e dos estados do chip).
+
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
 layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).

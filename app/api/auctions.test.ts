@@ -55,6 +55,22 @@ describe('auctions api', () => {
     });
   });
 
+  it('lists the auctions hit by a WhatsApp outage', async () => {
+    const request = vi.fn().mockResolvedValue({ whatsapp_status: 'OFFLINE', items: [] });
+    const signal = new AbortController().signal;
+    await apiWith(request).affected(signal);
+    expect(request).toHaveBeenCalledWith('/v1/auctions/affected', { signal });
+  });
+
+  it('extends every running auction by some minutes', async () => {
+    const request = vi.fn().mockResolvedValue({ extended: [] });
+    await apiWith(request).extendAll(30);
+    expect(request).toHaveBeenCalledWith('/v1/auctions/extend', {
+      method: 'POST',
+      body: { minutes: 30 },
+    });
+  });
+
   it('decides a poll that reached the ceiling', async () => {
     const request = vi.fn().mockResolvedValue({});
     await apiWith(request).resolve('a1', 'APPROVE');

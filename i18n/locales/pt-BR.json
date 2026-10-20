@@ -926,5 +926,42 @@
       "cancel": "Ainda não",
       "close": "Fechar"
     }
+  },
+  "waDown": {
+    "pageTitle": "Conexão do WhatsApp",
+    "title": "WhatsApp desconectado",
+    "affected": "Um leilão em andamento não está recebendo lances. | {count} leilões em andamento não estão recebendo lances.",
+    "noneAffected": "Nenhum leilão está em andamento agora.",
+    "reconnectHint": "Reconecte para o bot voltar a registrar os lances.",
+    "reconnect": "Reconectar agora",
+    "loading": "Verificando a conexão do WhatsApp",
+    "error": {
+      "title": "Não foi possível verificar a conexão do WhatsApp",
+      "text": "Confira sua conexão e tente de novo.",
+      "retry": "Tentar de novo"
+    },
+    "online": {
+      "title": "WhatsApp conectado",
+      "text": "O bot está recebendo os lances dos seus leilões em andamento."
+    },
+    "qr": {
+      "title": "Ler o QR Code",
+      "waiting": "Aguardando leitura",
+      "disconnected": "Desconectado",
+      "connected": "Conectado",
+      "step1": "Abra o WhatsApp da loja.",
+      "step2": "Vá em Aparelhos conectados.",
+      "step3": "Escolha Conectar aparelho e leia o código.",
+      "soon": "O QR Code ainda não aparece nesta tela: o código vem do bot e a API não o entrega ao app web. Peça a quem cuida do bot para lê-lo, ou use a tela de conexão das configurações quando ela existir."
+    },
+    "table": {
+      "title": "Leilões afetados",
+      "empty": "Nenhum leilão em andamento foi afetado",
+      "plus": "+{minutes} min",
+      "extendAll": "Estender todos em {minutes} min",
+      "foot": "Lances enviados no grupo durante a queda podem não ter sido registrados: estenda o prazo se precisar."
+    },
+    "endsIn": "Termina em",
+    "extended": "O fim foi adiado em {minutes} minutos."
   }
 }
