@@ -890,6 +890,41 @@
     },
     "initial": "Lance mínimo",
     "increment": "Incremento mínimo",
-    "ceiling": "Valor teto da enquete"
+    "ceiling": "Valor teto da enquete",
+    "paused": {
+      "title": "Esta enquete chegou ao valor máximo",
+      "text": "Aprove o encerramento para anunciar o vencedor no grupo, ou mantenha aberta."
+    }
+  },
+  "polls": {
+    "title": "Enquetes aguardando validação",
+    "crumb": "Enquetes",
+    "loading": "Carregando as enquetes",
+    "error": {
+      "title": "Não foi possível carregar as enquetes",
+      "text": "Confira sua conexão e tente de novo.",
+      "retry": "Tentar de novo"
+    },
+    "empty": {
+      "title": "Nenhuma enquete espera por você",
+      "text": "Quando uma enquete chega ao valor máximo, ela aparece aqui para você aprovar o encerramento ou manter aberta."
+    },
+    "pending": "Uma pendente | {count} pendentes",
+    "pendingText": "O lance chegou ao valor máximo definido. Aprove o encerramento para anunciar o vencedor no grupo, ou mantenha aberta.",
+    "maxValue": "Valor máximo",
+    "highest": "Maior lance",
+    "provisional": "Vencedor provisório:",
+    "keepOpen": "Manter aberto",
+    "approve": "Aprovar encerramento",
+    "approved": "Encerramento de {title} aprovado.",
+    "kept": "O leilão de {title} continua aberto.",
+    "confirm": {
+      "title": "Aprovar o encerramento?",
+      "text": "O leilão de {title} fecha agora e {winner} é anunciado como vencedor no grupo.",
+      "textNoWinner": "O leilão de {title} fecha agora, sem vencedor.",
+      "approve": "Aprovar encerramento",
+      "cancel": "Ainda não",
+      "close": "Fechar"
+    }
   }
 }

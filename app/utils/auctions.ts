@@ -186,3 +186,12 @@ export function editMode(status: AuctionStatus): 'full' | 'end' | 'none' {
 export function canCancel(status: AuctionStatus): boolean {
   return status === 'PENDING' || status === 'ACTIVE' || status === 'PAUSED_FOR_VALIDATION';
 }
+
+/** "Rafael M. · (11) *****-1020": who is ahead, with the masked phone when the bids have it. */
+export function leaderLabel(
+  leader: { name: string } | null | undefined,
+  phone: string | null | undefined,
+): string | null {
+  if (!leader) return null;
+  return phone ? `${leader.name} · ${phone}` : leader.name;
+}

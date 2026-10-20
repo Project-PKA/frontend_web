@@ -523,3 +523,38 @@ body:has(dialog[open]) {
   margin: 0;
   padding: var(--sp-4);
 }
+
+/* ---------- polls waiting for validation ---------- */
+.polls__values {
+  flex: 1 1 180px;
+  gap: var(--sp-1);
+}
+
+.polls__small {
+  font-size: var(--fs-xs);
+}
+
+.polls__big {
+  font-size: var(--fs-xl);
+}
+
+.polls__highest {
+  color: var(--success);
+}
+
+.polls__bids {
+  background: var(--surface);
+}
+
+.polls__actions {
+  justify-content: flex-end;
+}
+
+.polls__more {
+  justify-content: center;
+}
+
+/* The label of the winner box ("Winner:") and the name that follows it need a gap. */
+.win b {
+  margin-right: var(--sp-2);
+}

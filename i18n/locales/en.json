@@ -890,6 +890,41 @@
     },
     "initial": "Opening bid",
     "increment": "Minimum increment",
-    "ceiling": "Poll ceiling"
+    "ceiling": "Poll ceiling",
+    "paused": {
+      "title": "This poll reached its maximum value",
+      "text": "Approve the closing to announce the winner in the group, or keep it open."
+    }
+  },
+  "polls": {
+    "title": "Polls waiting for validation",
+    "crumb": "Polls",
+    "loading": "Loading the polls",
+    "error": {
+      "title": "We could not load the polls",
+      "text": "Check your connection and try again.",
+      "retry": "Try again"
+    },
+    "empty": {
+      "title": "No poll is waiting for you",
+      "text": "When a poll reaches its maximum value it shows up here, for you to approve the closing or keep it open."
+    },
+    "pending": "One pending | {count} pending",
+    "pendingText": "The bid reached the maximum value set. Approve the closing to announce the winner in the group, or keep it open.",
+    "maxValue": "Maximum value",
+    "highest": "Highest bid",
+    "provisional": "Provisional winner:",
+    "keepOpen": "Keep open",
+    "approve": "Approve closing",
+    "approved": "Closing of {title} approved.",
+    "kept": "The auction of {title} stays open.",
+    "confirm": {
+      "title": "Approve the closing?",
+      "text": "The auction of {title} closes now and {winner} is announced as the winner in the group.",
+      "textNoWinner": "The auction of {title} closes now, with no winner.",
+      "approve": "Approve closing",
+      "cancel": "Not yet",
+      "close": "Close"
+    }
   }
 }

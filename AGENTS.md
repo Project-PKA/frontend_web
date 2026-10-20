@@ -245,6 +245,14 @@ origem vem da carta (`GET /v1/cards/:id`). "Estender" (+15, +30, +1 h) chama
 mascarado da API; o do vencedor sai do lance dele. O vencedor leva a `/customers/:id` (#33).
 Aprovar o encerramento ou manter aberto a enquete que bateu no teto e da #31.
 
+**Enquete no teto** — `/auctions/polls` lista os leiloes `PAUSED_FOR_VALIDATION` (a Home e a
+lista de leiloes levam para la; atualiza a cada 15 s). Cada `PollCard` mostra o valor maximo, o
+maior lance, o vencedor provisorio (link para `/customers/:id`) e os ultimos lances, e
+`PollDecision` (tambem usado na sala do leilao) decide: **Manter aberto** vale na hora;
+**Aprovar encerramento** pede confirmacao, porque anuncia o vencedor no grupo (ADR 0004).
+Depois de decidir, `auctions`, `auction`, `home` e `inventory` sao invalidados (a carta muda de
+estado). `/auctions/polls` e rota fixa: vem antes de `/auctions/:id`.
+
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
 layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).

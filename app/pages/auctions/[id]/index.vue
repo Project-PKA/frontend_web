@@ -2,7 +2,7 @@
 import { useQuery, useQueryClient } from '@tanstack/vue-query';
 import { createAuctionsApi, type AuctionStatus } from '../../../api/auctions';
 import { createInventoryApi } from '../../../api/inventory';
-import { editMode } from '../../../utils/auctions';
+import { editMode, leaderLabel } from '../../../utils/auctions';
 import { cardTitle, statusTone } from '../../../utils/inventory';
 import { formatCountdown } from '../../../utils/format';
 
@@ -211,6 +211,19 @@ const extensionLabel = (minutes: number) =>
               <p v-else class="mono muted">
                 {{ t('auctionRoom.endedAt', { date: format.dateTime(auction.end_time) }) }}
               </p>
+
+              <div v-if="auction.status === 'PAUSED_FOR_VALIDATION'" class="alert alert--warning">
+                <AppIcon name="alert" />
+                <div class="alert__body">
+                  <p class="alert__title">{{ t('auctionRoom.paused.title') }}</p>
+                  <span class="muted">{{ t('auctionRoom.paused.text') }}</span>
+                  <PollDecision
+                    :auction-id="auction.id"
+                    :title="title"
+                    :winner="leaderLabel(auction.leader, winnerPhone)"
+                  />
+                </div>
+              </div>
 
               <div v-if="running" class="stack">
                 <span class="label">{{ t('auctionRoom.extend.label') }}</span>

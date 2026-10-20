@@ -18,7 +18,12 @@ const labels = useHomeData((home) => pollLabels(home.poll_alerts));
       </p>
       <span class="muted">{{ labels.data.value.join(' · ') }}</span>
     </div>
-    <AppButton v-if="access.can('can_manage_auctions')" variant="primary" size="sm" to="/auctions">
+    <AppButton
+      v-if="access.can('can_manage_auctions')"
+      variant="primary"
+      size="sm"
+      to="/auctions/polls"
+    >
       {{ t('home.pollAlert.action') }}
     </AppButton>
   </div>
