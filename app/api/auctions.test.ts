@@ -46,6 +46,15 @@ describe('auctions api', () => {
     });
   });
 
+  it('extends the end of a running auction by some minutes', async () => {
+    const request = vi.fn().mockResolvedValue({ extended: ['a1'] });
+    await apiWith(request).extend('a1', 30);
+    expect(request).toHaveBeenCalledWith('/v1/auctions/a1/extend', {
+      method: 'POST',
+      body: { minutes: 30 },
+    });
+  });
+
   it('cancels an auction', async () => {
     const request = vi.fn().mockResolvedValue({});
     await apiWith(request).cancel('a1');

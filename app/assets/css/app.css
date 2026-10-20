@@ -498,3 +498,28 @@ body:has(dialog[open]) {
   justify-content: flex-end;
   gap: var(--sp-2);
 }
+
+/* ---------- auction room ---------- */
+.auctionroom__info {
+  flex: 1 1 200px;
+  gap: var(--sp-3);
+}
+
+.auctionroom__small {
+  font-size: var(--fs-xs);
+}
+
+.auctionroom__clock {
+  margin: 0;
+}
+
+.bidlist {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bidlist__empty {
+  margin: 0;
+  padding: var(--sp-4);
+}

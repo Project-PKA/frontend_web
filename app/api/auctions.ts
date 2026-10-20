@@ -54,6 +54,12 @@ export function createAuctionsApi(client: ApiClient) {
         method: 'PATCH',
         body: changes,
       }),
+    /** Pushes the end of a running auction later by some minutes (1 to 1440). */
+    extend: (id: string, minutes: number) =>
+      client.request<{ extended: string[] }>(`/v1/auctions/${encodeURIComponent(id)}/extend`, {
+        method: 'POST',
+        body: { minutes },
+      }),
     cancel: (id: string) =>
       client.request<Auction>(`/v1/auctions/${encodeURIComponent(id)}/cancel`, { method: 'POST' }),
   };

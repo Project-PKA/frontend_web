@@ -235,6 +235,16 @@ encerrado ou cancelado e so leitura. A tela manda so o que mudou (`toUpdateBody`
 (modal de confirmacao) vale ate encerrar. "Deixar para depois" do design nao e um leilao: e
 cadastrar a carta sem agendar.
 
+**Sala do leilao** — `/auctions/:id` e um monitor: uma consulta (`GET /v1/auctions/:id`, leilao e
+lances, o maior primeiro) que repete a cada **5 s** enquanto esta em andamento ou aguardando
+validacao, a cada 15 s se agendado (para notar quando comeca) e **para** quando termina. A
+contagem regressiva e do relogio da tela (`useNow`, `formatCountdown`), nao da API, e o
+`role="timer"` tem `aria-live="off"` (anunciar todo segundo seria ruido). A foto real e a
+origem vem da carta (`GET /v1/cards/:id`). "Estender" (+15, +30, +1 h) chama
+`POST /v1/auctions/:id/extend` e so aparece em leilao rodando. O telefone do lance vem
+mascarado da API; o do vencedor sai do lance dele. O vencedor leva a `/customers/:id` (#33).
+Aprovar o encerramento ou manter aberto a enquete que bateu no teto e da #31.
+
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
 layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).

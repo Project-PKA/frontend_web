@@ -854,5 +854,42 @@
       "cancel": "Cancelar o leilão",
       "close": "Fechar"
     }
+  },
+  "auctionRoom": {
+    "title": "Leilão",
+    "loading": "Carregando o leilão",
+    "error": {
+      "title": "Não foi possível abrir este leilão",
+      "retry": "Tentar de novo"
+    },
+    "edit": "Editar leilão",
+    "card": "Carta",
+    "photoAlt": "Foto real de {name}",
+    "photoLoading": "Carregando a foto",
+    "photoError": "A foto não carregou",
+    "noPhoto": "Sem foto ainda",
+    "highest": "Maior lance",
+    "noBids": "Nenhum lance ainda",
+    "bidCount": "Nenhum lance | Um lance | {count} lances",
+    "lastBid": "último {ago}",
+    "winner": "Vencedor:",
+    "endsIn": "Termina em {time}",
+    "startsAt": "Começa {date}",
+    "endedAt": "Encerrou {date}",
+    "extend": {
+      "label": "Estender o fim",
+      "minutes": "+{n} min",
+      "hour": "+1 h"
+    },
+    "extended": "O fim foi adiado em {minutes} minutos.",
+    "bids": {
+      "title": "Lances recebidos do WhatsApp",
+      "empty": "Nenhum lance ainda. Eles aparecem aqui conforme chegam no grupo.",
+      "foot": "Horário, telefone e valor",
+      "footLive": "Horário, telefone e valor · atualização automática"
+    },
+    "initial": "Lance mínimo",
+    "increment": "Incremento mínimo",
+    "ceiling": "Valor teto da enquete"
   }
 }
