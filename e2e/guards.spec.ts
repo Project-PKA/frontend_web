@@ -63,6 +63,25 @@ test('opens a protected page for a person with a session', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Choose a store' })).toBeVisible();
 });
 
+test('keeps a logged out visitor on the landing page at /', async ({ page }) => {
+  await mockApi(page, { loggedIn: false });
+
+  await page.goto('/');
+
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page).toHaveURL(/localhost:\d+\/$/);
+});
+
+test('takes a person who is logged in from / into the app', async ({ page }) => {
+  await mockApi(page, { loggedIn: true });
+
+  await page.goto('/');
+
+  // No store chosen yet: the app asks which one (with a store it would open /home).
+  await expect(page).toHaveURL(/\/stores$/);
+  await expect(page.getByRole('heading', { name: 'Choose a store' })).toBeVisible();
+});
+
 test('never redirects to another site after signing in', async ({ page }) => {
   await mockApi(page, { loggedIn: false });
 
