@@ -43,6 +43,7 @@ export default defineNuxtConfig({
     '/whatsapp': { ssr: false },
     '/auctions': { ssr: false },
     '/auctions/**': { ssr: false },
+    '/shipments': { ssr: false },
     '/inventory': { ssr: false },
     '/inventory/**': { ssr: false },
     '/activity': { ssr: false },

@@ -1082,7 +1082,16 @@
     "settlementPending": "Pendente",
     "bidWon": "Ganhou",
     "bidLost": "Não ganhou",
-    "bidOpen": "Leilão em andamento"
+    "bidOpen": "Leilão em andamento",
+    "confirm": {
+      "action": "Confirmar pagamento",
+      "title": "Confirmar o pagamento",
+      "text": "Confirma que o pagamento de {total} chegou? As cartas deste acerto passam a vendidas. Só a loja confirma: o aviso do comprador sozinho não basta.",
+      "confirm": "Confirmar pagamento",
+      "cancel": "Cancelar",
+      "close": "Fechar",
+      "done": "Pagamento confirmado."
+    }
   },
   "blacklist": {
     "title": "Blacklist e inatividade",
@@ -1168,5 +1177,41 @@
       "whatsapp": "Enviar no WhatsApp",
       "message": "Oi, {name}! Acompanhe as suas cartas e os leilões aqui: {link}"
     }
+  },
+  "shipments": {
+    "caption": "Envios",
+    "loading": "Carregando os envios",
+    "error": "Não foi possível carregar os envios",
+    "retry": "Tentar de novo",
+    "empty": {
+      "title": "Nenhum envio aqui",
+      "text": "As vendas pagas aparecem aqui para serem enviadas. O envio é combinado diretamente entre a loja e o comprador."
+    },
+    "filters": {
+      "status": "Status",
+      "all": "Status: todos"
+    },
+    "status": {
+      "TO_SHIP": "A enviar",
+      "SHIPPED": "Enviado",
+      "DELIVERED": "Entregue"
+    },
+    "columns": {
+      "customer": "Cliente",
+      "destination": "Destino",
+      "status": "Status",
+      "tracking": "Rastreio"
+    },
+    "trackingPlaceholder": "Código de rastreio",
+    "trackingFor": "Código de rastreio de {name}",
+    "markShipped": "Marcar como enviado",
+    "markDelivered": "Marcar como entregue",
+    "loadMore": "Mostrar mais",
+    "notify": {
+      "action": "Avisar cliente no WhatsApp",
+      "withCode": "Oi, {name}! Seu pedido foi enviado. Código de rastreio: {code}.",
+      "withoutCode": "Oi, {name}! Seu pedido foi enviado."
+    },
+    "note": "Entram aqui as vendas pagas. O envio é combinado diretamente entre a loja e o comprador, e o sistema não manda mensagem sozinho."
   }
 }

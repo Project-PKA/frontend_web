@@ -2,6 +2,7 @@
 import { useQuery, useQueryClient } from '@tanstack/vue-query';
 import { useForm } from 'vee-validate';
 import { createCustomersApi } from '../../api/customers';
+import { createSettlementsApi } from '../../api/settlements';
 import type { TableColumn } from '../../components/AppTable.vue';
 import { useCursorList } from '../../utils/cursor-list';
 import {
@@ -200,11 +201,14 @@ const bids = useCursorList({
   enabled: () => active.value === 'bids',
 });
 
+// Only the store confirms a payment, and the API asks for `can_view_finance`.
+const canConfirm = computed(() => access.can('can_view_finance'));
 const settlementColumns = computed<TableColumn[]>(() => [
   { key: 'created', label: t('customer.columns.date') },
   { key: 'items', label: t('customer.columns.items'), numeric: true },
   { key: 'total', label: t('customer.columns.total'), numeric: true },
   { key: 'status', label: t('customer.columns.status') },
+  ...(canConfirm.value ? [{ key: 'action', label: '' }] : []),
 ]);
 const settlementRows = computed(() =>
   settlements.items.value.map((item) => ({
@@ -215,6 +219,33 @@ const settlementRows = computed(() =>
     paid: item.status === 'PAID',
   })),
 );
+
+// ---- Confirming a payment: the cards of the settlement become sold, so it asks first
+const settlementsApi = createSettlementsApi(useApi());
+const confirming = ref<{ id: string; total: string } | null>(null);
+const confirmBusy = ref(false);
+const confirmError = ref<string | null>(null);
+
+async function confirmPayment() {
+  if (!confirming.value) return;
+  confirmBusy.value = true;
+  confirmError.value = null;
+  try {
+    await settlementsApi.markPaid(confirming.value.id);
+    confirming.value = null;
+    toast.success(t('customer.confirm.done'));
+    await Promise.all(
+      ['customer-settlements', 'customer-bids', 'shipments', 'inventory', 'home'].map((key) =>
+        queryClient.invalidateQueries({ queryKey: [key] }),
+      ),
+    );
+  } catch (error) {
+    confirmError.value = errorMessage(error);
+  } finally {
+    confirmBusy.value = false;
+  }
+}
+
 const bidColumns = computed<TableColumn[]>(() => [
   { key: 'when', label: t('customer.columns.date') },
   { key: 'card', label: t('customer.columns.card') },
@@ -433,6 +464,18 @@ const bidRows = computed(() =>
                     {{ row.paid ? t('customer.settlementPaid') : t('customer.settlementPending') }}
                   </AppBadge>
                 </template>
+                <template #cell-action="{ row }">
+                  <AppButton
+                    v-if="!row.paid"
+                    size="sm"
+                    @click="
+                      confirmError = null;
+                      confirming = { id: row.id, total: row.total };
+                    "
+                  >
+                    {{ t('customer.confirm.action') }}
+                  </AppButton>
+                </template>
               </AppTable>
               <div v-if="settlements.hasNextPage.value" class="row customers__more card__foot">
                 <AppButton
@@ -526,5 +569,23 @@ const bidRows = computed(() =>
         </template>
       </AppModal>
     </template>
+
+    <AppModal
+      :open="confirming !== null"
+      :title="t('customer.confirm.title')"
+      :close-label="t('customer.confirm.close')"
+      @close="confirming = null"
+    >
+      <div class="stack">
+        <p>{{ t('customer.confirm.text', { total: confirming?.total ?? '' }) }}</p>
+        <p v-if="confirmError" role="alert" class="hint hint--error">{{ confirmError }}</p>
+      </div>
+      <template #foot>
+        <AppButton @click="confirming = null">{{ t('customer.confirm.cancel') }}</AppButton>
+        <AppButton variant="primary" :busy="confirmBusy" @click="confirmPayment">
+          {{ t('customer.confirm.confirm') }}
+        </AppButton>
+      </template>
+    </AppModal>
   </div>
 </template>

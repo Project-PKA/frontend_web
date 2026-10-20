@@ -1082,7 +1082,16 @@
     "settlementPending": "Pending",
     "bidWon": "Won",
     "bidLost": "Not won",
-    "bidOpen": "Auction running"
+    "bidOpen": "Auction running",
+    "confirm": {
+      "action": "Confirm payment",
+      "title": "Confirm the payment",
+      "text": "Confirm that the payment of {total} arrived? The cards of this settlement become sold. Only the store confirms: the buyer's notice alone is not enough.",
+      "confirm": "Confirm payment",
+      "cancel": "Cancel",
+      "close": "Close",
+      "done": "Payment confirmed."
+    }
   },
   "blacklist": {
     "title": "Blacklist and inactivity",
@@ -1168,5 +1177,41 @@
       "whatsapp": "Send on WhatsApp",
       "message": "Hi, {name}! Follow your cards and the auctions here: {link}"
     }
+  },
+  "shipments": {
+    "caption": "Shipments",
+    "loading": "Loading the shipments",
+    "error": "We could not load the shipments",
+    "retry": "Try again",
+    "empty": {
+      "title": "No shipments here",
+      "text": "Paid sales show up here to be shipped. The shipping itself is arranged directly between the store and the buyer."
+    },
+    "filters": {
+      "status": "Status",
+      "all": "Status: all"
+    },
+    "status": {
+      "TO_SHIP": "To ship",
+      "SHIPPED": "Shipped",
+      "DELIVERED": "Delivered"
+    },
+    "columns": {
+      "customer": "Customer",
+      "destination": "Destination",
+      "status": "Status",
+      "tracking": "Tracking"
+    },
+    "trackingPlaceholder": "Tracking code",
+    "trackingFor": "Tracking code for {name}",
+    "markShipped": "Mark as shipped",
+    "markDelivered": "Mark as delivered",
+    "loadMore": "Show more",
+    "notify": {
+      "action": "Notify customer on WhatsApp",
+      "withCode": "Hi, {name}! Your order was shipped. Tracking code: {code}.",
+      "withoutCode": "Hi, {name}! Your order was shipped."
+    },
+    "note": "Paid sales come in here. The shipping is arranged directly between the store and the buyer, and the system sends no message by itself."
   }
 }
