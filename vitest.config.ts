@@ -27,6 +27,11 @@ export default defineConfig({
         'app/components/LanguageSwitcher.vue',
         'app/components/ThemeSwitcher.vue',
         'app/components/AppToastRegion.vue',
+        // The pieces of the Home, the auctions and the card photo ask the API and translate by
+        // themselves (`useHomeData`, `useApi`, `useI18n`): covered by the e2e tests.
+        'app/components/Home*.vue',
+        'app/components/Auction*.vue',
+        'app/components/CardPhoto.vue',
       ],
       thresholds: {
         lines: 70,

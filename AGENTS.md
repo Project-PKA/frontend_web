@@ -218,6 +218,23 @@ vai no fragmento (`consignorLinkUrl`, `/consignor#token=`); "Enviar no WhatsApp"
 `wa.me` com o telefone do cliente (`rel="noopener noreferrer"`). Sem a secao "Leilao" do design:
 agendar e da #29 (a carta fica "Disponivel"). Foto depois do cadastro ainda nao tem tela.
 
+**Leiloes** — `/auctions` (abas Em andamento, Agendados, Encerrados e Cancelados; cada uma pede
+so o seu `status` por cursor, e a API nao da contagem, entao as abas nao mostram numero) e
+`/auctions/:id/edit`; so com `can_manage_auctions`. Os que esperam validacao do teto
+(`PAUSED_FOR_VALIDATION`) aparecem primeiro em "Em andamento" (e o proprio leilao ao vivo e
+da #30). "Novo leilao" e um modal (`AuctionCreate`; `/auctions/new`, que a Home usa, so
+redireciona para `/auctions?new=1`): uma carta **disponivel** (busca por #ID ou nome), "Agendar"
+(inicio e fim) ou "Lancar agora" (sem `start_time`, so o fim) e os termos (`AuctionTerms`, o
+mesmo na edicao). **Data**: o campo `datetime-local` e lido no **fuso do perfil**, nao no do
+navegador (`localInputToUtc` / `utcToLocalInput`). **Dinheiro**: o valor digitado ("25,50") so
+vira o texto decimal que a API quer (`normalizeMoney`); a comparacao do teto usa centavos
+inteiros, nunca `number` de ponto flutuante. Regras como a API: fim depois do inicio e no
+futuro, lance e incremento acima de zero, teto so na enquete e acima do lance. Edicao: leilao
+agendado muda tudo; **em andamento so o fim** (a API devolve `AUCTION_LOCKED` no resto); ja
+encerrado ou cancelado e so leitura. A tela manda so o que mudou (`toUpdateBody`). Cancelar
+(modal de confirmacao) vale ate encerrar. "Deixar para depois" do design nao e um leilao: e
+cadastrar a carta sem agendar.
+
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
 layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).

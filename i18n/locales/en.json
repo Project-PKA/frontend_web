@@ -33,7 +33,12 @@
     "otpCode": "Enter the 6 digits of the code.",
     "tooLong": "This text is too long.",
     "phone": "Enter the number with the area code.",
-    "commission": "Enter a commission from 0 to 100."
+    "commission": "Enter a commission from 0 to 100.",
+    "dateTime": "Enter a valid date and time.",
+    "endFuture": "The end must be in the future.",
+    "endAfterStart": "The end must be after the start.",
+    "money": "Enter an amount above zero, like 25 or 25.50.",
+    "ceilingAbove": "The ceiling must be above the opening bid."
   },
   "errors": {
     "unknown": "Something went wrong. Try again.",
@@ -724,6 +729,130 @@
         "copied": "Link copied.",
         "copyFailed": "Could not copy. Select the link and copy it by hand."
       }
+    }
+  },
+  "auctions": {
+    "title": "Auctions",
+    "new": "New auction",
+    "loadMore": "Show more",
+    "loading": "Loading the auctions",
+    "error": {
+      "title": "We could not load the auctions",
+      "text": "Check your connection and try again.",
+      "retry": "Try again"
+    },
+    "edit": "Edit",
+    "noWinner": "No winner",
+    "tabs": {
+      "label": "Auctions by situation",
+      "active": "In progress",
+      "scheduled": "Scheduled",
+      "finished": "Finished",
+      "cancelled": "Cancelled"
+    },
+    "empty": {
+      "active": {
+        "title": "No auction in progress",
+        "text": "The ones running right now show up here, with their bids."
+      },
+      "scheduled": {
+        "title": "No scheduled auction",
+        "text": "Schedule an auction for a card in your stock."
+      },
+      "finished": {
+        "title": "No finished auction yet",
+        "text": "The auctions that ended show up here, with the winner."
+      },
+      "cancelled": {
+        "title": "No cancelled auction",
+        "text": "The auctions you cancel show up here."
+      }
+    },
+    "columns": {
+      "card": "Card",
+      "type": "Type",
+      "ends": "Ends",
+      "bids": "Bids",
+      "highest": "Highest bid",
+      "start": "Start",
+      "end": "End",
+      "closed": "Ended",
+      "raised": "Raised",
+      "winner": "Winner",
+      "wasToEnd": "Was to end"
+    },
+    "types": {
+      "FREE_BID": "Free bid",
+      "POLL": "Poll"
+    },
+    "state": {
+      "live": "live",
+      "paused": "Awaiting validation"
+    },
+    "status": {
+      "PENDING": "Scheduled",
+      "ACTIVE": "In progress",
+      "PAUSED_FOR_VALIDATION": "Awaiting validation",
+      "FINISHED": "Finished",
+      "CANCELLED": "Cancelled"
+    },
+    "terms": {
+      "start": "Start",
+      "end": "End",
+      "type": "Type",
+      "pollHint": "In a poll the bids stop at the ceiling and wait for you to approve the closing.",
+      "initial": "Opening bid (R$)",
+      "increment": "Minimum increment (R$)",
+      "ceiling": "Poll ceiling (R$)",
+      "ceilingHint": "Above the opening bid."
+    },
+    "create": {
+      "title": "New auction",
+      "close": "Close",
+      "cancel": "Cancel",
+      "schedule": "Schedule auction",
+      "launch": "Launch auction",
+      "scheduled": "Auction of {title} scheduled.",
+      "launched": "Auction of {title} launched.",
+      "card": {
+        "label": "Available card in stock",
+        "hint": "Search by #ID or name (at least 2 characters).",
+        "loading": "Searching the stock",
+        "none": "No available card found for \"{text}\".",
+        "error": "We could not search the stock.",
+        "retry": "Try again",
+        "count": "No cards found | One card found | {count} cards found",
+        "change": "Change"
+      },
+      "when": {
+        "label": "When it starts",
+        "schedule": "Schedule",
+        "now": "Launch now",
+        "nowHint": "The card is posted in the group as soon as you save. Set only when the auction ends."
+      }
+    }
+  },
+  "auctionEdit": {
+    "title": "Edit auction",
+    "loading": "Loading the auction",
+    "error": {
+      "title": "We could not open this auction",
+      "retry": "Try again"
+    },
+    "endOnly": "This auction is already running: only its end can be changed.",
+    "locked": "This auction is over: it can no longer be changed.",
+    "nothingChanged": "Nothing was changed.",
+    "saved": "Auction saved.",
+    "cancel": "Cancel auction",
+    "cancelled": "Auction cancelled.",
+    "back": "Back",
+    "save": "Save changes",
+    "confirm": {
+      "title": "Cancel this auction?",
+      "text": "The auction of {title} will be cancelled and the card goes back to the stock. This cannot be undone.",
+      "keep": "Keep the auction",
+      "cancel": "Cancel the auction",
+      "close": "Close"
     }
   }
 }
