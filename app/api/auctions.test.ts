@@ -55,6 +55,20 @@ describe('auctions api', () => {
     });
   });
 
+  it('decides a poll that reached the ceiling', async () => {
+    const request = vi.fn().mockResolvedValue({});
+    await apiWith(request).resolve('a1', 'APPROVE');
+    expect(request).toHaveBeenCalledWith('/v1/auctions/a1/resolve', {
+      method: 'POST',
+      body: { decision: 'APPROVE' },
+    });
+    await apiWith(request).resolve('a1', 'KEEP_OPEN');
+    expect(request).toHaveBeenLastCalledWith('/v1/auctions/a1/resolve', {
+      method: 'POST',
+      body: { decision: 'KEEP_OPEN' },
+    });
+  });
+
   it('cancels an auction', async () => {
     const request = vi.fn().mockResolvedValue({});
     await apiWith(request).cancel('a1');

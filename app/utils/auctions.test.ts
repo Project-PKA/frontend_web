@@ -3,6 +3,7 @@ import type { Auction } from '../api/auctions';
 import {
   canCancel,
   editMode,
+  leaderLabel,
   normalizeMoney,
   sameMoney,
   termsOf,
@@ -196,5 +197,19 @@ describe('what can be done to an auction', () => {
   ] as const)('%s: edit %s, cancel %s', (status, mode, cancel) => {
     expect(editMode(status)).toBe(mode);
     expect(canCancel(status)).toBe(cancel);
+  });
+});
+
+describe('leaderLabel', () => {
+  it('joins the name and the masked phone', () => {
+    expect(leaderLabel({ name: 'Rafael M.' }, '(11) *****-1020')).toBe(
+      'Rafael M. · (11) *****-1020',
+    );
+  });
+
+  it('is only the name without a phone, and nothing without a leader', () => {
+    expect(leaderLabel({ name: 'Rafael M.' }, undefined)).toBe('Rafael M.');
+    expect(leaderLabel(null, '(11) *****-1020')).toBeNull();
+    expect(leaderLabel(undefined, null)).toBeNull();
   });
 });

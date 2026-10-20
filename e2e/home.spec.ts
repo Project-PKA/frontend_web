@@ -164,7 +164,9 @@ test('warns about the poll auctions waiting for validation', async ({ page }) =>
   const warning = page.getByRole('alert').filter({ hasText: 'poll auctions are waiting' });
   await expect(warning).toContainText('2 poll auctions are waiting for validation');
   await expect(warning).toContainText('#0411 Charizard ex · #0421 Pikachu VMAX');
-  await expect(warning.getByRole('link', { name: 'Review and approve the closing' })).toBeVisible();
+  await expect(
+    warning.getByRole('link', { name: 'Review and approve the closing' }),
+  ).toHaveAttribute('href', '/auctions/polls');
 });
 
 test('guides a new store through the four steps', async ({ page }) => {

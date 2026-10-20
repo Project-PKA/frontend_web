@@ -33,6 +33,9 @@ export const AUCTION_STATUSES = [
   'CANCELLED',
 ] as const;
 export type AuctionStatus = (typeof AUCTION_STATUSES)[number];
+/** What the store decides about a poll that reached its ceiling. */
+export type PollDecision = 'APPROVE' | 'KEEP_OPEN';
+
 export const AUCTION_TYPES = ['FREE_BID', 'POLL'] as const;
 export type AuctionType = (typeof AUCTION_TYPES)[number];
 
@@ -59,6 +62,12 @@ export function createAuctionsApi(client: ApiClient) {
       client.request<{ extended: string[] }>(`/v1/auctions/${encodeURIComponent(id)}/extend`, {
         method: 'POST',
         body: { minutes },
+      }),
+    /** A poll that reached the ceiling does not close by itself: approve the closing or keep it open. */
+    resolve: (id: string, decision: PollDecision) =>
+      client.request<Auction>(`/v1/auctions/${encodeURIComponent(id)}/resolve`, {
+        method: 'POST',
+        body: { decision },
       }),
     cancel: (id: string) =>
       client.request<Auction>(`/v1/auctions/${encodeURIComponent(id)}/cancel`, { method: 'POST' }),
