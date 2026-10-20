@@ -454,7 +454,10 @@ Pare e pergunte antes de:
   navegador): os testes de unidade cobrem so a nossa ligacao; foco preso e Esc foram
   conferidos no Chromium e entram no e2e na primeira tela que usar `AppModal`.
 - O `lighthouserc.json` mede a landing e o `/login` (3 execucoes, vale a mediana: uma so
-  oscilava acima do teto). O `/login` nao entra no SEO (tem `noindex`) e tem teto de LCP
+  oscilava acima do teto). A landing completa (#49) mede LCP perto de 3,3 s no Lighthouse
+  simulado (a `main` com a pagina provisoria media 2,1 s) e seu teto passou a 3,5 s, com
+  aprovacao do dono; nao achei uma secao culpada (testei sem fontes, sem o CSS da landing e so
+  com topo e heroi). O `/login` nao entra no SEO (tem `noindex`) e tem teto de LCP
   maior (3,5 s). Ele e pre-renderizado (o titulo e o formulario pintam do HTML; como
   SPA o LCP passava de 3,3 s) e a pagina so liga o comportamento no `onMounted`, entao a
   hidratacao e segura. Pagina pre-renderizada que linka para rota que ainda nao existe
