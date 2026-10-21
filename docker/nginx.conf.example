@@ -20,16 +20,29 @@ server {
 
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-Frame-Options        "DENY"    always;
-    add_header Referrer-Policy        "strict-origin-when-cross-origin" always;
+    add_header Referrer-Policy        "no-referrer" always;
     add_header Permissions-Policy     "camera=(), microphone=(), geolocation=()" always;
-    add_header Content-Security-Policy
-        "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https:; font-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'"
-        always;
+    # A CSP tem o hash dos scripts embutidos, que muda a cada build: gere o arquivo no deploy
+    # com `node scripts/csp.mjs .output/public --api <API> --images <host> `
+    # e grave `add_header Content-Security-Policy "<saida>" always;` em csp.conf.
+    include /etc/nginx/snippets/csp.conf;
 
     location = /healthz {
         access_log off;
         add_header Content-Type text/plain;
         return 200 "ok\n";
+    }
+
+    # Rotas privadas e abertas por token: fora dos buscadores (add_header nao herda em location,
+    # por isso o include se repete). Lista: NOINDEX_PATHS em scripts/csp.mjs.
+    location ~ ^/(login|invite|convite|request-access|settlement|consignor|stores|home|inventory|auctions|customers|settlements|finance|team|settings|plan|whatsapp|activity|profile|admin)(/|$) {
+        add_header X-Robots-Tag "noindex, nofollow" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-Frame-Options        "DENY"    always;
+        add_header Referrer-Policy        "no-referrer" always;
+        add_header Permissions-Policy     "camera=(), microphone=(), geolocation=()" always;
+        include /etc/nginx/snippets/csp.conf;
+        try_files $uri $uri/index.html /200.html;
     }
 
     # Assets com hash no nome: cache agressivo e seguro.
@@ -48,6 +61,6 @@ server {
     # Fallback de roteamento no cliente: rota desconhecida devolve o index.
     # Remova este bloco se o roteamento for no servidor.
     location / {
-        try_files $uri $uri/ /index.html;
+        try_files $uri $uri/index.html /200.html;
     }
 }
