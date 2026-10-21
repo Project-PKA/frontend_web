@@ -289,15 +289,21 @@ filtra por `customer_id` (Backend#108).
 
 **Acertos** — o frete e os envios sairam do produto por decisao do dono (shared ADR 0018): nao ha
 `/shipments`, nem frete no acerto, nem "Avisar cliente no WhatsApp" (o bot so fala no grupo). O
-total do acerto e so a soma dos itens. Confirmar o pagamento e sempre da loja: na aba "Acertos" de
-`/customers/:id`, o acerto pendente tem "Confirmar pagamento" (so com `can_view_finance`; modal de
-confirmacao, porque as cartas passam a vendidas; `POST /v1/settlements/:id/paid`). O aviso do
-comprador nao basta. Ainda falta o resumo do acerto para copiar e a criacao do acerto
-(`POST /v1/settlements`).
+total do acerto e so a soma dos itens. `/settlements` (menu "Acertos", `can_manage_auctions`) tem tres
+abas: **A acertar** (`GET /v1/settlements/awaiting`: compradores com leiloes ganhos e sem acerto; "Criar
+acerto" manda `customer_id` e os `auction_ids` do comprador), **Em aberto** e **Pagos** (`GET
+/v1/settlements?status=`, por cursor). Ao criar o acerto, ou em "Link do comprador", a loja gera o link
+da pagina publica (`POST /v1/settlements/:id/public-link`, vale 14 dias, **gerar outro invalida o
+anterior**): o token aparece **uma vez**, no fragmento (`settlementLinkUrl`, `/settlement#token=`), com
+"Copiar" e "Enviar no WhatsApp" (`wa.me` com o telefone do comprador). Confirmar o pagamento e sempre da
+loja (so com `can_view_finance`, modal de confirmacao, `POST /v1/settlements/:id/paid`; tambem na aba
+"Acertos" de `/customers/:id`): o aviso do comprador nao basta.
 
 **Landing** — `/` (ingles) e `/pt-BR` (portugues), estatica e indexavel; segue `design/landing.html`
-com as secoes da issue #49 (topo, heroi com a previa do painel, como funciona, funcionalidades, para
-quem e, perguntas, convite e rodape). Preco, vitrine e dashboards sao da #50. Quem ja esta logado vai
+com as secoes das issues #49 e #50 (topo, heroi com a previa do painel, como funciona, funcionalidades,
+vitrine, dashboards, para quem e, planos, perguntas, convite e rodape). Os planos **nao tem preco**
+("Preco a definir"; D6: sem cobranca no MVP) e a vitrine e os dashboards sao exemplos marcados como
+tal, sem link para a vitrine (#48) nem botao de periodo que nao faz nada. Quem ja esta logado vai
 de `/` para `/home` (`onMounted` + `session.restore()`; a pagina prerenderizada nao muda). Os textos em
 lista ficam em `landing.*.items.<n>` (o tipo de mensagem nao aceita lista) e a pagina os le por indice.
 O CTA leva a `/request-access` em vez de repetir o formulario do design. Sem "Mapa de telas", sem
@@ -387,6 +393,33 @@ o WhatsApp). O administrador da plataforma fica so leitura (`ADMIN_ADMIN_PROTECT
 da API nao filtra por e-mail, entao `findPendingAccountInvitation` le as paginas de convites de
 conta pendentes (ate 10 de 100) ate achar o e-mail; se nao achar, a tela diz. O input numerico
 entrega texto no `AppInput`: o estado do limite e `string`.
+
+**Admin: lojas e convites** — `/admin/stores` (lista com busca `q` no endereco; a API so filtra por
+texto, entao nao ha filtro de WhatsApp nem de plano), `/admin/stores/new` e `/admin/invitations`. A
+loja nova leva nome, cidade, plano (codigo, vazio = padrao da API), limite de membros (1 a 1000, padrao
+5) e de cartas (vazio = sem limite) e o **proprietario**: um e-mail novo (a API manda o convite;
+`owner_state` diz se ficou `INVITED` ou `MEMBER`) ou uma conta ativa achada por nome ou e-mail
+(`UserSearch`, so `ACTIVE`). `?request=<id>` converte uma solicitacao de acesso (preenche loja e e-mail
+e manda `access_request_id`). "Transferir propriedade" so aceita conta ativa e o dono atual vira
+funcionario. Um `<input type="number">` entrega **numero**: `0` e falsy, leia o campo com `String()`
+(`toNewStore` ja faz). Convites e solicitacoes ficam em abas: convites por tipo e status (reenviar
+vale para pendente e expirado, revogar so para pendente, cada um com seu texto e confirmacao no
+revogar), solicitacoes pendentes com "Criar loja e convidar" e "Recusar" (nao envia nada a pessoa).
+
+**Paginas publicas por link** — `/settlement` (comprador) e `/consignor` (consignador) usam o layout
+`plain` (sem menu), `usePublicApi()` (`anonymous`), `noindex` e `referrer: no-referrer`, e o token vem do
+**fragmento** (`tokenFromFragment`; ausente, curto, invalido, expirado, revogado ou bloqueado dizem a
+mesma coisa). O contrato deixa o corpo das duas paginas aberto: `normalizeSettlement` e
+`normalizeConsignor` (`utils/public-pages.ts`) leem so o que a tela usa. **Acerto**: resumo das cartas
+e total (sem frete), CPF e endereco com mascara (`maskCpf`, `maskCep`) e **consentimento**
+(`CONSENT_VERSION` e o texto sao rascunho ate a revisao juridica, D2), chave PIX com "Copiar", e "Ja
+paguei, avisar a loja", que **so avisa** (a pagina continua "Aguardando pagamento"; quem confirma e a
+loja). Sem comprovante em arquivo (issue propria, bloqueada). O texto nao promete nada sobre o
+pagamento: a plataforma nao o processa. **Consignador**: a chave sao os 4 primeiros digitos do CPF
+(`AppOtpInput keys`; o ultimo digito abre sozinho), vive so na memoria e a pagina pergunta de novo a
+cada 15 s; 404 (chave errada ou link ruim) e o mesmo texto, 429 pede para esperar. Mostra carta,
+situacao, lances com telefone parcialmente oculto (a API ja oculta), contagem regressiva e a estimativa
+de repasse (lance menos a comissao = o que a API manda como repasse) com o aviso de que e estimativa.
 
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o

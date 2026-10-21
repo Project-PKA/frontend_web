@@ -12,7 +12,10 @@
       "who": "Para quem é",
       "faq": "Perguntas",
       "signIn": "Entrar",
-      "requestAccess": "Solicitar acesso"
+      "requestAccess": "Solicitar acesso",
+      "showcase": "Vitrine",
+      "dashboards": "Dashboards",
+      "pricing": "Preços"
     },
     "hero": {
       "pill": "Plataforma para lojistas de cartas Pokémon TCG",
@@ -170,6 +173,70 @@
       "nav": "Rodapé",
       "language": "Idioma",
       "note": "Plataforma de leilões de cartas Pokémon TCG no WhatsApp para lojistas e colecionadores. Pokémon e os nomes das cartas pertencem aos seus respectivos titulares."
+    },
+    "showcase": {
+      "pill": "Vitrine",
+      "title": "Seus leilões ao vivo, à vista de todo mundo",
+      "text": "Cada leilão ativo pode aparecer em uma página pública com a foto da carta, o estado, o idioma, o último lance e o tempo restante. Quem se interessa vai direto ao grupo de WhatsApp da loja.",
+      "points": {
+        "0": "Mais visibilidade para as suas cartas, mesmo para quem ainda não está no grupo.",
+        "1": "Lances e tempo atualizados automaticamente.",
+        "2": "Você escolhe se a sua loja aparece na vitrine."
+      },
+      "exampleLabel": "Exemplo de leilão na vitrine",
+      "store": "Loja de exemplo",
+      "photo": "[ foto da carta ]",
+      "highest": "Maior lance",
+      "bidMeta": "54 lances · último há 8 s",
+      "example": "* imagem de exemplo"
+    },
+    "dashboards": {
+      "pill": "Dashboards",
+      "title": "Operacional e financeiro, cada um no seu lugar",
+      "chart": "Faturamento por dia",
+      "chartLabel": "Gráfico de barras de exemplo",
+      "byOrigin": "Vendas por origem",
+      "own": "Estoque próprio",
+      "consigned": "Consignadas",
+      "home": "A Home operacional mostra o que precisa de atenção agora: leilões ativos, enquetes aguardando aprovação, acertos pendentes e cartas sem leilão agendado.",
+      "finance": "O painel financeiro reúne faturamento bruto, lucro líquido, ticket médio, gráficos por período, a distribuição das vendas por valor, idioma e estado de conservação, e a lista de repasses de consignação.",
+      "access": "O acesso ao financeiro é exclusivo do proprietário ou de quem receber essa permissão."
+    },
+    "pricing": {
+      "pill": "Preços",
+      "title": "Escolha o plano da sua loja",
+      "lead": "Planos e preços em definição. O acesso é por convite: solicite e nossa equipe cria a sua loja.",
+      "price": "Preço a definir",
+      "plans": {
+        "0": {
+          "name": "Inicial",
+          "for": "Para começar a organizar",
+          "points": {
+            "0": "1 grupo de WhatsApp",
+            "1": "1 usuário",
+            "2": "Limite de cartas a definir"
+          }
+        },
+        "1": {
+          "name": "Loja",
+          "for": "Para quem tem equipe",
+          "points": {
+            "0": "Vários grupos",
+            "1": "Funcionários e permissões",
+            "2": "Consignados e financeiro",
+            "3": "Vitrine pública"
+          }
+        },
+        "2": {
+          "name": "Rede",
+          "for": "Para várias lojas",
+          "points": {
+            "0": "Várias lojas",
+            "1": "Vitrine em destaque",
+            "2": "Suporte dedicado"
+          }
+        }
+      }
     }
   },
   "auth": {
@@ -397,7 +464,8 @@
     "finance": "Financeiro",
     "profile": "Meu perfil",
     "activity": "Notificações e atividade",
-    "admin": "Administração"
+    "admin": "Administração",
+    "settlements": "Acertos"
   },
   "role": {
     "OWNER": "Proprietário",
@@ -2054,6 +2122,57 @@
       "net": "Líquido estimado",
       "final": "Líquido a repassar",
       "note": "Valor final definido quando o leilão encerrar e a venda for confirmada pela loja."
+    }
+  },
+  "settlements": {
+    "title": "Acertos",
+    "loading": "Carregando os acertos",
+    "error": "Não foi possível carregar os acertos",
+    "retry": "Tentar de novo",
+    "loadMore": "Mostrar mais",
+    "close": "Fechar",
+    "created": "Acerto de {name} criado.",
+    "claimed": "O comprador avisou que pagou em {when}",
+    "awaitingEmpty": "Nenhum comprador esperando acerto",
+    "awaitingNote": "Compradores que ganharam leilões e ainda não têm acerto. O total é a soma das cartas: a plataforma não cuida do frete nem do pagamento.",
+    "pendingEmpty": "Nenhum acerto em aberto",
+    "paidEmpty": "Nenhum acerto pago ainda",
+    "tabs": {
+      "label": "Acertos",
+      "awaiting": "A acertar",
+      "pending": "Em aberto",
+      "paid": "Pagos"
+    },
+    "status": {
+      "PENDING": "Aguardando pagamento",
+      "PAID": "Pago"
+    },
+    "columns": {
+      "customer": "Comprador",
+      "cards": "Cartas ganhas",
+      "subtotal": "Subtotal",
+      "items": "Cartas",
+      "total": "Total",
+      "status": "Status"
+    },
+    "create": {
+      "open": "Criar acerto",
+      "aria": "Criar o acerto de {name}"
+    },
+    "confirm": {
+      "aria": "Confirmar o pagamento de {name}"
+    },
+    "link": {
+      "open": "Link do comprador",
+      "aria": "Gerar o link do acerto de {name}",
+      "title": "Link para o comprador",
+      "text": "Envie este link para {name}. Ele confere o resumo, informa CPF e endereço e avisa quando pagar.",
+      "once": "O link aparece só agora e vale por {days} dias. Gerar outro faz este parar de funcionar.",
+      "copy": "Copiar link",
+      "copied": "Link copiado.",
+      "copyFailed": "Não foi possível copiar. Selecione o link e copie à mão.",
+      "whatsapp": "Enviar no WhatsApp",
+      "message": "Oi, {name}! Aqui está o resumo da sua compra e onde deixar os seus dados: {link}"
     }
   }
 }

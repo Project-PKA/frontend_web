@@ -41,6 +41,13 @@ export const NAV_ITEMS: readonly NavItem[] = [
     access: { level: 'store', permission: 'can_manage_customers' },
   },
   {
+    id: 'settlements',
+    labelKey: 'nav.settlements',
+    icon: 'log',
+    to: '/settlements',
+    access: { level: 'store', permission: 'can_manage_auctions' },
+  },
+  {
     id: 'team',
     labelKey: 'nav.team',
     icon: 'shield',

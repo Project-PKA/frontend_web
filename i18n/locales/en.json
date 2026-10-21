@@ -12,7 +12,10 @@
       "who": "Who it is for",
       "faq": "Questions",
       "signIn": "Sign in",
-      "requestAccess": "Request access"
+      "requestAccess": "Request access",
+      "showcase": "Showcase",
+      "dashboards": "Dashboards",
+      "pricing": "Pricing"
     },
     "hero": {
       "pill": "A platform for Pokémon TCG store owners",
@@ -170,6 +173,70 @@
       "nav": "Footer",
       "language": "Language",
       "note": "A platform for Pokémon TCG auctions on WhatsApp for store owners and collectors. Pokémon and the card names belong to their respective owners."
+    },
+    "showcase": {
+      "pill": "Showcase",
+      "title": "Your live auctions, in plain sight",
+      "text": "Each running auction can appear on a public page with the card photo, the condition, the language, the last bid and the time left. Whoever is interested goes straight to the group of the store.",
+      "points": {
+        "0": "More visibility for your cards, even for people who are not in the group yet.",
+        "1": "Bids and time updated automatically.",
+        "2": "You choose whether your store appears on the showcase."
+      },
+      "exampleLabel": "Example of an auction on the showcase",
+      "store": "Example Store",
+      "photo": "[ card photo ]",
+      "highest": "Highest bid",
+      "bidMeta": "54 bids · last one 8 s ago",
+      "example": "* example image"
+    },
+    "dashboards": {
+      "pill": "Dashboards",
+      "title": "Operations and finance, each in its place",
+      "chart": "Revenue per day",
+      "chartLabel": "Example bar chart",
+      "byOrigin": "Sales by origin",
+      "own": "Own stock",
+      "consigned": "Consigned",
+      "home": "The operations Home shows what needs attention now: active auctions, polls waiting for approval, pending settlements and cards with no auction scheduled.",
+      "finance": "The finance panel gathers gross revenue, net profit, average ticket, charts by period, the split of sales by price, language and condition, and the list of consignment payouts.",
+      "access": "Finance is only for the owner or whoever gets that permission."
+    },
+    "pricing": {
+      "pill": "Pricing",
+      "title": "Choose the plan of your store",
+      "lead": "Plans and prices are being defined. Access is by invitation: ask for it and our team creates your store.",
+      "price": "Price to be defined",
+      "plans": {
+        "0": {
+          "name": "Starter",
+          "for": "To start organizing",
+          "points": {
+            "0": "1 WhatsApp group",
+            "1": "1 user",
+            "2": "Limit of cards to be defined"
+          }
+        },
+        "1": {
+          "name": "Store",
+          "for": "For stores with a team",
+          "points": {
+            "0": "Several groups",
+            "1": "Employees and permissions",
+            "2": "Consignments and finance",
+            "3": "Public showcase"
+          }
+        },
+        "2": {
+          "name": "Network",
+          "for": "For several stores",
+          "points": {
+            "0": "Several stores",
+            "1": "Featured showcase",
+            "2": "Dedicated support"
+          }
+        }
+      }
     }
   },
   "auth": {
@@ -397,7 +464,8 @@
     "finance": "Finance",
     "profile": "My profile",
     "activity": "Notifications and activity",
-    "admin": "Administration"
+    "admin": "Administration",
+    "settlements": "Settlements"
   },
   "role": {
     "OWNER": "Owner",
@@ -2054,6 +2122,57 @@
       "net": "Estimated net",
       "final": "Net to pass on",
       "note": "The final value is set when the auction ends and the store confirms the sale."
+    }
+  },
+  "settlements": {
+    "title": "Settlements",
+    "loading": "Loading the settlements",
+    "error": "We could not load the settlements",
+    "retry": "Try again",
+    "loadMore": "Show more",
+    "close": "Close",
+    "created": "Settlement of {name} created.",
+    "claimed": "The buyer said they paid on {when}",
+    "awaitingEmpty": "No buyer is waiting for a settlement",
+    "awaitingNote": "Buyers who won auctions and have no settlement yet. The total is the sum of the cards: the platform does not handle shipping or payment.",
+    "pendingEmpty": "No open settlements",
+    "paidEmpty": "No paid settlements yet",
+    "tabs": {
+      "label": "Settlements",
+      "awaiting": "To settle",
+      "pending": "Open",
+      "paid": "Paid"
+    },
+    "status": {
+      "PENDING": "Waiting for payment",
+      "PAID": "Paid"
+    },
+    "columns": {
+      "customer": "Buyer",
+      "cards": "Cards won",
+      "subtotal": "Subtotal",
+      "items": "Cards",
+      "total": "Total",
+      "status": "Status"
+    },
+    "create": {
+      "open": "Create settlement",
+      "aria": "Create the settlement of {name}"
+    },
+    "confirm": {
+      "aria": "Confirm the payment of {name}"
+    },
+    "link": {
+      "open": "Buyer link",
+      "aria": "Make the link of the settlement of {name}",
+      "title": "Link for the buyer",
+      "text": "Send this link to {name}. They check the summary, fill in their CPF and address, and tell you when they paid.",
+      "once": "The link shows only now and works for {days} days. Making another one stops this one.",
+      "copy": "Copy link",
+      "copied": "Link copied.",
+      "copyFailed": "Could not copy. Select the link and copy it by hand.",
+      "whatsapp": "Send on WhatsApp",
+      "message": "Hi, {name}! Here is the summary of your purchase and where to leave your data: {link}"
     }
   }
 }

@@ -1185,3 +1185,149 @@ html {
 .consignor__net {
   color: var(--success);
 }
+
+/* ---------- landing: showcase, dashboards and plans (from design/landing.html) ---------- */
+.landing .two {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 56px;
+  align-items: center;
+}
+
+.landing .two .txt {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.landing .two h2 {
+  font-size: clamp(1.75rem, 3.2vw, 2.4rem);
+  line-height: 1.12;
+}
+
+.landing .two ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--text-2);
+}
+
+.landing .two li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.landing .two li .i {
+  color: var(--success);
+  margin-top: 2px;
+}
+
+.landing__example {
+  align-items: center;
+  gap: 8px;
+}
+
+.landing__auction {
+  width: min(300px, 100%);
+}
+
+.landing__chart {
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.landing__split {
+  gap: 20px;
+}
+
+.landing__ring {
+  width: 96px;
+}
+
+.landing__legend {
+  gap: 6px;
+}
+
+.landing__key {
+  gap: 8px;
+  font-size: var(--fs-xs);
+}
+
+.landing__dot--own {
+  background: var(--success);
+}
+
+.landing__dot--consigned {
+  background: var(--surface-3);
+}
+
+.landing .plans {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+.landing .plan {
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.landing .plan__price {
+  font: 600 var(--fs-lg) / 1 var(--font-display);
+  color: var(--text-2);
+}
+
+.landing .plan ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: var(--fs-sm);
+  flex: 1;
+}
+
+.landing .plan li {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.landing .plan li .i {
+  color: var(--primary);
+}
+
+@media (max-width: 960px) {
+  .landing .two {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+  }
+
+  .landing .plans {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- settlements ---------- */
+.settlements__phone {
+  display: block;
+  font-size: var(--fs-xs);
+}
+
+.settlements__url {
+  overflow-wrap: anywhere;
+  border: 1px dashed var(--border-strong);
+  border-radius: 10px;
+  padding: 10px 12px;
+}

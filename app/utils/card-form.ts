@@ -94,6 +94,11 @@ export function consignorLinkUrl(siteOrigin: string, token: string): string {
   return `${siteOrigin}/consignor#token=${encodeURIComponent(token)}`;
 }
 
+/** The settlement page of a buyer: the token goes in the fragment, never in the path or the query. */
+export function settlementLinkUrl(siteOrigin: string, token: string): string {
+  return `${siteOrigin}/settlement#token=${encodeURIComponent(token)}`;
+}
+
 /** A WhatsApp chat with the number (digits with the country code, as the API keeps it) and the text ready. */
 export function whatsappUrl(phone: string, text: string): string {
   return `https://wa.me/${phone.replace(/\D/g, '')}?text=${encodeURIComponent(text)}`;
