@@ -1060,3 +1060,26 @@ html {
   display: block;
   font-size: var(--fs-xs);
 }
+
+/* ---------- plan ---------- */
+.plan__name {
+  font: 600 var(--fs-xl) var(--font-display);
+}
+
+.plan__usage {
+  gap: 6px;
+}
+
+.plan__row {
+  justify-content: space-between;
+}
+
+.plan__note {
+  display: block;
+  font-size: var(--fs-xs);
+}
+
+.plan__message {
+  display: block;
+  overflow-wrap: anywhere;
+}
