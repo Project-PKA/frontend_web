@@ -78,7 +78,7 @@ jobs:
         run: make generate-types
 
       - name: Abrir PR com os tipos atualizados
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.AUTOMATION_TOKEN || github.token }}
           branch: chore/sync-api-types
