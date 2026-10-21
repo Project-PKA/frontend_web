@@ -53,10 +53,10 @@ jobs:
             echo "::warning title=Sem AUTOMATION_TOKEN::Usando GITHUB_TOKEN: nao le shared privado e o PR aberto nao dispara o CI."
           fi
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Baixar o contrato do docs/shared
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           repository: ${{ env.CONTRACT_REPO }}
           ref: ${{ env.CONTRACT_REF }}
