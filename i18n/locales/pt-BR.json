@@ -2047,7 +2047,7 @@
     },
     "data": {
       "title": "Seus dados",
-      "use": "usados pela loja para o envio",
+      "use": "usados pela loja para identificar a sua compra",
       "savedLine": "Salvo: CPF {cpf} · {place}",
       "cpf": "CPF",
       "zip": "CEP",
@@ -2056,7 +2056,7 @@
       "comp": "Complemento",
       "city": "Cidade",
       "state": "Estado (UF)",
-      "consent": "Concordo que a loja guarde o meu CPF e o meu endereço para preparar o envio",
+      "consent": "Concordo que a loja guarde o meu CPF e o meu endereço para identificar a minha compra",
       "consentNote": "Seu CPF é guardado cifrado e a loja só o vê mascarado. Você pode pedir à loja que remova os seus dados.",
       "save": "Salvar meus dados",
       "saved": "Dados salvos.",

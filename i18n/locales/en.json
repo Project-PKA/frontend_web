@@ -2047,7 +2047,7 @@
     },
     "data": {
       "title": "Your data",
-      "use": "used by the store for the shipping",
+      "use": "used by the store to identify your purchase",
       "savedLine": "Saved: CPF {cpf} · {place}",
       "cpf": "CPF",
       "zip": "Postal code (CEP)",
@@ -2056,7 +2056,7 @@
       "comp": "Complement",
       "city": "City",
       "state": "State (UF)",
-      "consent": "I agree that the store keeps my CPF and address to prepare the shipping",
+      "consent": "I agree that the store keeps my CPF and address to identify my purchase",
       "consentNote": "Your CPF is stored encrypted and the store only sees it masked. You can ask the store to remove your data.",
       "save": "Save my data",
       "saved": "Data saved.",
