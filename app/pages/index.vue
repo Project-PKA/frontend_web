@@ -11,6 +11,7 @@ import { landingStructuredData } from '../utils/landing';
  */
 const { t, locale } = useI18n();
 const switchLocalePath = useSwitchLocalePath();
+const localePath = useLocalePath();
 const session = useSessionStore();
 const { public: config } = useRuntimeConfig();
 
@@ -19,6 +20,11 @@ const FEATURES = 8;
 const WHO = 3;
 const FAQ = 7;
 const CHIPS = 4;
+const SHOWCASE_POINTS = 3;
+const PLANS = 3;
+const PLAN_POINTS = [3, 4, 3];
+/** The heights of the example chart, in percent: a week of sales with one peak. */
+const BARS = [48, 62, 94, 58, 70, 44, 66, 52, 78, 40, 84];
 const range = (count: number) => Array.from({ length: count }, (_, index) => index);
 
 const NAMES: Record<string, string> = { en: 'English', 'pt-BR': 'Português (Brasil)' };
@@ -84,7 +90,9 @@ onMounted(async () => {
         </a>
         <nav :aria-label="t('landing.nav.label')">
           <a href="#funcionalidades">{{ t('landing.nav.features') }}</a>
-          <a href="#para-quem">{{ t('landing.nav.who') }}</a>
+          <a href="#vitrine">{{ t('landing.nav.showcase') }}</a>
+          <a href="#dashboards">{{ t('landing.nav.dashboards') }}</a>
+          <a href="#precos">{{ t('landing.nav.pricing') }}</a>
           <a href="#faq">{{ t('landing.nav.faq') }}</a>
         </nav>
         <div class="actions">
@@ -195,6 +203,94 @@ onMounted(async () => {
           </div>
         </section>
 
+        <section id="vitrine" class="sec" aria-labelledby="h-vit">
+          <div class="two">
+            <div class="txt">
+              <span class="pill">{{ t('landing.showcase.pill') }}</span>
+              <h2 id="h-vit">{{ t('landing.showcase.title') }}</h2>
+              <p class="muted">{{ t('landing.showcase.text') }}</p>
+              <ul>
+                <li v-for="index in range(SHOWCASE_POINTS)" :key="index">
+                  <AppIcon name="check" />
+                  {{ t(`landing.showcase.points.${index}`) }}
+                </li>
+              </ul>
+              <NuxtLink class="btn btn--primary" to="/showcase">
+                {{ t('landing.showcase.open') }}
+                <AppIcon name="external" />
+              </NuxtLink>
+            </div>
+            <div class="stack landing__example">
+              <article
+                class="card card--highlight auction landing__auction"
+                :aria-label="t('landing.showcase.exampleLabel')"
+              >
+                <div class="auction__top">
+                  <span class="badge">{{ t('landing.showcase.store') }}</span>
+                  <span class="badge badge--success badge--live">{{
+                    t('landing.preview.live')
+                  }}</span>
+                </div>
+                <div class="tcg">
+                  <div class="tcg__ph">{{ t('landing.showcase.photo') }}</div>
+                </div>
+                <div>
+                  <div class="auction__name">{{ t('landing.preview.card') }}</div>
+                  <div class="faint landing__small">151 · NM · EN</div>
+                </div>
+                <div class="auction__bid">
+                  <span class="faint landing__small">{{ t('landing.showcase.highest') }}</span>
+                  <strong>R$ 820,00</strong>
+                  <span class="mono faint landing__small">{{ t('landing.showcase.bidMeta') }}</span>
+                </div>
+              </article>
+              <small class="faint landing__small">{{ t('landing.showcase.example') }}</small>
+            </div>
+          </div>
+        </section>
+
+        <section id="dashboards" class="sec" aria-labelledby="h-dash">
+          <div class="two">
+            <div class="card frame landing__chart">
+              <span class="card__title">{{ t('landing.dashboards.chart') }}</span>
+              <div class="bars" role="img" :aria-label="t('landing.dashboards.chartLabel')">
+                <span
+                  v-for="(height, index) in BARS"
+                  :key="index"
+                  :class="{ 'is-peak': height === 94 }"
+                  :style="{ height: `${height}%` }"
+                />
+              </div>
+              <div class="row landing__split">
+                <div class="ring landing__ring" style="--v: 58">
+                  <div class="ring__in"><span class="mono">58%</span></div>
+                </div>
+                <div class="stack landing__legend">
+                  <span class="muted landing__small">{{ t('landing.dashboards.byOrigin') }}</span>
+                  <span class="row landing__key"
+                    ><i class="dot landing__dot landing__dot--own" />{{
+                      t('landing.dashboards.own')
+                    }}</span
+                  >
+                  <span class="row landing__key"
+                    ><i class="dot landing__dot landing__dot--consigned" />{{
+                      t('landing.dashboards.consigned')
+                    }}</span
+                  >
+                </div>
+              </div>
+              <p class="faint landing__small">{{ t('landing.preview.example') }}</p>
+            </div>
+            <div class="txt">
+              <span class="pill">{{ t('landing.dashboards.pill') }}</span>
+              <h2 id="h-dash">{{ t('landing.dashboards.title') }}</h2>
+              <p class="muted">{{ t('landing.dashboards.home') }}</p>
+              <p class="muted">{{ t('landing.dashboards.finance') }}</p>
+              <p class="muted">{{ t('landing.dashboards.access') }}</p>
+            </div>
+          </div>
+        </section>
+
         <section id="para-quem" class="sec" aria-labelledby="h-quem">
           <div class="sec__head">
             <span class="pill">{{ t('landing.who.pill') }}</span>
@@ -204,6 +300,39 @@ onMounted(async () => {
             <div v-for="index in range(WHO)" :key="index" class="card">
               <h3>{{ t(`landing.who.items.${index}.title`) }}</h3>
               <p>{{ t(`landing.who.items.${index}.text`) }}</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="precos" class="sec" aria-labelledby="h-preco">
+          <div class="sec__head">
+            <span class="pill">{{ t('landing.pricing.pill') }}</span>
+            <h2 id="h-preco">{{ t('landing.pricing.title') }}</h2>
+            <p>{{ t('landing.pricing.lead') }}</p>
+          </div>
+          <div class="plans">
+            <div
+              v-for="plan in range(PLANS)"
+              :key="plan"
+              :class="['card', 'plan', plan === 1 && 'card--highlight']"
+            >
+              <div>
+                <h3>{{ t(`landing.pricing.plans.${plan}.name`) }}</h3>
+                <p class="faint landing__small">{{ t(`landing.pricing.plans.${plan}.for`) }}</p>
+              </div>
+              <div class="plan__price">{{ t('landing.pricing.price') }}</div>
+              <ul>
+                <li v-for="point in range(PLAN_POINTS[plan] ?? 0)" :key="point">
+                  <AppIcon name="check" />
+                  {{ t(`landing.pricing.plans.${plan}.points.${point}`) }}
+                </li>
+              </ul>
+              <NuxtLink
+                :class="['btn', 'btn--block', plan === 1 ? 'btn--primary' : 'btn--secondary']"
+                to="/request-access"
+              >
+                {{ t('landing.cta.button') }}
+              </NuxtLink>
             </div>
           </div>
         </section>
@@ -249,9 +378,13 @@ onMounted(async () => {
         </div>
         <nav class="foot__links" :aria-label="t('landing.footer.nav')">
           <a href="#funcionalidades">{{ t('landing.nav.features') }}</a>
+          <a href="#vitrine">{{ t('landing.nav.showcase') }}</a>
+          <a href="#precos">{{ t('landing.nav.pricing') }}</a>
           <a href="#faq">{{ t('landing.nav.faq') }}</a>
           <NuxtLink to="/request-access">{{ t('landing.nav.requestAccess') }}</NuxtLink>
           <NuxtLink to="/login">{{ t('landing.nav.signIn') }}</NuxtLink>
+          <NuxtLink :to="localePath('/terms')">{{ t('landing.footer.terms') }}</NuxtLink>
+          <NuxtLink :to="localePath('/privacy')">{{ t('landing.footer.privacy') }}</NuxtLink>
         </nav>
         <nav class="foot__links" :aria-label="t('landing.footer.language')">
           <a

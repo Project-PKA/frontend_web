@@ -5,6 +5,7 @@ import {
   cardFormSchema,
   checkPhotos,
   consignorLinkUrl,
+  settlementLinkUrl,
   parseCommission,
   toCreateBody,
   whatsappUrl,
@@ -147,6 +148,12 @@ describe('links', () => {
   it('puts the token in the fragment, never in the path or the query', () => {
     const url = consignorLinkUrl('https://app.example.com', 'a b/c');
     expect(url).toBe('https://app.example.com/consignor#token=a%20b%2Fc');
+    expect(new URL(url).search).toBe('');
+  });
+
+  it('puts the token of a settlement in the fragment too', () => {
+    const url = settlementLinkUrl('https://app.example.com', 'a b/c');
+    expect(url).toBe('https://app.example.com/settlement#token=a%20b%2Fc');
     expect(new URL(url).search).toBe('');
   });
 

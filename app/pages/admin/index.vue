@@ -29,6 +29,7 @@ const requestColumns = computed<TableColumn[]>(() => [
   { key: 'name', label: t('admin.dashboard.requests.columns.name') },
   { key: 'store', label: t('admin.dashboard.requests.columns.store') },
   { key: 'when', label: t('admin.dashboard.requests.columns.when') },
+  { key: 'action', label: '' },
 ]);
 const requestRows = computed(() =>
   (requests.data.value?.items ?? []).map((item) => ({
@@ -111,6 +112,7 @@ const statusText = (status: string) =>
         <AppCard as="section" :aria-label="t('admin.dashboard.requests.title')">
           <div class="card__head">
             <h2 class="card__title">{{ t('admin.dashboard.requests.title') }}</h2>
+            <NuxtLink to="/admin/invitations">{{ t('admin.dashboard.seeAll') }}</NuxtLink>
           </div>
           <p v-if="requests.isPending.value" class="card__body muted">
             {{ t('admin.dashboard.loading') }}
@@ -127,12 +129,24 @@ const statusText = (status: string) =>
             :columns="requestColumns"
             :rows="requestRows"
             :row-key="(row) => row.id"
-          />
+          >
+            <template #cell-action="{ row }">
+              <AppButton
+                :to="`/admin/stores/new?request=${row.id}`"
+                variant="primary"
+                size="sm"
+                :label="t('admin.invitations.requests.createAria', { name: row.name })"
+              >
+                {{ t('admin.invitations.requests.create') }}
+              </AppButton>
+            </template>
+          </AppTable>
         </AppCard>
 
         <AppCard as="section" :aria-label="t('admin.dashboard.stores.title')">
           <div class="card__head">
             <h2 class="card__title">{{ t('admin.dashboard.stores.title') }}</h2>
+            <NuxtLink to="/admin/stores">{{ t('admin.stores.title') }}</NuxtLink>
           </div>
           <p v-if="storeRows.length === 0" class="card__body muted">
             {{ t('admin.dashboard.stores.empty') }}

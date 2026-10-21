@@ -41,6 +41,13 @@ export const NAV_ITEMS: readonly NavItem[] = [
     access: { level: 'store', permission: 'can_manage_customers' },
   },
   {
+    id: 'settlements',
+    labelKey: 'nav.settlements',
+    icon: 'log',
+    to: '/settlements',
+    access: { level: 'store', permission: 'can_manage_auctions' },
+  },
+  {
     id: 'team',
     labelKey: 'nav.team',
     icon: 'shield',
@@ -83,6 +90,20 @@ export const ADMIN_NAV_ITEMS: readonly NavItem[] = [
     labelKey: 'admin.nav.users',
     icon: 'users',
     to: '/admin/users',
+    access: { level: 'admin' },
+  },
+  {
+    id: 'stores',
+    labelKey: 'admin.nav.stores',
+    icon: 'store',
+    to: '/admin/stores',
+    access: { level: 'admin' },
+  },
+  {
+    id: 'invitations',
+    labelKey: 'admin.nav.invitations',
+    icon: 'mail',
+    to: '/admin/invitations',
     access: { level: 'admin' },
   },
 ];

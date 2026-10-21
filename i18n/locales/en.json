@@ -12,7 +12,10 @@
       "who": "Who it is for",
       "faq": "Questions",
       "signIn": "Sign in",
-      "requestAccess": "Request access"
+      "requestAccess": "Request access",
+      "showcase": "Showcase",
+      "dashboards": "Dashboards",
+      "pricing": "Pricing"
     },
     "hero": {
       "pill": "A platform for Pokémon TCG store owners",
@@ -169,7 +172,74 @@
     "footer": {
       "nav": "Footer",
       "language": "Language",
-      "note": "A platform for Pokémon TCG auctions on WhatsApp for store owners and collectors. Pokémon and the card names belong to their respective owners."
+      "note": "A platform for Pokémon TCG auctions on WhatsApp for store owners and collectors. Pokémon and the card names belong to their respective owners.",
+      "terms": "Terms of use",
+      "privacy": "Privacy policy"
+    },
+    "showcase": {
+      "pill": "Showcase",
+      "title": "Your live auctions, in plain sight",
+      "text": "Each running auction can appear on a public page with the card photo, the condition, the language, the last bid and the time left. Whoever is interested goes straight to the group of the store.",
+      "points": {
+        "0": "More visibility for your cards, even for people who are not in the group yet.",
+        "1": "Bids and time updated automatically.",
+        "2": "You choose whether your store appears on the showcase."
+      },
+      "exampleLabel": "Example of an auction on the showcase",
+      "store": "Example Store",
+      "photo": "[ card photo ]",
+      "highest": "Highest bid",
+      "bidMeta": "54 bids · last one 8 s ago",
+      "example": "* example image",
+      "open": "Open the showcase"
+    },
+    "dashboards": {
+      "pill": "Dashboards",
+      "title": "Operations and finance, each in its place",
+      "chart": "Revenue per day",
+      "chartLabel": "Example bar chart",
+      "byOrigin": "Sales by origin",
+      "own": "Own stock",
+      "consigned": "Consigned",
+      "home": "The operations Home shows what needs attention now: active auctions, polls waiting for approval, pending settlements and cards with no auction scheduled.",
+      "finance": "The finance panel gathers gross revenue, net profit, average ticket, charts by period, the split of sales by price, language and condition, and the list of consignment payouts.",
+      "access": "Finance is only for the owner or whoever gets that permission."
+    },
+    "pricing": {
+      "pill": "Pricing",
+      "title": "Choose the plan of your store",
+      "lead": "Plans and prices are being defined. Access is by invitation: ask for it and our team creates your store.",
+      "price": "Price to be defined",
+      "plans": {
+        "0": {
+          "name": "Starter",
+          "for": "To start organizing",
+          "points": {
+            "0": "1 WhatsApp group",
+            "1": "1 user",
+            "2": "Limit of cards to be defined"
+          }
+        },
+        "1": {
+          "name": "Store",
+          "for": "For stores with a team",
+          "points": {
+            "0": "Several groups",
+            "1": "Employees and permissions",
+            "2": "Consignments and finance",
+            "3": "Public showcase"
+          }
+        },
+        "2": {
+          "name": "Network",
+          "for": "For several stores",
+          "points": {
+            "0": "Several stores",
+            "1": "Featured showcase",
+            "2": "Dedicated support"
+          }
+        }
+      }
     }
   },
   "auth": {
@@ -397,7 +467,8 @@
     "finance": "Finance",
     "profile": "My profile",
     "activity": "Notifications and activity",
-    "admin": "Administration"
+    "admin": "Administration",
+    "settlements": "Settlements"
   },
   "role": {
     "OWNER": "Owner",
@@ -1628,7 +1699,9 @@
     "nav": {
       "label": "Administration",
       "dashboard": "Dashboard",
-      "users": "Users"
+      "users": "Users",
+      "stores": "Stores",
+      "invitations": "Invitations and requests"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -1666,7 +1739,8 @@
           "city": "City",
           "status": "WhatsApp"
         }
-      }
+      },
+      "seeAll": "See all"
     },
     "close": "Close",
     "cancel": "Cancel",
@@ -1785,6 +1859,449 @@
         "text": "{who} will be able to sign in again.",
         "confirm": "Reactivate",
         "done": "Access reactivated."
+      }
+    },
+    "stores": {
+      "title": "Stores",
+      "caption": "Stores",
+      "loading": "Loading the stores",
+      "loadMore": "Show more",
+      "search": "Search store or owner",
+      "create": "Create store",
+      "note": "The administrator creates the store and sets the owner · WhatsApp, stock and team are managed by the owner",
+      "membersOf": "{used} of {limit}",
+      "error": {
+        "title": "We could not load the stores",
+        "text": "Check the connection and try again.",
+        "retry": "Try again"
+      },
+      "empty": {
+        "title": "No stores yet",
+        "text": "Create the first store and set its owner."
+      },
+      "noMatch": {
+        "title": "No store matches",
+        "text": "Try another search."
+      },
+      "columns": {
+        "name": "Store",
+        "owner": "Owner",
+        "plan": "Plan",
+        "members": "Members",
+        "whatsapp": "WhatsApp",
+        "created": "Created on"
+      },
+      "transfer": {
+        "open": "Transfer ownership",
+        "aria": "Transfer the ownership of {store}",
+        "title": "Transfer ownership",
+        "store": "Store:",
+        "current": "current owner:",
+        "owner": "New owner",
+        "hint": "Search by name or e-mail. Only active accounts.",
+        "loading": "Searching",
+        "none": "No active account found for {text}.",
+        "error": "We could not search.",
+        "retry": "Try again",
+        "count": "No accounts found | 1 account found | {count} accounts found",
+        "chosen": "New owner: {email}",
+        "needsUser": "Pick the account of the new owner.",
+        "text": "The current owner becomes an employee of the store. No data of the store is changed.",
+        "confirm": "Transfer",
+        "done": "{email} is now the owner."
+      },
+      "new": {
+        "title": "Create store",
+        "data": "Store data",
+        "name": "Store name",
+        "namePlaceholder": "E.g. Marina Cards",
+        "city": "City / State",
+        "cityPlaceholder": "São Paulo / SP",
+        "plan": "Plan",
+        "planHint": "The code of the plan, e.g. STANDARD. Empty uses the default.",
+        "memberLimit": "Member limit",
+        "cardLimit": "Card limit",
+        "cardLimitHint": "Empty means no limit.",
+        "fromRequest": "Creating the store of the request from {name}.",
+        "owner": {
+          "title": "Owner",
+          "new": "Invite new user",
+          "existing": "Existing user",
+          "email": "E-mail",
+          "emailPlaceholder": "owner{'@'}example.com",
+          "search": "Search user",
+          "hint": "A new e-mail gets an invitation by e-mail. The owner signs in with a code, connects the WhatsApp and invites their own team."
+        },
+        "submit": "Create store",
+        "created": "{store} created. {email} is the owner.",
+        "createdInvited": "{store} created. Invitation sent to {email}.",
+        "errors": {
+          "nameRequired": "Enter the name of the store.",
+          "planInvalid": "The code of a plan has capital letters, digits and _ (2 to 20 characters).",
+          "memberLimit": "Enter a whole number from 1 to 1000.",
+          "cardLimit": "Enter a whole number from 1 to 1000000, or leave it empty.",
+          "ownerEmail": "Enter a valid e-mail.",
+          "ownerUser": "Pick the account of the owner."
+        }
+      }
+    },
+    "invitations": {
+      "title": "Invitations and requests",
+      "loading": "Loading",
+      "loadMore": "Show more",
+      "error": "We could not load the list",
+      "retry": "Try again",
+      "empty": "No invitations here.",
+      "resent": "Invitation sent again to {email}.",
+      "resend": "Resend",
+      "resendAria": "Resend the invitation to {email}",
+      "tabs": {
+        "label": "Invitations and requests",
+        "invitations": "Invitations sent",
+        "requests": "Access requests"
+      },
+      "filters": {
+        "state": "Status",
+        "stateAll": "Status: all",
+        "kind": "Type",
+        "kindAll": "Type: all"
+      },
+      "state": {
+        "PENDING": "Pending",
+        "ACCEPTED": "Accepted",
+        "REVOKED": "Revoked",
+        "EXPIRED": "Expired"
+      },
+      "kind": {
+        "ACCOUNT": "Account",
+        "OWNER": "Owner",
+        "STAFF": "Employee"
+      },
+      "columns": {
+        "email": "E-mail",
+        "kind": "Type",
+        "store": "Store",
+        "sent": "Sent",
+        "expires": "Expires",
+        "state": "Status"
+      },
+      "revoke": {
+        "open": "Revoke",
+        "title": "Revoke the invitation",
+        "text": "The link sent to {email} stops working right away.",
+        "confirm": "Revoke",
+        "done": "Invitation revoked."
+      },
+      "revokeAria": "Revoke the invitation of {email}",
+      "requests": {
+        "empty": "No new access requests.",
+        "note": "Refusing sends nothing to the person. To approve, create the store from the request.",
+        "create": "Create store and invite",
+        "createAria": "Create the store and invite {name}",
+        "columns": {
+          "name": "Name",
+          "email": "E-mail",
+          "whatsapp": "WhatsApp",
+          "store": "Store asked for",
+          "when": "When"
+        }
+      },
+      "refuse": {
+        "open": "Refuse",
+        "aria": "Refuse the request of {name}",
+        "title": "Refuse the request",
+        "text": "The request of {name} is refused. Nothing is sent to the person.",
+        "confirm": "Refuse",
+        "done": "Request refused."
+      }
+    }
+  },
+  "settlementPage": {
+    "title": "Your settlement",
+    "loading": "Loading your settlement",
+    "copyFailed": "Could not copy. Select the text and copy it by hand.",
+    "invalid": {
+      "title": "This link is not available",
+      "text": "The link is invalid or has expired. Ask the store for a new one."
+    },
+    "failed": {
+      "title": "We could not open your settlement",
+      "text": "Check the connection and try again.",
+      "retry": "Try again"
+    },
+    "heading": "Your settlement, {name}",
+    "headingNoName": "Your settlement",
+    "status": {
+      "PENDING": "Waiting for payment",
+      "PAID": "Paid"
+    },
+    "intro": "You won no cards at the auctions of {store}. | You won 1 card at the auctions of {store}. Check the summary, complete your data and agree the payment with the store. | You won {count} cards at the auctions of {store}. Check the summary, complete your data and agree the payment with the store.",
+    "items": {
+      "title": "Cards you won",
+      "id": "#ID",
+      "card": "Card",
+      "amount": "Amount",
+      "total": "Total",
+      "copy": "Copy #{code}",
+      "copied": "#{code} copied."
+    },
+    "data": {
+      "title": "Your data",
+      "use": "used by the store for the shipping",
+      "savedLine": "Saved: CPF {cpf} · {place}",
+      "cpf": "CPF",
+      "zip": "Postal code (CEP)",
+      "street": "Street",
+      "number": "Number",
+      "comp": "Complement",
+      "city": "City",
+      "state": "State (UF)",
+      "consent": "I agree that the store keeps my CPF and address to prepare the shipping",
+      "consentNote": "Your CPF is stored encrypted and the store only sees it masked. You can ask the store to remove your data.",
+      "save": "Save my data",
+      "saved": "Data saved.",
+      "privacy": "Privacy policy"
+    },
+    "pay": {
+      "title": "Payment",
+      "text": "The payment is made directly to the store. The platform does not process the payment or the shipping.",
+      "pix": "PIX key: {key}",
+      "copy": "Copy key",
+      "copied": "PIX key copied.",
+      "noPix": "The store has not shared a PIX key yet. Ask the store how to pay.",
+      "claim": "I already paid, notify the store",
+      "again": "Notify the store again",
+      "sent": "We warned the store.",
+      "already": "This settlement is already paid.",
+      "claimedAt": "You told the store you paid on {when}.",
+      "confirmed": "The store confirmed your payment.",
+      "note": "This only warns the store: it is the store that confirms the payment."
+    },
+    "errors": {
+      "cpf": "Enter a valid CPF.",
+      "zip": "Enter a valid postal code (CEP).",
+      "required": "Fill in this field.",
+      "state": "Enter the two letters of the state.",
+      "consent": "You need to agree to continue."
+    },
+    "receipt": {
+      "label": "Receipt (optional)",
+      "hint": "A photo or image of the receipt: JPEG, PNG or WebP, up to 5 MB.",
+      "send": "Send receipt",
+      "sent": "Receipt sent to the store.",
+      "already": "A receipt was already sent for this settlement.",
+      "done": "You already sent the receipt to the store.",
+      "errors": {
+        "choose": "Choose the image of the receipt.",
+        "type": "The file is not an image. Send a JPEG, PNG or WebP.",
+        "size": "The image is too big. The limit is 5 MB.",
+        "empty": "The file is empty."
+      }
+    }
+  },
+  "consignorPage": {
+    "title": "Follow your card",
+    "loading": "Opening",
+    "invalid": {
+      "title": "This link is not available",
+      "text": "The link is invalid or has expired. Ask the store for a new one."
+    },
+    "gate": {
+      "title": "Follow your card",
+      "text": "Enter your access key: the first 4 numbers of your CPF.",
+      "label": "Access key",
+      "digit": "Digit {position} of {total}",
+      "submit": "Open",
+      "refused": "This link is not available or the key is wrong. Ask the store for help.",
+      "blocked": "Too many attempts. Wait a few minutes and try again.",
+      "failed": "We could not open the page. Try again in a moment.",
+      "again": "Try again",
+      "note": "Wrong key? Talk to the store."
+    },
+    "heading": "{name}, your cards at {store}",
+    "intro": "The amounts below are an estimate until the auction ends and the store confirms the sale.",
+    "empty": "You have no cards consigned to this store right now.",
+    "consignedByYou": "consigned by you",
+    "auction": {
+      "title": "Auction",
+      "highest": "Highest bid",
+      "bidCount": "No bids | 1 bid | {count} bids",
+      "endsIn": "Ends in {time}"
+    },
+    "bids": {
+      "title": "Recent bids",
+      "empty": "No bids yet.",
+      "note": "Phone numbers partly hidden"
+    },
+    "estimate": {
+      "title": "Payout estimate",
+      "bid": "Current bid",
+      "commission": "Store commission ({pct}%)",
+      "net": "Estimated net",
+      "final": "Net to pass on",
+      "note": "The final value is set when the auction ends and the store confirms the sale."
+    }
+  },
+  "settlements": {
+    "title": "Settlements",
+    "loading": "Loading the settlements",
+    "error": "We could not load the settlements",
+    "retry": "Try again",
+    "loadMore": "Show more",
+    "close": "Close",
+    "created": "Settlement of {name} created.",
+    "claimed": "The buyer said they paid on {when}",
+    "awaitingEmpty": "No buyer is waiting for a settlement",
+    "awaitingNote": "Buyers who won auctions and have no settlement yet. The total is the sum of the cards: the platform does not handle shipping or payment.",
+    "pendingEmpty": "No open settlements",
+    "paidEmpty": "No paid settlements yet",
+    "tabs": {
+      "label": "Settlements",
+      "awaiting": "To settle",
+      "pending": "Open",
+      "paid": "Paid"
+    },
+    "status": {
+      "PENDING": "Waiting for payment",
+      "PAID": "Paid"
+    },
+    "columns": {
+      "customer": "Buyer",
+      "cards": "Cards won",
+      "subtotal": "Subtotal",
+      "items": "Cards",
+      "total": "Total",
+      "status": "Status"
+    },
+    "create": {
+      "open": "Create settlement",
+      "aria": "Create the settlement of {name}"
+    },
+    "confirm": {
+      "aria": "Confirm the payment of {name}"
+    },
+    "link": {
+      "open": "Buyer link",
+      "aria": "Make the link of the settlement of {name}",
+      "title": "Link for the buyer",
+      "text": "Send this link to {name}. They check the summary, fill in their CPF and address, and tell you when they paid.",
+      "once": "The link shows only now and works for {days} days. Making another one stops this one.",
+      "copy": "Copy link",
+      "copied": "Link copied.",
+      "copyFailed": "Could not copy. Select the link and copy it by hand.",
+      "whatsapp": "Send on WhatsApp",
+      "message": "Hi, {name}! Here is the summary of your purchase and where to leave your data: {link}"
+    },
+    "receipt": {
+      "open": "View receipt",
+      "aria": "View the receipt sent by {name}",
+      "title": "Receipt of the payment",
+      "text": "The image {name} sent as the receipt.",
+      "alt": "Receipt of the payment sent by {name}",
+      "note": "Check the payment in your own account: the receipt is only an image."
+    }
+  },
+  "showcase": {
+    "title": "Live auctions",
+    "heading": "Live auctions right now",
+    "lead": "Pick a card and place your bid straight in the WhatsApp group of the store.",
+    "count": "none happening | 1 happening | {count} happening",
+    "loading": "Loading the auctions",
+    "live": "LIVE",
+    "noPhoto": "[ card photo ]",
+    "highest": "Highest bid",
+    "noBids": "No bids yet",
+    "bids": "No bids | 1 bid | {count} bids",
+    "last": "last {when}",
+    "endsIn": "Ends in {time}",
+    "go": "Go to the auction",
+    "openGroup": "Opens the WhatsApp group of the store",
+    "loadMore": "Show more",
+    "filters": {
+      "store": "Store",
+      "storeAll": "Store: all",
+      "language": "Language",
+      "languageAll": "Language: all",
+      "sort": "Sort by"
+    },
+    "sort": {
+      "ENDING_SOON": "Ending first",
+      "HIGHEST_BID": "Highest bid",
+      "MOST_BIDS": "Most bids",
+      "NEWEST": "Newest"
+    },
+    "error": {
+      "title": "We could not load the auctions",
+      "text": "Check the connection and try again.",
+      "retry": "Try again"
+    },
+    "empty": {
+      "title": "No live auctions right now",
+      "text": "Come back soon: the stores on this page open new auctions every day."
+    }
+  },
+  "legal": {
+    "notice": "Illustrative text, pending legal review",
+    "terms": {
+      "title": "Terms of use",
+      "sections": {
+        "0": {
+          "title": "About the platform",
+          "text": "The platform organizes Pokémon TCG card auctions in WhatsApp groups: stock, schedule, bid records, settlements and reports."
+        },
+        "1": {
+          "title": "Access by invitation",
+          "text": "Access is granted by the administration through an invitation. Each user is responsible for the use of their own account."
+        },
+        "2": {
+          "title": "Sales and payments",
+          "text": "The platform does not make sales, does not process payments and does not handle shipping. The deal is made directly between the store and the buyer."
+        },
+        "3": {
+          "title": "Conduct and moderation",
+          "text": "Stores are responsible for the content and the moderation of their groups, including the list of blocked numbers."
+        },
+        "4": {
+          "title": "Plans and billing",
+          "text": "Limits follow the plan of the store. In this phase there is no billing: the plan is only a label with limits."
+        },
+        "5": {
+          "title": "Contact",
+          "text": "For questions about these terms, talk to the platform administration or to the store you deal with."
+        }
+      }
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "sections": {
+        "0": {
+          "title": "What data we collect",
+          "text": "Name, e-mail, phone, CPF and address given by store owners, buyers and consignors, plus the records of bids and of the use of the platform."
+        },
+        "1": {
+          "title": "What we use it for",
+          "text": "To identify buyers, to confirm settlements, to prepare shipments and consignment payouts and to keep the service secure."
+        },
+        "2": {
+          "title": "Legal basis (LGPD)",
+          "text": "Performance of a contract, legitimate interest and consent, according to the purpose of each piece of data."
+        },
+        "3": {
+          "title": "Who we share it with",
+          "text": "The data of a buyer is visible to the store in whose auction they took part. The CPF is stored encrypted and shown masked. We do not sell personal data."
+        },
+        "4": {
+          "title": "How long we keep it",
+          "text": "For as long as needed for the purposes above and to meet legal obligations."
+        },
+        "5": {
+          "title": "Your rights",
+          "text": "You can ask for access, correction, portability, anonymization or deletion of your data, and withdraw your consent. Ask the store or the platform administration."
+        },
+        "6": {
+          "title": "Data protection officer",
+          "text": "The contact of the person in charge of data protection will be published here when the platform has its first stores."
+        }
       }
     }
   }

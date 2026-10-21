@@ -45,6 +45,7 @@ export default defineNuxtConfig({
     '/whatsapp': { ssr: false },
     '/auctions': { ssr: false },
     '/auctions/**': { ssr: false },
+    '/settlements': { ssr: false },
     '/admin': { ssr: false },
     '/admin/**': { ssr: false },
     '/plan': { ssr: false },
@@ -58,7 +59,19 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      routes: ['/', '/pt-BR', '/robots.txt', '/sitemap.xml'],
+      routes: [
+        '/',
+        '/pt-BR',
+        '/robots.txt',
+        '/sitemap.xml',
+        '/settlement',
+        '/consignor',
+        '/showcase',
+        '/terms',
+        '/privacy',
+        '/pt-BR/terms',
+        '/pt-BR/privacy',
+      ],
     },
   },
 });
