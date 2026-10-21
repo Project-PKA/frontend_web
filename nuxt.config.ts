@@ -47,6 +47,7 @@ export default defineNuxtConfig({
     '/auctions/**': { ssr: false },
     '/admin': { ssr: false },
     '/admin/**': { ssr: false },
+    '/plan': { ssr: false },
     '/settings': { ssr: false },
     '/team': { ssr: false },
     '/finance': { ssr: false },

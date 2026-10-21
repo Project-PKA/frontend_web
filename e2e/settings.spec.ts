@@ -161,6 +161,15 @@ test('shows the connection, the group, the PIX key, the showcase and the message
   );
 });
 
+test('leads to the plan and its usage', async ({ page }) => {
+  await signedIn(page);
+  await page.goto('/settings');
+
+  await expect(
+    page.getByRole('region', { name: 'Plan' }).getByRole('link', { name: 'Plan and usage' }),
+  ).toHaveAttribute('href', '/plan');
+});
+
 test('shows the connection as a problem when WhatsApp is not online', async ({ page }) => {
   await signedIn(page, { status: 'OFFLINE' });
   await page.goto('/settings');

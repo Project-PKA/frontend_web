@@ -1554,6 +1554,71 @@
         "auction_won": "Anúncio do vencedor",
         "auction_unsold": "Leilão sem lances"
       }
+    },
+    "plan": {
+      "title": "Plano",
+      "text": "O plano da loja, o que já foi usado de cada limite e os pedidos de mudança.",
+      "open": "Plano e uso"
+    }
+  },
+  "plan": {
+    "title": "Plano",
+    "loading": "Carregando o plano",
+    "error": {
+      "title": "Não foi possível carregar o plano",
+      "text": "Confira a conexão e tente de novo.",
+      "retry": "Tentar de novo"
+    },
+    "close": "Fechar",
+    "cancel": "Cancelar",
+    "current": "Plano atual",
+    "active": "Ativo",
+    "text": "O plano define quanto a loja pode usar. Para mudar, fale com a administração.",
+    "billing": "Nesta fase não há cobrança: o plano é só um rótulo com limites.",
+    "names": {
+      "STANDARD": "Padrão"
+    },
+    "usage": {
+      "groups": "Grupos de WhatsApp",
+      "members": "Membros da equipe",
+      "cards": "Cartas no estoque",
+      "of": "{used} de {limit}",
+      "noLimit": "{used}, sem limite",
+      "atLimit": "O limite foi atingido. Peça mais espaço à administração.",
+      "pendingInvitations": "{count} convite pendente | {count} convites pendentes"
+    },
+    "pending": {
+      "title": "Uma mudança de plano espera a administração",
+      "plan": "Plano pedido: {plan}"
+    },
+    "ask": {
+      "open": "Pedir mudança de plano",
+      "again": "Atualizar o pedido",
+      "title": "Pedir mudança de plano",
+      "intro": "A administração lê o pedido e muda o plano. Pedir de novo atualiza o pedido que está na fila.",
+      "plan": "Plano que você quer",
+      "planHint": "O código do plano, por exemplo STANDARD. Opcional se você escrever uma mensagem.",
+      "message": "Mensagem",
+      "send": "Enviar pedido",
+      "sent": "Pedido enviado à administração.",
+      "errors": {
+        "empty": "Diga qual plano você quer ou escreva uma mensagem.",
+        "planInvalid": "O código de um plano tem letras maiúsculas, números e _ (de 2 a 20 caracteres)."
+      }
+    },
+    "requests": {
+      "title": "Pedidos",
+      "columns": {
+        "created": "Data",
+        "plan": "Plano pedido",
+        "message": "Mensagem",
+        "status": "Status"
+      },
+      "status": {
+        "PENDING": "Aguardando",
+        "APPLIED": "Aplicado",
+        "REFUSED": "Recusado"
+      }
     }
   },
   "admin": {

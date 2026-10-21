@@ -297,6 +297,16 @@ async function resetTemplate(item: { key: TemplateKey }) {
       </AppCard>
     </div>
 
+    <AppCard as="section" :aria-label="t('settings.plan.title')">
+      <div class="card__head">
+        <h2 class="card__title">{{ t('settings.plan.title') }}</h2>
+      </div>
+      <div class="card__body row">
+        <span class="grow muted">{{ t('settings.plan.text') }}</span>
+        <AppButton to="/plan" size="sm">{{ t('settings.plan.open') }}</AppButton>
+      </div>
+    </AppCard>
+
     <AppCard as="section" :aria-label="t('settings.templates.title')">
       <div class="card__head">
         <h2 class="card__title">{{ t('settings.templates.title') }}</h2>

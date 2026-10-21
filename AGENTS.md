@@ -364,6 +364,16 @@ mudanca de plano", que o design nao tem; sem a coluna "Proprietario" e "Desde" d
 desconectadas (a API da cidade e o estado) e sem o botao "Criar loja e convidar" e os links
 "Gerenciar/Ver" ate as telas existirem (#43 a #45). Cada tela nova do admin entra com o seu item em
 `ADMIN_NAV_ITEMS`.
+**Plano** — `/plan` (so o proprietario; chega por Configuracoes, o design tem a migalha "Configuracoes /
+Plano e cobranca"). Decisao D6 (18/10): **sem cobranca no MVP**, o plano e so um rotulo com limites. A
+tela mostra o plano (`GET /v1/plan`; o codigo vira texto por `plan.names.<CODE>` quando o app conhece,
+senao aparece como a API mandou), o uso de grupos, membros e cartas contra o limite (`usageRows`;
+`cards: null` e **sem limite**, sem barra) com o aviso de limite atingido, o pedido de mudanca que
+espera a administracao e os pedidos ja decididos. Nao ha autoatendimento: "Pedir mudanca de plano"
+(`POST /v1/plan/change-requests`) manda o codigo do plano (`^[A-Z][A-Z0-9_]{1,19}$`; letras minusculas
+viram maiusculas, `toPlanChange`) e/ou uma mensagem de ate 1000 caracteres, **pelo menos um dos dois**;
+pedir de novo atualiza o pedido da fila. Sem "Forma de pagamento" e sem "Faturas" do design (nao ha
+cobranca nem endpoint).
 
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o

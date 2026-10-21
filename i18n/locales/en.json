@@ -1554,6 +1554,71 @@
         "auction_won": "Winner announcement",
         "auction_unsold": "Auction without bids"
       }
+    },
+    "plan": {
+      "title": "Plan",
+      "text": "The plan of the store, what is used of each limit, and the requests for a change.",
+      "open": "Plan and usage"
+    }
+  },
+  "plan": {
+    "title": "Plan",
+    "loading": "Loading the plan",
+    "error": {
+      "title": "We could not load the plan",
+      "text": "Check the connection and try again.",
+      "retry": "Try again"
+    },
+    "close": "Close",
+    "cancel": "Cancel",
+    "current": "Current plan",
+    "active": "Active",
+    "text": "The plan sets how much the store can use. To change it, ask the administration.",
+    "billing": "There is no billing in this phase: the plan is only a label with limits.",
+    "names": {
+      "STANDARD": "Standard"
+    },
+    "usage": {
+      "groups": "WhatsApp groups",
+      "members": "Team members",
+      "cards": "Cards in stock",
+      "of": "{used} of {limit}",
+      "noLimit": "{used}, no limit",
+      "atLimit": "The limit was reached. Ask the administration for more room.",
+      "pendingInvitations": "{count} invitation pending | {count} invitations pending"
+    },
+    "pending": {
+      "title": "A plan change is waiting for the administration",
+      "plan": "Plan asked for: {plan}"
+    },
+    "ask": {
+      "open": "Ask for a plan change",
+      "again": "Update the request",
+      "title": "Ask for a plan change",
+      "intro": "The administration reads the request and changes the plan. Asking again updates the request that is waiting.",
+      "plan": "Plan you want",
+      "planHint": "The code of the plan, e.g. STANDARD. Optional if you write a message.",
+      "message": "Message",
+      "send": "Send request",
+      "sent": "Request sent to the administration.",
+      "errors": {
+        "empty": "Tell which plan you want, or write a message.",
+        "planInvalid": "The code of a plan has capital letters, digits and _ (2 to 20 characters)."
+      }
+    },
+    "requests": {
+      "title": "Requests",
+      "columns": {
+        "created": "Date",
+        "plan": "Plan asked for",
+        "message": "Message",
+        "status": "Status"
+      },
+      "status": {
+        "PENDING": "Waiting",
+        "APPLIED": "Applied",
+        "REFUSED": "Refused"
+      }
     }
   },
   "admin": {
