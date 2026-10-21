@@ -1944,5 +1944,116 @@
         "done": "Solicitação recusada."
       }
     }
+  },
+  "settlementPage": {
+    "title": "Seu acerto",
+    "loading": "Carregando o seu acerto",
+    "copyFailed": "Não foi possível copiar. Selecione o texto e copie à mão.",
+    "invalid": {
+      "title": "Este link não está disponível",
+      "text": "O link é inválido ou expirou. Peça um novo à loja."
+    },
+    "failed": {
+      "title": "Não foi possível abrir o seu acerto",
+      "text": "Confira a conexão e tente de novo.",
+      "retry": "Tentar de novo"
+    },
+    "heading": "Seu acerto, {name}",
+    "headingNoName": "Seu acerto",
+    "status": {
+      "PENDING": "Aguardando pagamento",
+      "PAID": "Pago"
+    },
+    "intro": "Você não arrematou cartas nos leilões da {store}. | Você arrematou 1 carta nos leilões da {store}. Confira o resumo, complete seus dados e combine o pagamento com a loja. | Você arrematou {count} cartas nos leilões da {store}. Confira o resumo, complete seus dados e combine o pagamento com a loja.",
+    "items": {
+      "title": "Cartas arrematadas",
+      "id": "#ID",
+      "card": "Carta",
+      "amount": "Valor",
+      "total": "Total",
+      "copy": "Copiar #{code}",
+      "copied": "#{code} copiado."
+    },
+    "data": {
+      "title": "Seus dados",
+      "use": "usados pela loja para o envio",
+      "savedLine": "Salvo: CPF {cpf} · {place}",
+      "cpf": "CPF",
+      "zip": "CEP",
+      "street": "Rua",
+      "number": "Número",
+      "comp": "Complemento",
+      "city": "Cidade",
+      "state": "Estado (UF)",
+      "consent": "Concordo que a loja guarde o meu CPF e o meu endereço para preparar o envio",
+      "consentNote": "Seu CPF é guardado cifrado e a loja só o vê mascarado. Você pode pedir à loja que remova os seus dados.",
+      "save": "Salvar meus dados",
+      "saved": "Dados salvos."
+    },
+    "pay": {
+      "title": "Pagamento",
+      "text": "O pagamento é feito diretamente à loja. A plataforma não processa o pagamento nem o envio.",
+      "pix": "Chave PIX: {key}",
+      "copy": "Copiar chave",
+      "copied": "Chave PIX copiada.",
+      "noPix": "A loja ainda não informou uma chave PIX. Pergunte a ela como pagar.",
+      "claim": "Já paguei, avisar a loja",
+      "again": "Avisar a loja de novo",
+      "sent": "Avisamos a loja.",
+      "already": "Este acerto já está pago.",
+      "claimedAt": "Você avisou a loja do pagamento em {when}.",
+      "confirmed": "A loja confirmou o seu pagamento.",
+      "note": "Isto só avisa a loja: é a loja que confirma o pagamento."
+    },
+    "errors": {
+      "cpf": "Informe um CPF válido.",
+      "zip": "Informe um CEP válido.",
+      "required": "Preencha este campo.",
+      "state": "Informe as duas letras do estado.",
+      "consent": "É preciso concordar para continuar."
+    }
+  },
+  "consignorPage": {
+    "title": "Acompanhe a sua carta",
+    "loading": "Abrindo",
+    "invalid": {
+      "title": "Este link não está disponível",
+      "text": "O link é inválido ou expirou. Peça um novo à loja."
+    },
+    "gate": {
+      "title": "Acompanhe a sua carta",
+      "text": "Digite a sua chave de acesso: os 4 primeiros números do seu CPF.",
+      "label": "Chave de acesso",
+      "digit": "Dígito {position} de {total}",
+      "submit": "Acessar",
+      "refused": "Este link não está disponível ou a chave está errada. Fale com a loja.",
+      "blocked": "Muitas tentativas. Espere alguns minutos e tente de novo.",
+      "failed": "Não foi possível abrir a página. Tente de novo em instantes.",
+      "again": "Tentar de novo",
+      "note": "Chave errada? Fale com a loja."
+    },
+    "heading": "{name}, suas cartas na {store}",
+    "intro": "Os valores abaixo são uma estimativa até o leilão encerrar e a loja confirmar a venda.",
+    "empty": "Você não tem cartas consignadas nesta loja agora.",
+    "consignedByYou": "consignada por você",
+    "auction": {
+      "title": "Leilão",
+      "highest": "Maior lance",
+      "bidCount": "Nenhum lance | 1 lance | {count} lances",
+      "endsIn": "Termina em {time}"
+    },
+    "bids": {
+      "title": "Lances recentes",
+      "empty": "Nenhum lance ainda.",
+      "note": "Telefones parcialmente ocultos"
+    },
+    "estimate": {
+      "title": "Estimativa de repasse",
+      "bid": "Lance atual",
+      "commission": "Comissão da loja ({pct}%)",
+      "net": "Líquido estimado",
+      "final": "Líquido a repassar",
+      "note": "Valor final definido quando o leilão encerrar e a venda for confirmada pela loja."
+    }
   }
 }

@@ -1121,3 +1121,67 @@ html {
 .admin__actions {
   justify-content: flex-end;
 }
+
+/* ---------- public pages by link (settlement, consignor) ---------- */
+.settlement,
+.consignor {
+  padding-block: 32px 80px;
+}
+
+.settlement__page,
+.consignor__page {
+  margin-inline: auto;
+  gap: 16px;
+}
+
+.settlement__head,
+.consignor__head {
+  gap: 6px;
+}
+
+.settlement__head h1,
+.consignor__head h1 {
+  font-size: var(--fs-2xl);
+}
+
+.consignor__head h2 {
+  font-size: var(--fs-xl);
+}
+
+.settlement__meta,
+.consignor__meta {
+  display: block;
+  font-size: var(--fs-xs);
+}
+
+.settlement__actions {
+  justify-content: flex-end;
+}
+
+.settlement__consent {
+  gap: 6px;
+}
+
+.settlement__pix {
+  border: 1px dashed var(--border-strong);
+  border-radius: 10px;
+  padding: 10px 12px;
+  overflow-wrap: anywhere;
+}
+
+.consignor__mark {
+  width: 40px;
+  height: 40px;
+}
+
+.consignor__card {
+  gap: 12px;
+}
+
+.consignor__line {
+  justify-content: space-between;
+}
+
+.consignor__net {
+  color: var(--success);
+}

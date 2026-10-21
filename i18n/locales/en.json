@@ -1944,5 +1944,116 @@
         "done": "Request refused."
       }
     }
+  },
+  "settlementPage": {
+    "title": "Your settlement",
+    "loading": "Loading your settlement",
+    "copyFailed": "Could not copy. Select the text and copy it by hand.",
+    "invalid": {
+      "title": "This link is not available",
+      "text": "The link is invalid or has expired. Ask the store for a new one."
+    },
+    "failed": {
+      "title": "We could not open your settlement",
+      "text": "Check the connection and try again.",
+      "retry": "Try again"
+    },
+    "heading": "Your settlement, {name}",
+    "headingNoName": "Your settlement",
+    "status": {
+      "PENDING": "Waiting for payment",
+      "PAID": "Paid"
+    },
+    "intro": "You won no cards at the auctions of {store}. | You won 1 card at the auctions of {store}. Check the summary, complete your data and agree the payment with the store. | You won {count} cards at the auctions of {store}. Check the summary, complete your data and agree the payment with the store.",
+    "items": {
+      "title": "Cards you won",
+      "id": "#ID",
+      "card": "Card",
+      "amount": "Amount",
+      "total": "Total",
+      "copy": "Copy #{code}",
+      "copied": "#{code} copied."
+    },
+    "data": {
+      "title": "Your data",
+      "use": "used by the store for the shipping",
+      "savedLine": "Saved: CPF {cpf} · {place}",
+      "cpf": "CPF",
+      "zip": "Postal code (CEP)",
+      "street": "Street",
+      "number": "Number",
+      "comp": "Complement",
+      "city": "City",
+      "state": "State (UF)",
+      "consent": "I agree that the store keeps my CPF and address to prepare the shipping",
+      "consentNote": "Your CPF is stored encrypted and the store only sees it masked. You can ask the store to remove your data.",
+      "save": "Save my data",
+      "saved": "Data saved."
+    },
+    "pay": {
+      "title": "Payment",
+      "text": "The payment is made directly to the store. The platform does not process the payment or the shipping.",
+      "pix": "PIX key: {key}",
+      "copy": "Copy key",
+      "copied": "PIX key copied.",
+      "noPix": "The store has not shared a PIX key yet. Ask the store how to pay.",
+      "claim": "I already paid, notify the store",
+      "again": "Notify the store again",
+      "sent": "We warned the store.",
+      "already": "This settlement is already paid.",
+      "claimedAt": "You told the store you paid on {when}.",
+      "confirmed": "The store confirmed your payment.",
+      "note": "This only warns the store: it is the store that confirms the payment."
+    },
+    "errors": {
+      "cpf": "Enter a valid CPF.",
+      "zip": "Enter a valid postal code (CEP).",
+      "required": "Fill in this field.",
+      "state": "Enter the two letters of the state.",
+      "consent": "You need to agree to continue."
+    }
+  },
+  "consignorPage": {
+    "title": "Follow your card",
+    "loading": "Opening",
+    "invalid": {
+      "title": "This link is not available",
+      "text": "The link is invalid or has expired. Ask the store for a new one."
+    },
+    "gate": {
+      "title": "Follow your card",
+      "text": "Enter your access key: the first 4 numbers of your CPF.",
+      "label": "Access key",
+      "digit": "Digit {position} of {total}",
+      "submit": "Open",
+      "refused": "This link is not available or the key is wrong. Ask the store for help.",
+      "blocked": "Too many attempts. Wait a few minutes and try again.",
+      "failed": "We could not open the page. Try again in a moment.",
+      "again": "Try again",
+      "note": "Wrong key? Talk to the store."
+    },
+    "heading": "{name}, your cards at {store}",
+    "intro": "The amounts below are an estimate until the auction ends and the store confirms the sale.",
+    "empty": "You have no cards consigned to this store right now.",
+    "consignedByYou": "consigned by you",
+    "auction": {
+      "title": "Auction",
+      "highest": "Highest bid",
+      "bidCount": "No bids | 1 bid | {count} bids",
+      "endsIn": "Ends in {time}"
+    },
+    "bids": {
+      "title": "Recent bids",
+      "empty": "No bids yet.",
+      "note": "Phone numbers partly hidden"
+    },
+    "estimate": {
+      "title": "Payout estimate",
+      "bid": "Current bid",
+      "commission": "Store commission ({pct}%)",
+      "net": "Estimated net",
+      "final": "Net to pass on",
+      "note": "The final value is set when the auction ends and the store confirms the sale."
+    }
   }
 }
