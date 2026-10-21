@@ -337,6 +337,20 @@ tem o seu "Salvar" (desligado enquanto o texto e o que a loja ja diz) e "Restaur
 (`DELETE`); marcador que a mensagem nao aceita e barrado antes (`unknownPlaceholders`) e a API ainda
 responde `MESSAGE_TEMPLATE_PLACEHOLDER_UNKNOWN`. Sem o cartao "Assinatura" do design (cobranca e do
 dono, D6) e sem o link "Ver a vitrine" (a vitrine e da #48). Os marcadores aparecem como `{nome}` (escritos por codigo, nao por traducao).
+**Equipe** — `/team` (item "Equipe" do menu, **so o proprietario**: `access: { owner: true }`). Uma
+tabela junta os membros (`GET /v1/team`) e os convites ainda abertos (`GET /v1/team/invitations`,
+estados `PENDING` e `EXPIRED`; aceito ou revogado ja nao e convite em aberto), proprietario primeiro
+(`teamRows`). O proprietario nao tem botao: as permissoes dele sao fixas (`OWNER_PERMISSIONS_FIXED`)
+e a API nunca deixa a loja sem um (`LAST_OWNER`). "Convidar funcionario" abre o modal do design (e-mail
+e `PermissionMatrix`: estoque, leiloes, clientes, financeiro e excluir; excluir vem **desligado**, com
+o selo "Bloqueado por padrao"). A tela manda **as cinco chaves** sempre (`toChoice`), para um
+interruptor desligado tambem valer. O e-mail e conferido no cliente (`inviteSchema`) e a API envia o
+convite: o token nao volta para a tela, entao nao ha "Ver convite" como no design. Tambem ha
+"Editar permissoes" (`PATCH /v1/team/:id`), "Reenviar" (token novo; o link anterior deixa de valer),
+"Revogar" e "Remover", estes dois pedem confirmacao. Todo botao de linha leva o e-mail no nome
+acessivel (`label`). O "Acertos" do design e a permissao `can_manage_customers`.
+Um `@` dentro de uma mensagem de traducao quebra o vue-i18n (e a pagina cai em "Algo deu errado"
+sem erro no console do build): escreva `{'@'}` (ex.: `funcionario{'@'}email.com`).
 
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o

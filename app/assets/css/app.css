@@ -1077,3 +1077,9 @@ html {
 .settings__actions {
   justify-content: flex-end;
 }
+
+/* ---------- team ---------- */
+.team__name {
+  display: block;
+  font-size: var(--fs-xs);
+}

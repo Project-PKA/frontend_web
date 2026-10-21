@@ -1418,6 +1418,81 @@
       "payout": "To pass on"
     }
   },
+  "team": {
+    "caption": "Team",
+    "loading": "Loading the team",
+    "error": "We could not load the team",
+    "retry": "Try again",
+    "invitationsError": "We could not load the open invitations.",
+    "empty": {
+      "title": "No one here yet",
+      "text": "Invite an employee by e-mail."
+    },
+    "close": "Close",
+    "cancel": "Cancel",
+    "resent": "Invitation sent again to {email}.",
+    "columns": {
+      "member": "Member",
+      "role": "Role",
+      "permissions": "Permissions",
+      "status": "Status"
+    },
+    "role": {
+      "OWNER": "Owner",
+      "STAFF": "Employee"
+    },
+    "status": {
+      "active": "Active",
+      "pending": "Pending invitation",
+      "expired": "Invitation expired"
+    },
+    "permissions": {
+      "title": "Permissions",
+      "all": "All",
+      "none": "None",
+      "blocked": "Blocked by default"
+    },
+    "invite": {
+      "open": "Invite employee",
+      "title": "Invite employee",
+      "email": "E-mail",
+      "emailPlaceholder": "employee{'@'}example.com",
+      "hint": "The employee gets an invitation by e-mail and signs in with a code, with no password.",
+      "send": "Send invitation",
+      "sent": "Invitation sent to {email}.",
+      "errors": {
+        "emailRequired": "Enter the e-mail.",
+        "emailInvalid": "Enter a valid e-mail."
+      }
+    },
+    "edit": {
+      "open": "Edit permissions",
+      "aria": "Edit permissions of {email}",
+      "title": "Edit permissions",
+      "save": "Save",
+      "saved": "Permissions saved."
+    },
+    "resend": {
+      "open": "Resend",
+      "aria": "Resend the invitation to {email}"
+    },
+    "remove": {
+      "open": "Remove",
+      "aria": "Remove {email} from the team",
+      "title": "Remove from the team",
+      "text": "{email} loses access to the store right away. The records they made stay.",
+      "confirm": "Remove",
+      "done": "Removed from the team."
+    },
+    "revoke": {
+      "open": "Revoke",
+      "aria": "Revoke the invitation of {email}",
+      "title": "Revoke the invitation",
+      "text": "The link sent to {email} stops working right away.",
+      "confirm": "Revoke",
+      "done": "Invitation revoked."
+    }
+  },
   "settings": {
     "save": "Save",
     "cancel": "Cancel",

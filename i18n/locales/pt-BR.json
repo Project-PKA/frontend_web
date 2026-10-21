@@ -1418,6 +1418,81 @@
       "payout": "A repassar"
     }
   },
+  "team": {
+    "caption": "Equipe",
+    "loading": "Carregando a equipe",
+    "error": "Não foi possível carregar a equipe",
+    "retry": "Tentar de novo",
+    "invitationsError": "Não foi possível carregar os convites em aberto.",
+    "empty": {
+      "title": "Ninguém por aqui ainda",
+      "text": "Convide um funcionário por e-mail."
+    },
+    "close": "Fechar",
+    "cancel": "Cancelar",
+    "resent": "Convite enviado de novo para {email}.",
+    "columns": {
+      "member": "Membro",
+      "role": "Papel",
+      "permissions": "Permissões",
+      "status": "Status"
+    },
+    "role": {
+      "OWNER": "Proprietário",
+      "STAFF": "Funcionário"
+    },
+    "status": {
+      "active": "Ativo",
+      "pending": "Convite pendente",
+      "expired": "Convite expirado"
+    },
+    "permissions": {
+      "title": "Permissões",
+      "all": "Todas",
+      "none": "Nenhuma",
+      "blocked": "Bloqueado por padrão"
+    },
+    "invite": {
+      "open": "Convidar funcionário",
+      "title": "Convidar funcionário",
+      "email": "E-mail",
+      "emailPlaceholder": "funcionario{'@'}email.com",
+      "hint": "O funcionário recebe um convite por e-mail e entra com um código, sem senha.",
+      "send": "Enviar convite",
+      "sent": "Convite enviado para {email}.",
+      "errors": {
+        "emailRequired": "Informe o e-mail.",
+        "emailInvalid": "Informe um e-mail válido."
+      }
+    },
+    "edit": {
+      "open": "Editar permissões",
+      "aria": "Editar permissões de {email}",
+      "title": "Editar permissões",
+      "save": "Salvar",
+      "saved": "Permissões salvas."
+    },
+    "resend": {
+      "open": "Reenviar",
+      "aria": "Reenviar o convite para {email}"
+    },
+    "remove": {
+      "open": "Remover",
+      "aria": "Remover {email} da equipe",
+      "title": "Remover da equipe",
+      "text": "{email} perde o acesso à loja na hora. Os registros que fez continuam.",
+      "confirm": "Remover",
+      "done": "Removido da equipe."
+    },
+    "revoke": {
+      "open": "Revogar",
+      "aria": "Revogar o convite de {email}",
+      "title": "Revogar o convite",
+      "text": "O link enviado para {email} deixa de funcionar na hora.",
+      "confirm": "Revogar",
+      "done": "Convite revogado."
+    }
+  },
   "settings": {
     "save": "Salvar",
     "cancel": "Cancelar",
