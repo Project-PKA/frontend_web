@@ -8,7 +8,7 @@ import { phoneDigits } from './phone';
  * lawyer (decision D2): when it changes, this changes with it, so the store can tell which one
  * each buyer accepted.
  */
-export const CONSENT_VERSION = 'draft-2026-10';
+export const CONSENT_VERSION = 'draft-2026-10-21';
 
 const text = (value: unknown): string => (typeof value === 'string' ? value : '');
 const orNull = (value: unknown): string | null =>
