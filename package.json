@@ -14,7 +14,8 @@
     "preview": "node scripts/serve-static.mjs .output/public",
     "postinstall": "nuxt prepare",
     "typecheck": "nuxt typecheck",
-    "sync:error-codes": "node scripts/sync-error-codes.mjs"
+    "sync:error-codes": "node scripts/sync-error-codes.mjs",
+    "e2e:real": "playwright test -c playwright.real.config.ts"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",

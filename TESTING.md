@@ -97,6 +97,31 @@ do que voce quer.
 Prefira a API que reproduz a sequencia real (foco, keydown, input, change) a
 disparar um evento sintetico isolado. Os bugs moram na sequencia.
 
+### E2E contra a API real (`e2e-real/`)
+
+A suite principal (`e2e/`) simula a API por rota. `e2e-real/` roda contra a pilha de
+`../shared/compose.yaml` (API, banco, Mailpit e frontend), **sem nenhuma rota simulada**: se o
+contrato mudar e a tela nao acompanhar, ela falha. Hoje cobre o login por codigo (o codigo e lido no
+Mailpit), um leilao (lancar, abrir a sala, cancelar) e um acerto inteiro (a loja gera o link, o
+comprador preenche os dados e avisa que pagou, a loja confirma).
+
+```bash
+# Ambiente separado do seu (outros portas e volumes), com os dados de exemplo:
+cd ../shared
+export WEB_PORT=3100 API_PORT=8181 MAILPIT_WEB_PORT=8125 MAILPIT_SMTP_PORT=1125 DB_PORT=5532 REDIS_PORT=6479
+docker compose -p itest up -d && docker compose -p itest run --rm seed
+cd ../frontend_web
+E2E_BASE_URL=http://localhost:3100 E2E_API_URL=http://localhost:8181 E2E_MAILPIT_URL=http://localhost:8125 npm run e2e:real
+docker compose -p itest down -v   # ao terminar
+```
+
+- Sem as variaveis, usa o ambiente padrao (3000, 8081 e 8025). Nesse caso rode contra um banco que
+  pode ser apagado: o seed **apaga o banco**.
+- O acerto **consome** o comprador que esperava acerto no seed: rode `docker compose -p itest run
+  --rm seed` de novo antes de repetir a suite.
+- Os textos sao procurados pela chave de traducao nos dois idiomas (`label()` em
+  `e2e-real/helpers.ts`), porque o dono do seed pode ter qualquer um salvo.
+
 ### Regras
 
 - Um comportamento por teste; o nome descreve o comportamento, nao a funcao
