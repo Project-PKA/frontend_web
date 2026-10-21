@@ -285,7 +285,9 @@ test('shows the error of the showcase translated, inside the dialog', async ({ p
     .locator('label.switch')
     .filter({ hasText: 'I know the group link becomes public' })
     .click();
-  await dialog.getByRole('button', { name: 'Turn on' }).click();
+  const turnOn = dialog.getByRole('button', { name: 'Turn on' });
+  await expect(turnOn).toBeEnabled();
+  await turnOn.click();
 
   await expect(dialog.getByRole('alert')).toContainText('Confirm that you know the group link');
   await expect(page.getByText('mensagem em português')).toHaveCount(0);
