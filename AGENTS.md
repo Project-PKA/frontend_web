@@ -476,6 +476,10 @@ e sistema.
 **Seguranca** — nada de segredo ou token em codigo, log, issue ou chat; nada de
 dado pessoal real nos testes (`@example.com`, CPFs ficticios); CSP restritiva;
 sem `innerHTML` com dado externo.
+A CSP nao permite script inline nem `eval`: os `<script>` do build entram pelo hash
+(`node scripts/csp.mjs`, gerado a cada deploy; ver `DEPLOY.md`) e o Zod roda sem JIT
+(`app/plugins/0.zod.ts`, o primeiro plugin: precisa vir antes de qualquer schema).
+`e2e/csp.spec.ts` carrega as paginas publicas sob essa politica e falha com violacao.
 
 **Ambiente** — variavel de ambiente lida em um unico modulo e documentada em
 `.env.example`. Resolvidas em **build** (`SITE_URL` etc.).

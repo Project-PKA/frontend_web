@@ -13,6 +13,31 @@
 > catalogo** (o que o Backend grava em `image_url`; hoje `assets.tcgdex.net`). `connect-src`
 > precisa da origem da API. As imagens do catalogo saem com `referrerpolicy="no-referrer"`.
 
+## Cabecalhos de seguranca e CSP
+
+O build estatico tem alguns `<script>` embutidos em cada pagina (a configuracao do app e o
+import map). A CSP **nao usa `'unsafe-inline'`** nos scripts: cada um entra pelo hash, e o hash
+muda a cada build. Por isso o cabecalho sai do build, nao e escrito a mao:
+
+```bash
+node scripts/csp.mjs .output/public --api https://api.exemplo.com.br --images https://assets.tcgdex.net
+```
+
+O comando imprime a linha da `Content-Security-Policy` (`default-src 'self'`, `script-src` com os
+hashes, `connect-src` com a API, `img-src` com `data:`, `blob:` e o host das imagens, `font-src`
+com `data:` porque o build embute fontes pequenas, `object-src 'none'`, `frame-ancestors 'none'`).
+Gere de novo **a cada deploy** e recarregue o proxy; `docker/nginx.conf.example` mostra a inclusao.
+O `e2e/csp.spec.ts` carrega as paginas publicas sob essa mesma politica e falha com qualquer
+violacao (o Zod e configurado sem `eval` em `app/plugins/0.zod.ts` por isso).
+
+Em toda resposta: `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`,
+`Referrer-Policy: no-referrer` e `Permissions-Policy` fechada (`COMMON_HEADERS` em
+`scripts/csp.mjs`). Com `X-Robots-Tag: noindex` as rotas do app, do admin e as abertas por token
+(`NOINDEX_PATHS`); a landing, a vitrine, os termos e a privacidade ficam indexaveis. O fallback
+de rota da SPA e `try_files $uri $uri/index.html /200.html`.
+
+---
+
 A fundacao separa **como publicar** (depende da plataforma) de **quando e com
 que autorizacao publicar** (nao depende).
 
