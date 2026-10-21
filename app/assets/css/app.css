@@ -1055,6 +1055,29 @@ html {
   list-style: none;
 }
 
+/* ---------- settings ---------- */
+.settings__template {
+  padding-block: var(--sp-3);
+  border-top: 1px solid var(--border);
+}
+
+.settings__template:first-of-type {
+  border-top: 0;
+}
+
+.settings__tokens {
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.settings__tokens-label {
+  font-size: var(--fs-xs);
+}
+
+.settings__actions {
+  justify-content: flex-end;
+}
+
 /* ---------- team ---------- */
 .team__name {
   display: block;
