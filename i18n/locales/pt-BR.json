@@ -172,7 +172,9 @@
     "footer": {
       "nav": "Rodapé",
       "language": "Idioma",
-      "note": "Plataforma de leilões de cartas Pokémon TCG no WhatsApp para lojistas e colecionadores. Pokémon e os nomes das cartas pertencem aos seus respectivos titulares."
+      "note": "Plataforma de leilões de cartas Pokémon TCG no WhatsApp para lojistas e colecionadores. Pokémon e os nomes das cartas pertencem aos seus respectivos titulares.",
+      "terms": "Termos de uso",
+      "privacy": "Política de Privacidade"
     },
     "showcase": {
       "pill": "Vitrine",
@@ -188,7 +190,8 @@
       "photo": "[ foto da carta ]",
       "highest": "Maior lance",
       "bidMeta": "54 lances · último há 8 s",
-      "example": "* imagem de exemplo"
+      "example": "* imagem de exemplo",
+      "open": "Abrir a vitrine"
     },
     "dashboards": {
       "pill": "Dashboards",
@@ -2056,7 +2059,8 @@
       "consent": "Concordo que a loja guarde o meu CPF e o meu endereço para preparar o envio",
       "consentNote": "Seu CPF é guardado cifrado e a loja só o vê mascarado. Você pode pedir à loja que remova os seus dados.",
       "save": "Salvar meus dados",
-      "saved": "Dados salvos."
+      "saved": "Dados salvos.",
+      "privacy": "Política de Privacidade"
     },
     "pay": {
       "title": "Pagamento",
@@ -2079,6 +2083,20 @@
       "required": "Preencha este campo.",
       "state": "Informe as duas letras do estado.",
       "consent": "É preciso concordar para continuar."
+    },
+    "receipt": {
+      "label": "Comprovante (opcional)",
+      "hint": "Uma foto ou imagem do comprovante: JPEG, PNG ou WebP, até 5 MB.",
+      "send": "Enviar comprovante",
+      "sent": "Comprovante enviado à loja.",
+      "already": "Já foi enviado um comprovante para este acerto.",
+      "done": "Você já enviou o comprovante à loja.",
+      "errors": {
+        "choose": "Escolha a imagem do comprovante.",
+        "type": "O arquivo não é uma imagem. Envie um JPEG, PNG ou WebP.",
+        "size": "A imagem é grande demais. O limite é 5 MB.",
+        "empty": "O arquivo está vazio."
+      }
     }
   },
   "consignorPage": {
@@ -2173,6 +2191,118 @@
       "copyFailed": "Não foi possível copiar. Selecione o link e copie à mão.",
       "whatsapp": "Enviar no WhatsApp",
       "message": "Oi, {name}! Aqui está o resumo da sua compra e onde deixar os seus dados: {link}"
+    },
+    "receipt": {
+      "open": "Ver comprovante",
+      "aria": "Ver o comprovante enviado por {name}",
+      "title": "Comprovante do pagamento",
+      "text": "A imagem que {name} enviou como comprovante.",
+      "alt": "Comprovante do pagamento enviado por {name}",
+      "note": "Confira o pagamento na sua própria conta: o comprovante é só uma imagem."
+    }
+  },
+  "showcase": {
+    "title": "Leilões ao vivo",
+    "heading": "Leilões ao vivo agora",
+    "lead": "Escolha uma carta e dê o seu lance direto no grupo de WhatsApp da loja.",
+    "count": "nenhum acontecendo | 1 acontecendo | {count} acontecendo",
+    "loading": "Carregando os leilões",
+    "live": "AO VIVO",
+    "noPhoto": "[ foto da carta ]",
+    "highest": "Maior lance",
+    "noBids": "Sem lances ainda",
+    "bids": "Nenhum lance | 1 lance | {count} lances",
+    "last": "último {when}",
+    "endsIn": "Termina em {time}",
+    "go": "Ir para o leilão",
+    "openGroup": "Abre o grupo de WhatsApp da loja",
+    "loadMore": "Mostrar mais",
+    "filters": {
+      "store": "Loja",
+      "storeAll": "Loja: todas",
+      "language": "Idioma",
+      "languageAll": "Idioma: todos",
+      "sort": "Ordenar por"
+    },
+    "sort": {
+      "ENDING_SOON": "Terminando primeiro",
+      "HIGHEST_BID": "Maior lance",
+      "MOST_BIDS": "Mais lances",
+      "NEWEST": "Mais novos"
+    },
+    "error": {
+      "title": "Não foi possível carregar os leilões",
+      "text": "Confira a conexão e tente de novo.",
+      "retry": "Tentar de novo"
+    },
+    "empty": {
+      "title": "Nenhum leilão ao vivo agora",
+      "text": "Volte logo: as lojas desta página abrem leilões novos todos os dias."
+    }
+  },
+  "legal": {
+    "notice": "Texto ilustrativo para revisão jurídica",
+    "terms": {
+      "title": "Termos de uso",
+      "sections": {
+        "0": {
+          "title": "Sobre a plataforma",
+          "text": "A plataforma organiza leilões de cartas Pokémon TCG em grupos de WhatsApp: estoque, agenda, registro de lances, acertos e relatórios."
+        },
+        "1": {
+          "title": "Acesso por convite",
+          "text": "O acesso é concedido pela administração por convite. Cada usuário é responsável pelo uso da própria conta."
+        },
+        "2": {
+          "title": "Vendas e pagamentos",
+          "text": "A plataforma não realiza vendas, não processa pagamentos e não cuida do envio. A negociação ocorre diretamente entre loja e comprador."
+        },
+        "3": {
+          "title": "Conduta e moderação",
+          "text": "Lojas são responsáveis pelo conteúdo e pela moderação dos seus grupos, incluindo a lista de números bloqueados."
+        },
+        "4": {
+          "title": "Planos e cobrança",
+          "text": "Os limites seguem o plano da loja. Nesta fase não há cobrança: o plano é só um rótulo com limites."
+        },
+        "5": {
+          "title": "Contato",
+          "text": "Dúvidas sobre estes termos: fale com a administração da plataforma ou com a loja com quem você negocia."
+        }
+      }
+    },
+    "privacy": {
+      "title": "Política de Privacidade",
+      "sections": {
+        "0": {
+          "title": "Quais dados coletamos",
+          "text": "Nome, e-mail, telefone, CPF e endereço informados por lojistas, compradores e consignadores, além de registros de lances e de uso da plataforma."
+        },
+        "1": {
+          "title": "Para que usamos",
+          "text": "Identificar compradores, confirmar acertos, organizar envios e repasses de consignação e manter a segurança do serviço."
+        },
+        "2": {
+          "title": "Base legal (LGPD)",
+          "text": "Execução de contrato, legítimo interesse e consentimento, conforme a finalidade de cada dado."
+        },
+        "3": {
+          "title": "Com quem compartilhamos",
+          "text": "Os dados de um comprador são visíveis para a loja em que ele participou do leilão. O CPF é guardado cifrado e mostrado mascarado. Não vendemos dados pessoais."
+        },
+        "4": {
+          "title": "Por quanto tempo guardamos",
+          "text": "Pelo tempo necessário para as finalidades acima e para cumprir obrigações legais."
+        },
+        "5": {
+          "title": "Seus direitos",
+          "text": "Você pode pedir acesso, correção, portabilidade, anonimização ou exclusão dos seus dados e revogar consentimentos. Fale com a loja ou com a administração da plataforma."
+        },
+        "6": {
+          "title": "Encarregado (DPO)",
+          "text": "O contato do encarregado pelo tratamento de dados será publicado aqui quando a plataforma tiver as primeiras lojas."
+        }
+      }
     }
   }
 }

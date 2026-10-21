@@ -59,7 +59,19 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      routes: ['/', '/pt-BR', '/robots.txt', '/sitemap.xml', '/settlement', '/consignor'],
+      routes: [
+        '/',
+        '/pt-BR',
+        '/robots.txt',
+        '/sitemap.xml',
+        '/settlement',
+        '/consignor',
+        '/showcase',
+        '/terms',
+        '/privacy',
+        '/pt-BR/terms',
+        '/pt-BR/privacy',
+      ],
     },
   },
 });

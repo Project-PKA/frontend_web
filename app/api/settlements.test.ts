@@ -45,4 +45,14 @@ describe('settlements api', () => {
       body: { expires_in_days: 14 },
     });
   });
+
+  it('downloads the receipt as a file', async () => {
+    const request = vi.fn().mockResolvedValue(new Blob());
+    const signal = new AbortController().signal;
+    await createSettlementsApi({ request } as unknown as ApiClient).receipt('s/1', signal);
+    expect(request).toHaveBeenCalledWith('/v1/settlements/s%2F1/receipt', {
+      parse: 'blob',
+      signal,
+    });
+  });
 });

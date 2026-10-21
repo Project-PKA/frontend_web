@@ -78,6 +78,7 @@ interface Options {
   permissions?: Record<string, boolean>;
   awaiting?: object[];
   createAnswer?: object;
+  receipt?: boolean;
 }
 
 function problem(status: number, code: string) {
@@ -94,10 +95,14 @@ async function signedIn(page: Page, options: Options = {}) {
     links: [] as { id: string; body: Record<string, unknown> }[],
     paid: [] as string[],
     lists: [] as string[],
+    receipts: [] as string[],
   };
   let awaiting = options.awaiting ?? AWAITING();
   let pending: Row[] = [
-    SETTLEMENT('s-1', 'PENDING', { payment_claimed_at: '2030-03-05T18:00:00Z' }),
+    SETTLEMENT('s-1', 'PENDING', {
+      payment_claimed_at: '2030-03-05T18:00:00Z',
+      has_receipt: options.receipt === true,
+    }),
   ];
   let paid: Row[] = [SETTLEMENT('s-9', 'PAID')];
 
@@ -161,6 +166,17 @@ async function signedIn(page: Page, options: Options = {}) {
         },
         token: 'tok_0123456789abcdefghij',
       },
+    });
+  });
+  await page.route(/\/v1\/settlements\/[^/]+\/receipt$/, (route) => {
+    calls.receipts.push(route.request().url().split('/').at(-2) ?? '');
+    return route.fulfill({
+      status: 200,
+      contentType: 'image/png',
+      body: Buffer.from(
+        'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+        'base64',
+      ),
     });
   });
   await page.route(/\/v1\/settlements\/[^/]+\/paid$/, (route) => {
@@ -280,6 +296,32 @@ test('lists the open settlements, with the notice of the buyer, and makes a new 
     '/settlement#token=',
   );
   expect(calls.links).toEqual([{ id: 's-1', body: { expires_in_days: 14 } }]);
+});
+
+test('shows the receipt the buyer sent, as an image, only to who asks for it', async ({ page }) => {
+  const calls = await signedIn(page, { receipt: true });
+  await page.goto('/settlements');
+
+  await page.getByRole('tab', { name: 'Open' }).click();
+  expect(calls.receipts).toEqual([]);
+  await page.getByRole('button', { name: 'View the receipt sent by Bruno A.' }).click();
+
+  const dialog = page.getByRole('dialog', { name: 'Receipt of the payment' });
+  const image = dialog.getByRole('img', { name: 'Receipt of the payment sent by Bruno A.' });
+  await expect(image).toBeVisible();
+  expect(await image.getAttribute('src')).toMatch(/^blob:/);
+  expect(calls.receipts).toEqual(['s-1']);
+  await expect(dialog).toContainText('the receipt is only an image');
+  await dialog.getByRole('button', { name: 'Close' }).click();
+  await expect(dialog).toBeHidden();
+});
+
+test('has no receipt button when the buyer sent none', async ({ page }) => {
+  await signedIn(page);
+  await page.goto('/settlements');
+
+  await page.getByRole('tab', { name: 'Open' }).click();
+  await expect(page.getByRole('button', { name: /View the receipt/ })).toHaveCount(0);
 });
 
 test('confirms a payment only after asking, and the settlement moves to the paid ones', async ({

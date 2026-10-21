@@ -58,4 +58,27 @@ describe('public pages api', () => {
       anonymous: true,
     });
   });
+
+  it('asks for the showcase with the filters and the offset, without a session', async () => {
+    const request = vi.fn().mockResolvedValue({});
+    const signal = new AbortController().signal;
+    await apiWith(request).showcase({ store: 's1', sort: 'HIGHEST_BID' }, 24, signal);
+    expect(request).toHaveBeenCalledWith('/v1/public/showcase', {
+      query: { store: 's1', sort: 'HIGHEST_BID', limit: 24, offset: 24 },
+      signal,
+      anonymous: true,
+    });
+  });
+
+  it('sends the receipt as the body, with the token in the header', async () => {
+    const request = vi.fn().mockResolvedValue({ result: 'OK' });
+    const file = new Blob(['x'], { type: 'image/png' });
+    await apiWith(request).sendReceipt('tok', file);
+    expect(request).toHaveBeenCalledWith('/v1/public/settlement/receipt', {
+      method: 'PUT',
+      body: file,
+      headers: { 'x-public-token': 'tok' },
+      anonymous: true,
+    });
+  });
 });

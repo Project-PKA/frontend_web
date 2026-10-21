@@ -414,12 +414,38 @@ mesma coisa). O contrato deixa o corpo das duas paginas aberto: `normalizeSettle
 e total (sem frete), CPF e endereco com mascara (`maskCpf`, `maskCep`) e **consentimento**
 (`CONSENT_VERSION` e o texto sao rascunho ate a revisao juridica, D2), chave PIX com "Copiar", e "Ja
 paguei, avisar a loja", que **so avisa** (a pagina continua "Aguardando pagamento"; quem confirma e a
-loja). Sem comprovante em arquivo (issue propria, bloqueada). O texto nao promete nada sobre o
+loja). **Comprovante** (opcional, so enquanto pendente): uma imagem JPEG, PNG ou WebP de ate 5 MB
+(`checkReceipt`), enviada como esta (`PUT /v1/public/settlement/receipt`, o token vai no header
+`x-public-token`, a opcao `headers` do cliente); `RECEIPT_EXISTS` diz que ja havia um. A loja o ve em
+`/settlements` ("Ver comprovante", `GET /v1/settlements/:id/receipt` como arquivo, so com o login; o
+endereco temporario e liberado ao fechar) e o aviso diz que o comprovante e so uma imagem. O texto nao promete
 pagamento: a plataforma nao o processa. **Consignador**: a chave sao os 4 primeiros digitos do CPF
 (`AppOtpInput keys`; o ultimo digito abre sozinho), vive so na memoria e a pagina pergunta de novo a
 cada 15 s; 404 (chave errada ou link ruim) e o mesmo texto, 429 pede para esperar. Mostra carta,
 situacao, lances com telefone parcialmente oculto (a API ja oculta), contagem regressiva e a estimativa
 de repasse (lance menos a comissao = o que a API manda como repasse) com o aviso de que e estimativa.
+
+**Vitrine publica** — `/showcase` (layout `public`, sem login, sem token): os leiloes ao vivo das lojas que
+ligaram a vitrine (`GET /v1/public/showcase`, ate 24 por pagina por `offset`, no maximo 480; a pagina
+pergunta de novo a cada 30 s). Filtros de loja (a lista vem da propria resposta), idioma
+(PT, EN, JP, ES) e ordem (terminando primeiro, maior lance, mais lances, mais novos), no endereco
+(valor desconhecido e descartado). A arte do catalogo (D5) vem do endereco de origem, so `https`
+(`artUrl`), com `referrerpolicy="no-referrer"`; sem arte aparece o quadro com "foto da carta". "Ir
+para o leilao" abre o grupo da loja e **so aparece se o link e de verdade um convite**
+(`isGroupInviteUrl`, `https://chat.whatsapp.com/...`): a loja ja pode ter guardado outra coisa. Link
+para a landing em `/showcase` e `to="/showcase"` puro (`localePath` devolve vazio em pagina
+`i18n: false`).
+
+**Termos e privacidade** — `/terms` e `/privacy` (e `/pt-BR/...`, pagina com idioma na URL, ao
+contrario das telas do app), em `LegalDocument` com a nota "Texto ilustrativo para revisao
+juridica" sempre visivel (D2: o texto juridico e do dono). Dizem que a plataforma nao vende, nao
+processa pagamento nem cuida do envio (ADR 0013) e que o CPF e guardado cifrado e mostrado
+mascarado. Linkadas no rodape da landing e na pagina do acerto. Sem data nem e-mail de contato: o
+que o design deixava como `[ ... ]` ficou de fora ate haver loja real.
+
+**O que continua com o dono** — cobranca e faturas (#40, D6: sem cobranca no MVP; o design tinha
+"Forma de pagamento" e "Faturas", que nao existem) e o nome final do produto (#10, D10:
+`pokemonAuction` e provisorio e vem de `t('brand.name')`, um lugar so).
 
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o

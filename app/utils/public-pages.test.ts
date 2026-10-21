@@ -1,9 +1,12 @@
 import { describe, expect, it } from 'vitest';
 import {
   CONSENT_VERSION,
+  MAX_RECEIPT_BYTES,
   accessKey,
+  checkReceipt,
   commissionOf,
   normalizeConsignor,
+  normalizeShowcase,
   normalizeSettlement,
   toBuyerSubmission,
   type BuyerForm,
@@ -42,6 +45,7 @@ describe('normalizeSettlement', () => {
       pixKey: 'loja-pix',
       status: 'PENDING',
       claimedAt: null,
+      receiptSent: false,
       total: '115.00',
     });
     expect(view.items).toHaveLength(2);
@@ -200,10 +204,85 @@ describe('normalizeConsignor', () => {
   });
 });
 
+describe('normalizeShowcase', () => {
+  const page = {
+    items: [
+      {
+        store: {
+          id: 's-1',
+          name: 'Card Hub',
+          city: 'São Paulo',
+          group_url: 'https://chat.whatsapp.com/AbCdEfGhIj12',
+        },
+        card: {
+          short_code: '0431',
+          name: 'Pikachu VMAX',
+          number: '044/185',
+          set_name: 'Vivid Voltage',
+          condition: 'NM',
+          language: 'PT',
+          is_foil: true,
+          image_url: 'https://assets.example.com/low.webp',
+        },
+        current_bid: '465.00',
+        bid_count: 41,
+        last_bid_at: '2030-03-05T21:42:10Z',
+        ends_at: '2030-03-05T22:00:00Z',
+      },
+    ],
+    total: 6,
+    stores: [{ id: 's-1', name: 'Card Hub' }, { name: 'no id' }],
+  };
+
+  it('reads the items, the total and the stores of the filter', () => {
+    const view = normalizeShowcase(page);
+    expect(view.total).toBe(6);
+    expect(view.stores).toEqual([{ id: 's-1', name: 'Card Hub' }]);
+    expect(view.items[0]).toMatchObject({
+      storeName: 'Card Hub',
+      city: 'São Paulo',
+      groupUrl: 'https://chat.whatsapp.com/AbCdEfGhIj12',
+      code: '0431',
+      name: 'Pikachu VMAX',
+      set: 'Vivid Voltage',
+      foil: true,
+      imageUrl: 'https://assets.example.com/low.webp',
+      currentBid: '465.00',
+      bidCount: 41,
+    });
+  });
+
+  it('survives an auction with no bid, no image and fields missing', () => {
+    const view = normalizeShowcase({ items: [{ card: { name: 'Mew ex' } }] });
+    expect(view.items[0]).toMatchObject({
+      name: 'Mew ex',
+      currentBid: null,
+      bidCount: 0,
+      imageUrl: null,
+      groupUrl: null,
+    });
+    expect(normalizeShowcase(undefined)).toEqual({ items: [], total: 0, stores: [] });
+  });
+});
+
 describe('commissionOf', () => {
   it('is the bid minus what is passed on, never below zero', () => {
     expect(commissionOf('465.00', '395.25')).toBe('69.75');
     expect(commissionOf('10.00', '12.00')).toBe('0.00');
+  });
+});
+
+describe('checkReceipt', () => {
+  it('accepts an image up to 5 MB', () => {
+    expect(checkReceipt({ type: 'image/png', size: 1000 })).toBeNull();
+    expect(checkReceipt({ type: 'image/webp', size: MAX_RECEIPT_BYTES })).toBeNull();
+  });
+
+  it('refuses what is not a JPEG, PNG or WebP, an empty file and a big one', () => {
+    expect(checkReceipt({ type: 'application/pdf', size: 1000 })).toBe('type');
+    expect(checkReceipt({ type: 'image/gif', size: 1000 })).toBe('type');
+    expect(checkReceipt({ type: 'image/png', size: 0 })).toBe('empty');
+    expect(checkReceipt({ type: 'image/png', size: MAX_RECEIPT_BYTES + 1 })).toBe('size');
   });
 });
 

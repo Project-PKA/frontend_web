@@ -179,6 +179,30 @@ const awaitingRows = computed(() =>
 );
 type AwaitingRow = (typeof awaitingRows.value)[number];
 
+// ---- The receipt the buyer sent: an image that needs the login, so it comes as a file
+const receipt = ref<{ name: string; url: string } | null>(null);
+const receiptBusy = ref<string | null>(null);
+
+function closeReceipt() {
+  if (receipt.value) URL.revokeObjectURL(receipt.value.url);
+  receipt.value = null;
+}
+onBeforeUnmount(closeReceipt);
+
+async function openReceipt(row: Row) {
+  receiptBusy.value = row.id;
+  failure.value = null;
+  try {
+    const file = await api.receipt(row.id);
+    closeReceipt();
+    receipt.value = { name: row.customer.name, url: URL.createObjectURL(file) };
+  } catch (error) {
+    failure.value = errorMessage(error);
+  } finally {
+    receiptBusy.value = null;
+  }
+}
+
 // ---- Confirming a payment: the cards become sold, so it asks first
 const confirming = ref<Row | null>(null);
 const confirmBusy = ref(false);
@@ -295,6 +319,15 @@ async function confirmPayment() {
                     {{ t('settlements.link.open') }}
                   </AppButton>
                   <AppButton
+                    v-if="row.has_receipt"
+                    size="sm"
+                    :busy="receiptBusy === row.id"
+                    :label="t('settlements.receipt.aria', { name: row.customer.name })"
+                    @click="openReceipt(row)"
+                  >
+                    {{ t('settlements.receipt.open') }}
+                  </AppButton>
+                  <AppButton
                     v-if="canConfirm"
                     size="sm"
                     variant="primary"
@@ -351,6 +384,24 @@ async function confirmPayment() {
           {{ t('settlements.link.whatsapp') }}
         </a>
       </template>
+    </AppModal>
+
+    <AppModal
+      :open="receipt !== null"
+      :title="t('settlements.receipt.title')"
+      :close-label="t('settlements.close')"
+      @close="closeReceipt"
+    >
+      <div class="stack">
+        <p class="muted">{{ t('settlements.receipt.text', { name: receipt?.name ?? '' }) }}</p>
+        <img
+          v-if="receipt"
+          class="settlements__receipt"
+          :src="receipt.url"
+          :alt="t('settlements.receipt.alt', { name: receipt.name })"
+        />
+        <p class="faint">{{ t('settlements.receipt.note') }}</p>
+      </div>
     </AppModal>
 
     <AppModal

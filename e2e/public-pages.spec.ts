@@ -31,6 +31,7 @@ interface SettlementOptions {
   viewAnswer?: object;
   dataAnswer?: object;
   paidAnswer?: object;
+  receiptAnswer?: object;
 }
 
 async function settlementApi(page: Page, options: SettlementOptions = {}) {
@@ -39,9 +40,23 @@ async function settlementApi(page: Page, options: SettlementOptions = {}) {
     data: [] as Record<string, unknown>[],
     paid: [] as Record<string, unknown>[],
     headers: [] as Record<string, string>[],
+    receipts: [] as { token: string | undefined; type: string | undefined; size: number }[],
   };
   let current: object = options.page ?? SETTLEMENT;
 
+  await page.route(/\/v1\/public\/settlement\/receipt$/, (route) => {
+    const request = route.request();
+    calls.receipts.push({
+      token: request.headers()['x-public-token'],
+      type: request.headers()['content-type'],
+      size: request.postDataBuffer()?.length ?? 0,
+    });
+    if (options.receiptAnswer) {
+      return route.fulfill(options.receiptAnswer as Parameters<typeof route.fulfill>[0]);
+    }
+    current = { ...current, receipt_sent: true };
+    return route.fulfill({ status: 200, json: { result: 'OK' } });
+  });
   await page.route(/\/v1\/public\/settlement\/paid$/, (route) => {
     calls.paid.push(route.request().postDataJSON() as Record<string, unknown>);
     if (options.paidAnswer)
@@ -244,6 +259,81 @@ test('translates the error of the notice, never the detail', async ({ page }) =>
   await page.getByRole('button', { name: 'I already paid, notify the store' }).click();
   await expect(page.getByRole('alert').filter({ hasText: 'Too many attempts' })).toBeVisible();
   await expect(page.getByText('mensagem em português')).toHaveCount(0);
+});
+
+const PNG = Buffer.from(
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+  'base64',
+);
+
+test('sends the receipt as an image, with the token in the header', async ({ page }) => {
+  const calls = await settlementApi(page);
+  await page.goto(`/settlement#token=${TOKEN}`);
+
+  await page
+    .getByLabel('Receipt (optional)')
+    .setInputFiles({ name: 'receipt.png', mimeType: 'image/png', buffer: PNG });
+  await page.getByRole('button', { name: 'Send receipt' }).click();
+
+  await expect(page.getByText('Receipt sent to the store.')).toBeVisible();
+  expect(calls.receipts).toEqual([{ token: TOKEN, type: 'image/png', size: PNG.length }]);
+  await expect(page.getByText('You already sent the receipt to the store.')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Send receipt' })).toHaveCount(0);
+});
+
+test('checks the receipt before sending it', async ({ page }) => {
+  const calls = await settlementApi(page);
+  await page.goto(`/settlement#token=${TOKEN}`);
+
+  await page.getByRole('button', { name: 'Send receipt' }).click();
+  await expect(page.getByText('Choose the image of the receipt.')).toBeVisible();
+
+  await page
+    .getByLabel('Receipt (optional)')
+    .setInputFiles({ name: 'receipt.pdf', mimeType: 'application/pdf', buffer: Buffer.from('x') });
+  await page.getByRole('button', { name: 'Send receipt' }).click();
+  await expect(page.getByText('The file is not an image.')).toBeVisible();
+
+  await page.getByLabel('Receipt (optional)').setInputFiles({
+    name: 'big.png',
+    mimeType: 'image/png',
+    buffer: Buffer.alloc(5 * 1024 * 1024 + 1),
+  });
+  await page.getByRole('button', { name: 'Send receipt' }).click();
+  await expect(page.getByText('The image is too big. The limit is 5 MB.')).toBeVisible();
+  expect(calls.receipts).toEqual([]);
+});
+
+test('says a receipt was already sent, and translates the error of the file', async ({ page }) => {
+  await settlementApi(page, { receiptAnswer: { status: 200, json: { result: 'RECEIPT_EXISTS' } } });
+  await page.goto(`/settlement#token=${TOKEN}`);
+
+  await page
+    .getByLabel('Receipt (optional)')
+    .setInputFiles({ name: 'receipt.png', mimeType: 'image/png', buffer: PNG });
+  await page.getByRole('button', { name: 'Send receipt' }).click();
+  await expect(page.getByText('A receipt was already sent for this settlement.')).toBeVisible();
+});
+
+test('shows the error of the receipt translated, never the detail', async ({ page }) => {
+  await settlementApi(page, { receiptAnswer: problem(422, 'RECEIPT_INVALID') });
+  await page.goto(`/settlement#token=${TOKEN}`);
+
+  await page
+    .getByLabel('Receipt (optional)')
+    .setInputFiles({ name: 'receipt.png', mimeType: 'image/png', buffer: PNG });
+  await page.getByRole('button', { name: 'Send receipt' }).click();
+  await expect(
+    page.getByRole('alert').filter({ hasText: 'The file is not an image' }),
+  ).toBeVisible();
+  await expect(page.getByText('mensagem em português')).toHaveCount(0);
+});
+
+test('does not ask for a receipt when the settlement is already paid', async ({ page }) => {
+  await settlementApi(page, { page: { ...SETTLEMENT, status: 'PAID' } });
+  await page.goto(`/settlement#token=${TOKEN}`);
+
+  await expect(page.getByLabel('Receipt (optional)')).toHaveCount(0);
 });
 
 test('the settlement fits a 320px screen without scrolling sideways', async ({ page }) => {

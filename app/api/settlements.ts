@@ -49,6 +49,12 @@ export function createSettlementsApi(client: ApiClient) {
         method: 'POST',
         body: { customer_id: customerId, auction_ids: auctionIds },
       }),
+    /** The image the buyer sent as the receipt (needs the login, so it comes as a file). */
+    receipt: (id: string, signal?: AbortSignal) =>
+      client.request<Blob>(`/v1/settlements/${encodeURIComponent(id)}/receipt`, {
+        parse: 'blob',
+        signal,
+      }),
     /** A new link: the previous one stops working. */
     createLink: (id: string) =>
       client.request<SettlementLink>(`/v1/settlements/${encodeURIComponent(id)}/public-link`, {

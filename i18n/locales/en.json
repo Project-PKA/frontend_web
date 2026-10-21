@@ -172,7 +172,9 @@
     "footer": {
       "nav": "Footer",
       "language": "Language",
-      "note": "A platform for Pokémon TCG auctions on WhatsApp for store owners and collectors. Pokémon and the card names belong to their respective owners."
+      "note": "A platform for Pokémon TCG auctions on WhatsApp for store owners and collectors. Pokémon and the card names belong to their respective owners.",
+      "terms": "Terms of use",
+      "privacy": "Privacy policy"
     },
     "showcase": {
       "pill": "Showcase",
@@ -188,7 +190,8 @@
       "photo": "[ card photo ]",
       "highest": "Highest bid",
       "bidMeta": "54 bids · last one 8 s ago",
-      "example": "* example image"
+      "example": "* example image",
+      "open": "Open the showcase"
     },
     "dashboards": {
       "pill": "Dashboards",
@@ -2056,7 +2059,8 @@
       "consent": "I agree that the store keeps my CPF and address to prepare the shipping",
       "consentNote": "Your CPF is stored encrypted and the store only sees it masked. You can ask the store to remove your data.",
       "save": "Save my data",
-      "saved": "Data saved."
+      "saved": "Data saved.",
+      "privacy": "Privacy policy"
     },
     "pay": {
       "title": "Payment",
@@ -2079,6 +2083,20 @@
       "required": "Fill in this field.",
       "state": "Enter the two letters of the state.",
       "consent": "You need to agree to continue."
+    },
+    "receipt": {
+      "label": "Receipt (optional)",
+      "hint": "A photo or image of the receipt: JPEG, PNG or WebP, up to 5 MB.",
+      "send": "Send receipt",
+      "sent": "Receipt sent to the store.",
+      "already": "A receipt was already sent for this settlement.",
+      "done": "You already sent the receipt to the store.",
+      "errors": {
+        "choose": "Choose the image of the receipt.",
+        "type": "The file is not an image. Send a JPEG, PNG or WebP.",
+        "size": "The image is too big. The limit is 5 MB.",
+        "empty": "The file is empty."
+      }
     }
   },
   "consignorPage": {
@@ -2173,6 +2191,118 @@
       "copyFailed": "Could not copy. Select the link and copy it by hand.",
       "whatsapp": "Send on WhatsApp",
       "message": "Hi, {name}! Here is the summary of your purchase and where to leave your data: {link}"
+    },
+    "receipt": {
+      "open": "View receipt",
+      "aria": "View the receipt sent by {name}",
+      "title": "Receipt of the payment",
+      "text": "The image {name} sent as the receipt.",
+      "alt": "Receipt of the payment sent by {name}",
+      "note": "Check the payment in your own account: the receipt is only an image."
+    }
+  },
+  "showcase": {
+    "title": "Live auctions",
+    "heading": "Live auctions right now",
+    "lead": "Pick a card and place your bid straight in the WhatsApp group of the store.",
+    "count": "none happening | 1 happening | {count} happening",
+    "loading": "Loading the auctions",
+    "live": "LIVE",
+    "noPhoto": "[ card photo ]",
+    "highest": "Highest bid",
+    "noBids": "No bids yet",
+    "bids": "No bids | 1 bid | {count} bids",
+    "last": "last {when}",
+    "endsIn": "Ends in {time}",
+    "go": "Go to the auction",
+    "openGroup": "Opens the WhatsApp group of the store",
+    "loadMore": "Show more",
+    "filters": {
+      "store": "Store",
+      "storeAll": "Store: all",
+      "language": "Language",
+      "languageAll": "Language: all",
+      "sort": "Sort by"
+    },
+    "sort": {
+      "ENDING_SOON": "Ending first",
+      "HIGHEST_BID": "Highest bid",
+      "MOST_BIDS": "Most bids",
+      "NEWEST": "Newest"
+    },
+    "error": {
+      "title": "We could not load the auctions",
+      "text": "Check the connection and try again.",
+      "retry": "Try again"
+    },
+    "empty": {
+      "title": "No live auctions right now",
+      "text": "Come back soon: the stores on this page open new auctions every day."
+    }
+  },
+  "legal": {
+    "notice": "Illustrative text, pending legal review",
+    "terms": {
+      "title": "Terms of use",
+      "sections": {
+        "0": {
+          "title": "About the platform",
+          "text": "The platform organizes Pokémon TCG card auctions in WhatsApp groups: stock, schedule, bid records, settlements and reports."
+        },
+        "1": {
+          "title": "Access by invitation",
+          "text": "Access is granted by the administration through an invitation. Each user is responsible for the use of their own account."
+        },
+        "2": {
+          "title": "Sales and payments",
+          "text": "The platform does not make sales, does not process payments and does not handle shipping. The deal is made directly between the store and the buyer."
+        },
+        "3": {
+          "title": "Conduct and moderation",
+          "text": "Stores are responsible for the content and the moderation of their groups, including the list of blocked numbers."
+        },
+        "4": {
+          "title": "Plans and billing",
+          "text": "Limits follow the plan of the store. In this phase there is no billing: the plan is only a label with limits."
+        },
+        "5": {
+          "title": "Contact",
+          "text": "For questions about these terms, talk to the platform administration or to the store you deal with."
+        }
+      }
+    },
+    "privacy": {
+      "title": "Privacy policy",
+      "sections": {
+        "0": {
+          "title": "What data we collect",
+          "text": "Name, e-mail, phone, CPF and address given by store owners, buyers and consignors, plus the records of bids and of the use of the platform."
+        },
+        "1": {
+          "title": "What we use it for",
+          "text": "To identify buyers, to confirm settlements, to prepare shipments and consignment payouts and to keep the service secure."
+        },
+        "2": {
+          "title": "Legal basis (LGPD)",
+          "text": "Performance of a contract, legitimate interest and consent, according to the purpose of each piece of data."
+        },
+        "3": {
+          "title": "Who we share it with",
+          "text": "The data of a buyer is visible to the store in whose auction they took part. The CPF is stored encrypted and shown masked. We do not sell personal data."
+        },
+        "4": {
+          "title": "How long we keep it",
+          "text": "For as long as needed for the purposes above and to meet legal obligations."
+        },
+        "5": {
+          "title": "Your rights",
+          "text": "You can ask for access, correction, portability, anonymization or deletion of your data, and withdraw your consent. Ask the store or the platform administration."
+        },
+        "6": {
+          "title": "Data protection officer",
+          "text": "The contact of the person in charge of data protection will be published here when the platform has its first stores."
+        }
+      }
     }
   }
 }

@@ -4,7 +4,13 @@ import { createPublicPagesApi } from '../api/public-pages';
 import { ApiError } from '../api/errors';
 import { maskCep, maskCpf } from '../utils/documents';
 import { tokenFromFragment } from '../utils/fragment-token';
-import { normalizeSettlement, toBuyerSubmission, type BuyerFormError } from '../utils/public-pages';
+import {
+  RECEIPT_TYPES,
+  checkReceipt,
+  normalizeSettlement,
+  toBuyerSubmission,
+  type BuyerFormError,
+} from '../utils/public-pages';
 
 definePageMeta({ i18n: false, layout: 'plain' });
 
@@ -132,6 +138,38 @@ async function claim() {
     claimFailure.value = errorMessage(error);
   } finally {
     claiming.value = false;
+  }
+}
+
+// ---- The receipt of the payment: an image, optional
+const receiptInput = ref<HTMLInputElement | null>(null);
+const sending = ref(false);
+const receiptFailure = ref<string | null>(null);
+
+async function sendReceipt() {
+  const file = receiptInput.value?.files?.[0];
+  receiptFailure.value = null;
+  if (!file) {
+    receiptFailure.value = t('settlementPage.receipt.errors.choose');
+    return;
+  }
+  const problem = checkReceipt(file);
+  if (problem) {
+    receiptFailure.value = t(`settlementPage.receipt.errors.${problem}`);
+    return;
+  }
+  sending.value = true;
+  try {
+    const answer = await api.sendReceipt(token.value as string, file);
+    await queryClient.invalidateQueries({ queryKey: ['public-settlement'] });
+    if (receiptInput.value) receiptInput.value.value = '';
+    toast.success(
+      t(answer.result === 'OK' ? 'settlementPage.receipt.sent' : 'settlementPage.receipt.already'),
+    );
+  } catch (error) {
+    receiptFailure.value = errorMessage(error);
+  } finally {
+    sending.value = false;
   }
 }
 
@@ -322,7 +360,10 @@ const savedAddress = computed(() => {
               {{ t('settlementPage.data.consent') }}
             </AppSwitch>
             <p v-if="errors.consent" class="hint hint--error">{{ errors.consent }}</p>
-            <p class="faint settlement__meta">{{ t('settlementPage.data.consentNote') }}</p>
+            <p class="faint settlement__meta">
+              {{ t('settlementPage.data.consentNote') }}
+              <NuxtLink to="/privacy">{{ t('settlementPage.data.privacy') }}</NuxtLink>
+            </p>
           </div>
 
           <p v-if="failure" role="alert" class="hint hint--error">{{ failure }}</p>
@@ -350,6 +391,32 @@ const savedAddress = computed(() => {
             </AppButton>
           </div>
           <p v-else class="hint">{{ t('settlementPage.pay.noPix') }}</p>
+
+          <div v-if="view.status === 'PENDING'" class="field settlement__receipt">
+            <span class="label">{{ t('settlementPage.receipt.label') }}</span>
+            <p v-if="view.receiptSent" class="hint" role="status">
+              {{ t('settlementPage.receipt.done') }}
+            </p>
+            <div v-else class="stack">
+              <input
+                ref="receiptInput"
+                class="input"
+                type="file"
+                :accept="RECEIPT_TYPES.join(',')"
+                :aria-label="t('settlementPage.receipt.label')"
+              />
+              <p class="faint settlement__meta">{{ t('settlementPage.receipt.hint') }}</p>
+              <p v-if="receiptFailure" role="alert" class="hint hint--error">
+                {{ receiptFailure }}
+              </p>
+              <div class="row">
+                <AppButton :busy="sending" @click="sendReceipt">
+                  <AppIcon name="download" />
+                  {{ t('settlementPage.receipt.send') }}
+                </AppButton>
+              </div>
+            </div>
+          </div>
 
           <p v-if="view.claimedAt" class="hint" role="status">
             {{ t('settlementPage.pay.claimedAt', { when: format.dateTime(view.claimedAt) }) }}

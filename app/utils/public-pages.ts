@@ -33,6 +33,8 @@ export interface SettlementView {
   pixKey: string | null;
   status: 'PENDING' | 'PAID';
   claimedAt: string | null;
+  /** The buyer already sent the receipt. */
+  receiptSent: boolean;
   total: string;
   expiresAt: string;
   items: SettlementItem[];
@@ -54,6 +56,7 @@ export function normalizeSettlement(raw: unknown): SettlementView {
     pixKey: orNull(page.pix_key),
     status: page.status === 'PAID' ? 'PAID' : 'PENDING',
     claimedAt: orNull(page.payment_claimed_at),
+    receiptSent: page.receipt_sent === true,
     total: text(page.total_amount) || '0.00',
     expiresAt: text(page.expires_at),
     items: list(page.items).map((item) => ({
@@ -124,6 +127,84 @@ export function toBuyerSubmission(
       address,
       consent: { accepted: true, version: CONSENT_VERSION },
     },
+  };
+}
+
+// ---- The receipt of the payment (an image, optional)
+
+export const RECEIPT_TYPES = ['image/jpeg', 'image/png', 'image/webp'] as const;
+/** As the API: 5 MB. */
+export const MAX_RECEIPT_BYTES = 5 * 1024 * 1024;
+
+export type ReceiptError = 'type' | 'size' | 'empty';
+
+/** What is wrong with the file, before it is sent (`null` when it is fine). */
+export function checkReceipt(file: { type: string; size: number }): ReceiptError | null {
+  if (!(RECEIPT_TYPES as readonly string[]).includes(file.type)) return 'type';
+  if (file.size === 0) return 'empty';
+  if (file.size > MAX_RECEIPT_BYTES) return 'size';
+  return null;
+}
+
+// ---- The showcase of live auctions
+
+export interface ShowcaseItem {
+  key: string;
+  storeId: string;
+  storeName: string;
+  city: string | null;
+  /** The invitation link of the group of the store: the way to bid. */
+  groupUrl: string | null;
+  code: string;
+  name: string;
+  number: string;
+  set: string;
+  condition: string;
+  language: string;
+  foil: boolean;
+  imageUrl: string | null;
+  currentBid: string | null;
+  bidCount: number;
+  lastBidAt: string | null;
+  endsAt: string | null;
+}
+
+export interface ShowcaseView {
+  items: ShowcaseItem[];
+  total: number;
+  stores: { id: string; name: string }[];
+}
+
+export function normalizeShowcase(raw: unknown): ShowcaseView {
+  const page = record(raw);
+  return {
+    items: list(page.items).map((item, index) => {
+      const store = record(item.store);
+      const card = record(item.card);
+      return {
+        key: `${text(card.short_code)}-${text(store.id)}-${index}`,
+        storeId: text(store.id),
+        storeName: text(store.name),
+        city: orNull(store.city),
+        groupUrl: orNull(store.group_url),
+        code: text(card.short_code),
+        name: text(card.name),
+        number: text(card.number),
+        set: text(card.set_name),
+        condition: text(card.condition),
+        language: text(card.language),
+        foil: card.is_foil === true,
+        imageUrl: orNull(card.image_url),
+        currentBid: orNull(item.current_bid),
+        bidCount: typeof item.bid_count === 'number' ? item.bid_count : 0,
+        lastBidAt: orNull(item.last_bid_at),
+        endsAt: orNull(item.ends_at),
+      };
+    }),
+    total: typeof page.total === 'number' ? page.total : 0,
+    stores: list(page.stores)
+      .filter((store) => text(store.id) !== '')
+      .map((store) => ({ id: text(store.id), name: text(store.name) })),
   };
 }
 

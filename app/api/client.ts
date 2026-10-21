@@ -25,6 +25,8 @@ export interface RequestOptions {
   signal?: AbortSignal;
   /** What the answer is: JSON (the default) or a file, e.g. a card photo, which needs the login. */
   parse?: 'json' | 'blob';
+  /** Extra headers, e.g. the token of a public page in `x-public-token`. */
+  headers?: Record<string, string>;
 }
 
 const DEFAULT_TIMEOUT_MS = 15_000;
@@ -51,6 +53,7 @@ export function createApiClient(options: ApiClientOptions) {
     const headers = new Headers({ Accept: 'application/json, application/problem+json' });
     const payload = encodeBody(request.body);
     if (payload) headers.set('Content-Type', payload.contentType);
+    for (const [name, value] of Object.entries(request.headers ?? {})) headers.set(name, value);
     if (!request.anonymous) {
       const token = options.getAccessToken();
       const storeId = options.getStoreId();

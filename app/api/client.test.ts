@@ -26,6 +26,18 @@ function makeClient(fetchImpl: typeof fetch, overrides: { refresh?: () => Promis
 }
 
 describe('api client', () => {
+  it('sends the extra headers it is given', async () => {
+    const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ ok: true }));
+    await makeClient(fetchImpl as unknown as typeof fetch).request('/v1/x', {
+      method: 'PUT',
+      anonymous: true,
+      headers: { 'x-public-token': 'tok' },
+    });
+    const headers = (fetchImpl.mock.calls[0]![1] as RequestInit).headers as Headers;
+    expect(headers.get('x-public-token')).toBe('tok');
+    expect(headers.get('Authorization')).toBeNull();
+  });
+
   it('sends the bearer token and the store header', async () => {
     const fetchImpl = vi.fn().mockResolvedValue(jsonResponse({ ok: true }));
     await makeClient(fetchImpl).request('/v1/store');

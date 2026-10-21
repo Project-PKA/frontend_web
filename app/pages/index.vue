@@ -11,6 +11,7 @@ import { landingStructuredData } from '../utils/landing';
  */
 const { t, locale } = useI18n();
 const switchLocalePath = useSwitchLocalePath();
+const localePath = useLocalePath();
 const session = useSessionStore();
 const { public: config } = useRuntimeConfig();
 
@@ -214,6 +215,10 @@ onMounted(async () => {
                   {{ t(`landing.showcase.points.${index}`) }}
                 </li>
               </ul>
+              <NuxtLink class="btn btn--primary" to="/showcase">
+                {{ t('landing.showcase.open') }}
+                <AppIcon name="external" />
+              </NuxtLink>
             </div>
             <div class="stack landing__example">
               <article
@@ -378,6 +383,8 @@ onMounted(async () => {
           <a href="#faq">{{ t('landing.nav.faq') }}</a>
           <NuxtLink to="/request-access">{{ t('landing.nav.requestAccess') }}</NuxtLink>
           <NuxtLink to="/login">{{ t('landing.nav.signIn') }}</NuxtLink>
+          <NuxtLink :to="localePath('/terms')">{{ t('landing.footer.terms') }}</NuxtLink>
+          <NuxtLink :to="localePath('/privacy')">{{ t('landing.footer.privacy') }}</NuxtLink>
         </nav>
         <nav class="foot__links" :aria-label="t('landing.footer.language')">
           <a
