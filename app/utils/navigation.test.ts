@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import type { AccessContext } from './access';
-import { NAV_ITEMS, isCurrent, visibleNavItems } from './navigation';
+import { decideAccess, type AccessContext } from './access';
+import { ADMIN_NAV_ITEMS, NAV_ITEMS, isCurrent, visibleNavItems } from './navigation';
 import { toPermissionMap } from './permissions';
 
 const base: AccessContext = {
@@ -65,6 +65,15 @@ describe('visibleNavItems', () => {
     expect(ids({ ...base, authenticated: false })).toEqual([]);
   });
 
+  it('shows the way into the admin area only to a platform administrator', () => {
+    expect(ids({ ...base, role: 'OWNER' })).not.toContain('admin');
+    expect(ids({ ...base, role: 'OWNER', isPlatformAdmin: true }).at(-1)).toBe('admin');
+    // The administrator does not need a store for it.
+    expect(
+      ids({ ...base, storeId: null, role: null, permissions: null, isPlatformAdmin: true }),
+    ).toEqual(['admin']);
+  });
+
   it('has an item for every entry once, with its own path', () => {
     expect(new Set(NAV_ITEMS.map((item) => item.id)).size).toBe(NAV_ITEMS.length);
     expect(new Set(NAV_ITEMS.map((item) => item.to)).size).toBe(NAV_ITEMS.length);
@@ -86,5 +95,24 @@ describe('isCurrent', () => {
   it('is not current on another page, even with a similar name', () => {
     expect(isCurrent(inventory, '/home')).toBe(false);
     expect(isCurrent(inventory, '/inventory-old')).toBe(false);
+  });
+});
+
+describe('the admin menu', () => {
+  const dashboard = ADMIN_NAV_ITEMS.find((item) => item.id === 'dashboard')!;
+
+  it('is for the platform administrator, with no store', () => {
+    const context = { ...base, storeId: null, role: null, permissions: null };
+    const ask = (isPlatformAdmin: boolean) =>
+      ADMIN_NAV_ITEMS.filter(
+        (item) => decideAccess(item.access, { ...context, isPlatformAdmin }).kind === 'allow',
+      ).map((item) => item.id);
+    expect(ask(true)).toContain('dashboard');
+    expect(ask(false)).toEqual([]);
+  });
+
+  it('marks the dashboard current only on /admin, not on the pages under it', () => {
+    expect(isCurrent(dashboard, '/admin')).toBe(true);
+    expect(isCurrent(dashboard, '/admin/users')).toBe(false);
   });
 });

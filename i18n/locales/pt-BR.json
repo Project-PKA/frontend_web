@@ -396,7 +396,8 @@
     "settings": "Configurações",
     "finance": "Financeiro",
     "profile": "Meu perfil",
-    "activity": "Notificações e atividade"
+    "activity": "Notificações e atividade",
+    "admin": "Administração"
   },
   "role": {
     "OWNER": "Proprietário",
@@ -1617,6 +1618,53 @@
         "PENDING": "Aguardando",
         "APPLIED": "Aplicado",
         "REFUSED": "Recusado"
+      }
+    }
+  },
+  "admin": {
+    "brand": "Administração",
+    "backToStores": "Voltar ao app das lojas",
+    "backToStoresAs": "Voltar ao app das lojas, como {email}",
+    "nav": {
+      "label": "Administração",
+      "dashboard": "Painel"
+    },
+    "dashboard": {
+      "title": "Painel",
+      "loading": "Carregando",
+      "error": {
+        "title": "Não foi possível carregar o painel",
+        "text": "Confira a conexão e tente de novo.",
+        "retry": "Tentar de novo"
+      },
+      "kpi": {
+        "users": "Usuários ativos",
+        "stores": "Lojas ativas",
+        "invitations": "Convites pendentes",
+        "requests": "Solicitações de acesso",
+        "plans": "Pedidos de mudança de plano",
+        "waiting": "aguardando",
+        "new": "novas"
+      },
+      "requests": {
+        "title": "Solicitações de acesso novas",
+        "empty": "Nenhuma solicitação nova.",
+        "error": "Não foi possível carregar as solicitações.",
+        "columns": {
+          "name": "Nome",
+          "store": "Loja",
+          "when": "Quando"
+        }
+      },
+      "stores": {
+        "title": "Lojas com WhatsApp desconectado",
+        "empty": "Todas as lojas estão conectadas.",
+        "note": "Somente acompanhamento · alterações na loja são feitas pelo proprietário",
+        "columns": {
+          "name": "Loja",
+          "city": "Cidade",
+          "status": "WhatsApp"
+        }
       }
     }
   }

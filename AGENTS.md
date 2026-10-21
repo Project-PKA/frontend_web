@@ -352,6 +352,18 @@ acessivel (`label`). O "Acertos" do design e a permissao `can_manage_customers`.
 Um `@` dentro de uma mensagem de traducao quebra o vue-i18n (e a pagina cai em "Algo deu errado"
 sem erro no console do build): escreva `{'@'}` (ex.: `funcionario{'@'}email.com`).
 
+**Admin** — `/admin/**` e a area da plataforma, so com `is_platform_admin` (`access: { level: 'admin' }`,
+o middleware carrega `/v1/me`; sem loja, sem `x-store-id`). Usa o layout `admin` (menu proprio a
+partir de `ADMIN_NAV_ITEMS`, selo `/admin` na barra do topo, "Voltar ao app das lojas" no rodape, o
+mesmo `AppSideNav` sem o bloco da loja) e a rota precisa de `ssr: false` como as outras. O app das
+lojas ganha o item "Administracao" so para o administrador (`NAV_ITEMS`, id `admin`). **O
+administrador nao ve dados internos das lojas**: o painel e so acompanhamento (numeros, solicitacoes
+de acesso novas, lojas com WhatsApp desconectado), sem botoes de acao sobre a loja. O painel
+(`GET /v1/admin/dashboard` mais as solicitacoes `PENDING`, 5) trouxe um quinto numero, "Pedidos de
+mudanca de plano", que o design nao tem; sem a coluna "Proprietario" e "Desde" das lojas
+desconectadas (a API da cidade e o estado) e sem o botao "Criar loja e convidar" e os links
+"Gerenciar/Ver" ate as telas existirem (#43 a #45). Cada tela nova do admin entra com o seu item em
+`ADMIN_NAV_ITEMS`.
 **Plano** — `/plan` (so o proprietario; chega por Configuracoes, o design tem a migalha "Configuracoes /
 Plano e cobranca"). Decisao D6 (18/10): **sem cobranca no MVP**, o plano e so um rotulo com limites. A
 tela mostra o plano (`GET /v1/plan`; o codigo vira texto por `plan.names.<CODE>` quando o app conhece,

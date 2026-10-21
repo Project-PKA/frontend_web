@@ -396,7 +396,8 @@
     "settings": "Settings",
     "finance": "Finance",
     "profile": "My profile",
-    "activity": "Notifications and activity"
+    "activity": "Notifications and activity",
+    "admin": "Administration"
   },
   "role": {
     "OWNER": "Owner",
@@ -1617,6 +1618,53 @@
         "PENDING": "Waiting",
         "APPLIED": "Applied",
         "REFUSED": "Refused"
+      }
+    }
+  },
+  "admin": {
+    "brand": "Administration",
+    "backToStores": "Back to the stores app",
+    "backToStoresAs": "Back to the stores app, as {email}",
+    "nav": {
+      "label": "Administration",
+      "dashboard": "Dashboard"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "loading": "Loading",
+      "error": {
+        "title": "We could not load the dashboard",
+        "text": "Check the connection and try again.",
+        "retry": "Try again"
+      },
+      "kpi": {
+        "users": "Active users",
+        "stores": "Active stores",
+        "invitations": "Pending invitations",
+        "requests": "Access requests",
+        "plans": "Plan change requests",
+        "waiting": "waiting",
+        "new": "new"
+      },
+      "requests": {
+        "title": "New access requests",
+        "empty": "No new requests.",
+        "error": "We could not load the requests.",
+        "columns": {
+          "name": "Name",
+          "store": "Store",
+          "when": "When"
+        }
+      },
+      "stores": {
+        "title": "Stores with WhatsApp disconnected",
+        "empty": "All the stores are connected.",
+        "note": "Follow-up only: changes to a store are made by its owner",
+        "columns": {
+          "name": "Store",
+          "city": "City",
+          "status": "WhatsApp"
+        }
       }
     }
   }
