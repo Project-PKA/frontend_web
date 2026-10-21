@@ -15,7 +15,7 @@ export default withNuxt(
   { files: ['**/*.vue'], rules: { 'vue/html-self-closing': ['warn', { html: { void: 'any' } }] } },
   {
     files: ['**/*.{ts,vue,mjs}'],
-    ignores: ['app/api/**', 'e2e/**'],
+    ignores: ['app/api/**', 'e2e/**', 'e2e-real/**'],
     rules: { 'no-restricted-syntax': ['error', forbiddenTransport] },
   },
 );
