@@ -9,6 +9,9 @@ test('shows the sections of the design, in English', async ({ page }) => {
   for (const name of [
     'A Pokémon card auction in four steps',
     'Everything for people who sell Pokémon cards',
+    'Your live auctions, in plain sight',
+    'Operations and finance, each in its place',
+    'Choose the plan of your store',
     'Made for people who sell cards in groups',
     'Get your questions answered',
     'Ready to organize your auctions?',
@@ -16,7 +19,7 @@ test('shows the sections of the design, in English', async ({ page }) => {
     await expect(page.getByRole('heading', { level: 2, name })).toBeVisible();
   }
   await expect(page.getByRole('listitem').filter({ hasText: 'Register the card' })).toBeVisible();
-  await expect(page.getByRole('article')).toHaveCount(8);
+  await expect(page.locator('#funcionalidades article')).toHaveCount(8);
 });
 
 test('is available in Brazilian Portuguese with the same sections', async ({ page }) => {
@@ -25,7 +28,7 @@ test('is available in Brazilian Portuguese with the same sections', async ({ pag
   await expect(page.locator('html')).toHaveAttribute('lang', 'pt-BR');
   await expect(page.getByRole('heading', { level: 1 })).toContainText('Leilões de cartas Pokémon');
   await expect(page.getByRole('heading', { level: 2, name: 'Tire suas dúvidas' })).toBeVisible();
-  await expect(page.getByRole('article')).toHaveCount(8);
+  await expect(page.locator('#funcionalidades article')).toHaveCount(8);
 });
 
 test('switches the language through the footer links', async ({ page }) => {
@@ -116,4 +119,44 @@ test('fits a 320px screen without scrolling sideways', async ({ page }) => {
     () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
   );
   expect(overflow).toBeLessThanOrEqual(0);
+});
+
+test('shows the showcase, the dashboards and the plans without prices or promises', async ({
+  page,
+}) => {
+  await page.goto('/');
+
+  const showcase = page.locator('#vitrine');
+  await expect(
+    showcase.getByRole('article', { name: 'Example of an auction on the showcase' }),
+  ).toBeVisible();
+  await expect(showcase).toContainText('* example image');
+  const dashboards = page.locator('#dashboards');
+  await expect(dashboards.getByRole('img', { name: 'Example bar chart' })).toBeVisible();
+  await expect(dashboards).toContainText('* example data');
+
+  const plans = page.locator('#precos');
+  await expect(plans.getByRole('heading', { level: 3 })).toHaveText([
+    'Starter',
+    'Store',
+    'Network',
+  ]);
+  await expect(plans).toContainText('Plans and prices are being defined');
+  await expect(plans.getByText('Price to be defined')).toHaveCount(3);
+  await expect(plans.getByText(/R\$/)).toHaveCount(0);
+  for (const link of await plans.getByRole('link', { name: 'Request access' }).all()) {
+    await expect(link).toHaveAttribute('href', '/request-access');
+  }
+});
+
+test('the menu reaches the new sections', async ({ page }) => {
+  await page.goto('/');
+
+  const nav = page.getByRole('navigation', { name: 'Sections' });
+  await expect(nav.getByRole('link', { name: 'Showcase' })).toHaveAttribute('href', '#vitrine');
+  await expect(nav.getByRole('link', { name: 'Dashboards' })).toHaveAttribute(
+    'href',
+    '#dashboards',
+  );
+  await expect(nav.getByRole('link', { name: 'Pricing' })).toHaveAttribute('href', '#precos');
 });
