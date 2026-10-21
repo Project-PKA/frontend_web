@@ -227,7 +227,7 @@ test('lists the buyers waiting for a settlement, with their cards and the subtot
     'href',
     '/customers/u-1',
   );
-  await expect(page.getByText(/the platform does not handle shipping or payment/)).toBeVisible();
+  await expect(page.getByText(/the platform does not handle payment or delivery/)).toBeVisible();
 });
 
 test('creates the settlement with the auctions the buyer won, and shows the link once', async ({

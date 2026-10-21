@@ -44,7 +44,7 @@
     "how": {
       "pill": "How it works",
       "title": "A Pokémon card auction in four steps",
-      "lead": "The platform organizes the auction and the settlement. Payment and shipping happen directly between the store and the buyer.",
+      "lead": "The platform organizes the auction and the settlement. Payment and delivery of the card are agreed directly between the store and the buyer.",
       "steps": {
         "0": {
           "title": "Register the card",
@@ -82,7 +82,7 @@
         "2": {
           "icon": "wallet",
           "title": "Settlements without spreadsheets",
-          "text": "Whoever wins gets a link to enter their details and see the purchase summary. You add the shipping, send the summary on WhatsApp and confirm the sale once the payment is made."
+          "text": "Whoever wins gets a link to enter their details and see the purchase summary. You send the summary on WhatsApp and confirm the sale once the payment is made."
         },
         "3": {
           "icon": "link",
@@ -143,7 +143,7 @@
         },
         "2": {
           "q": "Do you process payments or ship the cards?",
-          "a": "No. The platform organizes the auction and the settlement. Payment and shipping are agreed directly between the store and the buyer."
+          "a": "No. The platform organizes the auction and the settlement. Payment and delivery of the card are agreed directly between the store and the buyer."
         },
         "3": {
           "q": "Do I need a dedicated WhatsApp number?",
@@ -2064,7 +2064,7 @@
     },
     "pay": {
       "title": "Payment",
-      "text": "The payment is made directly to the store. The platform does not process the payment or the shipping.",
+      "text": "The payment is made directly to the store. The platform does not process the payment or take part in the delivery.",
       "pix": "PIX key: {key}",
       "copy": "Copy key",
       "copied": "PIX key copied.",
@@ -2152,7 +2152,7 @@
     "created": "Settlement of {name} created.",
     "claimed": "The buyer said they paid on {when}",
     "awaitingEmpty": "No buyer is waiting for a settlement",
-    "awaitingNote": "Buyers who won auctions and have no settlement yet. The total is the sum of the cards: the platform does not handle shipping or payment.",
+    "awaitingNote": "Buyers who won auctions and have no settlement yet. The total is the sum of the cards: the platform does not handle payment or delivery.",
     "pendingEmpty": "No open settlements",
     "paidEmpty": "No paid settlements yet",
     "tabs": {
@@ -2255,7 +2255,7 @@
         },
         "2": {
           "title": "Sales and payments",
-          "text": "The platform does not make sales, does not process payments and does not handle shipping. The deal is made directly between the store and the buyer."
+          "text": "The platform does not make sales, does not process payments and does not take part in the delivery of the cards. The deal, the payment and the delivery are agreed directly between the store and the buyer, who are responsible for them."
         },
         "3": {
           "title": "Conduct and moderation",
@@ -2280,7 +2280,7 @@
         },
         "1": {
           "title": "What we use it for",
-          "text": "To identify buyers, to confirm settlements, to prepare shipments and consignment payouts and to keep the service secure."
+          "text": "To identify buyers, to confirm settlements, to calculate consignment payouts, to comply with legal obligations and to keep the service secure."
         },
         "2": {
           "title": "Legal basis (LGPD)",
