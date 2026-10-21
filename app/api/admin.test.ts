@@ -95,4 +95,61 @@ describe('admin api', () => {
     const request = vi.fn().mockResolvedValue({ items: [], next_cursor: null });
     expect(await apiWith(request).findPendingAccountInvitation('x@example.com')).toBeNull();
   });
+
+  it('lists the stores with the search and the cursor', async () => {
+    const request = vi.fn().mockResolvedValue({ items: [], next_cursor: null });
+    await apiWith(request).stores('hub', 'abc');
+    expect(request).toHaveBeenCalledWith('/v1/admin/stores', {
+      query: { q: 'hub', cursor: 'abc', limit: 20 },
+      signal: undefined,
+    });
+  });
+
+  it('creates a store with its owner', async () => {
+    const request = vi.fn().mockResolvedValue({});
+    await apiWith(request).createStore({ name: 'Hub', owner_email: 'a@example.com' });
+    expect(request).toHaveBeenCalledWith('/v1/admin/stores', {
+      method: 'POST',
+      body: { name: 'Hub', owner_email: 'a@example.com' },
+    });
+  });
+
+  it('transfers the ownership of a store', async () => {
+    const request = vi.fn().mockResolvedValue({});
+    await apiWith(request).transferOwnership('s/1', 'u1');
+    expect(request).toHaveBeenCalledWith('/v1/admin/stores/s%2F1/transfer-ownership', {
+      method: 'POST',
+      body: { new_owner_user_id: 'u1' },
+    });
+  });
+
+  it('lists the invitations of a kind and a status, by cursor', async () => {
+    const request = vi.fn().mockResolvedValue({ items: [], next_cursor: null });
+    await apiWith(request).invitations({ kind: 'OWNER', status: 'PENDING' }, 'abc');
+    expect(request).toHaveBeenCalledWith('/v1/admin/invitations', {
+      query: { kind: 'OWNER', status: 'PENDING', cursor: 'abc', limit: 20 },
+      signal: undefined,
+    });
+  });
+
+  it('revokes an invitation', async () => {
+    const request = vi.fn().mockResolvedValue({});
+    await apiWith(request).revokeInvitation('i/1');
+    expect(request).toHaveBeenCalledWith('/v1/admin/invitations/i%2F1', { method: 'DELETE' });
+  });
+
+  it('lists the access requests by cursor and refuses one', async () => {
+    const request = vi.fn().mockResolvedValue({ items: [], next_cursor: null });
+    const api = apiWith(request);
+    await api.accessRequestPage('PENDING', 'abc');
+    await api.refuseAccessRequest('a/1');
+    expect(request).toHaveBeenNthCalledWith(1, '/v1/admin/access-requests', {
+      query: { status: 'PENDING', cursor: 'abc', limit: 20 },
+      signal: undefined,
+    });
+    expect(request).toHaveBeenNthCalledWith(2, '/v1/admin/access-requests/a%2F1/refuse', {
+      method: 'POST',
+      body: {},
+    });
+  });
 });

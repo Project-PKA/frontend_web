@@ -46,6 +46,27 @@ export interface UserFilters {
 export type AdminInvitationPage = JsonBody<'/v1/admin/invitations'>;
 export type AdminInvitation = AdminInvitationPage['items'][number];
 
+/** `GET /v1/admin/stores`: every store, with its owner, plan, members and WhatsApp (no inner data). */
+export type StorePage = JsonBody<'/v1/admin/stores'>;
+export type AdminStore = StorePage['items'][number];
+/** What `POST /v1/admin/stores` takes: the owner is an account (`owner_user_id`) or an e-mail. */
+export interface NewStore {
+  name: string;
+  city?: string | null;
+  plan?: string;
+  member_limit?: number;
+  card_limit?: number | null;
+  owner_user_id?: string;
+  owner_email?: string;
+  /** Turns the access request into this store. */
+  access_request_id?: string;
+}
+/** `MEMBER`: an active account became the owner. `INVITED`: a new e-mail got the invitation. */
+export interface CreatedStore {
+  store: AdminStore;
+  owner_state: 'MEMBER' | 'INVITED';
+}
+
 const PAGE_SIZE = 20;
 /** The biggest page of the invitations, and how many pages are read to find one. */
 const INVITATION_PAGE = 100;
@@ -111,6 +132,46 @@ export function createAdminApi(client: ApiClient) {
       }
       return null;
     },
+    stores: (q: string | undefined, cursor?: string, signal?: AbortSignal) =>
+      client.request<StorePage>('/v1/admin/stores', {
+        query: { q, cursor, limit: PAGE_SIZE },
+        signal,
+      }),
+    /** Creates the store and its owner: an active account becomes OWNER, a new e-mail is invited. */
+    createStore: (store: NewStore) =>
+      client.request<CreatedStore>('/v1/admin/stores', { method: 'POST', body: store }),
+    /** The new owner takes over and the current one stays as an employee. */
+    transferOwnership: (storeId: string, newOwnerUserId: string) =>
+      client.request<AdminStore>(
+        `/v1/admin/stores/${encodeURIComponent(storeId)}/transfer-ownership`,
+        { method: 'POST', body: { new_owner_user_id: newOwnerUserId } },
+      ),
+    invitations: (
+      query: { kind?: AdminInvitation['kind']; status?: AdminInvitation['state'] },
+      cursor?: string,
+      signal?: AbortSignal,
+    ) =>
+      client.request<AdminInvitationPage>('/v1/admin/invitations', {
+        query: { ...query, cursor, limit: PAGE_SIZE },
+        signal,
+      }),
+    /** The link of the invitation stops working right away. */
+    revokeInvitation: (id: string) =>
+      client.request<unknown>(`/v1/admin/invitations/${encodeURIComponent(id)}`, {
+        method: 'DELETE',
+      }),
+    /** A page of the access requests of a status, by cursor (the dashboard asks for a short one). */
+    accessRequestPage: (status: AccessRequestStatus, cursor?: string, signal?: AbortSignal) =>
+      client.request<AccessRequestPage>('/v1/admin/access-requests', {
+        query: { status, cursor, limit: PAGE_SIZE },
+        signal,
+      }),
+    /** Refuses the request; nothing is sent to who asked. To approve, create the store from it. */
+    refuseAccessRequest: (id: string) =>
+      client.request<unknown>(`/v1/admin/access-requests/${encodeURIComponent(id)}/refuse`, {
+        method: 'POST',
+        body: {},
+      }),
     accessRequests: (
       status: AccessRequestStatus,
       limit = DASHBOARD_REQUESTS,

@@ -1628,7 +1628,9 @@
     "nav": {
       "label": "Administration",
       "dashboard": "Dashboard",
-      "users": "Users"
+      "users": "Users",
+      "stores": "Stores",
+      "invitations": "Invitations and requests"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -1666,7 +1668,8 @@
           "city": "City",
           "status": "WhatsApp"
         }
-      }
+      },
+      "seeAll": "See all"
     },
     "close": "Close",
     "cancel": "Cancel",
@@ -1785,6 +1788,160 @@
         "text": "{who} will be able to sign in again.",
         "confirm": "Reactivate",
         "done": "Access reactivated."
+      }
+    },
+    "stores": {
+      "title": "Stores",
+      "caption": "Stores",
+      "loading": "Loading the stores",
+      "loadMore": "Show more",
+      "search": "Search store or owner",
+      "create": "Create store",
+      "note": "The administrator creates the store and sets the owner · WhatsApp, stock and team are managed by the owner",
+      "membersOf": "{used} of {limit}",
+      "error": {
+        "title": "We could not load the stores",
+        "text": "Check the connection and try again.",
+        "retry": "Try again"
+      },
+      "empty": {
+        "title": "No stores yet",
+        "text": "Create the first store and set its owner."
+      },
+      "noMatch": {
+        "title": "No store matches",
+        "text": "Try another search."
+      },
+      "columns": {
+        "name": "Store",
+        "owner": "Owner",
+        "plan": "Plan",
+        "members": "Members",
+        "whatsapp": "WhatsApp",
+        "created": "Created on"
+      },
+      "transfer": {
+        "open": "Transfer ownership",
+        "aria": "Transfer the ownership of {store}",
+        "title": "Transfer ownership",
+        "store": "Store:",
+        "current": "current owner:",
+        "owner": "New owner",
+        "hint": "Search by name or e-mail. Only active accounts.",
+        "loading": "Searching",
+        "none": "No active account found for {text}.",
+        "error": "We could not search.",
+        "retry": "Try again",
+        "count": "No accounts found | 1 account found | {count} accounts found",
+        "chosen": "New owner: {email}",
+        "needsUser": "Pick the account of the new owner.",
+        "text": "The current owner becomes an employee of the store. No data of the store is changed.",
+        "confirm": "Transfer",
+        "done": "{email} is now the owner."
+      },
+      "new": {
+        "title": "Create store",
+        "data": "Store data",
+        "name": "Store name",
+        "namePlaceholder": "E.g. Marina Cards",
+        "city": "City / State",
+        "cityPlaceholder": "São Paulo / SP",
+        "plan": "Plan",
+        "planHint": "The code of the plan, e.g. STANDARD. Empty uses the default.",
+        "memberLimit": "Member limit",
+        "cardLimit": "Card limit",
+        "cardLimitHint": "Empty means no limit.",
+        "fromRequest": "Creating the store of the request from {name}.",
+        "owner": {
+          "title": "Owner",
+          "new": "Invite new user",
+          "existing": "Existing user",
+          "email": "E-mail",
+          "emailPlaceholder": "owner{'@'}example.com",
+          "search": "Search user",
+          "hint": "A new e-mail gets an invitation by e-mail. The owner signs in with a code, connects the WhatsApp and invites their own team."
+        },
+        "submit": "Create store",
+        "created": "{store} created. {email} is the owner.",
+        "createdInvited": "{store} created. Invitation sent to {email}.",
+        "errors": {
+          "nameRequired": "Enter the name of the store.",
+          "planInvalid": "The code of a plan has capital letters, digits and _ (2 to 20 characters).",
+          "memberLimit": "Enter a whole number from 1 to 1000.",
+          "cardLimit": "Enter a whole number from 1 to 1000000, or leave it empty.",
+          "ownerEmail": "Enter a valid e-mail.",
+          "ownerUser": "Pick the account of the owner."
+        }
+      }
+    },
+    "invitations": {
+      "title": "Invitations and requests",
+      "loading": "Loading",
+      "loadMore": "Show more",
+      "error": "We could not load the list",
+      "retry": "Try again",
+      "empty": "No invitations here.",
+      "resent": "Invitation sent again to {email}.",
+      "resend": "Resend",
+      "resendAria": "Resend the invitation to {email}",
+      "tabs": {
+        "label": "Invitations and requests",
+        "invitations": "Invitations sent",
+        "requests": "Access requests"
+      },
+      "filters": {
+        "state": "Status",
+        "stateAll": "Status: all",
+        "kind": "Type",
+        "kindAll": "Type: all"
+      },
+      "state": {
+        "PENDING": "Pending",
+        "ACCEPTED": "Accepted",
+        "REVOKED": "Revoked",
+        "EXPIRED": "Expired"
+      },
+      "kind": {
+        "ACCOUNT": "Account",
+        "OWNER": "Owner",
+        "STAFF": "Employee"
+      },
+      "columns": {
+        "email": "E-mail",
+        "kind": "Type",
+        "store": "Store",
+        "sent": "Sent",
+        "expires": "Expires",
+        "state": "Status"
+      },
+      "revoke": {
+        "open": "Revoke",
+        "title": "Revoke the invitation",
+        "text": "The link sent to {email} stops working right away.",
+        "confirm": "Revoke",
+        "done": "Invitation revoked."
+      },
+      "revokeAria": "Revoke the invitation of {email}",
+      "requests": {
+        "empty": "No new access requests.",
+        "note": "Refusing sends nothing to the person. To approve, create the store from the request.",
+        "create": "Create store and invite",
+        "createAria": "Create the store and invite {name}",
+        "columns": {
+          "name": "Name",
+          "email": "E-mail",
+          "whatsapp": "WhatsApp",
+          "store": "Store asked for",
+          "when": "When"
+        }
+      },
+      "refuse": {
+        "open": "Refuse",
+        "aria": "Refuse the request of {name}",
+        "title": "Refuse the request",
+        "text": "The request of {name} is refused. Nothing is sent to the person.",
+        "confirm": "Refuse",
+        "done": "Request refused."
       }
     }
   }

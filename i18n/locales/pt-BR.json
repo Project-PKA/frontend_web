@@ -1628,7 +1628,9 @@
     "nav": {
       "label": "Administração",
       "dashboard": "Painel",
-      "users": "Usuários"
+      "users": "Usuários",
+      "stores": "Lojas",
+      "invitations": "Convites e solicitações"
     },
     "dashboard": {
       "title": "Painel",
@@ -1666,7 +1668,8 @@
           "city": "Cidade",
           "status": "WhatsApp"
         }
-      }
+      },
+      "seeAll": "Ver todas"
     },
     "close": "Fechar",
     "cancel": "Cancelar",
@@ -1785,6 +1788,160 @@
         "text": "{who} poderá entrar de novo.",
         "confirm": "Reativar",
         "done": "Acesso reativado."
+      }
+    },
+    "stores": {
+      "title": "Lojas",
+      "caption": "Lojas",
+      "loading": "Carregando as lojas",
+      "loadMore": "Mostrar mais",
+      "search": "Buscar loja ou proprietário",
+      "create": "Criar loja",
+      "note": "O administrador cria a loja e define o proprietário · WhatsApp, estoque e equipe são gerenciados pelo proprietário",
+      "membersOf": "{used} de {limit}",
+      "error": {
+        "title": "Não foi possível carregar as lojas",
+        "text": "Confira a conexão e tente de novo.",
+        "retry": "Tentar de novo"
+      },
+      "empty": {
+        "title": "Nenhuma loja ainda",
+        "text": "Crie a primeira loja e defina o proprietário."
+      },
+      "noMatch": {
+        "title": "Nenhuma loja encontrada",
+        "text": "Tente outra busca."
+      },
+      "columns": {
+        "name": "Loja",
+        "owner": "Proprietário",
+        "plan": "Plano",
+        "members": "Membros",
+        "whatsapp": "WhatsApp",
+        "created": "Criada em"
+      },
+      "transfer": {
+        "open": "Transferir propriedade",
+        "aria": "Transferir a propriedade de {store}",
+        "title": "Transferir propriedade",
+        "store": "Loja:",
+        "current": "proprietário atual:",
+        "owner": "Novo proprietário",
+        "hint": "Busque por nome ou e-mail. Só contas ativas.",
+        "loading": "Buscando",
+        "none": "Nenhuma conta ativa encontrada para {text}.",
+        "error": "Não foi possível buscar.",
+        "retry": "Tentar de novo",
+        "count": "Nenhuma conta encontrada | 1 conta encontrada | {count} contas encontradas",
+        "chosen": "Novo proprietário: {email}",
+        "needsUser": "Escolha a conta do novo proprietário.",
+        "text": "O proprietário atual passa a funcionário da loja. Nenhum dado da loja é alterado.",
+        "confirm": "Transferir",
+        "done": "{email} agora é o proprietário."
+      },
+      "new": {
+        "title": "Criar loja",
+        "data": "Dados da loja",
+        "name": "Nome da loja",
+        "namePlaceholder": "Ex.: Marina Cards",
+        "city": "Cidade / UF",
+        "cityPlaceholder": "São Paulo / SP",
+        "plan": "Plano",
+        "planHint": "O código do plano, por exemplo STANDARD. Vazio usa o padrão.",
+        "memberLimit": "Limite de membros",
+        "cardLimit": "Limite de cartas",
+        "cardLimitHint": "Vazio é sem limite.",
+        "fromRequest": "Criando a loja da solicitação de {name}.",
+        "owner": {
+          "title": "Proprietário",
+          "new": "Convidar novo usuário",
+          "existing": "Usuário existente",
+          "email": "E-mail",
+          "emailPlaceholder": "proprietario{'@'}email.com",
+          "search": "Buscar usuário",
+          "hint": "Um e-mail novo recebe um convite por e-mail. O proprietário entra com um código, conecta o WhatsApp e convida a própria equipe."
+        },
+        "submit": "Criar loja",
+        "created": "{store} criada. {email} é o proprietário.",
+        "createdInvited": "{store} criada. Convite enviado para {email}.",
+        "errors": {
+          "nameRequired": "Informe o nome da loja.",
+          "planInvalid": "O código de um plano tem letras maiúsculas, números e _ (de 2 a 20 caracteres).",
+          "memberLimit": "Informe um número inteiro de 1 a 1000.",
+          "cardLimit": "Informe um número inteiro de 1 a 1000000, ou deixe vazio.",
+          "ownerEmail": "Informe um e-mail válido.",
+          "ownerUser": "Escolha a conta do proprietário."
+        }
+      }
+    },
+    "invitations": {
+      "title": "Convites e solicitações",
+      "loading": "Carregando",
+      "loadMore": "Mostrar mais",
+      "error": "Não foi possível carregar a lista",
+      "retry": "Tentar de novo",
+      "empty": "Nenhum convite por aqui.",
+      "resent": "Convite enviado de novo para {email}.",
+      "resend": "Reenviar",
+      "resendAria": "Reenviar o convite para {email}",
+      "tabs": {
+        "label": "Convites e solicitações",
+        "invitations": "Convites enviados",
+        "requests": "Solicitações de acesso"
+      },
+      "filters": {
+        "state": "Status",
+        "stateAll": "Status: todos",
+        "kind": "Tipo",
+        "kindAll": "Tipo: todos"
+      },
+      "state": {
+        "PENDING": "Pendente",
+        "ACCEPTED": "Aceito",
+        "REVOKED": "Revogado",
+        "EXPIRED": "Expirado"
+      },
+      "kind": {
+        "ACCOUNT": "Conta",
+        "OWNER": "Proprietário",
+        "STAFF": "Funcionário"
+      },
+      "columns": {
+        "email": "E-mail",
+        "kind": "Tipo",
+        "store": "Loja",
+        "sent": "Enviado",
+        "expires": "Expira",
+        "state": "Status"
+      },
+      "revoke": {
+        "open": "Revogar",
+        "title": "Revogar o convite",
+        "text": "O link enviado para {email} deixa de funcionar na hora.",
+        "confirm": "Revogar",
+        "done": "Convite revogado."
+      },
+      "revokeAria": "Revogar o convite de {email}",
+      "requests": {
+        "empty": "Nenhuma solicitação de acesso nova.",
+        "note": "Recusar não envia nada à pessoa. Para aprovar, crie a loja a partir da solicitação.",
+        "create": "Criar loja e convidar",
+        "createAria": "Criar a loja e convidar {name}",
+        "columns": {
+          "name": "Nome",
+          "email": "E-mail",
+          "whatsapp": "WhatsApp",
+          "store": "Loja pretendida",
+          "when": "Quando"
+        }
+      },
+      "refuse": {
+        "open": "Recusar",
+        "aria": "Recusar a solicitação de {name}",
+        "title": "Recusar a solicitação",
+        "text": "A solicitação de {name} será recusada. Nada é enviado à pessoa.",
+        "confirm": "Recusar",
+        "done": "Solicitação recusada."
       }
     }
   }
