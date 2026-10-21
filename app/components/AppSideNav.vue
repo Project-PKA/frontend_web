@@ -9,20 +9,26 @@ export interface SideNavItem {
   current: boolean;
 }
 
-defineProps<{
-  /** Name of the product, already translated. */
-  brand: string;
-  /** Names the navigation for screen readers. */
-  navLabel: string;
-  items: SideNavItem[];
-  storeName: string;
-  /** "Owner" or "Staff", already translated. */
-  storeRole: string;
-  /** Name of the link that goes back to the choice of store. */
-  storeLabel: string;
-  /** `text` is shown under the e-mail; `label` is the full name of the link for screen readers. */
-  account: { email: string; text: string; label: string };
-}>();
+withDefaults(
+  defineProps<{
+    /** Name of the product, already translated. */
+    brand: string;
+    /** Where the name of the product leads. */
+    home?: string;
+    /** Names the navigation for screen readers. */
+    navLabel: string;
+    items: SideNavItem[];
+    /** Without a store (the admin area has none) the block of the store is not shown. */
+    storeName?: string;
+    /** "Owner" or "Staff", already translated. */
+    storeRole?: string;
+    /** Name of the link that goes back to the choice of store. */
+    storeLabel?: string;
+    /** `text` is shown under the e-mail; `label` is the full name of the link for screen readers. `to` is where it leads (the profile). */
+    account: { email: string; text: string; label: string; to?: string };
+  }>(),
+  { home: '/home', storeName: undefined, storeRole: undefined, storeLabel: undefined },
+);
 
 /** A link was used: the drawer of small screens closes. */
 const emit = defineEmits<{ navigate: [] }>();
@@ -30,12 +36,13 @@ const emit = defineEmits<{ navigate: [] }>();
 
 <template>
   <aside id="app-menu" class="side">
-    <NuxtLink class="brand" to="/home" :aria-label="brand" @click="emit('navigate')">
+    <NuxtLink class="brand" :to="home" :aria-label="brand" @click="emit('navigate')">
       <span class="brand__mark" aria-hidden="true" />
       <span class="lb">{{ brand }}</span>
     </NuxtLink>
 
     <NuxtLink
+      v-if="storeName"
       class="store-switch"
       to="/stores"
       :aria-label="storeLabel"
@@ -69,7 +76,7 @@ const emit = defineEmits<{ navigate: [] }>();
 
     <NuxtLink
       class="side__foot"
-      to="/profile"
+      :to="account.to ?? '/profile'"
       :aria-label="account.label"
       :title="account.label"
       @click="emit('navigate')"

@@ -1083,3 +1083,9 @@ html {
   display: block;
   font-size: var(--fs-xs);
 }
+
+/* ---------- admin area ---------- */
+/* The menu of the admin area is a shade apart from the one of the stores, as in the design. */
+.app--admin .side {
+  background: var(--surface-2);
+}

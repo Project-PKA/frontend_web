@@ -72,4 +72,28 @@ describe('AppSideNav', () => {
     render(AppSideNav, { props: { ...props, items: [] } });
     expect(within(screen.getByRole('navigation')).queryAllByRole('link')).toEqual([]);
   });
+
+  it('leaves out the store and leads elsewhere when it is not the app of a store', () => {
+    render(AppSideNav, {
+      props: {
+        brand: 'Admin',
+        navLabel: 'Admin',
+        items: [],
+        home: '/admin',
+        account: {
+          email: 'igor@example.com',
+          text: 'Back to the stores',
+          label: 'Back to the stores, as igor@example.com',
+          to: '/stores',
+        },
+      },
+    });
+    expect(screen.queryByRole('link', { name: /Change store/ })).toBeNull();
+    expect(screen.getByRole('link', { name: 'Admin' }).getAttribute('href')).toBe('/admin');
+    expect(
+      screen
+        .getByRole('link', { name: 'Back to the stores, as igor@example.com' })
+        .getAttribute('href'),
+    ).toBe('/stores');
+  });
 });
