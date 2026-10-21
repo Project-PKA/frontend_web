@@ -1627,7 +1627,8 @@
     "backToStoresAs": "Voltar ao app das lojas, como {email}",
     "nav": {
       "label": "Administração",
-      "dashboard": "Painel"
+      "dashboard": "Painel",
+      "users": "Usuários"
     },
     "dashboard": {
       "title": "Painel",
@@ -1665,6 +1666,125 @@
           "city": "Cidade",
           "status": "WhatsApp"
         }
+      }
+    },
+    "close": "Fechar",
+    "cancel": "Cancelar",
+    "users": {
+      "title": "Usuários",
+      "caption": "Usuários",
+      "loading": "Carregando os usuários",
+      "loadMore": "Mostrar mais",
+      "register": "Cadastrar usuário",
+      "invited": "Convite enviado para {email}.",
+      "never": "nunca",
+      "manage": "Gerenciar",
+      "manageAria": "Gerenciar {who}",
+      "platformAdmin": "Administrador da plataforma",
+      "createYes": "Sim · até {limit}",
+      "createNo": "Não",
+      "note": "Usuários só entram por convite · não existe cadastro aberto",
+      "error": {
+        "title": "Não foi possível carregar os usuários",
+        "text": "Confira a conexão e tente de novo.",
+        "retry": "Tentar de novo"
+      },
+      "empty": {
+        "title": "Nenhum usuário ainda",
+        "text": "Cadastre um usuário para enviar o primeiro convite."
+      },
+      "noMatch": {
+        "title": "Nenhum usuário encontrado",
+        "text": "Tente outra busca ou limpe os filtros.",
+        "clear": "Limpar os filtros"
+      },
+      "filters": {
+        "search": "Buscar por nome ou e-mail",
+        "status": "Status",
+        "statusAll": "Status: todos",
+        "create": "Pode criar lojas",
+        "createAll": "Criar lojas: todos",
+        "create_yes": "Pode criar",
+        "create_no": "Não pode criar"
+      },
+      "status": {
+        "ACTIVE": "Ativo",
+        "INVITED": "Convite pendente",
+        "SUSPENDED": "Suspenso"
+      },
+      "columns": {
+        "user": "Usuário",
+        "stores": "Lojas",
+        "create": "Pode criar lojas",
+        "status": "Status",
+        "last": "Último acesso"
+      },
+      "form": {
+        "name": "Nome",
+        "email": "E-mail",
+        "emailPlaceholder": "usuario{'@'}email.com",
+        "canCreate": "Pode criar novas lojas",
+        "limit": "Limite de lojas próprias",
+        "hint": "O usuário recebe um convite por e-mail. Para dar uma loja a ele, use \"Criar loja\".",
+        "send": "Enviar convite"
+      },
+      "errors": {
+        "emailRequired": "Informe o e-mail.",
+        "emailInvalid": "Informe um e-mail válido.",
+        "limit": "Informe um número inteiro de 0 a {max}."
+      }
+    },
+    "user": {
+      "title": "Usuário",
+      "loading": "Carregando o usuário",
+      "error": {
+        "title": "Não foi possível carregar o usuário",
+        "retry": "Tentar de novo"
+      },
+      "data": {
+        "title": "Dados",
+        "name": "Nome",
+        "email": "E-mail",
+        "created": "Criado em",
+        "last": "Último acesso"
+      },
+      "permissions": {
+        "title": "Permissões globais",
+        "hint": "Sem essa permissão, o usuário só entra em lojas para as quais foi convidado ou que o administrador criou para ele.",
+        "adminFixed": "As permissões de um administrador da plataforma não mudam por aqui."
+      },
+      "save": "Salvar alterações",
+      "saved": "Permissões salvas.",
+      "nothingToSave": "Nada foi alterado.",
+      "stores": {
+        "title": "Lojas vinculadas",
+        "empty": "Este usuário ainda não está em nenhuma loja.",
+        "note": "Somente leitura · o administrador não altera dados das lojas",
+        "columns": {
+          "name": "Loja",
+          "role": "Papel"
+        }
+      },
+      "access": {
+        "title": "Acesso",
+        "hint": "Suspender impede o login em todas as lojas, sem apagar nenhum dado."
+      },
+      "resend": "Reenviar convite",
+      "resent": "Convite enviado de novo para {email}.",
+      "noInvitation": "Não encontramos convite pendente para este e-mail.",
+      "suspend": {
+        "open": "Suspender acesso",
+        "title": "Suspender o acesso",
+        "text": "{who} não poderá entrar em nenhuma loja. Nada é apagado, e você pode liberar o acesso depois.",
+        "confirm": "Suspender",
+        "done": "Acesso suspenso."
+      },
+      "reactivate": {
+        "open": "Reativar acesso",
+        "title": "Reativar o acesso",
+        "text": "{who} poderá entrar de novo.",
+        "confirm": "Reativar",
+        "done": "Acesso reativado."
       }
     }
   }

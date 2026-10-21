@@ -78,6 +78,13 @@ export const ADMIN_NAV_ITEMS: readonly NavItem[] = [
     access: { level: 'admin' },
     exact: true,
   },
+  {
+    id: 'users',
+    labelKey: 'admin.nav.users',
+    icon: 'users',
+    to: '/admin/users',
+    access: { level: 'admin' },
+  },
 ];
 
 /** The items this person can open in the current store. */

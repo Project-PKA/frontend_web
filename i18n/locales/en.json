@@ -1627,7 +1627,8 @@
     "backToStoresAs": "Back to the stores app, as {email}",
     "nav": {
       "label": "Administration",
-      "dashboard": "Dashboard"
+      "dashboard": "Dashboard",
+      "users": "Users"
     },
     "dashboard": {
       "title": "Dashboard",
@@ -1665,6 +1666,125 @@
           "city": "City",
           "status": "WhatsApp"
         }
+      }
+    },
+    "close": "Close",
+    "cancel": "Cancel",
+    "users": {
+      "title": "Users",
+      "caption": "Users",
+      "loading": "Loading the users",
+      "loadMore": "Show more",
+      "register": "Register user",
+      "invited": "Invitation sent to {email}.",
+      "never": "never",
+      "manage": "Manage",
+      "manageAria": "Manage {who}",
+      "platformAdmin": "Platform admin",
+      "createYes": "Yes · up to {limit}",
+      "createNo": "No",
+      "note": "Users only come in by invitation · there is no open sign-up",
+      "error": {
+        "title": "We could not load the users",
+        "text": "Check the connection and try again.",
+        "retry": "Try again"
+      },
+      "empty": {
+        "title": "No users yet",
+        "text": "Register a user to send the first invitation."
+      },
+      "noMatch": {
+        "title": "No user matches",
+        "text": "Try another search or clear the filters.",
+        "clear": "Clear the filters"
+      },
+      "filters": {
+        "search": "Search by name or e-mail",
+        "status": "Status",
+        "statusAll": "Status: all",
+        "create": "Can create stores",
+        "createAll": "Create stores: all",
+        "create_yes": "Can create",
+        "create_no": "Cannot create"
+      },
+      "status": {
+        "ACTIVE": "Active",
+        "INVITED": "Pending invitation",
+        "SUSPENDED": "Suspended"
+      },
+      "columns": {
+        "user": "User",
+        "stores": "Stores",
+        "create": "Can create stores",
+        "status": "Status",
+        "last": "Last access"
+      },
+      "form": {
+        "name": "Name",
+        "email": "E-mail",
+        "emailPlaceholder": "user{'@'}example.com",
+        "canCreate": "Can create new stores",
+        "limit": "Limit of own stores",
+        "hint": "The user gets an invitation by e-mail. To give them a store, use \"Create store\".",
+        "send": "Send invitation"
+      },
+      "errors": {
+        "emailRequired": "Enter the e-mail.",
+        "emailInvalid": "Enter a valid e-mail.",
+        "limit": "Enter a whole number from 0 to {max}."
+      }
+    },
+    "user": {
+      "title": "User",
+      "loading": "Loading the user",
+      "error": {
+        "title": "We could not load the user",
+        "retry": "Try again"
+      },
+      "data": {
+        "title": "Data",
+        "name": "Name",
+        "email": "E-mail",
+        "created": "Created on",
+        "last": "Last access"
+      },
+      "permissions": {
+        "title": "Global permissions",
+        "hint": "Without this permission, the user only joins stores they were invited to or that the administrator created for them.",
+        "adminFixed": "The permissions of a platform administrator cannot be changed here."
+      },
+      "save": "Save changes",
+      "saved": "Permissions saved.",
+      "nothingToSave": "Nothing was changed.",
+      "stores": {
+        "title": "Linked stores",
+        "empty": "This user is not in any store yet.",
+        "note": "Read only · the administrator does not change the data of the stores",
+        "columns": {
+          "name": "Store",
+          "role": "Role"
+        }
+      },
+      "access": {
+        "title": "Access",
+        "hint": "Suspending blocks the login in every store, without deleting any data."
+      },
+      "resend": "Resend invitation",
+      "resent": "Invitation sent again to {email}.",
+      "noInvitation": "We found no pending invitation for this e-mail.",
+      "suspend": {
+        "open": "Suspend access",
+        "title": "Suspend access",
+        "text": "{who} will not be able to sign in to any store. Nothing is deleted, and you can let them back in later.",
+        "confirm": "Suspend",
+        "done": "Access suspended."
+      },
+      "reactivate": {
+        "open": "Reactivate access",
+        "title": "Reactivate access",
+        "text": "{who} will be able to sign in again.",
+        "confirm": "Reactivate",
+        "done": "Access reactivated."
       }
     }
   }
