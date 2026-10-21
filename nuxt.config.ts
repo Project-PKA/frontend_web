@@ -45,6 +45,7 @@ export default defineNuxtConfig({
     '/whatsapp': { ssr: false },
     '/auctions': { ssr: false },
     '/auctions/**': { ssr: false },
+    '/plan': { ssr: false },
     '/settings': { ssr: false },
     '/team': { ssr: false },
     '/finance': { ssr: false },
