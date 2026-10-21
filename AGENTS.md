@@ -375,6 +375,19 @@ viram maiusculas, `toPlanChange`) e/ou uma mensagem de ate 1000 caracteres, **pe
 pedir de novo atualiza o pedido da fila. Sem "Forma de pagamento" e sem "Faturas" do design (nao ha
 cobranca nem endpoint).
 
+**Admin: usuarios** — `/admin/users` (lista) e `/admin/users/:id` (detalhe), no menu do admin. Os filtros
+(`q` com 300 ms, `status`, `create` = pode criar lojas; o API toma `can_create_stores`) ficam no
+endereco e `parseUserFilters` descarta valor desconhecido. "Cadastrar usuario" cria a conta **por
+convite** (`POST /v1/admin/users`; o nome so vai se foi digitado; o limite e lido como texto e tem de ser
+inteiro de 0 a 100, `parseStoreLimit`). No detalhe, so as **permissoes globais** mudam (`PATCH
+.../permissions` com so o que mudou, `toPermissionChanges`); nome, e-mail e datas sao leitura (a API
+nao edita; o design tinha telefone, que a API nao da) e as lojas vinculadas tambem (nome e papel, sem
+o WhatsApp). O administrador da plataforma fica so leitura (`ADMIN_ADMIN_PROTECTED`). "Suspender"/
+"Reativar" pedem confirmacao. "Reenviar convite" so para quem ainda nao aceitou: a lista de convites
+da API nao filtra por e-mail, entao `findPendingAccountInvitation` le as paginas de convites de
+conta pendentes (ate 10 de 100) ate achar o e-mail; se nao achar, a tela diz. O input numerico
+entrega texto no `AppInput`: o estado do limite e `string`.
+
 **Shell** — pagina do app usa `layout: 'app'` (menu lateral, barra do topo) e declara
 `definePageMeta({ i18n: false, layout: 'app', titleKey: 'nav.x', access: { ... } })`: o
 layout mostra `titleKey` como o unico `h1` da pagina (nao ponha outro `h1` no conteudo).

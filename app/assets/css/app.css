@@ -1112,3 +1112,8 @@ html {
   display: block;
   overflow-wrap: anywhere;
 }
+
+.admin__email {
+  display: block;
+  font-size: var(--fs-xs);
+}
