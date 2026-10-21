@@ -1493,6 +1493,73 @@
       "done": "Convite revogado."
     }
   },
+  "settings": {
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "close": "Fechar",
+    "whatsapp": {
+      "title": "Conexão do WhatsApp",
+      "text": "O bot monitora o grupo e posta as cartas pelo número conectado à loja.",
+      "qr": "Conectar um aparelho novo, com o QR Code, ainda não está disponível no app.",
+      "steps": "Passos para reconectar"
+    },
+    "group": {
+      "title": "Grupo monitorado",
+      "label": "Link de convite do grupo",
+      "hint": "O link é https://chat.whatsapp.com/ seguido de um código. Deixe vazio para remover.",
+      "invalid": "Informe o link de convite de um grupo de WhatsApp (https://chat.whatsapp.com/...).",
+      "saved": "Link do grupo salvo."
+    },
+    "pix": {
+      "title": "Chave PIX",
+      "label": "Chave PIX da loja",
+      "hint": "Aparece para o comprador na página do acerto. Deixe vazio para remover.",
+      "saved": "Chave PIX salva."
+    },
+    "showcase": {
+      "title": "Vitrine pública",
+      "label": "Mostrar os leilões desta loja na vitrine de leilões ao vivo",
+      "text": "Quem clicar em \"Ir para o leilão\" vai para o grupo monitorado, então o link de convite dele fica público.",
+      "needsGroup": "Salve o link de convite do grupo para ligar a vitrine.",
+      "confirmTitle": "Ligar a vitrine",
+      "confirmText": "O link de convite do grupo será mostrado a quem abrir a vitrine. Quem tiver o link pode pedir para entrar.",
+      "acknowledge": "Sei que o link do grupo fica público",
+      "turnOn": "Ligar",
+      "on": "Vitrine ligada.",
+      "off": "Vitrine desligada."
+    },
+    "templates": {
+      "title": "Mensagens automáticas",
+      "intro": "O texto que o bot diz no grupo. Enquanto você não salvar o seu, o bot usa o padrão.",
+      "loading": "Carregando as mensagens",
+      "empty": "Nenhuma mensagem para personalizar",
+      "error": "Não foi possível carregar as mensagens",
+      "retry": "Tentar de novo",
+      "tokens": "Marcadores:",
+      "unknown": "Esta mensagem não aceita: {names}.",
+      "saved": "Mensagem salva.",
+      "reset": "Mensagem padrão restaurada.",
+      "resetOne": "Restaurar padrão",
+      "resetAria": "Restaurar o texto padrão de: {name}",
+      "saveAria": "Salvar o texto de: {name}",
+      "keys": {
+        "card_opened": "Postagem da carta",
+        "bid_too_low": "Lance abaixo do mínimo",
+        "invalid_amount": "Lance não entendido",
+        "not_started": "Leilão ainda não começou",
+        "ended": "Encerramento do leilão",
+        "not_active": "Leilão fora do ar",
+        "ceiling_reached": "Teto atingido",
+        "auction_won": "Anúncio do vencedor",
+        "auction_unsold": "Leilão sem lances"
+      }
+    },
+    "plan": {
+      "title": "Plano",
+      "text": "O plano da loja, o que já foi usado de cada limite e os pedidos de mudança.",
+      "open": "Plano e uso"
+    }
+  },
   "plan": {
     "title": "Plano",
     "loading": "Carregando o plano",

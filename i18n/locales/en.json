@@ -1493,6 +1493,73 @@
       "done": "Invitation revoked."
     }
   },
+  "settings": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "whatsapp": {
+      "title": "WhatsApp connection",
+      "text": "The bot watches the group and posts the cards through the number connected to the store.",
+      "qr": "Connecting a new device, with the QR code, is not available in the app yet.",
+      "steps": "Steps to reconnect"
+    },
+    "group": {
+      "title": "Monitored group",
+      "label": "Invitation link of the group",
+      "hint": "The link looks like https://chat.whatsapp.com/ followed by a code. Leave it empty to remove it.",
+      "invalid": "Enter the invitation link of a WhatsApp group (https://chat.whatsapp.com/...).",
+      "saved": "Group link saved."
+    },
+    "pix": {
+      "title": "PIX key",
+      "label": "PIX key of the store",
+      "hint": "Shown to the buyer on the settlement page. Leave it empty to remove it.",
+      "saved": "PIX key saved."
+    },
+    "showcase": {
+      "title": "Public showcase",
+      "label": "Show this store's auctions on the live auctions showcase",
+      "text": "Whoever clicks \"Go to the auction\" goes to the monitored group, so its invitation link becomes public.",
+      "needsGroup": "Save the invitation link of the group to turn the showcase on.",
+      "confirmTitle": "Turn the showcase on",
+      "confirmText": "The invitation link of the group will be shown to anyone who opens the showcase. Anyone with the link can ask to join.",
+      "acknowledge": "I know the group link becomes public",
+      "turnOn": "Turn on",
+      "on": "Showcase turned on.",
+      "off": "Showcase turned off."
+    },
+    "templates": {
+      "title": "Automatic messages",
+      "intro": "The text the bot says in the group. Until you save your own, the bot uses the default one.",
+      "loading": "Loading the messages",
+      "empty": "No messages to customize",
+      "error": "We could not load the messages",
+      "retry": "Try again",
+      "tokens": "Placeholders:",
+      "unknown": "This message does not accept: {names}.",
+      "saved": "Message saved.",
+      "reset": "Default message restored.",
+      "resetOne": "Restore default",
+      "resetAria": "Restore the default text of: {name}",
+      "saveAria": "Save the text of: {name}",
+      "keys": {
+        "card_opened": "Card post",
+        "bid_too_low": "Bid below the minimum",
+        "invalid_amount": "Bid not understood",
+        "not_started": "Auction not started",
+        "ended": "Auction ended",
+        "not_active": "Auction not running",
+        "ceiling_reached": "Ceiling reached",
+        "auction_won": "Winner announcement",
+        "auction_unsold": "Auction without bids"
+      }
+    },
+    "plan": {
+      "title": "Plan",
+      "text": "The plan of the store, what is used of each limit, and the requests for a change.",
+      "open": "Plan and usage"
+    }
+  },
   "plan": {
     "title": "Plan",
     "loading": "Loading the plan",
