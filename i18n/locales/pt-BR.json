@@ -44,7 +44,7 @@
     "how": {
       "pill": "Como funciona",
       "title": "Um leilão de cartas Pokémon em quatro passos",
-      "lead": "A plataforma organiza o leilão e o acerto. O pagamento e o envio acontecem diretamente entre a loja e o comprador.",
+      "lead": "A plataforma organiza o leilão e o acerto. O pagamento e a entrega da carta são combinados diretamente entre a loja e o comprador.",
       "steps": {
         "0": {
           "title": "Cadastre a carta",
@@ -82,7 +82,7 @@
         "2": {
           "icon": "wallet",
           "title": "Acertos sem planilha",
-          "text": "Quem arremata recebe um link para informar os dados e ver o resumo da compra. Você soma o frete, envia o resumo no WhatsApp e confirma a venda quando o pagamento for feito."
+          "text": "Quem arremata recebe um link para informar os dados e ver o resumo da compra. Você envia o resumo no WhatsApp e confirma a venda quando o pagamento for feito."
         },
         "3": {
           "icon": "link",
@@ -143,7 +143,7 @@
         },
         "2": {
           "q": "Vocês processam os pagamentos ou enviam as cartas?",
-          "a": "Não. A plataforma organiza o leilão e o acerto. O pagamento e o envio são combinados diretamente entre a loja e o comprador."
+          "a": "Não. A plataforma organiza o leilão e o acerto. O pagamento e a entrega da carta são combinados diretamente entre a loja e o comprador."
         },
         "3": {
           "q": "Preciso de um número de WhatsApp exclusivo?",
@@ -2064,7 +2064,7 @@
     },
     "pay": {
       "title": "Pagamento",
-      "text": "O pagamento é feito diretamente à loja. A plataforma não processa o pagamento nem o envio.",
+      "text": "O pagamento é feito diretamente à loja. A plataforma não processa o pagamento nem participa da entrega.",
       "pix": "Chave PIX: {key}",
       "copy": "Copiar chave",
       "copied": "Chave PIX copiada.",
@@ -2152,7 +2152,7 @@
     "created": "Acerto de {name} criado.",
     "claimed": "O comprador avisou que pagou em {when}",
     "awaitingEmpty": "Nenhum comprador esperando acerto",
-    "awaitingNote": "Compradores que ganharam leilões e ainda não têm acerto. O total é a soma das cartas: a plataforma não cuida do frete nem do pagamento.",
+    "awaitingNote": "Compradores que ganharam leilões e ainda não têm acerto. O total é a soma das cartas: a plataforma não cuida do pagamento nem da entrega.",
     "pendingEmpty": "Nenhum acerto em aberto",
     "paidEmpty": "Nenhum acerto pago ainda",
     "tabs": {
@@ -2255,7 +2255,7 @@
         },
         "2": {
           "title": "Vendas e pagamentos",
-          "text": "A plataforma não realiza vendas, não processa pagamentos e não cuida do envio. A negociação ocorre diretamente entre loja e comprador."
+          "text": "A plataforma não realiza vendas, não processa pagamentos e não participa da entrega das cartas. A negociação, o pagamento e a entrega são combinados diretamente entre loja e comprador, que respondem por eles."
         },
         "3": {
           "title": "Conduta e moderação",
@@ -2280,7 +2280,7 @@
         },
         "1": {
           "title": "Para que usamos",
-          "text": "Identificar compradores, confirmar acertos, organizar envios e repasses de consignação e manter a segurança do serviço."
+          "text": "Identificar compradores, confirmar acertos, calcular repasses de consignação, cumprir obrigações legais e manter a segurança do serviço."
         },
         "2": {
           "title": "Base legal (LGPD)",
